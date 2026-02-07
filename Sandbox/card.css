@@ -1,12 +1,17 @@
 .card_div {
   position: relative;
   --card-border-width: 1px;
+  --card-stroke-gradient: linear-gradient(
+    135deg,
+    var(--color-saffron-fade),
+    var(--color-saffron-fade-partial)
+  );
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-500);
   padding: var(--space-500);
-  border: var(--card-border-width) solid var(--color-saffron-fade);
+  border: var(--card-border-width) solid transparent;
   border-radius: var(--radius-large);
   overflow: clip;
   background: rgba(0, 0, 0, 0.75);
@@ -18,6 +23,23 @@
 
 .card_div:hover {
   --card-border-width: 2px;
+}
+
+.card_div::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: var(--card-border-width);
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 0;
+  background: var(--card-stroke-gradient);
+
+  /* Show gradient only on the stroke (border ring) */
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
 }
 
 .card_div::after {

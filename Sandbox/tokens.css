@@ -1,7 +1,9 @@
 :root {
   /* Color tokens */
+  --color-white: #ffffff;
   --color-saffron: #ecbc2a;
   --color-saffron-fade: #ecbc2a40;
+  --color-saffron-fade-partial: #ecbc2a80;
 
   /* Background color tokens */
   --color-bg-forest: #041514;
