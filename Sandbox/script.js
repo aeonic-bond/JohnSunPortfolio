@@ -7,4 +7,3 @@ countBtn?.addEventListener("click", () => {
   count += 1;
   if (countEl) countEl.textContent = String(count);
 });
-

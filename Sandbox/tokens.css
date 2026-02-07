@@ -1,0 +1,18 @@
+:root {
+  /* Color tokens */
+  --color-saffron: #ecbc2a;
+  --color-saffron-fade: #ecbc2a40;
+
+  /* Background color tokens */
+  --color-bg-forest: #041514;
+
+  /* Border-Radius tokens */
+  --radius-small: 4px;
+  --radius-base: 8px;
+  --radius-large: 12px;
+
+  /* Spacing tokens */
+  --space-300: 8px;
+  --space-500: 16px;
+  --block-space-800: 80px;
+}

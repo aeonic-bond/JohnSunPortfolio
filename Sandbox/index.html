@@ -4,17 +4,61 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Sandbox</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./layout.css" />
+    <link rel="stylesheet" href="./tokens.css" />
+    <link rel="stylesheet" href="./card.css" />
   </head>
   <body>
-    <main class="container">
-      <h1>Sandbox</h1>
-      <p>Edit <code>Sandbox/script.js</code> to start experimenting.</p>
+    <main class="container_div">
+      <div class="intro_div">
+        <h1>Sandbox</h1>
+      </div>
 
-      <button id="countBtn" type="button">Clicked: <span id="count">0</span></button>
+      <section aria-label="Card demo">
+        <div class="cards_div" aria-label="Cards">
+          <div class="card_div" data-name="Card" data-node-id="223:127">
+            <div class="card_inner_div" data-name="Inner Card" data-node-id="223:128">
+              <div class="card_stage_div">
+                <div class="card_media_div" data-name="Img. Placeholder" data-node-id="224:136"></div>
+                <div class="card_back_div" aria-hidden="true"></div>
+              </div>
+            </div>
+            <p class="card_title type-h2" data-node-id="223:132">Torus</p>
+          </div>
+          <div class="card_div" data-name="Card" data-node-id="223:127">
+            <div class="card_inner_div" data-name="Inner Card" data-node-id="223:128">
+              <div class="card_stage_div">
+                <div class="card_media_div" data-name="Img. Placeholder" data-node-id="224:136"></div>
+                <div class="card_back_div" aria-hidden="true"></div>
+              </div>
+            </div>
+            <p class="card_title type-h2" data-node-id="223:132">Sphere</p>
+          </div>
+          <div class="card_div" data-name="Card" data-node-id="223:127">
+            <div class="card_inner_div" data-name="Inner Card" data-node-id="223:128">
+              <div class="card_stage_div">
+                <div class="card_media_div" data-name="Img. Placeholder" data-node-id="224:136"></div>
+                <div class="card_back_div" aria-hidden="true"></div>
+              </div>
+            </div>
+            <p class="card_title type-h2" data-node-id="223:132">Cube</p>
+          </div>
+          <div class="card_div" data-name="Card" data-node-id="223:127">
+            <div class="card_inner_div" data-name="Inner Card" data-node-id="223:128">
+              <div class="card_stage_div">
+                <div class="card_media_div" data-name="Img. Placeholder" data-node-id="224:136"></div>
+                <div class="card_back_div" aria-hidden="true"></div>
+              </div>
+            </div>
+            <p class="card_title type-h2" data-node-id="223:132">Cone</p>
+          </div>
+        </div>
+      </section>
+      
     </main>
 
+    <script src="./typography.js" defer></script>
+    <script src="./card.js" defer></script>
     <script src="./script.js" defer></script>
   </body>
 </html>
-

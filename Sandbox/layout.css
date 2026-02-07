@@ -1,0 +1,66 @@
+:root {
+  color-scheme: light dark;
+
+  /* Layout tokens */
+  --container-padding: 16px;
+  --card-max-width: 480px;
+
+  /* Breakpoints */
+  --bp-desktop: 1024px;
+
+  /* Viewport flags (default: mobile < 1024px) */
+  --viewport: mobile;
+  --is-mobile: 1;
+  --is-desktop: 0;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --viewport: desktop;
+    --is-mobile: 0;
+    --is-desktop: 1;
+    --container-padding: 60px;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  text-align: center;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Layout divs */
+.intro_div {
+  height: 2000px;
+}
+
+.container_div {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: var(--container-padding);
+  background: var(--color-bg-forest);
+}
+
+.cards_div {
+  display: grid;
+  gap: var(--block-space-800);
+  width: 100%;
+  min-width: 0;
+  margin-inline: auto;
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
+@media (min-width: 1024px) {
+  .cards_div {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
