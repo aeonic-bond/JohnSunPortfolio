@@ -3,7 +3,6 @@
 
   /* Layout tokens */
   --container-padding: 16px;
-  --card-max-width: 480px;
 
   /* Breakpoints */
   --bp-desktop: 1024px;
@@ -38,7 +37,7 @@ body {
 
 /* Layout divs */
 .intro_div {
-  height: 2000px;
+  height: 1000px;
 }
 
 .container_div {
@@ -61,6 +60,6 @@ body {
 
 @media (min-width: 1024px) {
   .cards_div {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
 }
