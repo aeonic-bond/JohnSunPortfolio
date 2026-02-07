@@ -106,7 +106,7 @@
 }
 
 .card_div.is_flipped .card_inner_div {
-  transform: rotateY(-90deg);
+  transform: rotateY(-45deg);
 }
 
 .card_div::after {

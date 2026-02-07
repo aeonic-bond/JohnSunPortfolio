@@ -20,13 +20,13 @@ const triggerTorusFlipReveal = (card) => {
     if (!card.classList.contains("is_flipped")) {
       card.classList.add("media_revealed");
     }
-  }, 330); // ~33% through the 1000ms flip transition
+  }, 100);
 
   setTimeout(() => {
     if (!card.classList.contains("is_flipped")) {
       card.classList.add("bottom_panel_revealed");
     }
-  }, 400); // 40% through the 1000ms flip transition
+  }, 200);
 };
 
 window.SandboxTorusCard = {

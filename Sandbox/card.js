@@ -58,7 +58,7 @@ const torusHooks = window.SandboxTorusCard || {};
 const initialFlip = ({
   cardSelector = ".card_div",
   observeSelector = ".card_inner_div",
-  threshold = 0.2,
+  threshold = 0.05,
   initialFlipped = true,
 } = {}) => {
   const cards = document.querySelectorAll(cardSelector);
