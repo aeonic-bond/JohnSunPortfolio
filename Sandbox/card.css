@@ -1,16 +1,12 @@
 .card_div {
   position: relative;
   --card-border-width: 1px;
-  --card-stroke-gradient: linear-gradient(
-    135deg,
-    var(--color-saffron-fade),
-    var(--color-saffron-fade-partial)
-  );
+  --card-stroke-gradient: var(--color-saffron-fade);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-500);
-  padding: var(--space-500);
+  gap: var(--block-space-300);
+  padding: var(--block-space-300);
   border: var(--card-border-width) solid transparent;
   border-radius: var(--radius-large);
   overflow: clip;
@@ -23,6 +19,7 @@
 
 .card_div:hover {
   --card-border-width: 2px;
+  --card-stroke-gradient: var(--color-saffron-fade-partial);
 }
 
 .card_div::before {
@@ -70,6 +67,17 @@
   height: auto;
 }
 
+.card_div[data-card-kind="torus"] .torus_spline {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: transparent;
+  border: 0;
+}
+
 @media (min-width: 1024px) {
   .card_div {
     max-width: 640px;
@@ -109,69 +117,8 @@
   transform: rotateY(-45deg);
 }
 
-.card_div::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  padding: var(--card-border-width);
-  pointer-events: none;
-  border-radius: inherit;
-  z-index: 0;
-  opacity: 1;
-  background: linear-gradient(
-    135deg,
-    transparent calc(50% - 120px),
-    var(--color-saffron) calc(50% - 120px),
-    var(--color-saffron) calc(50% + 120px),
-    transparent calc(50% + 120px)
-  );
-  background-repeat: no-repeat;
-  background-size: 260% 260%;
-  background-position: 200% 200%;
-  will-change: background-position, opacity;
-
-  /* Show glint only on the stroke (border ring) */
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  mask-composite: exclude;
-}
-
-.card_div:hover::after {
-  animation: cardGlintBlade 2000ms linear infinite;
-}
-
-@keyframes cardGlintBlade {
-  0% {
-    opacity: 0.9;
-    background-position: 200% 200%;
-    animation-timing-function: cubic-bezier(0.12, 0.9, 0.3, 1);
-  }
-  16.667% {
-    opacity: 0.9;
-    background-position: 65% 65%;
-    animation-timing-function: linear;
-  }
-  90% {
-    opacity: 0.6;
-    background-position: -110% -110%;
-  }
-  95% {
-    opacity: 0;
-    background-position: -160% -160%;
-  }
-  100% {
-    opacity: 0;
-    background-position: 200% 200%;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .card_inner_div {
     transition: none;
-  }
-
-  .card_div:hover::after {
-    animation: none;
   }
 }

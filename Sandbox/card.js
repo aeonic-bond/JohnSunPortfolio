@@ -16,6 +16,14 @@ const createCard = ({ title = "Torus" } = {}) => {
   media.dataset.name = "Img. Placeholder";
   media.dataset.nodeId = "224:136";
   if (isTorus) {
+    const torusSpline = document.createElement("spline-viewer");
+    torusSpline.className = "torus_spline";
+    torusSpline.setAttribute(
+      "url",
+      "https://prod.spline.design/a9anYE4jWjzHCGfl/scene.splinecode",
+    );
+    media.append(torusSpline);
+
     const picture = document.createElement("picture");
     picture.className = "top_nav_asset";
     const desktopSource = document.createElement("source");

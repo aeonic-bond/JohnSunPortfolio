@@ -3,10 +3,14 @@
 }
 
 .card_div[data-card-kind="torus"] .top_nav_asset {
+  position: relative;
+  z-index: 3;
   display: block;
 }
 
 .card_div[data-card-kind="torus"] .top_nav_img {
+  position: relative;
+  z-index: 3;
   opacity: 0;
   transform: translateY(-100%);
   transition:
@@ -26,7 +30,7 @@
   bottom: 8px;
   transform: translate(-50%, 120%);
   opacity: 0;
-  z-index: 2;
+  z-index: 3;
   width: 50%;
   max-width: 200px;
   transition:
