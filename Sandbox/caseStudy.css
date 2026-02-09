@@ -17,7 +17,9 @@
   isolation: isolate;
 }
 
-.card_div:hover {
+.card_div:hover,
+.case_study_div:hover .card_div,
+.case_study_div:focus-within .card_div {
   --card-border-width: 2px;
   --card-stroke-gradient: var(--color-saffron-fade-partial);
 }

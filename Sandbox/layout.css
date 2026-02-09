@@ -48,7 +48,7 @@ body {
   background: var(--color-bg-forest);
 }
 
-.cards_div {
+.case_studies_div {
   display: grid;
   gap: var(--block-space-800);
   width: 100%;
@@ -58,8 +58,15 @@ body {
   justify-items: center;
 }
 
+.case_study_div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 @media (min-width: 1024px) {
-  .cards_div {
+  .case_studies_div {
     grid-template-columns: 1fr;
   }
 }

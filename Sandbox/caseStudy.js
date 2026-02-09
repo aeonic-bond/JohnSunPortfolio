@@ -1,4 +1,4 @@
-const createCard = ({ title = "Torus" } = {}) => {
+const createCaseStudyCard = ({ title = "Torus" } = {}) => {
   const isTorus = String(title).trim().toLowerCase() === "torus";
   const card = document.createElement("div");
   card.className = "card_div";
@@ -59,11 +59,12 @@ const createCard = ({ title = "Torus" } = {}) => {
 };
 
 window.SandboxComponents = window.SandboxComponents || {};
-window.SandboxComponents.createCard = createCard;
+window.SandboxComponents.createCaseStudyCard = createCaseStudyCard;
+window.SandboxComponents.createCard = createCaseStudyCard;
 
 const torusHooks = window.SandboxTorusCard || {};
 
-const initialFlip = ({
+const initializeCaseStudyFlip = ({
   cardSelector = ".card_div",
   observeSelector = ".card_inner_div",
   threshold = 0.05,
@@ -111,4 +112,4 @@ const initialFlip = ({
   }
 };
 
-initialFlip();
+initializeCaseStudyFlip();
