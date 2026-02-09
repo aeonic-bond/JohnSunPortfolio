@@ -1,0 +1,39 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+  background: #101011;
+  color: var(--color-white);
+}
+
+.live_main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.header_div {
+  height: 1000px;
+  padding-top: var(--block-space-800);
+}
+
+.case_studies_div {
+  display: grid;
+  gap: var(--block-space-800);
+  width: 100%;
+  padding: 16px;
+  max-width: 560px;
+}
+
+@media (min-width: 1024px) {
+  .case_studies_div {
+    max-width: 800px;
+  }
+}

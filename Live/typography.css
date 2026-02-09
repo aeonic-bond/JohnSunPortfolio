@@ -1,0 +1,23 @@
+:root {
+  /* Typography tokens */
+  --type-h1: normal 700 56px/56px "Crimson Text", serif;
+  --type-h2: normal 700 28px/28px "Crimson Text", serif;
+  --type-body2: normal 400 14px/14px "Inter", sans-serif;
+  --type-action: normal 600 15px/15px "Inter", sans-serif;
+}
+
+.type-h1 {
+  font: var(--type-h1);
+}
+
+.type-h2 {
+  font: var(--type-h2);
+}
+
+.type-body2 {
+  font: var(--type-body2);
+}
+
+.type-action {
+  font: var(--type-action);
+}
