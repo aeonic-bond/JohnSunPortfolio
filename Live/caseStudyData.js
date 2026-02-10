@@ -29,11 +29,22 @@ const CASE_STUDIES = [
   },
 ];
 
+const SPLINE_CACHE_BUST = Date.now().toString();
+const withCacheBust = (url) => {
+  if (!url) return "";
+  const separator = url.includes("?") ? "&" : "?";
+  return `${url}${separator}v=${SPLINE_CACHE_BUST}`;
+};
+
 const renderTorusMedia = (mediaRoot, media = {}) => {
   const desktopQuery = window.matchMedia("(min-width: 1024px)");
   const getUrl = () => {
-    if (desktopQuery.matches) return media?.splineUrlDesktop || media?.splineUrl;
-    return media?.splineUrlMobile || media?.splineUrlDesktop || media?.splineUrl;
+    if (desktopQuery.matches) {
+      return withCacheBust(media?.splineUrlDesktop || media?.splineUrl);
+    }
+    return withCacheBust(
+      media?.splineUrlMobile || media?.splineUrlDesktop || media?.splineUrl,
+    );
   };
 
   const initialUrl = getUrl();
