@@ -49,8 +49,8 @@
 }
 
 .card_media_div > spline-viewer {
-  pointer-events: none;
-  touch-action: none;
+  pointer-events: auto;
+  touch-action: auto;
 }
 
 @media (min-width: 1024px) {
