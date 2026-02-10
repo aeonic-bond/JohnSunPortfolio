@@ -10,10 +10,13 @@ const CASE_STUDIES = [
     },
   },
   {
-    kind: "sphere",
-    title: "Sphere",
-    description: "Case study summary for Sphere.",
+    kind: "blueprint",
+    title: "Blueprint",
+    description: "Case study summary for Blueprint.",
     ctaLabel: "Read",
+    media: {
+      splineUrl: "https://prod.spline.design/5kxmLlprZtzzCVht/scene.splinecode",
+    },
   },
   {
     kind: "cube",
@@ -69,7 +72,18 @@ const renderTorusMedia = (mediaRoot, media = {}) => {
   }
 };
 
+const renderBlueprintMedia = (mediaRoot, media = {}) => {
+  const url = withCacheBust(media?.splineUrl);
+  if (!url) return;
+
+  const spline = document.createElement("spline-viewer");
+  spline.className = "card_media_layer blueprint_spline";
+  spline.setAttribute("url", url);
+  mediaRoot.append(spline);
+};
+
 const MEDIA_RENDERERS = {
+  blueprint: renderBlueprintMedia,
   torus: renderTorusMedia,
 };
 
