@@ -1,0 +1,40 @@
+{
+  "id": "replace-with-unique-id",
+  "slug": "replace-with-url-slug",
+  "status": "draft",
+  "publishedDate": "YYYY-MM-DD",
+  "card": {
+    "kind": "replace-with-kind",
+    "title": "Case Study Card Title",
+    "description": "Short card summary (1-2 lines).",
+    "ctaLabel": "Read",
+    "media": {
+      "splineUrlDesktop": "",
+      "splineUrlMobile": "",
+      "splineUrl": "",
+      "imageUrl": ""
+    }
+  },
+  "hero": {
+    "title": "Case Study Title",
+    "subtitle": "Case Study Subtitle",
+    "summary": "One-paragraph intro for the top of the page."
+  },
+  "figures": [
+    {
+      "id": "fig-01",
+      "src": "",
+      "alt": "",
+      "caption": "",
+      "credit": ""
+    }
+  ],
+  "sections": [
+    {
+      "id": "section-01",
+      "header": "Section Header",
+      "body": "Section body copy.",
+      "figureIds": ["fig-01"]
+    }
+  ]
+}

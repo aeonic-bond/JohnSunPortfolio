@@ -3,6 +3,7 @@ const createCaseStudyCard = ({
   title = "Title",
   description = "Default decscription text",
   ctaLabel = "Read",
+  href = "",
   media,
 } = {}) => {
   const wrapper = document.createElement("article");
@@ -26,7 +27,7 @@ const createCaseStudyCard = ({
   inner.append(mediaEl);
 
   const titleEl = document.createElement("h2");
-  titleEl.className = "card_title type-h2";
+  titleEl.className = "card_title";
   titleEl.textContent = title;
 
   card.append(inner, titleEl);
@@ -42,6 +43,23 @@ const createCaseStudyCard = ({
   ctaButton.className = "card_cta_button type-action";
   ctaButton.type = "button";
   ctaButton.textContent = ctaLabel;
+
+  if (href) {
+    const navigate = () => {
+      window.location.href = href;
+    };
+
+    card.setAttribute("role", "link");
+    card.tabIndex = 0;
+    card.addEventListener("click", navigate);
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        navigate();
+      }
+    });
+    ctaButton.addEventListener("click", navigate);
+  }
 
   footer.append(descriptionEl, ctaButton);
   wrapper.append(card, footer);

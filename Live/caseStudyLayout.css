@@ -1,0 +1,69 @@
+.cs-main {
+  width: 100%;
+  max-width: 640px;
+  padding: 0px 16px 400px;
+}
+
+.cs-back-link {
+  color: var(--color-saffron);
+  text-decoration: none;
+}
+
+.cs-article {
+  display: grid;
+  row-gap: var(--block-space-800);
+}
+
+.cs-hero {
+  display: grid;
+  row-gap: var(--block-space-300);
+}
+
+.cs-title {
+  font: var(--type-h1);
+}
+
+.cs-subtitle {
+  font: var(--type-subtitle);
+  color: var(--color-saffron);
+}
+
+.cs-section:has(> .cs-section-header):has(> .cs-section-body) {
+  display: grid;
+  row-gap: var(--space-300);
+}
+
+.cs-section-header {
+  font: var(--type-h2);
+}
+
+.cs-section-body {
+  font: var(--type-body1);
+}
+
+.cs-fig {
+  display: grid;
+  row-gap: var(--space-300);
+}
+
+.cs-fig-image {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-base);
+  border: 1px solid var(--color-saffron-fade);
+}
+
+.cs-fig-caption {
+  color: var(--color-saffron-fade-partial);
+}
+
+.cs-section-body p {
+}
+
+.cs-section-body ul {
+  padding-left: 1.2em;
+}
+
+.cs-section-body li + li {
+  margin-top: 0.35em;
+}

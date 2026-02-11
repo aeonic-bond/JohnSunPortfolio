@@ -60,6 +60,7 @@
 }
 
 .card_title {
+  font: var(--type-h2);
   margin: 0;
   color: var(--color-saffron);
   text-align: center;
@@ -91,11 +92,15 @@
 }
 
 .card_div.is_flipped .card_inner_div {
-  transform: rotateY(-45deg);
+  transform: rotateY(30deg);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .card_inner_div {
     transition: none;
   }
+}
+
+.card_div[role="link"] {
+  cursor: pointer;
 }

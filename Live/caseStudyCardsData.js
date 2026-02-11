@@ -4,6 +4,7 @@ const CASE_STUDIES = [
     title: "Torus",
     description: "Default decscription text",
     ctaLabel: "Read",
+    href: "./torus.html",
     media: {
       splineUrlDesktop: "https://prod.spline.design/fVaatZpFg7arBTsd/scene.splinecode",
       splineUrlMobile: "https://prod.spline.design/XszHhs9AMXT7tGNa/scene.splinecode",
