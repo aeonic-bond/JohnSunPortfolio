@@ -1,5 +1,3 @@
-const root = document.getElementById("case-study-root");
-
 const createBodyFragment = (body = "") => {
   const fragment = document.createDocumentFragment();
   const blocks = body.split("\n\n").map((block) => block.trim()).filter(Boolean);
@@ -52,7 +50,7 @@ const createFigureElement = (figure = {}) => {
   return fig;
 };
 
-const renderCaseStudy = (content = {}) => {
+const renderCaseStudy = (content = {}, root) => {
   if (!root) return;
 
   const figureMap = new Map((content.figures || []).map((figure) => [figure.id, figure]));
@@ -100,18 +98,36 @@ const renderCaseStudy = (content = {}) => {
   root.replaceChildren(article);
 };
 
-fetch("./TorusContent.json")
-  .then((response) => {
-    if (!response.ok) throw new Error("Failed to load TorusContent.json");
-    return response.json();
-  })
-  .then((content) => {
-    renderCaseStudy(content);
-  })
-  .catch((error) => {
-    if (!root) return;
-    const message = document.createElement("p");
-    message.className = "type-body1";
-    message.textContent = error.message;
-    root.replaceChildren(message);
-  });
+const loadCaseStudyInto = (root, contentPath) => {
+  if (!root || !contentPath) return;
+
+  fetch(contentPath)
+    .then((response) => {
+      if (!response.ok) throw new Error(`Failed to load ${contentPath}`);
+      return response.json();
+    })
+    .then((content) => {
+      renderCaseStudy(content, root);
+    })
+    .catch((error) => {
+      const message = document.createElement("p");
+      message.className = "type-body1";
+      message.textContent = error.message;
+      root.replaceChildren(message);
+    });
+};
+
+window.LiveCaseStudyRenderer = {
+  renderCaseStudy,
+  loadCaseStudyInto,
+};
+
+// --- Page Mounting (Per-Case-Study Configuration) ---
+// Each case study page sets `data-content-src` on `#case-study-root`.
+// Example in HTML:
+// <article id="case-study-root" data-content-src="./TorusContent.json"></article>
+const mountRoot = document.getElementById("case-study-root");
+const mountContentPath = mountRoot?.dataset?.contentSrc || "";
+if (mountRoot && mountContentPath) {
+  loadCaseStudyInto(mountRoot, mountContentPath);
+}
