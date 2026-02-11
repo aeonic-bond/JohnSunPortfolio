@@ -5,13 +5,22 @@
   "publishedDate": "",
   "hero": {
     "title": "Designing Torus to Challenge Autodesk Revit's UX",
-    "subtitle": "Working with 2 senior architects, I designed the core functionality for a modern browser-based architect platform to create parametric objects."
+    "subtitle": "Working with 2 senior architects, I designed the core functionality for a modern browser-based architect platform to create parametric objects.",
+    "imageSrc": "../../Assets/Image Placeholder.png",
+    "imageAlt": "Torus hero image placeholder"
   },
   "figures": [
     {
-      "id": "fig-01",
+      "id": "fig-00",
       "src": "",
       "alt": "",
+      "caption": "Figure 00",
+      "credit": ""
+    },
+    {
+      "id": "fig-01",
+      "src": "../../Assets/Image Placeholder.png",
+      "alt": "Torus figure 1 placeholder",
       "caption": "Figure 1",
       "credit": ""
     },
@@ -63,6 +72,34 @@
       "alt": "",
       "caption": "Figure 8",
       "credit": ""
+    },
+    {
+      "id": "fig-09",
+      "src": "",
+      "alt": "",
+      "caption": "Figure 09",
+      "credit": ""
+    },
+    {
+      "id": "fig-10",
+      "src": "",
+      "alt": "",
+      "caption": "Figure 10",
+      "credit": ""
+    },
+    {
+      "id": "fig-11",
+      "src": "",
+      "alt": "",
+      "caption": "Figure 11",
+      "credit": ""
+    },
+    {
+      "id": "fig-12",
+      "src": "",
+      "alt": "",
+      "caption": "Figure 12",
+      "credit": ""
     }
   ],
   "sections": [
@@ -70,79 +107,108 @@
       "id": "section-00",
       "header": "Executive Summary",
       "body": "I worked with 2 senior architects to develop Torus, a browser-based CAD tool for creating parametric architectural objects. I tackled common pain points within Autodesk Revit by streamlining the UX of setting reference planes and assigning parameters. I conducted user research, designed wireframes, built a working MVP demo with AI assistance, and conducted user tests. With one iteration on UI, the final testing round showed a 100% completion rate. These results demonstrate that parametric processes can be intuited in under 5 minutes when built on modern, intuitive design principles.",
-      "figureIds": []
+      "figureIds": [
+        "fig-00"
+      ]
     },
     {
       "id": "section-01",
       "header": "Background on Autodesk Revit",
       "body": "Torus is born out of frustration with Autodesk Revit's family creation process. Revit is the dominant architecture tool and uses the term \"family\" to refer to reusable 3D components. Families are ideally built parametrically, meaning they are systematically generated with variables controlling aspects such as length and width. Creating families in Revit has a steep learning curve due to Revit's outdated UX.\n\nWorking alongside two senior architects, Matthew and Nicky, I set out to improve the UX of family creation. As a team, we settled on exploring this idea by designing and creating a separate browser-based family editor that can export to Revit. In my research of Revit, I identified 3 key frustrations:\n- Revit has awkward workflows that feel outdated in a digital context. These design decisions seem to mirror paper-and-pencil drafting.\n- Revit's UX lacks prescriptiveness. This conflicts with best practices in modern architecture that value strict logical processes.\n- The UI simply feels unintuitive. When it comes to creating families, key tools are hidden among many others, with no logical order.",
-      "figureIds": []
+      "bulletRows": [
+        "Section 01 bullet row placeholder"
+      ],
+      "figureIds": [
+        "fig-01"
+      ]
     },
     {
       "id": "section-02",
       "header": "User Research and Learning Revit",
       "body": "These frustrations were echoed in the 5 user interviews my team conducted during an exploratory phase. Interview candidates were all working architects with 4-10 years of experience.\n\nI synthesized their responses into the following summary list:\n- Revit is a notoriously difficult tool to learn and use. These quotes deal specifically with family building:\n  \"Families are commonly used and not static...they can be tedious to set up.\" - DC\n  \"It's something I prefer not to do and takes too much of my time [because] it's forcing us to build it like engineers.\" - DI\n- The education on Revit does not include best-practice methods. Entire company roles are needed to maintain consistent practices. As many architectural projects are enormous in size, their \"health\" is dependent on how consistent their families are built.\n  \"There are schools of thought, but people generally don't follow them. Someone might say it works well when testing them in narrow cases, but I can tell they are not correctly built.\" - MA\n- Families provided by manufacturers can vary wildly in quality and are not reliable to be directly imported into a project. So, there is a demand for new families to be created in-house.\n  \"Everything is made new because every project is different\" - IH\n\nAs part of my Revit research, I also learned the fundamentals of creating parametric families. Creating a good parametric family is akin to writing good code. You need a mechanism to store variable data. You need to take that data as input and generate an output. You also want to generally avoid adding unnecessary elements. Just like in code, more cumbersome families mean more bloated projects and slower processing and rendering.",
-      "figureIds": ["fig-01"]
+      "figureIds": [
+        "fig-02"
+      ]
     },
     {
       "id": "section-03",
       "header": "Project Scope",
       "body": "Looking over the user research results, we decided early on to build Torus as a platform for constructing solely parametric families. Revit has a steep learning curve, as it is a master tool that encompasses several functionalities. Isolating our scope to just parametric family construction allowed us to optimize Torus towards a specific need.",
-      "figureIds": []
+      "figureIds": [
+        "fig-03"
+      ]
     },
     {
       "id": "section-04",
       "header": "MVP Design Ideation",
       "body": "I led the product design and frequently consulted Matthew and Nicky on domain knowledge. To start wireframing the MVP, I drew inspiration from Figma and Onshape, both successful, modern, browser-based design tools. I relied on the basic arch structure, with a panel on the left and right and a toolbox on top.\n\nAt the start, I made one key decision to deviate from Revit and include an Asset Tree for two primary reasons. The obvious reason was to allow the user to see all assets being added, which would encourage them to stay organized, knowing that each new asset was being recorded. The second reason was tied to a crucial feature that Matthew and Nicky pushed for. Torus would force objects like reference planes to have strictly enforced parent/child relationships. An Asset Tree would help users visualize the logic behind those relationships significantly better than the 3D environment alone can.\n\nFor the right-side panel, I decided to keep the Parameter Panel visible, communicating that parameters are fundamental to Torus' workflow.",
-      "figureIds": ["fig-02"]
+      "figureIds": [
+        "fig-04"
+      ]
     },
     {
       "id": "section-05",
       "header": "Determining Key Functionality",
       "body": "To determine which tools and features to prioritize, I consulted with Matthew and Nicky and learned to model several basic families in Revit to understand the standard workflow. The following is an example workflow of creating a simple parametric table family:\n- Place 2 parallel reference planes (planes in XYZ space) in the 2D Top view, one on the left and one on the right of the origin point.\n- Use the Aligned Dimensions tool to define the distance between them, then set it as the \"length\" parameter.\n- Repeat that for top and bottom and define the distance as the \"width\" parameter.\n- Select extrusion, then draw a rectangle shape with each side locked to the 4 reference planes.\n- In the Front view, place a reference plane parallel to the initial 2D view and define the distance as the \"height\" parameter.\n- Set the rectangle extrusion from the Ref Level up to the height plane to create a tabletop.\n\nOne process that might seem unintuitive to non-architects is the use of reference planes. The general wisdom is that using reference planes as invisible anchors yields more scalable geometry with more predictable outcomes than baking it into the geometry itself. They essentially act as variables in 3D space, abstracting away the need to \"hard-code\" values.\n\nDue to the complex workflow, I decided to limit the MVP to the following requirements:\n- Adding reference planes (RPs): Adding RPs will likely be the most important UX to get right.\n- Setting parameters: Creating and applying parameters should be smoothly woven into the reference plane creation UX.\n- Explicitly showing logic: Showing geometry logic explicitly in the interface instead of just in the visual space will allow better evaluation of the model.\n\nThese requirements focus on Torus' unique value proposition: a simplified parametric workflow rather than the generic 2D/3D geometry tools that all CAD tools need.",
-      "figureIds": []
+      "figureIds": [
+        "fig-05"
+      ]
     },
     {
       "id": "section-06",
       "header": "The UX of Adding Reference Planes",
       "body": "As previously stated, Matthew and Nicky suggested early on that all user-generated RPs must be children of another RP. In contrast, Revit treats RPs as independent placed objects that are situationally constrained through other tools. As such, I decided that the default RP tool was not an \"Add RP\" tool, but a \"Create RP by Offset\" tool that creates a child RP from a designated parent RP, enforcing a formal hierarchical relationship among all RPs.\n\nAfter several iterations, I decided on the final behavior of the OffsetRP tool:\n- The user chooses a Parent Plane.\n- The cursor transforms to a plane parallel to the Parent Plane, with a Distance Indicator.\n- The user manually places a Child Plane by clicking in the workspace.\n\nThere was a design fork at Step 3. I could prompt the user to enter a distance and/or a parameter, and the child plane is generated automatically. I ultimately decided against this and opted for the user manually placing it with the cursor. I didn't want to completely strip away the pen-and-paper drafting mimicry that Revit relied on, as I was told verbatim, \"most architects are still artists at heart, and not developers.\"",
-      "figureIds": ["fig-03"]
+      "figureIds": [
+        "fig-06"
+      ]
     },
     {
       "id": "section-07",
       "header": "The UX of Setting Parameters",
       "body": "Next, I worked on streamlining the parameter-setting UX. In Revit, setting a single parameter is a minimum 2-step process with 2 different tools.\n\nFor Torus, I wanted to reduce it to 1 step and 1 feature by seamlessly integrating parameter setting with RP creation. I designed the offsetRP tool to have an automatic distance indicator. This distance indicator consisted of a dotted line connecting the RP to its parent and a value box. I designed the value box to turn into an input field where the user can type a parameter name and press Enter to confirm.",
-      "figureIds": ["fig-04"]
+      "figureIds": [
+        "fig-07"
+      ]
     },
     {
       "id": "section-08",
       "header": "The OffsetEQRP Tool",
       "body": "Later in the MVP design process, I slightly expanded the scope and designed the OffsetEQRP tool to accommodate a common workflow. Since many families are symmetrical, a common Revit workflow is to create pairs of parallel RPs and then constrain them to be equidistant (EQ) from a center. To streamline this particularly common flow, I designed the OffsetEQRP tool to behave similarly to OffsetRP but automatically generate a mirrored RP. Both RPs would be added to an EQ group in the asset panel, and a parameter can be applied to the total distance between them.",
-      "figureIds": ["fig-05"]
+      "figureIds": [
+        "fig-08"
+      ]
     },
     {
       "id": "section-09",
       "header": "Demo Building",
       "body": "Once these 3 features were designed, I took on the role of developer, testing coordinator, and UX interview conductor. I first built a working demo for the Torus MVP, mainly by generating prompts with Codex in VSC. While building the demo, I made a few necessary UX and UI changes as my perception of the tool changed during interactive use:\n- Added color scheming for the global axis (Z-Axis = yellow, Y-Axis = blue, X-axis = red). To accommodate more colors, I removed the bright pink and reduced the bright green.\n- Added ID indicators to the cursor when hovering over a global plane.\n- Added resizing handles at the ends of the RPs, allowing users to visually adjust the RP's appearance. This doesn't change the underlying geometry.",
-      "figureIds": ["fig-06"]
+      "figureIds": [
+        "fig-09"
+      ]
     },
     {
       "id": "section-10",
       "header": "Demo Testing & Iteration",
       "body": "Once the demo reached a testable stage, I reached out and found 6 participants who were architects or students. Their experiences with Revit ranged from a class to 10+ years. I ran 10-minute usability tests to see if users could add reference planes and set parameters. Before each session, I emphasized that this was an early-stage demo with limited capabilities.\n\n4 participants completed both tasks. 2 participants completed both with minimal guidance. This was a major accomplishment and speaks to the design's relative intuitiveness. A few participants remarked that this would have been much more difficult in Revit.\n\nI observed the following usability issues:\n- All participants first attempted to input numbers inside the distance indicator rather than the expected parameter name.\n- 3 participants pointed out that the parameter panel was not particularly clear.\n- All participants tried to hover over the tools, expecting tooltips to appear.\n\nI made the following changes based on the observation and feedback:\n- Added tooltips for offsetRP and offsetEQRP, and increased the speed at which they appear.\n- Refactored the distance indicator to have two input triggers. The old indicator became the value input, allowing users to manipulate the simple distance or the value of a set parameter. A new parameter input button gained the functionality of the old indicator. To accommodate this change, I also moved the EQ group tag from the indicator to the line to avoid confusion.\n- Changed the styling of the parameter name and value sets by wrapping them in a single div that resembles a split input box with an explicit \"=\" between the name and value.\n\nI tested this new iteration with 5 users, and the qualitative results significantly improved, with a 100% completion rate.",
-      "figureIds": ["fig-07"]
+      "figureIds": [
+        "fig-10"
+      ]
     },
     {
       "id": "section-11",
       "header": "Next Steps",
       "body": "Now that the MVP can set up the parametric \"bones\" (as Matthew likes to call it), the next steps would be to enable users to create 2D geometry and then turn it into 3D geometry. I've already initiated the design process to streamline another infamous Revit function: locking 2D geometry to RPs. In overhauling Revit's lock system, I developed the \"clasp\" system, paired with color-changing, to visually communicate geometry snapping to RPs. The next logical step will be to build out this system for demo and testing.\n\nA more philosophical question also emerged during testing. Less experienced users, particularly students, leaned more on the 3D perspective view. Several participants explicitly stated a preference for working in 3D. In contrast, more experienced users valued the 2D views that enable a more precise parametric workflow. This divergence revealed a design tension: making the 3D perspective view more interactive could lower the barrier to entry for beginners, but doing so would conflict with Torus's prescriptive workflow and its core value proposition.\n\nThis finding suggests that more research is needed to better understand how experience level influences spatial workflows and mental models.",
-      "figureIds": ["fig-08"]
+      "figureIds": [
+        "fig-11"
+      ]
     },
     {
       "id": "section-12",
       "header": "Conclusion",
       "body": "Torus was one of the most rewarding and challenging projects I've worked on, requiring hands-on involvement across every stage of product development, from research and wireframing to agile development and usability testing. This project demonstrated that even deeply technical, legacy workflows can support intuitive, modern UX when designed with clear structure and intention. Ultimately, the successful feedback results of the initial MVP showed that a modern parametric CAD tool can be intuitively understood and used in under 5 minutes. I'm grateful to Matthew and Nicky for sharing their domain expertise and for their close collaboration throughout the project.",
-      "figureIds": []
+      "figureIds": [
+        "fig-12"
+      ]
     }
   ]
 }

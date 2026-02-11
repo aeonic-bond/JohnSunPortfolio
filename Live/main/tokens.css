@@ -7,6 +7,7 @@
 
   /* Background color tokens */
   --color-bg-forest: #041514;
+  --color-bg-forest-raise: #09201E;
 
   /* Border-Radius tokens */
   --radius-small: 4px;
@@ -14,16 +15,24 @@
   --radius-large: 12px;
 
   /* Spacing tokens */
+  --space-200: 4px;
   --space-300: 8px;
   --space-400: 12px;
   --space-500: 16px;
   --space-600: 20px;
-  --block-space-300: 24px;
-  --block-space-400: 32px;
-  --block-space-500: 40px;
-  --block-space-600: 48px;
-  --block-space-700: 64px;
-  --block-space-800: 80px;
+  --space-700: 24px;
+  --space-block-200: 20px;
+  --space-block-300: 24px;
+  --space-block-400: 32px;
+  --space-block-500: 40px;
+  --space-block-600: 48px;
+  --space-block-700: 64px;
+  --space-block-800: 80px;
+  --space-block-900: 120px;
+
+    /* Margin tokens */
+  --margin-mobile-500: 16px;
+  --margin-bottom-500: 400px;
 
   /* Breakpoints */
   --breakpoint-desktop: 1024px;

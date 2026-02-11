@@ -21,12 +21,12 @@ body {
 
 .header_div {
   height: 1000px;
-  padding-top: var(--block-space-800);
+  padding-top: var(--space-block-800);
 }
 
 .case_studies_div {
   display: grid;
-  gap: var(--block-space-800);
+  gap: var(--space-block-800);
   width: 100%;
   padding: 16px;
   max-width: 560px;

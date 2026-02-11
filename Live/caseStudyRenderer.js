@@ -31,8 +31,9 @@ const createFigureElement = (figure = {}) => {
   const fig = document.createElement("figure");
   fig.className = "cs-fig";
   fig.id = figure.id || "";
+  const hasImage = Boolean(figure.src);
 
-  if (figure.src) {
+  if (hasImage) {
     const img = document.createElement("img");
     img.className = "cs-fig-image";
     img.src = figure.src;
@@ -40,7 +41,7 @@ const createFigureElement = (figure = {}) => {
     fig.append(img);
   }
 
-  if (figure.caption || figure.credit) {
+  if (hasImage && (figure.caption || figure.credit)) {
     const caption = document.createElement("figcaption");
     caption.className = "cs-fig-caption type-body2";
     caption.textContent = [figure.caption, figure.credit].filter(Boolean).join(" | ");
@@ -54,11 +55,11 @@ const renderCaseStudy = (content = {}, root) => {
   if (!root) return;
 
   const figureMap = new Map((content.figures || []).map((figure) => [figure.id, figure]));
-  const article = document.createElement("article");
-  article.className = "cs-article";
+  const sectionsAll = document.createElement("article");
+  sectionsAll.className = "cs-div-sectionsALL";
 
   const hero = document.createElement("header");
-  hero.className = "cs-hero";
+  hero.className = "cs-div-intro";
 
   const title = document.createElement("h1");
   title.className = "cs-title";
@@ -68,12 +69,25 @@ const renderCaseStudy = (content = {}, root) => {
   subtitle.className = "cs-subtitle";
   subtitle.textContent = content.hero?.subtitle || "";
 
-  hero.append(title, subtitle);
-  article.append(hero);
+  const introText = document.createElement("div");
+  introText.className = "cs-div-intro-text";
+  introText.append(title, subtitle);
 
+  const heroImageSrc = content.hero?.imageSrc || "";
+  const heroImageAlt = content.hero?.imageAlt || "";
+
+  hero.append(introText);
+
+  if (heroImageSrc) {
+    const heroImage = document.createElement("img");
+    heroImage.className = "cs-hero-image";
+    heroImage.src = heroImageSrc;
+    heroImage.alt = heroImageAlt;
+    hero.append(heroImage);
+  }
   for (const sectionData of content.sections || []) {
     const section = document.createElement("section");
-    section.className = "cs-section";
+    section.className = "cs-div-section";
     section.id = sectionData.id || "";
 
     const header = document.createElement("h2");
@@ -84,7 +98,40 @@ const renderCaseStudy = (content = {}, root) => {
     bodyWrap.className = "cs-section-body";
     bodyWrap.append(createBodyFragment(sectionData.body || ""));
 
-    section.append(header, bodyWrap);
+    const sectionText = document.createElement("div");
+    sectionText.className = "cs-div-section-text";
+    sectionText.append(header, bodyWrap);
+
+    section.append(sectionText);
+
+    for (const bulletRow of sectionData.bulletRows || []) {
+      const bulletRowEl = document.createElement("div");
+      bulletRowEl.className = "cs-bullet-row";
+
+      let items = [];
+      if (Array.isArray(bulletRow)) {
+        items = bulletRow;
+      } else if (typeof bulletRow === "string") {
+        items = [bulletRow];
+      } else if (bulletRow && typeof bulletRow === "object" && Array.isArray(bulletRow.items)) {
+        items = bulletRow.items;
+      } else if (bulletRow && typeof bulletRow === "object" && typeof bulletRow.text === "string") {
+        items = [bulletRow.text];
+      }
+      const itemCount = 6;
+
+      for (let i = 0; i < itemCount; i += 1) {
+        const bulletItemEl = document.createElement("div");
+        bulletItemEl.className = "cs-bullet-item";
+        const bulletItemTextEl = document.createElement("p");
+        bulletItemTextEl.className = "cs-bullet-item-text";
+        bulletItemTextEl.textContent = typeof items[i] === "string" ? items[i] : "";
+        bulletItemEl.append(bulletItemTextEl);
+        bulletRowEl.append(bulletItemEl);
+      }
+
+      section.append(bulletRowEl);
+    }
 
     for (const figureId of sectionData.figureIds || []) {
       const figure = figureMap.get(figureId);
@@ -92,10 +139,10 @@ const renderCaseStudy = (content = {}, root) => {
       section.append(createFigureElement(figure));
     }
 
-    article.append(section);
+    sectionsAll.append(section);
   }
 
-  root.replaceChildren(article);
+  root.replaceChildren(hero, sectionsAll);
 };
 
 const loadCaseStudyInto = (root, contentPath) => {
