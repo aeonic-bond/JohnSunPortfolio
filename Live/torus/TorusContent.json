@@ -19,15 +19,15 @@
     },
     {
       "id": "fig-01",
-      "src": "../../Assets/Image Placeholder.png",
-      "alt": "Torus figure 1 placeholder",
+      "src": "",
+      "alt": "",
       "caption": "Figure 1",
       "credit": ""
     },
     {
       "id": "fig-02",
-      "src": "",
-      "alt": "",
+      "src": "../../Assets/Image Placeholder.png",
+      "alt": "Torus figure 2 placeholder",
       "caption": "Figure 2",
       "credit": ""
     },
@@ -129,7 +129,14 @@
     {
       "id": "section-02",
       "header": "User Research and Learning Revit",
-      "body": "These frustrations were echoed in the 5 user interviews my team conducted during an exploratory phase. Interview candidates were all working architects with 4-10 years of experience.\n\nI synthesized their responses into the following summary list:\n- Revit is a notoriously difficult tool to learn and use. These quotes deal specifically with family building:\n  \"Families are commonly used and not static...they can be tedious to set up.\" - DC\n  \"It's something I prefer not to do and takes too much of my time [because] it's forcing us to build it like engineers.\" - DI\n- The education on Revit does not include best-practice methods. Entire company roles are needed to maintain consistent practices. As many architectural projects are enormous in size, their \"health\" is dependent on how consistent their families are built.\n  \"There are schools of thought, but people generally don't follow them. Someone might say it works well when testing them in narrow cases, but I can tell they are not correctly built.\" - MA\n- Families provided by manufacturers can vary wildly in quality and are not reliable to be directly imported into a project. So, there is a demand for new families to be created in-house.\n  \"Everything is made new because every project is different\" - IH\n\nAs part of my Revit research, I also learned the fundamentals of creating parametric families. Creating a good parametric family is akin to writing good code. You need a mechanism to store variable data. You need to take that data as input and generate an output. You also want to generally avoid adding unnecessary elements. Just like in code, more cumbersome families mean more bloated projects and slower processing and rendering.",
+      "body": "These frustrations were echoed in the 5 user interviews my team conducted during an exploratory phase. Interview candidates were all working architects with 4-10 years of experience.\n\nAs part of my Revit research, I also learned the fundamentals of creating parametric families. Creating a good parametric family is akin to writing good code. You need a mechanism to store variable data. You need to take that data as input and generate an output. You also want to generally avoid adding unnecessary elements. Just like in code, more cumbersome families mean more bloated projects and slower processing and rendering.",
+      "bulletRows": [
+        [
+          "Revit families are difficult to create.\n\n“Families are commonly used and not static...they can be tedious to set up.” - DC\n\n“It’s something I prefer not to do and takes too much of my time [because] it’s forcing us to build it like engineers.” - DI",
+          "Entire company roles are needed to help keep practices consistent. As many architectural projects are enormous in size, their “health” is dependent on how consistent their families are built.\n\n“There are schools of thoughts, but people generally don’t follow them. Someone might say it works well when testing them in narrow cases, but I can tell they are not correctly build.” - MA",
+          "Stock families often can't be customized for unique projects. New families need to be created in-house.\n\n“Everything is made new because every project is different.” - IH"
+        ]
+      ],
       "figureIds": [
         "fig-02"
       ]
@@ -153,9 +160,29 @@
     {
       "id": "section-05",
       "header": "Determining Key Functionality",
-      "body": "To determine which tools and features to prioritize, I consulted with Matthew and Nicky and learned to model several basic families in Revit to understand the standard workflow. The following is an example workflow of creating a simple parametric table family:\n- Place 2 parallel reference planes (planes in XYZ space) in the 2D Top view, one on the left and one on the right of the origin point.\n- Use the Aligned Dimensions tool to define the distance between them, then set it as the \"length\" parameter.\n- Repeat that for top and bottom and define the distance as the \"width\" parameter.\n- Select extrusion, then draw a rectangle shape with each side locked to the 4 reference planes.\n- In the Front view, place a reference plane parallel to the initial 2D view and define the distance as the \"height\" parameter.\n- Set the rectangle extrusion from the Ref Level up to the height plane to create a tabletop.\n\nOne process that might seem unintuitive to non-architects is the use of reference planes. The general wisdom is that using reference planes as invisible anchors yields more scalable geometry with more predictable outcomes than baking it into the geometry itself. They essentially act as variables in 3D space, abstracting away the need to \"hard-code\" values.\n\nDue to the complex workflow, I decided to limit the MVP to the following requirements:\n- Adding reference planes (RPs): Adding RPs will likely be the most important UX to get right.\n- Setting parameters: Creating and applying parameters should be smoothly woven into the reference plane creation UX.\n- Explicitly showing logic: Showing geometry logic explicitly in the interface instead of just in the visual space will allow better evaluation of the model.\n\nThese requirements focus on Torus' unique value proposition: a simplified parametric workflow rather than the generic 2D/3D geometry tools that all CAD tools need.",
       "figureIds": [
         "fig-05"
+      ],
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "To determine which tools and features to prioritize, I consulted with Matthew and Nicky and learned to model several basic families in Revit to understand the standard workflow."
+        },
+        {
+          "type": "bulletRow",
+          "items": [
+            "Place 2 parallel reference planes (planes in XYZ space) in the 2D Top view, one on the left and one on the right of the origin point. ",
+            "Use the Aligned Dimensions tool to define the distance between them, then set it as the “length” parameter. ",
+            "Repeat that for top and bottom and define the distance as the “width” parameter. ",
+            "Select extrusion and draw a rectangle shape where each side is locked to the 4 reference planes.",
+            "In the Front view, place a reference plane parallel to the initial 2D view and define the distance as the “height” parameter.",
+            "Set the rectangle extrusion from the Ref Level up to the height plane to create a tabletop."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "One process that might seem unintuitive to non-architects is the use of reference planes. The general wisdom is that using reference planes as invisible anchors yields more scalable geometry with more predictable outcomes than baking it into the geometry itself. They essentially act as variables in 3D space, abstracting away the need to \"hard-code\" values.\n\nDue to the complex workflow, I decided to limit the MVP to the following requirements:\n- Adding reference planes (RPs): Adding RPs will likely be the most important UX to get right.\n- Setting parameters: Creating and applying parameters should be smoothly woven into the reference plane creation UX.\n- Explicitly showing logic: Showing geometry logic explicitly in the interface instead of just in the visual space will allow better evaluation of the model.\n\nThese requirements focus on Torus' unique value proposition: a simplified parametric workflow rather than the generic 2D/3D geometry tools that all CAD tools need."
+        }
       ]
     },
     {

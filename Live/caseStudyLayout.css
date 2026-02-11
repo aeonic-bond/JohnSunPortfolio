@@ -2,7 +2,7 @@
 .navBar {
   width: 100%;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   padding: var(--space-block-300) var(--margin-mobile-500);
   background-color: gray;
 }
@@ -58,6 +58,7 @@
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
   border-radius: var(--radius-base);
+  gap: var(--space-300);
   border: 1px solid var(--color-saffron-fade);
 }
 
@@ -117,21 +118,69 @@
 }
 
 .cs-bullet-item {
+  position: relative;
   width: 100%;
   height: 100%;
   min-height: 80px;
   display: flex;
-  align-items: top;
-  justify-content: center;
-  padding: var(--space-block-500) var(--space-block-300);
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--space-block-500) var(--space-block-500);
   border: 1px solid var(--color-saffron-fade);
   border-radius: var(--radius-base);
+  gap: var(--space-300);
+}
+
+.cs-bullet-item-counter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--color-saffron-fade);
+  border-radius: var(--radius-base) 0 var(--radius-base) 0;
+  font: var(--type-action);
+  color: var(--color-black);
+  background-color: var(--color-saffron);
 }
 
 .cs-bullet-item-text {
   width: 100%;
   font: var(--type-body2);
   color: var(--color-white-off);
+}
+
+.cs-bullet-item-text > * + * {
+  margin-top: var(--space-300);
+}
+
+.cs-bullet-item-text-block {
+  margin: 0;
+}
+
+.cs-bullet-item-quote {
+  margin: var(--space-700) 0 0;
+  padding: 0 var(--space-500) 0;
+  border-left: 1px solid var(--color-saffron-fade);
+  font-style: italic;
+}
+
+.cs-bullet-item-quote::before {
+  content: "“";
+}
+
+.cs-bullet-item-quote::after {
+  content: "”";
+}
+
+.cs-bullet-item-cite {
+  display: block;
+  font: var(--type-body2);
+  color: var(--color-saffron-fade-partial);
+  font-style: normal;
 }
 
 .cs-fig {
@@ -143,6 +192,7 @@
   width: 100%;
   height: auto;
   border-radius: var(--radius-base);
+  gap: var(--space-300);
   border: 1px solid var(--color-saffron-fade);
 }
 

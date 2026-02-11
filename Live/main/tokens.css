@@ -1,10 +1,13 @@
 :root {
   /* Color tokens */
-  --color-white: #ffffff;
-   --color-white-off: #E0DBDB;
   --color-saffron: #ecbc2a;
   --color-saffron-fade: #ecbc2a40;
   --color-saffron-fade-partial: #ecbc2a80;
+
+  --color-white: #fff;
+  --color-white-off: #E0DBDB;
+
+  --color-black: #000;
 
   /* Background color tokens */
   --color-bg-forest: #041514;

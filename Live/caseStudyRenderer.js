@@ -51,6 +51,80 @@ const createFigureElement = (figure = {}) => {
   return fig;
 };
 
+const createBulletItemTextElement = (value) => {
+  const content = document.createElement("div");
+  content.className = "cs-bullet-item-text";
+
+  const rawText = typeof value === "string" ? value.trim() : "";
+  if (!rawText) {
+    const paragraph = document.createElement("p");
+    paragraph.className = "cs-bullet-item-text-block";
+    paragraph.textContent = "";
+    content.append(paragraph);
+    return content;
+  }
+
+  const blocks = rawText.split("\n\n").map((block) => block.trim()).filter(Boolean);
+  for (const block of blocks) {
+    const quoteWithCite = block.match(/^(["“].*["”])\s*-\s*(.+)$/);
+    const quoteOnly = /^["“].*["”]$/.test(block);
+
+    if (quoteWithCite || quoteOnly) {
+      const quoteText = (quoteWithCite ? quoteWithCite[1] : block).replace(/^(["“])|(["”])$/g, "");
+      const quote = document.createElement("blockquote");
+      quote.className = "cs-bullet-item-quote";
+      quote.textContent = quoteText;
+      content.append(quote);
+
+      if (quoteWithCite) {
+        const cite = document.createElement("cite");
+        cite.className = "cs-bullet-item-cite";
+        cite.textContent = quoteWithCite[2];
+        content.append(cite);
+      }
+      continue;
+    }
+
+    const paragraph = document.createElement("p");
+    paragraph.className = "cs-bullet-item-text-block";
+    paragraph.textContent = block;
+    content.append(paragraph);
+  }
+
+  return content;
+};
+
+const createBulletRowElement = (bulletRow) => {
+  const bulletRowEl = document.createElement("div");
+  bulletRowEl.className = "cs-bullet-row";
+
+  let items = [];
+  if (Array.isArray(bulletRow)) {
+    items = bulletRow;
+  } else if (typeof bulletRow === "string") {
+    items = [bulletRow];
+  } else if (bulletRow && typeof bulletRow === "object" && Array.isArray(bulletRow.items)) {
+    items = bulletRow.items;
+  } else if (bulletRow && typeof bulletRow === "object" && typeof bulletRow.text === "string") {
+    items = [bulletRow.text];
+  }
+
+  const itemCount = Math.max(1, items.length);
+  for (let i = 0; i < itemCount; i += 1) {
+    const bulletItemEl = document.createElement("div");
+    bulletItemEl.className = "cs-bullet-item";
+    const bulletItemCounterEl = document.createElement("div");
+    bulletItemCounterEl.className = "cs-bullet-item-counter";
+    bulletItemCounterEl.textContent = String(i + 1);
+
+    const bulletItemTextEl = createBulletItemTextElement(items[i]);
+    bulletItemEl.append(bulletItemCounterEl, bulletItemTextEl);
+    bulletRowEl.append(bulletItemEl);
+  }
+
+  return bulletRowEl;
+};
+
 const renderCaseStudy = (content = {}, root) => {
   if (!root) return;
 
@@ -94,43 +168,37 @@ const renderCaseStudy = (content = {}, root) => {
     header.className = "cs-section-header";
     header.textContent = sectionData.header || "";
 
-    const bodyWrap = document.createElement("div");
-    bodyWrap.className = "cs-section-body";
-    bodyWrap.append(createBodyFragment(sectionData.body || ""));
+    if (Array.isArray(sectionData.blocks) && sectionData.blocks.length > 0) {
+      section.append(header);
+      for (const block of sectionData.blocks) {
+        if (!block || typeof block !== "object") continue;
 
-    const sectionText = document.createElement("div");
-    sectionText.className = "cs-div-section-text";
-    sectionText.append(header, bodyWrap);
+        if (block.type === "paragraph") {
+          const bodyWrap = document.createElement("div");
+          bodyWrap.className = "cs-section-body";
+          bodyWrap.append(createBodyFragment(block.text || ""));
+          section.append(bodyWrap);
+          continue;
+        }
 
-    section.append(sectionText);
-
-    for (const bulletRow of sectionData.bulletRows || []) {
-      const bulletRowEl = document.createElement("div");
-      bulletRowEl.className = "cs-bullet-row";
-
-      let items = [];
-      if (Array.isArray(bulletRow)) {
-        items = bulletRow;
-      } else if (typeof bulletRow === "string") {
-        items = [bulletRow];
-      } else if (bulletRow && typeof bulletRow === "object" && Array.isArray(bulletRow.items)) {
-        items = bulletRow.items;
-      } else if (bulletRow && typeof bulletRow === "object" && typeof bulletRow.text === "string") {
-        items = [bulletRow.text];
+        if (block.type === "bulletRow") {
+          section.append(createBulletRowElement(block.items || block));
+        }
       }
-      const itemCount = Math.max(1, items.length);
+    } else {
+      const bodyWrap = document.createElement("div");
+      bodyWrap.className = "cs-section-body";
+      bodyWrap.append(createBodyFragment(sectionData.body || ""));
 
-      for (let i = 0; i < itemCount; i += 1) {
-        const bulletItemEl = document.createElement("div");
-        bulletItemEl.className = "cs-bullet-item";
-        const bulletItemTextEl = document.createElement("p");
-        bulletItemTextEl.className = "cs-bullet-item-text";
-        bulletItemTextEl.textContent = typeof items[i] === "string" ? items[i] : "";
-        bulletItemEl.append(bulletItemTextEl);
-        bulletRowEl.append(bulletItemEl);
+      const sectionText = document.createElement("div");
+      sectionText.className = "cs-div-section-text";
+      sectionText.append(header, bodyWrap);
+
+      section.append(sectionText);
+
+      for (const bulletRow of sectionData.bulletRows || []) {
+        section.append(createBulletRowElement(bulletRow));
       }
-
-      section.append(bulletRowEl);
     }
 
     for (const figureId of sectionData.figureIds || []) {
