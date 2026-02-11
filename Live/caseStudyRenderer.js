@@ -118,7 +118,7 @@ const renderCaseStudy = (content = {}, root) => {
       } else if (bulletRow && typeof bulletRow === "object" && typeof bulletRow.text === "string") {
         items = [bulletRow.text];
       }
-      const itemCount = 6;
+      const itemCount = Math.max(1, items.length);
 
       for (let i = 0; i < itemCount; i += 1) {
         const bulletItemEl = document.createElement("div");

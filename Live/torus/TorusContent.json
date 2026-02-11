@@ -116,7 +116,14 @@
       "header": "Background on Autodesk Revit",
       "body": "Torus is born out of frustration with Autodesk Revit's family creation process. Revit is the dominant architecture tool and uses the term \"family\" to refer to reusable 3D components. Families are ideally built parametrically, meaning they are systematically generated with variables controlling aspects such as length and width. Creating families in Revit has a steep learning curve due to Revit's outdated UX.\n\nWorking alongside two senior architects, Matthew and Nicky, I set out to improve the UX of family creation. As a team, we settled on exploring this idea by designing and creating a separate browser-based family editor that can export to Revit. In my research of Revit, I identified 3 key frustrations:\n- Revit has awkward workflows that feel outdated in a digital context. These design decisions seem to mirror paper-and-pencil drafting.\n- Revit's UX lacks prescriptiveness. This conflicts with best practices in modern architecture that value strict logical processes.\n- The UI simply feels unintuitive. When it comes to creating families, key tools are hidden among many others, with no logical order.",
       "bulletRows": [
-        "Section 01 bullet row placeholder"
+        [
+          "Bullet 1",
+          "Bullet 2",
+          "Bullet 3",
+          "Bullet 4",
+          "Bullet 5",
+          "Bullet 6"
+        ]
       ],
       "figureIds": [
         "fig-01"
