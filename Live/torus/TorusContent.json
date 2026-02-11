@@ -132,9 +132,9 @@
       "body": "These frustrations were echoed in the 5 user interviews my team conducted during an exploratory phase. Interview candidates were all working architects with 4-10 years of experience.\n\nAs part of my Revit research, I also learned the fundamentals of creating parametric families. Creating a good parametric family is akin to writing good code. You need a mechanism to store variable data. You need to take that data as input and generate an output. You also want to generally avoid adding unnecessary elements. Just like in code, more cumbersome families mean more bloated projects and slower processing and rendering.",
       "bulletRows": [
         [
-          "Revit families are difficult to create.\n\n“Families are commonly used and not static...they can be tedious to set up.” - DC\n\n“It’s something I prefer not to do and takes too much of my time [because] it’s forcing us to build it like engineers.” - DI",
-          "Entire company roles are needed to help keep practices consistent. As many architectural projects are enormous in size, their “health” is dependent on how consistent their families are built.\n\n“There are schools of thoughts, but people generally don’t follow them. Someone might say it works well when testing them in narrow cases, but I can tell they are not correctly build.” - MA",
-          "Stock families often can't be customized for unique projects. New families need to be created in-house.\n\n“Everything is made new because every project is different.” - IH"
+          "Revit families are difficult to create. - \n\n“Families are commonly used and not static...they can be tedious to set up.” - DC\n\n“It’s something I prefer not to do and takes too much of my time [because] it’s forcing us to build it like engineers.” - DI",
+          "Entire company roles are needed to help keep practices consistent. - \n\n“There are schools of thoughts, but people generally don’t follow them. Someone might say it works well when testing them in narrow cases, but I can tell they are not correctly build.” - MA",
+          "Stock families often can't be customized for unique projects. - \n\n“Everything is made new because every project is different.” - IH"
         ]
       ],
       "figureIds": [
@@ -166,29 +166,14 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "To determine which tools and features to prioritize, I consulted with Matthew and Nicky and learned to model several basic families in Revit to understand the standard workflow."
+          "text": "To determine which tools and features to prioritize, I consulted with Matthew and Nicky and learned to model several basic families in Revit to understand the parametric workflow. The core workflow involves 3 separate tools each with their own separate processes: placing reference planes (RPs act as variables in 3D space to prevent \"hard-coded\" values), drawing a magic line with the Aligned Dimensions tool, then using the label tool to parametricize the magic line. As a team, we decided that Torus’ UX differentiator will be to streamline this workflow with these three requirements."
         },
         {
           "type": "bulletRow",
           "items": [
-            "Place 2 parallel reference planes (planes in XYZ space) in the 2D Top view, one on the left and one on the right of the origin point. ",
-            "Use the Aligned Dimensions tool to define the distance between them, then set it as the “length” parameter. ",
-            "Repeat that for top and bottom and define the distance as the “width” parameter. ",
-            "Select extrusion and draw a rectangle shape where each side is locked to the 4 reference planes.",
-            "In the Front view, place a reference plane parallel to the initial 2D view and define the distance as the “height” parameter.",
-            "Set the rectangle extrusion from the Ref Level up to the height plane to create a tabletop."
-          ]
-        },
-        {
-          "type": "paragraph",
-          "text": "One process that might seem unintuitive to non-architects is the use of reference planes. The general wisdom is that using reference planes as invisible anchors yields more scalable geometry with more predictable outcomes than baking it into the geometry itself. They essentially act as variables in 3D space, abstracting away the need to \"hard-code\" values.\n\nDue to the complex workflow, I decided to limit the MVP to the following requirements:\n- Adding reference planes (RPs): Adding RPs will likely be the most important UX to get right.\n- Setting parameters: Creating and applying parameters should be smoothly woven into the reference plane creation UX.\n- Explicitly showing logic: Showing geometry logic explicitly in the interface instead of just in the visual space will allow better evaluation of the model.\n\nThese requirements focus on Torus' unique value proposition: a simplified parametric workflow rather than the generic 2D/3D geometry tools that all CAD tools need."
-        },
-        {
-          "type": "bulletRow",
-          "items": [
-            "Add Reference Planes - Adding RPs will probably be the most important UX to get right.",
-            "Set Parameters - Creating and applying parameters should be smoothly woven into the reference plane creation UX.",
-            "Explicitly Show Logic - Showing geometry logic explicitly in the interface instead of just in the visual space will allow better evaluation of the model."
+            "Adding RPs - Force new RPs to be children created from pre-existing RPs.",
+            "Set Parameters - Smoothly weave this process into RP creation flow.",
+            "Explicitly Show Logic - Show geometry logic explicitly in the interface to allow better evaluation of the model."
           ]
         }
       ]
@@ -205,7 +190,7 @@
           "text": "As previously stated, Matthew and Nicky suggested early on that all user-generated RPs must be children of another RP. In contrast, Revit treats RPs as independent placed objects that are situationally constrained through other tools. As such, I decided that the default RP tool was not an \"Add RP\" tool, but a \"Create RP by Offset\" tool that creates a child RP from a designated parent RP, enforcing a formal hierarchical relationship among all RPs.\n\nAfter several iterations, I decided on the final behavior of the OffsetRP tool."
         },
         {
-          "type": "bulletRow",
+          "type": "flowRow",
           "items": [
             "The user chooses a Parent Plane.",
             "The cursor transforms to a plane that is parallel to the Parent Plane with a Distance Indicator.",
@@ -243,14 +228,14 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "Once these 3 features were designed, I took on the role of developer, testing coordinator, and UX interview conductor. I first built a working demo for the Torus MVP, mainly by generating prompts with Codex in VSC. While building the demo, I made a few necessary UX and UI changes as my perception of the tool changed during interactive use:"
+          "text": "Once these 3 features were designed, I took on the role of developer, testing coordinator, and UX interview conductor. I first built a working demo for the Torus MVP, mainly by generating prompts with Codex in VSC. While building the demo, I made the following UI changes:"
         },
         {
           "type": "bulletRow",
           "items": [
-            "Added color scheming for the global axis (Z-Axis = yellow, Y-Axis = blue, X-axis = red). To accommodate more colors, I removed the bright pink and reduced the bright green.",
-            "Added ID indicators to the cursor when hovering over a global plane.",
-            "Added resizing handles at the ends of the RPs, allowing users to visually adjust the RP's appearance. This doesn't change the underlying geometry."
+            "Global Axis Colors - To accommodate more colors, I removed the pink and reduced the green.",
+            "Hover ID Indicators - Increase identification of RPs and global axis.",
+            "Resize RP Handles - Allow users to visually adjust the RP's appearance."
           ]
         }
       ]

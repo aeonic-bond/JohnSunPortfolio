@@ -180,6 +180,54 @@
   font-style: normal;
 }
 
+ /* Flow Row */
+.cs-flow-row {
+  display: grid;
+  grid-template-columns: 2px 1fr;
+  width: 100%;
+  height: fit-content;
+  padding: var(--space-block-500) 0 0;
+  gap: var(--space-block-300);
+}
+
+.cs-flow-row-tracker {
+  position: relative;
+  width: 2px;
+  align-self: stretch;
+  background: linear-gradient(
+    to bottom,
+    var(--color-saffron) 0 calc(var(--tracker-progress, 0) * 100%),
+    var(--color-saffron-fade) calc(var(--tracker-progress, 0) * 100%) 100%
+  );
+  border-radius: 1000px;
+}
+
+.cs-flow-row-itemsAll {
+  display: grid;
+  grid-template-columns: 1fr;
+  height: fit-content;
+  gap: var(--space-block-500);
+}
+
+.cs-flow-row-item {
+  position: relative;
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.cs-flow-row-item-text {
+  width: 100%;
+  font: var(--type-body2);
+  color: var(--color-white-off);
+}
+
+.cs-flow-row-item-text > * + * {
+  margin-top: var(--space-300);
+}
+
 .cs-fig {
   display: grid;
   row-gap: 8px;

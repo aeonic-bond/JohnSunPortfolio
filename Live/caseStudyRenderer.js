@@ -27,6 +27,39 @@ const createBodyFragment = (body = "") => {
   return fragment;
 };
 
+const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+let flowTrackerRafId = 0;
+let flowTrackerEventsBound = false;
+
+const updateFlowRowTrackers = () => {
+  const thresholdY = window.innerHeight * 0.5;
+  const flowRows = document.querySelectorAll(".cs-flow-row");
+
+  for (const flowRow of flowRows) {
+    const rect = flowRow.getBoundingClientRect();
+    const height = Math.max(rect.height, 1);
+    const progress = clamp((thresholdY - rect.top) / height, 0, 1);
+    flowRow.style.setProperty("--tracker-progress", progress.toString());
+  }
+};
+
+const scheduleFlowRowTrackerUpdate = () => {
+  if (flowTrackerRafId) return;
+  flowTrackerRafId = window.requestAnimationFrame(() => {
+    flowTrackerRafId = 0;
+    updateFlowRowTrackers();
+  });
+};
+
+const bindFlowRowTrackerEvents = () => {
+  if (flowTrackerEventsBound) return;
+  flowTrackerEventsBound = true;
+
+  window.addEventListener("scroll", scheduleFlowRowTrackerUpdate, { passive: true });
+  window.addEventListener("resize", scheduleFlowRowTrackerUpdate);
+  window.addEventListener("orientationchange", scheduleFlowRowTrackerUpdate);
+};
+
 const createFigureElement = (figure = {}) => {
   const fig = document.createElement("figure");
   fig.className = "cs-fig";
@@ -51,9 +84,17 @@ const createFigureElement = (figure = {}) => {
   return fig;
 };
 
-const createBulletItemTextElement = (value) => {
+const normalizeRowItems = (row) => {
+  if (Array.isArray(row)) return row;
+  if (typeof row === "string") return [row];
+  if (row && typeof row === "object" && Array.isArray(row.items)) return row.items;
+  if (row && typeof row === "object" && typeof row.text === "string") return [row.text];
+  return [];
+};
+
+const createBulletItemTextElement = (value, rootClassName = "cs-bullet-item-text") => {
   const content = document.createElement("div");
-  content.className = "cs-bullet-item-text";
+  content.className = rootClassName;
 
   const rawText = typeof value === "string" ? value.trim() : "";
   if (!rawText) {
@@ -68,7 +109,7 @@ const createBulletItemTextElement = (value) => {
   for (const block of blocks) {
     const quoteWithCite = block.match(/^(["“].*["”])\s*-\s*(.+)$/);
     const quoteOnly = /^["“].*["”]$/.test(block);
-    const titleWithBody = block.match(/^([^"\n].*?)\s+-\s+(.+)$/);
+    const titleWithOptionalBody = block.match(/^([^"\n].*?)\s+-\s*(.*)$/);
 
     if (quoteWithCite || quoteOnly) {
       const quoteText = (quoteWithCite ? quoteWithCite[1] : block).replace(/^(["“])|(["”])$/g, "");
@@ -86,16 +127,19 @@ const createBulletItemTextElement = (value) => {
       continue;
     }
 
-    if (titleWithBody) {
+    if (titleWithOptionalBody) {
       const title = document.createElement("h3");
       title.className = "cs-bullet-item-title";
-      title.textContent = titleWithBody[1].trim();
+      title.textContent = titleWithOptionalBody[1].trim();
       content.append(title);
 
-      const paragraph = document.createElement("p");
-      paragraph.className = "cs-bullet-item-text-block";
-      paragraph.textContent = titleWithBody[2].trim();
-      content.append(paragraph);
+      const bodyText = titleWithOptionalBody[2].trim();
+      if (bodyText) {
+        const paragraph = document.createElement("p");
+        paragraph.className = "cs-bullet-item-text-block";
+        paragraph.textContent = bodyText;
+        content.append(paragraph);
+      }
       continue;
     }
 
@@ -112,16 +156,7 @@ const createBulletRowElement = (bulletRow) => {
   const bulletRowEl = document.createElement("div");
   bulletRowEl.className = "cs-bullet-row";
 
-  let items = [];
-  if (Array.isArray(bulletRow)) {
-    items = bulletRow;
-  } else if (typeof bulletRow === "string") {
-    items = [bulletRow];
-  } else if (bulletRow && typeof bulletRow === "object" && Array.isArray(bulletRow.items)) {
-    items = bulletRow.items;
-  } else if (bulletRow && typeof bulletRow === "object" && typeof bulletRow.text === "string") {
-    items = [bulletRow.text];
-  }
+  const items = normalizeRowItems(bulletRow);
 
   const itemCount = Math.max(1, items.length);
   for (let i = 0; i < itemCount; i += 1) {
@@ -139,8 +174,33 @@ const createBulletRowElement = (bulletRow) => {
   return bulletRowEl;
 };
 
+const createFlowRowElement = (flowRow) => {
+  const flowRowEl = document.createElement("div");
+  flowRowEl.className = "cs-flow-row";
+  const flowTrackerEl = document.createElement("div");
+  flowTrackerEl.className = "cs-flow-row-tracker";
+  const flowItemsAllEl = document.createElement("div");
+  flowItemsAllEl.className = "cs-flow-row-itemsAll";
+
+  const items = normalizeRowItems(flowRow);
+  const itemCount = Math.max(1, items.length);
+
+  for (let i = 0; i < itemCount; i += 1) {
+    const flowItemEl = document.createElement("div");
+    flowItemEl.className = "cs-flow-row-item";
+
+    const flowTextEl = createBulletItemTextElement(items[i], "cs-flow-row-item-text");
+    flowItemEl.append(flowTextEl);
+    flowItemsAllEl.append(flowItemEl);
+  }
+
+  flowRowEl.append(flowTrackerEl, flowItemsAllEl);
+  return flowRowEl;
+};
+
 const renderCaseStudy = (content = {}, root) => {
   if (!root) return;
+  bindFlowRowTrackerEvents();
 
   const figureMap = new Map((content.figures || []).map((figure) => [figure.id, figure]));
   const sectionsAll = document.createElement("article");
@@ -197,6 +257,11 @@ const renderCaseStudy = (content = {}, root) => {
 
         if (block.type === "bulletRow") {
           section.append(createBulletRowElement(block.items || block));
+          continue;
+        }
+
+        if (block.type === "flowRow") {
+          section.append(createFlowRowElement(block.items || block));
         }
       }
     } else {
@@ -213,6 +278,10 @@ const renderCaseStudy = (content = {}, root) => {
       for (const bulletRow of sectionData.bulletRows || []) {
         section.append(createBulletRowElement(bulletRow));
       }
+
+      for (const flowRow of sectionData.flowRows || []) {
+        section.append(createFlowRowElement(flowRow));
+      }
     }
 
     for (const figureId of sectionData.figureIds || []) {
@@ -225,6 +294,7 @@ const renderCaseStudy = (content = {}, root) => {
   }
 
   root.replaceChildren(hero, sectionsAll);
+  scheduleFlowRowTrackerUpdate();
 };
 
 const loadCaseStudyInto = (root, contentPath) => {
