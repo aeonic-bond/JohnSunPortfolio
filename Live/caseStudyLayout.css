@@ -2,7 +2,7 @@
 .navBar {
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   padding: var(--space-block-300) var(--margin-mobile-500);
   background-color: gray;
 }
@@ -72,7 +72,7 @@
  /* Sections */
 .cs-div-sectionsALL {
   display: grid;
-  row-gap: var(--space-block-800);
+  row-gap: var(--space-block-500);
 }
 
 .cs-div-section {
@@ -82,15 +82,17 @@
 
 .cs-div-section-text {
   display: grid;
-  row-gap: var(--space-300);
+  row-gap: var(--space-500);
 }
 
 .cs-section-header {
   font: var(--type-h2);
+  color: var(--color-white-off);
 }
 
 .cs-section-body {
   font: var(--type-body1);
+  color: var(--color-white-off);
 }
 
 .cs-bullet-row {
@@ -116,18 +118,20 @@
 
 .cs-bullet-item {
   width: 100%;
-  height: fit-content;
+  height: 100%;
   min-height: 80px;
   display: flex;
-  align-items: center;
+  align-items: top;
   justify-content: center;
-  padding: 0 var(--space-300);
+  padding: var(--space-block-500) var(--space-block-300);
   border: 1px solid var(--color-saffron-fade);
+  border-radius: var(--radius-base);
 }
 
 .cs-bullet-item-text {
   width: 100%;
   font: var(--type-body2);
+  color: var(--color-white-off);
 }
 
 .cs-fig {

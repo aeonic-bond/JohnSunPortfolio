@@ -1,13 +1,14 @@
 :root {
   /* Color tokens */
   --color-white: #ffffff;
+   --color-white-off: #E0DBDB;
   --color-saffron: #ecbc2a;
   --color-saffron-fade: #ecbc2a40;
   --color-saffron-fade-partial: #ecbc2a80;
 
   /* Background color tokens */
   --color-bg-forest: #041514;
-  --color-bg-forest-raise: #09201E;
+  --color-bg-forest-raise: #091D1C;
 
   /* Border-Radius tokens */
   --radius-small: 4px;
@@ -31,7 +32,7 @@
   --space-block-900: 120px;
 
     /* Margin tokens */
-  --margin-mobile-500: 16px;
+  --margin-mobile-500: 24px;
   --margin-bottom-500: 400px;
 
   /* Breakpoints */
