@@ -152,7 +152,7 @@
     {
       "id": "section-04",
       "header": "MVP Design Ideation",
-      "body": "I led the product design and frequently consulted Matthew and Nicky on domain knowledge. To start wireframing the MVP, I drew inspiration from Figma and Onshape, both successful, modern, browser-based design tools. I relied on the basic arch structure, with a panel on the left and right and a toolbox on top.\n\nAt the start, I made one key decision to deviate from Revit and include an Asset Tree for two primary reasons. The obvious reason was to allow the user to see all assets being added, which would encourage them to stay organized, knowing that each new asset was being recorded. The second reason was tied to a crucial feature that Matthew and Nicky pushed for. Torus would force objects like reference planes to have strictly enforced parent/child relationships. An Asset Tree would help users visualize the logic behind those relationships significantly better than the 3D environment alone can.\n\nFor the right-side panel, I decided to keep the Parameter Panel visible, communicating that parameters are fundamental to Torus' workflow.",
+      "body": "I led the product design and consulted Matthew and Nicky on domain knowledge. To start wireframing the MVP, I drew inspiration from Figma and Onshape. I relied on the basic arch structure, with a panel on the left and right and a toolbox on top.\n\nAt the start, I made one key decision to deviate from Revit and include an Asset Tree for two primary reasons. The obvious reason was to allow the user to see all assets being added, which would encourage them to stay organized, knowing that each new asset was being recorded. The second reason was tied to a crucial feature that Matthew and Nicky pushed for. Torus would force objects like reference planes to have strictly enforced parent/child relationships. An Asset Tree would help users visualize the logic behind those relationships significantly better than the 3D environment alone can.\n\nFor the right-side panel, I decided to keep the Parameter Panel visible, communicating that parameters are fundamental to Torus' workflow.",
       "figureIds": [
         "fig-04"
       ]
@@ -182,15 +182,40 @@
         {
           "type": "paragraph",
           "text": "One process that might seem unintuitive to non-architects is the use of reference planes. The general wisdom is that using reference planes as invisible anchors yields more scalable geometry with more predictable outcomes than baking it into the geometry itself. They essentially act as variables in 3D space, abstracting away the need to \"hard-code\" values.\n\nDue to the complex workflow, I decided to limit the MVP to the following requirements:\n- Adding reference planes (RPs): Adding RPs will likely be the most important UX to get right.\n- Setting parameters: Creating and applying parameters should be smoothly woven into the reference plane creation UX.\n- Explicitly showing logic: Showing geometry logic explicitly in the interface instead of just in the visual space will allow better evaluation of the model.\n\nThese requirements focus on Torus' unique value proposition: a simplified parametric workflow rather than the generic 2D/3D geometry tools that all CAD tools need."
+        },
+        {
+          "type": "bulletRow",
+          "items": [
+            "Add Reference Planes - Adding RPs will probably be the most important UX to get right.",
+            "Set Parameters - Creating and applying parameters should be smoothly woven into the reference plane creation UX.",
+            "Explicitly Show Logic - Showing geometry logic explicitly in the interface instead of just in the visual space will allow better evaluation of the model."
+          ]
         }
       ]
     },
     {
       "id": "section-06",
       "header": "The UX of Adding Reference Planes",
-      "body": "As previously stated, Matthew and Nicky suggested early on that all user-generated RPs must be children of another RP. In contrast, Revit treats RPs as independent placed objects that are situationally constrained through other tools. As such, I decided that the default RP tool was not an \"Add RP\" tool, but a \"Create RP by Offset\" tool that creates a child RP from a designated parent RP, enforcing a formal hierarchical relationship among all RPs.\n\nAfter several iterations, I decided on the final behavior of the OffsetRP tool:\n- The user chooses a Parent Plane.\n- The cursor transforms to a plane parallel to the Parent Plane, with a Distance Indicator.\n- The user manually places a Child Plane by clicking in the workspace.\n\nThere was a design fork at Step 3. I could prompt the user to enter a distance and/or a parameter, and the child plane is generated automatically. I ultimately decided against this and opted for the user manually placing it with the cursor. I didn't want to completely strip away the pen-and-paper drafting mimicry that Revit relied on, as I was told verbatim, \"most architects are still artists at heart, and not developers.\"",
       "figureIds": [
         "fig-06"
+      ],
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "As previously stated, Matthew and Nicky suggested early on that all user-generated RPs must be children of another RP. In contrast, Revit treats RPs as independent placed objects that are situationally constrained through other tools. As such, I decided that the default RP tool was not an \"Add RP\" tool, but a \"Create RP by Offset\" tool that creates a child RP from a designated parent RP, enforcing a formal hierarchical relationship among all RPs.\n\nAfter several iterations, I decided on the final behavior of the OffsetRP tool."
+        },
+        {
+          "type": "bulletRow",
+          "items": [
+            "The user chooses a Parent Plane.",
+            "The cursor transforms to a plane that is parallel to the Parent Plane with a Distance Indicator.",
+            "The user manually places a Child Plane by clicking in the workspace."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "There was a design fork at Step 3. I could prompt the user to enter a distance and/or a parameter, and the child plane is generated automatically. I ultimately decided against this and opted for the user manually placing it with the cursor. I didn't want to completely strip away the pen-and-paper drafting mimicry that Revit relied on, as I was told verbatim, \"most architects are still artists at heart, and not developers.\""
+        }
       ]
     },
     {
@@ -212,17 +237,59 @@
     {
       "id": "section-09",
       "header": "Demo Building",
-      "body": "Once these 3 features were designed, I took on the role of developer, testing coordinator, and UX interview conductor. I first built a working demo for the Torus MVP, mainly by generating prompts with Codex in VSC. While building the demo, I made a few necessary UX and UI changes as my perception of the tool changed during interactive use:\n- Added color scheming for the global axis (Z-Axis = yellow, Y-Axis = blue, X-axis = red). To accommodate more colors, I removed the bright pink and reduced the bright green.\n- Added ID indicators to the cursor when hovering over a global plane.\n- Added resizing handles at the ends of the RPs, allowing users to visually adjust the RP's appearance. This doesn't change the underlying geometry.",
       "figureIds": [
         "fig-09"
+      ],
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Once these 3 features were designed, I took on the role of developer, testing coordinator, and UX interview conductor. I first built a working demo for the Torus MVP, mainly by generating prompts with Codex in VSC. While building the demo, I made a few necessary UX and UI changes as my perception of the tool changed during interactive use:"
+        },
+        {
+          "type": "bulletRow",
+          "items": [
+            "Added color scheming for the global axis (Z-Axis = yellow, Y-Axis = blue, X-axis = red). To accommodate more colors, I removed the bright pink and reduced the bright green.",
+            "Added ID indicators to the cursor when hovering over a global plane.",
+            "Added resizing handles at the ends of the RPs, allowing users to visually adjust the RP's appearance. This doesn't change the underlying geometry."
+          ]
+        }
       ]
     },
     {
       "id": "section-10",
       "header": "Demo Testing & Iteration",
-      "body": "Once the demo reached a testable stage, I reached out and found 6 participants who were architects or students. Their experiences with Revit ranged from a class to 10+ years. I ran 10-minute usability tests to see if users could add reference planes and set parameters. Before each session, I emphasized that this was an early-stage demo with limited capabilities.\n\n4 participants completed both tasks. 2 participants completed both with minimal guidance. This was a major accomplishment and speaks to the design's relative intuitiveness. A few participants remarked that this would have been much more difficult in Revit.\n\nI observed the following usability issues:\n- All participants first attempted to input numbers inside the distance indicator rather than the expected parameter name.\n- 3 participants pointed out that the parameter panel was not particularly clear.\n- All participants tried to hover over the tools, expecting tooltips to appear.\n\nI made the following changes based on the observation and feedback:\n- Added tooltips for offsetRP and offsetEQRP, and increased the speed at which they appear.\n- Refactored the distance indicator to have two input triggers. The old indicator became the value input, allowing users to manipulate the simple distance or the value of a set parameter. A new parameter input button gained the functionality of the old indicator. To accommodate this change, I also moved the EQ group tag from the indicator to the line to avoid confusion.\n- Changed the styling of the parameter name and value sets by wrapping them in a single div that resembles a split input box with an explicit \"=\" between the name and value.\n\nI tested this new iteration with 5 users, and the qualitative results significantly improved, with a 100% completion rate.",
       "figureIds": [
         "fig-10"
+      ],
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Once the demo reached a testable stage, I reached out and found 6 participants who were architects or students. Their experiences with Revit ranged from a class to 10+ years. I ran 10-minute usability tests to see if users could add reference planes and set parameters. Before each session, I emphasized that this was an early-stage demo with limited capabilities.\n\n4 participants completed both tasks. 2 participants completed both with minimal guidance. This was a major accomplishment and speaks to the design's relative intuitiveness. A few participants remarked that this would have been much more difficult in Revit.\n\nI observed the following usability issues:"
+        },
+        {
+          "type": "bulletRow",
+          "items": [
+            "All participants first attempted to input numbers inside the distance indicator rather than the expected parameter name.",
+            "3 participants pointed out that the parameter panel was not particularly clear.",
+            "All participants tried to hover over the tools, expecting tooltips to appear."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "I made the following changes based on the observation and feedback:"
+        },
+        {
+          "type": "bulletRow",
+          "items": [
+            "Added tooltips for offsetRP and offsetEQRP, and increased the speed at which they appear.",
+            "Refactored the distance indicator to have two input triggers. The old indicator became the value input, allowing users to manipulate the simple distance or the value of a set parameter. A new parameter input button gained the functionality of the old indicator. To accommodate this change, I also moved the EQ group tag from the indicator to the line to avoid confusion.",
+            "Changed the styling of the parameter name and value sets by wrapping them in a single div that resembles a split input box with an explicit \"=\" between the name and value."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "I tested this new iteration with 5 users, and the qualitative results significantly improved, with a 100% completion rate."
+        }
       ]
     },
     {

@@ -68,6 +68,7 @@ const createBulletItemTextElement = (value) => {
   for (const block of blocks) {
     const quoteWithCite = block.match(/^(["“].*["”])\s*-\s*(.+)$/);
     const quoteOnly = /^["“].*["”]$/.test(block);
+    const titleWithBody = block.match(/^([^"\n].*?)\s+-\s+(.+)$/);
 
     if (quoteWithCite || quoteOnly) {
       const quoteText = (quoteWithCite ? quoteWithCite[1] : block).replace(/^(["“])|(["”])$/g, "");
@@ -82,6 +83,19 @@ const createBulletItemTextElement = (value) => {
         cite.textContent = quoteWithCite[2];
         content.append(cite);
       }
+      continue;
+    }
+
+    if (titleWithBody) {
+      const title = document.createElement("h3");
+      title.className = "cs-bullet-item-title";
+      title.textContent = titleWithBody[1].trim();
+      content.append(title);
+
+      const paragraph = document.createElement("p");
+      paragraph.className = "cs-bullet-item-text-block";
+      paragraph.textContent = titleWithBody[2].trim();
+      content.append(paragraph);
       continue;
     }
 

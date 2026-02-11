@@ -161,6 +161,13 @@
   margin: 0;
 }
 
+.cs-bullet-item-title {
+  margin: 0;
+  font: var(--type-subtitle2);
+  color: var(--color-white-off);
+  padding-bottom: var(--space-500);
+}
+
 .cs-bullet-item-quote {
   margin: var(--space-700) 0 0;
   padding: 0 var(--space-500) 0;
