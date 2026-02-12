@@ -23,10 +23,17 @@
   "figures": [
     {
       "id": "fig-01",
+      "type": "image",
       "src": "",
+      "poster": "",
       "alt": "",
       "caption": "",
-      "credit": ""
+      "credit": "",
+      "controls": true,
+      "autoplay": false,
+      "loop": false,
+      "muted": false,
+      "preload": "metadata"
     }
   ],
   "sections": [

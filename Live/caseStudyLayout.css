@@ -236,6 +236,17 @@
   width: 100%;
 }
 
+@media (min-width: 1024px) {
+  .cs-progress-row {
+    width: 90vw;
+    margin-left: calc(50% - 45vw);
+    margin-right: calc(50% - 45vw);
+    width: min(max-content, 90vw);
+    margin-left: calc(50% - (min(max-content, 90vw) / 2));
+    margin-right: calc(50% - (min(max-content, 90vw) / 2));
+  }
+}
+
 .cs-progress-row-itemsAll {
   display: grid;
   gap: var(--space-block-500);
@@ -246,8 +257,8 @@
   grid-template-columns: minmax(0, 1fr);
   justify-self: center;
   align-items: center;
-  gap: var(--space-block-200);
-  padding: var(--space-block-500);
+  gap: var(--space-block-500);
+  padding: var(--space-700);
   border: 1px solid transparent;
   border-radius: var(--radius-base);
   background:
@@ -255,20 +266,21 @@
     linear-gradient(
       to bottom,
       var(--color-black),
-      var(--color-saffron)
+      var(--color-saffron-fade)
     ) border-box;
 }
 
 @media (min-width: 1024px) {
   .cs-progress-row-item {
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    grid-template-columns: minmax(0, 320px) auto auto;
+    width: fit-content;
     gap: var(--space-block-500);
     background:
       linear-gradient(var(--color-black), var(--color-black)) padding-box,
       linear-gradient(
         to right,
         var(--color-black),
-        var(--color-saffron)
+        var(--color-saffron-fade)
       ) border-box;
   }
 }
@@ -299,15 +311,42 @@
   color: var(--color-white);
 }
 
+.cs-progress-row-div-secondaryAll {
+  width: fit-content;
+  display: grid;
+  gap: var(--space-block-500);
+}
+
 .cs-progress-row-item-primary > * + *,
 .cs-progress-row-item-secondary > * + * {
   margin-top: var(--space-300);
 }
 
+.cs-progress-row-item-image {
+  grid-column: 1 / -1;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-base);
+  overflow: hidden;
+  background-color: var(--color-black);
+  border: 1px solid var(--color-saffron-fade);
+}
+
+.cs-progress-row-item-image-content {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 @media (min-width: 1024px) {
-  .cs-progress-row-item-primary,
-  .cs-progress-row-item-secondary {
+  .cs-progress-row-item-primary {
+    width: 100%;
     max-width: 320px;
+  }
+
+  .cs-progress-row-item-secondary {
+    width: 320px;
   }
 
   .cs-progress-row-item-primary {
@@ -322,6 +361,20 @@
 
   .cs-progress-row-item-secondary {
     justify-self: start;
+  }
+
+  .cs-progress-row-div-secondaryAll {
+    grid-column: 3;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-self: start;
+  }
+
+  .cs-progress-row-item-image {
+    grid-column: auto;
+    justify-self: start;
+    max-width: 200px;
   }
 }
 

@@ -14,91 +14,109 @@
       "id": "fig-00",
       "src": "",
       "alt": "",
-      "caption": "Figure 00",
+      "caption": "",
       "credit": ""
     },
     {
       "id": "fig-01",
       "src": "",
       "alt": "",
-      "caption": "Figure 1",
+      "caption": "",
       "credit": ""
     },
     {
       "id": "fig-02",
-      "src": "../../Assets/Image Placeholder.png",
-      "alt": "Torus figure 2 placeholder",
-      "caption": "Figure 2",
+      "src": "../../Assets/Torus/Case Study/RevitScreenshot.png",
+      "alt": "Autodesk Revit screenshot",
+      "caption": "Autodesk Revit screenshot",
       "credit": ""
     },
     {
       "id": "fig-03",
       "src": "",
       "alt": "",
-      "caption": "Figure 3",
+      "caption": "",
       "credit": ""
     },
     {
       "id": "fig-04",
-      "src": "",
-      "alt": "",
-      "caption": "Figure 4",
+      "src": "../../Assets/Torus/Case Study/TorusMVP.png",
+      "alt": "Torus MVP interface",
+      "caption": "Torus MVP interface",
       "credit": ""
     },
     {
       "id": "fig-05",
       "src": "",
       "alt": "",
-      "caption": "Figure 5",
+      "caption": "",
       "credit": ""
     },
     {
       "id": "fig-06",
-      "src": "",
-      "alt": "",
-      "caption": "Figure 6",
-      "credit": ""
+      "type": "video",
+      "src": "../../Assets/Torus/Case Study/OffsetRPTool.mp4",
+      "alt": "UX of Offset RP tool being used to generate a child RP",
+      "caption": "UX of Offset RP tool being used to generate a child RP",
+      "credit": "",
+      "controls": true,
+      "autoplay": false,
+      "loop": false,
+      "muted": false,
+      "preload": "metadata"
     },
     {
       "id": "fig-07",
-      "src": "",
-      "alt": "",
-      "caption": "Figure 7",
-      "credit": ""
+      "type": "video",
+      "src": "../../Assets/Torus/Case Study/SettingParameter.mp4",
+      "alt": "Setting parameter workflow in Torus",
+      "caption": "Setting parameter workflow in Torus",
+      "credit": "",
+      "controls": true,
+      "autoplay": false,
+      "loop": false,
+      "muted": false,
+      "preload": "metadata"
     },
     {
       "id": "fig-08",
-      "src": "",
-      "alt": "",
-      "caption": "Figure 8",
-      "credit": ""
+      "type": "video",
+      "src": "../../Assets/Torus/Case Study/OffsetEQRPTool.mp4",
+      "alt": "Offset EQ RP tool workflow in Torus",
+      "caption": "Offset EQ RP tool workflow in Torus",
+      "credit": "",
+      "controls": true,
+      "autoplay": false,
+      "loop": false,
+      "muted": false,
+      "preload": "metadata"
     },
     {
       "id": "fig-09",
       "src": "",
       "alt": "",
-      "caption": "Figure 09",
+      "caption": "",
       "credit": ""
     },
     {
       "id": "fig-10",
       "src": "",
       "alt": "",
-      "caption": "Figure 10",
+      "caption": "",
       "credit": ""
     },
     {
       "id": "fig-11",
       "src": "",
       "alt": "",
-      "caption": "Figure 11",
+      "caption": "",
       "credit": ""
     },
     {
       "id": "fig-12",
       "src": "",
       "alt": "",
-      "caption": "Figure 12",
+      "caption": "",
       "credit": ""
     }
   ],
@@ -256,15 +274,21 @@
           "items": [
             {
               "primary": "All participants tried to hover over the tools, expecting tooltips to appear.",
-              "secondary": "Add Tooltips - Add tooltips for offsetRP and offsetEQRP and increase the appearance speed."
+              "secondary": "Add Tooltips - Add tooltips for offsetRP and offsetEQRP and increase the appearance speed.",
+              "imageSrc": "../../Assets/Torus/Case Study/section10/Tooltips.png",
+              "imageAlt": "Tooltips UI in Torus"
             },
             {
               "primary": "All participants first attempted to input numbers inside the distance indicator rather than the expected parameter name.",
-              "secondary": "Refactor Distance Indicator - Create two input triggers that allow users to manipulate distance or set a parameter."
+              "secondary": "Refactor Distance Indicator - Create two input triggers that allow users to manipulate distance or set a parameter.",
+              "imageSrc": "../../Assets/Torus/Case Study/section10/RefactorDistanceBox.png",
+              "imageAlt": "Refactored distance input UI in Torus"
             },
             {
               "primary": "3 participants pointed out that the parameter panel was not particularly clear.",
-              "secondary": "Update Parameter Panel - Wrap name and value sets in a single container with an explicit \"=\"."
+              "secondary": "Update Parameter Panel - Wrap name and value sets in a single container with an explicit \"=\".",
+              "imageSrc": "../../Assets/Torus/Case Study/section10/ParameterPanel.png",
+              "imageAlt": "Updated parameter panel design in Torus"
             }
           ]
         },

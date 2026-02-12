@@ -64,17 +64,33 @@ const createFigureElement = (figure = {}) => {
   const fig = document.createElement("figure");
   fig.className = "cs-fig";
   fig.id = figure.id || "";
-  const hasImage = Boolean(figure.src);
+  const hasSource = Boolean(figure.src);
+  const mediaType = figure.type === "video" ? "video" : "image";
 
-  if (hasImage) {
-    const img = document.createElement("img");
-    img.className = "cs-fig-image";
-    img.src = figure.src;
-    img.alt = figure.alt || "";
-    fig.append(img);
+  if (hasSource) {
+    if (mediaType === "video") {
+      const video = document.createElement("video");
+      video.className = "cs-fig-image";
+      video.src = figure.src;
+      video.poster = figure.poster || "";
+      video.preload = figure.preload || "metadata";
+      video.controls = figure.controls !== false;
+      video.autoplay = Boolean(figure.autoplay);
+      video.loop = Boolean(figure.loop);
+      video.muted = Boolean(figure.muted);
+      video.playsInline = true;
+      if (figure.alt) video.setAttribute("aria-label", figure.alt);
+      fig.append(video);
+    } else {
+      const img = document.createElement("img");
+      img.className = "cs-fig-image";
+      img.src = figure.src;
+      img.alt = figure.alt || "";
+      fig.append(img);
+    }
   }
 
-  if (hasImage && (figure.caption || figure.credit)) {
+  if (hasSource && (figure.caption || figure.credit)) {
     const caption = document.createElement("figcaption");
     caption.className = "cs-fig-caption type-body2";
     caption.textContent = [figure.caption, figure.credit].filter(Boolean).join(" | ");
@@ -98,29 +114,51 @@ const normalizeProgressPairs = (progressRow) => {
 
   for (const item of rawItems) {
     if (Array.isArray(item)) {
-      const [primary = "", secondary = ""] = item;
-      pairs.push({ primary: String(primary).trim(), secondary: String(secondary).trim() });
+      const [primary = "", secondary = "", imageSrc = "", imageAlt = ""] = item;
+      pairs.push({
+        primary: String(primary).trim(),
+        secondary: String(secondary).trim(),
+        imageSrc: String(imageSrc).trim(),
+        imageAlt: String(imageAlt).trim(),
+      });
       continue;
     }
 
     if (item && typeof item === "object") {
       const primary = item.primary ?? item.left ?? item.title ?? item.label ?? "";
       const secondary = item.secondary ?? item.right ?? item.value ?? item.detail ?? "";
-      pairs.push({ primary: String(primary).trim(), secondary: String(secondary).trim() });
+      const imageSrc = item.imageSrc ?? item.image?.src ?? "";
+      const imageAlt = item.imageAlt ?? item.image?.alt ?? "";
+      pairs.push({
+        primary: String(primary).trim(),
+        secondary: String(secondary).trim(),
+        imageSrc: String(imageSrc).trim(),
+        imageAlt: String(imageAlt).trim(),
+      });
       continue;
     }
 
     if (typeof item === "string") {
       const match = item.match(/^(.*?)\s+-\s+(.*)$/);
       if (match) {
-        pairs.push({ primary: match[1].trim(), secondary: match[2].trim() });
+        pairs.push({
+          primary: match[1].trim(),
+          secondary: match[2].trim(),
+          imageSrc: "",
+          imageAlt: "",
+        });
       } else {
-        pairs.push({ primary: item.trim(), secondary: "" });
+        pairs.push({
+          primary: item.trim(),
+          secondary: "",
+          imageSrc: "",
+          imageAlt: "",
+        });
       }
     }
   }
 
-  return pairs.filter((pair) => pair.primary || pair.secondary);
+  return pairs.filter((pair) => pair.primary || pair.secondary || pair.imageSrc);
 };
 
 const createItemTextElement = (value, rootClassName = "cs-bullet-item-text") => {
@@ -255,7 +293,25 @@ const createProgressRowElement = (progressRow) => {
       "cs-progress-row-item-secondary"
     );
 
-    itemEl.append(primaryEl, chevronEl, secondaryEl);
+    const secondaryAllEl = document.createElement("div");
+    secondaryAllEl.className = "cs-progress-row-div-secondaryAll";
+    secondaryAllEl.append(secondaryEl);
+
+    if (pair.imageSrc) {
+      const imageWrapEl = document.createElement("div");
+      imageWrapEl.className = "cs-progress-row-item-image";
+
+      const imageEl = document.createElement("img");
+      imageEl.className = "cs-progress-row-item-image-content";
+      imageEl.src = pair.imageSrc;
+      imageEl.alt = pair.imageAlt || "";
+
+      imageWrapEl.append(imageEl);
+      secondaryAllEl.append(imageWrapEl);
+    }
+
+    itemEl.append(primaryEl, chevronEl, secondaryAllEl);
+
     itemsAllEl.append(itemEl);
   }
 
