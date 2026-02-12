@@ -60,40 +60,97 @@ const bindFlowRowTrackerEvents = () => {
   window.addEventListener("orientationchange", scheduleFlowRowTrackerUpdate);
 };
 
+const normalizeMedia = (value, defaults = {}) => {
+  if (!value || typeof value !== "object") return null;
+
+  const type = value.type === "video" ? "video" : "image";
+  const src = String(value.src || "").trim();
+  if (!src) return null;
+
+  const hasShowCaption = Object.prototype.hasOwnProperty.call(value, "showCaption");
+  const fallbackShowCaption = defaults.showCaption !== undefined ? defaults.showCaption : true;
+
+  return {
+    type,
+    src,
+    alt: String(value.alt || "").trim(),
+    poster: String(value.poster || "").trim(),
+    caption: String(value.caption || "").trim(),
+    credit: String(value.credit || "").trim(),
+    controls: value.controls !== false,
+    autoplay: Boolean(value.autoplay),
+    loop: Boolean(value.loop),
+    muted: Boolean(value.muted),
+    preload: String(value.preload || "metadata"),
+    variant: String(value.variant || defaults.variant || "figure"),
+    showCaption: hasShowCaption ? value.showCaption !== false : fallbackShowCaption,
+  };
+};
+
+const createMediaElement = (media, className) => {
+  if (!media?.src) return null;
+
+  if (media.type === "video") {
+    const video = document.createElement("video");
+    video.className = className;
+    video.src = media.src;
+    video.poster = media.poster || "";
+    video.preload = media.preload || "metadata";
+    video.controls = media.controls !== false;
+    video.autoplay = Boolean(media.autoplay);
+    video.loop = Boolean(media.loop);
+    video.muted = Boolean(media.muted);
+    video.playsInline = true;
+    if (media.alt) video.setAttribute("aria-label", media.alt);
+    return video;
+  }
+
+  const img = document.createElement("img");
+  img.className = className;
+  img.src = media.src;
+  img.alt = media.alt || "";
+  return img;
+};
+
+const normalizeFigureMedia = (figure = {}) =>
+  normalizeMedia(figure, { variant: "figure", showCaption: true });
+
+const normalizeHeroMedia = (hero = {}) =>
+  normalizeMedia(
+    hero.media || {
+      type: hero.type || "image",
+      src: hero.imageSrc || "",
+      alt: hero.imageAlt || "",
+      poster: hero.poster || "",
+      caption: hero.caption || "",
+      credit: hero.credit || "",
+      controls: hero.controls,
+      autoplay: hero.autoplay,
+      loop: hero.loop,
+      muted: hero.muted,
+      preload: hero.preload,
+      variant: "hero",
+      showCaption: false,
+    },
+    { variant: "hero", showCaption: false }
+  );
+
 const createFigureElement = (figure = {}) => {
   const fig = document.createElement("figure");
   fig.className = "cs-fig";
   fig.id = figure.id || "";
-  const hasSource = Boolean(figure.src);
-  const mediaType = figure.type === "video" ? "video" : "image";
+  const media = normalizeFigureMedia(figure);
+  const mediaEl = createMediaElement(media, "cs-fig-image");
+  if (mediaEl) fig.append(mediaEl);
 
-  if (hasSource) {
-    if (mediaType === "video") {
-      const video = document.createElement("video");
-      video.className = "cs-fig-image";
-      video.src = figure.src;
-      video.poster = figure.poster || "";
-      video.preload = figure.preload || "metadata";
-      video.controls = figure.controls !== false;
-      video.autoplay = Boolean(figure.autoplay);
-      video.loop = Boolean(figure.loop);
-      video.muted = Boolean(figure.muted);
-      video.playsInline = true;
-      if (figure.alt) video.setAttribute("aria-label", figure.alt);
-      fig.append(video);
-    } else {
-      const img = document.createElement("img");
-      img.className = "cs-fig-image";
-      img.src = figure.src;
-      img.alt = figure.alt || "";
-      fig.append(img);
-    }
-  }
-
-  if (hasSource && (figure.caption || figure.credit)) {
+  if (
+    media &&
+    media.showCaption !== false &&
+    (media.caption || media.credit)
+  ) {
     const caption = document.createElement("figcaption");
     caption.className = "cs-fig-caption";
-    caption.textContent = [figure.caption, figure.credit].filter(Boolean).join(" | ");
+    caption.textContent = [media.caption, media.credit].filter(Boolean).join(" | ");
     fig.append(caption);
   }
 
@@ -428,19 +485,12 @@ const renderCaseStudy = (content = {}, root) => {
   const introText = document.createElement("div");
   introText.className = "cs-div-intro-text";
   introText.append(title, subtitle);
-
-  const heroImageSrc = content.hero?.imageSrc || "";
-  const heroImageAlt = content.hero?.imageAlt || "";
+  const heroMedia = normalizeHeroMedia(content.hero || {});
 
   hero.append(introText);
 
-  if (heroImageSrc) {
-    const heroImage = document.createElement("img");
-    heroImage.className = "cs-hero-image";
-    heroImage.src = heroImageSrc;
-    heroImage.alt = heroImageAlt;
-    hero.append(heroImage);
-  }
+  const heroImage = createMediaElement(heroMedia, "cs-hero-image");
+  if (heroImage) hero.append(heroImage);
   for (const sectionData of content.sections || []) {
     const section = document.createElement("section");
     section.className = "cs-div-section";

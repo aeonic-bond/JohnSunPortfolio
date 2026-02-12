@@ -6,8 +6,13 @@
   "hero": {
     "title": "Designing Torus to Challenge Autodesk Revit's UX",
     "subtitle": "Working with 2 senior architects, I designed the core functionality for a modern browser-based architect platform to create parametric objects.",
-    "imageSrc": "../../Assets/Torus/Case Study/TorusHero.png",
-    "imageAlt": "Torus hero image"
+    "media": {
+      "type": "image",
+      "src": "../../Assets/Torus/Case Study/TorusHero.png",
+      "alt": "Torus hero image",
+      "variant": "hero",
+      "showCaption": false
+    }
   },
   "figures": [
     {

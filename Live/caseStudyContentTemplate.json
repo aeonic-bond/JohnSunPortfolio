@@ -18,7 +18,22 @@
   "hero": {
     "title": "Case Study Title",
     "subtitle": "Case Study Subtitle",
-    "summary": "One-paragraph intro for the top of the page."
+    "summary": "One-paragraph intro for the top of the page.",
+    "media": {
+      "type": "image",
+      "src": "",
+      "alt": "",
+      "poster": "",
+      "caption": "",
+      "credit": "",
+      "controls": true,
+      "autoplay": false,
+      "loop": false,
+      "muted": false,
+      "preload": "metadata",
+      "variant": "hero",
+      "showCaption": false
+    }
   },
   "figures": [
     {
@@ -33,7 +48,9 @@
       "autoplay": false,
       "loop": false,
       "muted": false,
-      "preload": "metadata"
+      "preload": "metadata",
+      "variant": "figure",
+      "showCaption": true
     }
   ],
   "sections": [
