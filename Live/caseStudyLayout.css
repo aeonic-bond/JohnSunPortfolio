@@ -122,6 +122,7 @@
   padding: var(--space-block-500) var(--space-block-500);
   border: 1px solid var(--color-saffron-fade);
   border-radius: var(--radius-base);
+  background-color: var(--color-black);
   gap: var(--space-300);
 }
 
@@ -154,7 +155,7 @@
 .cs-bullet-item-title {
   margin: 0;
   font: var(--type-subtitle2);
-  color: var(--color-white-off);
+  color: var(--color-white);
   padding-bottom: var(--space-500);
 }
 
@@ -186,8 +187,9 @@
   grid-template-columns: 2px 1fr;
   width: 100%;
   height: fit-content;
-  padding: var(--space-block-500) 0 0;
-  gap: var(--space-block-300);
+  background-color: var(--color-black);
+  border-radius: var(--radius-base);
+  overflow: hidden;
 }
 
 .cs-flow-row-tracker {
@@ -197,7 +199,7 @@
   background: linear-gradient(
     to bottom,
     var(--color-saffron) 0 calc(var(--tracker-progress, 0) * 100%),
-    var(--color-saffron-fade) calc(var(--tracker-progress, 0) * 100%) 100%
+    transparent calc(var(--tracker-progress, 0) * 100%) 100%
   );
   border-radius: 1000px;
 }
@@ -207,6 +209,7 @@
   grid-template-columns: 1fr;
   height: fit-content;
   gap: var(--space-block-500);
+  padding: var(--space-block-500);
 }
 
 .cs-flow-row-item {
@@ -228,6 +231,101 @@
   margin-top: var(--space-300);
 }
 
+ /* Progress Row */
+.cs-progress-row {
+  width: 100%;
+}
+
+.cs-progress-row-itemsAll {
+  display: grid;
+  gap: var(--space-block-500);
+}
+
+.cs-progress-row-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-self: center;
+  align-items: center;
+  gap: var(--space-block-200);
+  padding: var(--space-block-500);
+  border: 1px solid transparent;
+  border-radius: var(--radius-base);
+  background:
+    linear-gradient(var(--color-black), var(--color-black)) padding-box,
+    linear-gradient(
+      to bottom,
+      var(--color-black),
+      var(--color-saffron)
+    ) border-box;
+}
+
+@media (min-width: 1024px) {
+  .cs-progress-row-item {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: var(--space-block-500);
+    background:
+      linear-gradient(var(--color-black), var(--color-black)) padding-box,
+      linear-gradient(
+        to right,
+        var(--color-black),
+        var(--color-saffron)
+      ) border-box;
+  }
+}
+
+.cs-progress-row-item-primary {
+  width: 100%;
+  min-width: 0;
+  font: var(--type-body2);
+  color: var(--color-white-off);
+}
+
+.cs-progress-row-chevron {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  width: 32px;
+  height: 32px;
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--color-saffron);
+  line-height: 1;
+}
+
+.cs-progress-row-item-secondary {
+  width: 100%;
+  min-width: 0;
+  font: var(--type-body2);
+  color: var(--color-white);
+}
+
+.cs-progress-row-item-primary > * + *,
+.cs-progress-row-item-secondary > * + * {
+  margin-top: var(--space-300);
+}
+
+@media (min-width: 1024px) {
+  .cs-progress-row-item-primary,
+  .cs-progress-row-item-secondary {
+    max-width: 320px;
+  }
+
+  .cs-progress-row-item-primary {
+    justify-self: end;
+  }
+
+  .cs-progress-row-chevron {
+    justify-self: center;
+    align-self: center;
+    transform: rotate(-90deg);
+  }
+
+  .cs-progress-row-item-secondary {
+    justify-self: start;
+  }
+}
+
+ /* Fig */
 .cs-fig {
   display: grid;
   row-gap: 8px;

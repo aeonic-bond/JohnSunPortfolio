@@ -249,26 +249,23 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "Once the demo reached a testable stage, I reached out and found 6 participants who were architects or students. Their experiences with Revit ranged from a class to 10+ years. I ran 10-minute usability tests to see if users could add reference planes and set parameters. Before each session, I emphasized that this was an early-stage demo with limited capabilities.\n\n4 participants completed both tasks. 2 participants completed both with minimal guidance. This was a major accomplishment and speaks to the design's relative intuitiveness. A few participants remarked that this would have been much more difficult in Revit.\n\nI observed the following usability issues:"
+          "text": "Once the demo reached a testable stage, I reached out and found 6 participants who were architects or students. Their experiences with Revit ranged from a class to 10+ years. I ran 10-minute usability tests to see if users could add reference planes and set parameters. Before each session, I emphasized that this was an early-stage demo with limited capabilities.\n\n4 participants completed both tasks. 2 participants completed both with minimal guidance. This was a major accomplishment and speaks to the design's relative intuitiveness. A few participants remarked that this would have been much more difficult in Revit.\n\nI observed the following usability issues and made the following changes:"
         },
         {
-          "type": "bulletRow",
+          "type": "progressRow",
           "items": [
-            "All participants first attempted to input numbers inside the distance indicator rather than the expected parameter name.",
-            "3 participants pointed out that the parameter panel was not particularly clear.",
-            "All participants tried to hover over the tools, expecting tooltips to appear."
-          ]
-        },
-        {
-          "type": "paragraph",
-          "text": "I made the following changes based on the observation and feedback:"
-        },
-        {
-          "type": "bulletRow",
-          "items": [
-            "Added tooltips for offsetRP and offsetEQRP, and increased the speed at which they appear.",
-            "Refactored the distance indicator to have two input triggers. The old indicator became the value input, allowing users to manipulate the simple distance or the value of a set parameter. A new parameter input button gained the functionality of the old indicator. To accommodate this change, I also moved the EQ group tag from the indicator to the line to avoid confusion.",
-            "Changed the styling of the parameter name and value sets by wrapping them in a single div that resembles a split input box with an explicit \"=\" between the name and value."
+            {
+              "primary": "All participants tried to hover over the tools, expecting tooltips to appear.",
+              "secondary": "Add Tooltips - Add tooltips for offsetRP and offsetEQRP and increase the appearance speed."
+            },
+            {
+              "primary": "All participants first attempted to input numbers inside the distance indicator rather than the expected parameter name.",
+              "secondary": "Refactor Distance Indicator - Create two input triggers that allow users to manipulate distance or set a parameter."
+            },
+            {
+              "primary": "3 participants pointed out that the parameter panel was not particularly clear.",
+              "secondary": "Update Parameter Panel - Wrap name and value sets in a single container with an explicit \"=\"."
+            }
           ]
         },
         {

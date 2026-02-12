@@ -92,7 +92,38 @@ const normalizeRowItems = (row) => {
   return [];
 };
 
-const createBulletItemTextElement = (value, rootClassName = "cs-bullet-item-text") => {
+const normalizeProgressPairs = (progressRow) => {
+  const rawItems = normalizeRowItems(progressRow);
+  const pairs = [];
+
+  for (const item of rawItems) {
+    if (Array.isArray(item)) {
+      const [primary = "", secondary = ""] = item;
+      pairs.push({ primary: String(primary).trim(), secondary: String(secondary).trim() });
+      continue;
+    }
+
+    if (item && typeof item === "object") {
+      const primary = item.primary ?? item.left ?? item.title ?? item.label ?? "";
+      const secondary = item.secondary ?? item.right ?? item.value ?? item.detail ?? "";
+      pairs.push({ primary: String(primary).trim(), secondary: String(secondary).trim() });
+      continue;
+    }
+
+    if (typeof item === "string") {
+      const match = item.match(/^(.*?)\s+-\s+(.*)$/);
+      if (match) {
+        pairs.push({ primary: match[1].trim(), secondary: match[2].trim() });
+      } else {
+        pairs.push({ primary: item.trim(), secondary: "" });
+      }
+    }
+  }
+
+  return pairs.filter((pair) => pair.primary || pair.secondary);
+};
+
+const createItemTextElement = (value, rootClassName = "cs-bullet-item-text") => {
   const content = document.createElement("div");
   content.className = rootClassName;
 
@@ -166,7 +197,7 @@ const createBulletRowElement = (bulletRow) => {
     bulletItemCounterEl.className = "cs-bullet-item-counter";
     bulletItemCounterEl.textContent = String(i + 1);
 
-    const bulletItemTextEl = createBulletItemTextElement(items[i]);
+    const bulletItemTextEl = createItemTextElement(items[i]);
     bulletItemEl.append(bulletItemCounterEl, bulletItemTextEl);
     bulletRowEl.append(bulletItemEl);
   }
@@ -189,13 +220,47 @@ const createFlowRowElement = (flowRow) => {
     const flowItemEl = document.createElement("div");
     flowItemEl.className = "cs-flow-row-item";
 
-    const flowTextEl = createBulletItemTextElement(items[i], "cs-flow-row-item-text");
+    const flowTextEl = createItemTextElement(items[i], "cs-flow-row-item-text");
     flowItemEl.append(flowTextEl);
     flowItemsAllEl.append(flowItemEl);
   }
 
   flowRowEl.append(flowTrackerEl, flowItemsAllEl);
   return flowRowEl;
+};
+
+const createProgressRowElement = (progressRow) => {
+  const progressRowEl = document.createElement("div");
+  progressRowEl.className = "cs-progress-row";
+
+  const itemsAllEl = document.createElement("div");
+  itemsAllEl.className = "cs-progress-row-itemsAll";
+
+  for (const pair of normalizeProgressPairs(progressRow)) {
+    const itemEl = document.createElement("div");
+    itemEl.className = "cs-progress-row-item";
+
+    const primaryEl = createItemTextElement(
+      pair.primary,
+      "cs-progress-row-item-primary"
+    );
+
+    const chevronEl = document.createElement("span");
+    chevronEl.className = "cs-progress-row-chevron";
+    chevronEl.setAttribute("aria-hidden", "true");
+    chevronEl.textContent = "⌄";
+
+    const secondaryEl = createItemTextElement(
+      pair.secondary,
+      "cs-progress-row-item-secondary"
+    );
+
+    itemEl.append(primaryEl, chevronEl, secondaryEl);
+    itemsAllEl.append(itemEl);
+  }
+
+  progressRowEl.append(itemsAllEl);
+  return progressRowEl;
 };
 
 const renderCaseStudy = (content = {}, root) => {
@@ -262,6 +327,11 @@ const renderCaseStudy = (content = {}, root) => {
 
         if (block.type === "flowRow") {
           section.append(createFlowRowElement(block.items || block));
+          continue;
+        }
+
+        if (block.type === "progressRow") {
+          section.append(createProgressRowElement(block.items || block));
         }
       }
     } else {
@@ -281,6 +351,10 @@ const renderCaseStudy = (content = {}, root) => {
 
       for (const flowRow of sectionData.flowRows || []) {
         section.append(createFlowRowElement(flowRow));
+      }
+
+      for (const progressRow of sectionData.progressRows || []) {
+        section.append(createProgressRowElement(progressRow));
       }
     }
 
