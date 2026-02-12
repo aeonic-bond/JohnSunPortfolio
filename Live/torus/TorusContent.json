@@ -6,8 +6,8 @@
   "hero": {
     "title": "Designing Torus to Challenge Autodesk Revit's UX",
     "subtitle": "Working with 2 senior architects, I designed the core functionality for a modern browser-based architect platform to create parametric objects.",
-    "imageSrc": "../../Assets/Image Placeholder.png",
-    "imageAlt": "Torus hero image placeholder"
+    "imageSrc": "../../Assets/Torus/Case Study/TorusHero.png",
+    "imageAlt": "Torus hero image"
   },
   "figures": [
     {
@@ -310,23 +310,23 @@
     {
       "id": "section-11",
       "header": "Next Steps",
-      "body": "Now that the MVP can set up the parametric \"bones\" (as Matthew likes to call it), the next steps would be to enable users to create 2D geometry and then turn it into 3D geometry. I've already initiated the design process to streamline another infamous Revit function: locking 2D geometry to RPs. In overhauling Revit's lock system, I developed the \"clasp\" system, paired with color-changing, to visually communicate geometry snapping to RPs. The next logical step will be to build out this system for demo and testing.\n\nA more philosophical question also emerged during testing. Less experienced users, particularly students, leaned more on the 3D perspective view. Several participants explicitly stated a preference for working in 3D. In contrast, more experienced users valued the 2D views that enable a more precise parametric workflow. This divergence revealed a design tension: making the 3D perspective view more interactive could lower the barrier to entry for beginners, but doing so would conflict with Torus's prescriptive workflow and its core value proposition.\n\nThis finding suggests that more research is needed to better understand how experience level influences spatial workflows and mental models.",
+      "body": "Now that the MVP can set up the parametric \"bones\" (as Matthew likes to call it), the next steps would be to enable users to create 2D geometry and then turn it into 3D geometry. I've already initiated the design process to streamline another infamous Revit function: locking 2D geometry to RPs. Also, a user behavior question emerged during testing. Less experienced users, particularly students, leaned more on the 3D perspective view. In contrast, more experienced users valued the 2D views that enable the parametric workflow.",
       "bulletRows": [
         [
           {
             "text": "Build and test the clasp system for locking 2D geometry to reference planes.",
             "stamp": {
               "type": "image",
-              "src": "../../Assets/Image Placeholder.png",
-              "alt": "Clasp system next-step placeholder"
+              "src": "../../Assets/Torus/Case Study/section11/Clasp.png",
+              "alt": "Clasp system concept for locking 2D geometry to reference planes"
             }
           },
           {
             "text": "Research experience-level differences between 2D and 3D spatial workflows.",
             "stamp": {
               "type": "image",
-              "src": "../../Assets/Image Placeholder.png",
-              "alt": "2D and 3D workflow research placeholder"
+              "src": "../../Assets/Torus/Case Study/section11/3Dv2D.png",
+              "alt": "2D vs 3D workflow comparison"
             }
           }
         ]
