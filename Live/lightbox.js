@@ -1,0 +1,208 @@
+const OVERLAY_ID = "cs-lightbox-overlay";
+const ZOOM_KEYS = new Set(["+", "=", "-", "_", "0"]);
+const MEDIA_MIN_ZOOM = 1;
+const MEDIA_MAX_ZOOM = 4;
+const MEDIA_ZOOM_STEP = 0.15;
+
+const isOverlayOpen = () => {
+  const overlay = document.getElementById(OVERLAY_ID);
+  return overlay?.getAttribute("aria-hidden") === "false";
+};
+
+const clampZoomValue = (value, min, max) => Math.min(max, Math.max(min, value));
+
+const getMediaMount = () => {
+  const overlay = ensureOverlay();
+  return overlay.querySelector(".cs-lightbox-mediaMount");
+};
+
+const getMediaZoom = (mount) => Number(mount?.dataset.zoom ?? "1");
+
+const setMediaZoom = (mount, zoom) => {
+  if (!(mount instanceof HTMLElement)) return;
+  const nextZoom = clampZoomValue(zoom, MEDIA_MIN_ZOOM, MEDIA_MAX_ZOOM);
+  mount.dataset.zoom = String(nextZoom);
+  mount.style.setProperty("--cs-lightbox-zoom", String(nextZoom));
+};
+
+const createLightboxMediaElement = (sourceMedia) => {
+  if (sourceMedia instanceof HTMLImageElement) {
+    const image = document.createElement("img");
+    image.className = "cs-lightbox-media";
+    image.src = sourceMedia.currentSrc || sourceMedia.src;
+    image.alt = sourceMedia.alt || "";
+    return image;
+  }
+
+  if (sourceMedia instanceof HTMLVideoElement) {
+    const video = document.createElement("video");
+    video.className = "cs-lightbox-media";
+    video.poster = sourceMedia.poster || "";
+    video.preload = sourceMedia.preload || "metadata";
+    video.controls = true;
+    video.autoplay = false;
+    video.loop = sourceMedia.loop;
+    video.muted = sourceMedia.muted;
+    video.playsInline = true;
+    const ariaLabel = sourceMedia.getAttribute("aria-label");
+    if (ariaLabel) video.setAttribute("aria-label", ariaLabel);
+
+    const sourceTags = Array.from(sourceMedia.querySelectorAll("source"));
+    if (sourceTags.length > 0) {
+      for (const sourceTag of sourceTags) {
+        const nextSource = document.createElement("source");
+        nextSource.src = sourceTag.src;
+        if (sourceTag.type) nextSource.type = sourceTag.type;
+        video.append(nextSource);
+      }
+    } else {
+      video.src = sourceMedia.currentSrc || sourceMedia.src;
+    }
+
+    return video;
+  }
+
+  return null;
+};
+
+const setMediaFromFigure = (figureElement) => {
+  if (!(figureElement instanceof Element)) return false;
+  const mediaMount = getMediaMount();
+  if (!(mediaMount instanceof HTMLElement)) return false;
+
+  const sourceMedia = figureElement.querySelector(".cs-fig-image");
+  const lightboxMedia = createLightboxMediaElement(sourceMedia);
+  if (!lightboxMedia) return false;
+
+  mediaMount.replaceChildren(lightboxMedia);
+  setMediaZoom(mediaMount, 1);
+  return true;
+};
+
+const ensureOverlay = () => {
+  let overlay = document.getElementById(OVERLAY_ID);
+  if (overlay) return overlay;
+
+  overlay = document.createElement("div");
+  overlay.id = OVERLAY_ID;
+  overlay.className = "cs-lightbox-overlay";
+  overlay.setAttribute("aria-hidden", "true");
+  const panel = document.createElement("div");
+  panel.className = "cs-lightbox-panel";
+  const panelHeader = document.createElement("div");
+  panelHeader.className = "cs-lightbox-panelHeader";
+  const closeButton = document.createElement("button");
+  closeButton.type = "button";
+  closeButton.className = "cs-lightbox-closeButton";
+  closeButton.setAttribute("aria-label", "Close lightbox");
+  const closeIcon = document.createElement("img");
+  closeIcon.className = "cs-lightbox-closeIcon";
+  closeIcon.src = "../../Assets/CloseButton.svg";
+  closeIcon.alt = "";
+  closeIcon.setAttribute("aria-hidden", "true");
+  closeButton.append(closeIcon);
+  closeButton.addEventListener("click", closeOverlay);
+  panelHeader.append(closeButton);
+  const mediaMount = document.createElement("div");
+  mediaMount.className = "cs-lightbox-mediaMount";
+  panel.append(panelHeader);
+  panel.append(mediaMount);
+  overlay.append(panel);
+  document.body.append(overlay);
+
+  overlay.addEventListener("click", (event) => {
+    if (event.target === overlay) {
+      closeOverlay();
+    }
+  });
+
+  return overlay;
+};
+
+const openOverlay = (figureElement) => {
+  if (!setMediaFromFigure(figureElement)) return;
+  const overlay = ensureOverlay();
+  overlay.setAttribute("aria-hidden", "false");
+  document.body.classList.add("cs-lightbox-active");
+};
+
+const closeOverlay = () => {
+  const overlay = ensureOverlay();
+  const mediaMount = getMediaMount();
+  const mountedVideo = mediaMount?.querySelector("video");
+  if (mountedVideo instanceof HTMLVideoElement) mountedVideo.pause();
+  mediaMount?.replaceChildren();
+  overlay.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("cs-lightbox-active");
+};
+
+const initLightbox = () => {
+  ensureOverlay();
+
+  // Delegate so dynamically rendered figures are supported.
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+
+    const figure = target.closest(".cs-fig");
+    if (figure) {
+      openOverlay(figure);
+    }
+  });
+
+  // While overlay is open, prevent browser/page zoom gestures.
+  document.addEventListener(
+    "wheel",
+    (event) => {
+      if (!isOverlayOpen()) return;
+
+      const overlay = ensureOverlay();
+      const target = event.target;
+      if (!(target instanceof Element) || !overlay.contains(target)) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (!event.ctrlKey && !event.metaKey) return;
+
+      const mediaMount = target.closest(".cs-lightbox-mediaMount");
+      if (!(mediaMount instanceof HTMLElement)) return;
+
+      const direction = event.deltaY < 0 ? 1 : -1;
+      const currentZoom = getMediaZoom(mediaMount);
+      const nextZoom = currentZoom + direction * MEDIA_ZOOM_STEP;
+      setMediaZoom(mediaMount, nextZoom);
+    },
+    { passive: false }
+  );
+
+  for (const gestureEventName of ["gesturestart", "gesturechange", "gestureend"]) {
+    document.addEventListener(
+      gestureEventName,
+      (event) => {
+        if (!isOverlayOpen()) return;
+        event.preventDefault();
+      },
+      { passive: false }
+    );
+  }
+
+  document.addEventListener("keydown", (event) => {
+    if (isOverlayOpen() && (event.ctrlKey || event.metaKey) && ZOOM_KEYS.has(event.key)) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+
+    if (event.key !== "Escape") return;
+    closeOverlay();
+  });
+};
+
+window.LiveLightbox = { initLightbox };
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initLightbox, { once: true });
+} else {
+  initLightbox();
+}
