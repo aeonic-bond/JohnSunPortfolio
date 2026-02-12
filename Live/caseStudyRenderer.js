@@ -92,7 +92,7 @@ const createFigureElement = (figure = {}) => {
 
   if (hasSource && (figure.caption || figure.credit)) {
     const caption = document.createElement("figcaption");
-    caption.className = "cs-fig-caption type-body2";
+    caption.className = "cs-fig-caption";
     caption.textContent = [figure.caption, figure.credit].filter(Boolean).join(" | ");
     fig.append(caption);
   }
@@ -108,18 +108,72 @@ const normalizeRowItems = (row) => {
   return [];
 };
 
+const normalizeStamp = (value) => {
+  if (!value) return null;
+
+  if (typeof value === "string") {
+    const src = value.trim();
+    return src ? { type: "image", src, alt: "" } : null;
+  }
+
+  if (value && typeof value === "object") {
+    const type = value.type === "video" ? "video" : "image";
+    const src = String(value.src || "").trim();
+    const alt = String(value.alt || "").trim();
+    const poster = String(value.poster || "").trim();
+    if (!src) return null;
+    return { type, src, alt, poster };
+  }
+
+  return null;
+};
+
+const normalizeBulletItem = (item) => {
+  if (typeof item === "string") {
+    return { text: item, stamp: null };
+  }
+
+  if (Array.isArray(item)) {
+    const [text = "", maybeStamp = "", legacyAlt = ""] = item;
+    const stamp =
+      typeof maybeStamp === "object"
+        ? normalizeStamp(maybeStamp)
+        : normalizeStamp({ src: maybeStamp, alt: legacyAlt });
+    return {
+      text: String(text).trim(),
+      stamp,
+    };
+  }
+
+  if (item && typeof item === "object") {
+    const text = item.text ?? item.body ?? item.value ?? "";
+    const stamp = normalizeStamp(
+      item.stamp ?? item.image ?? { src: item.imageSrc, alt: item.imageAlt }
+    );
+    return {
+      text: String(text).trim(),
+      stamp,
+    };
+  }
+
+  return { text: "", stamp: null };
+};
+
 const normalizeProgressPairs = (progressRow) => {
   const rawItems = normalizeRowItems(progressRow);
   const pairs = [];
 
   for (const item of rawItems) {
     if (Array.isArray(item)) {
-      const [primary = "", secondary = "", imageSrc = "", imageAlt = ""] = item;
+      const [primary = "", secondary = "", maybeStamp = "", legacyAlt = ""] = item;
+      const stamp =
+        typeof maybeStamp === "object"
+          ? normalizeStamp(maybeStamp)
+          : normalizeStamp({ src: maybeStamp, alt: legacyAlt });
       pairs.push({
         primary: String(primary).trim(),
         secondary: String(secondary).trim(),
-        imageSrc: String(imageSrc).trim(),
-        imageAlt: String(imageAlt).trim(),
+        stamp,
       });
       continue;
     }
@@ -127,13 +181,13 @@ const normalizeProgressPairs = (progressRow) => {
     if (item && typeof item === "object") {
       const primary = item.primary ?? item.left ?? item.title ?? item.label ?? "";
       const secondary = item.secondary ?? item.right ?? item.value ?? item.detail ?? "";
-      const imageSrc = item.imageSrc ?? item.image?.src ?? "";
-      const imageAlt = item.imageAlt ?? item.image?.alt ?? "";
+      const stamp = normalizeStamp(
+        item.stamp ?? item.image ?? { src: item.imageSrc, alt: item.imageAlt }
+      );
       pairs.push({
         primary: String(primary).trim(),
         secondary: String(secondary).trim(),
-        imageSrc: String(imageSrc).trim(),
-        imageAlt: String(imageAlt).trim(),
+        stamp,
       });
       continue;
     }
@@ -144,21 +198,49 @@ const normalizeProgressPairs = (progressRow) => {
         pairs.push({
           primary: match[1].trim(),
           secondary: match[2].trim(),
-          imageSrc: "",
-          imageAlt: "",
+          stamp: null,
         });
       } else {
         pairs.push({
           primary: item.trim(),
           secondary: "",
-          imageSrc: "",
-          imageAlt: "",
+          stamp: null,
         });
       }
     }
   }
 
-  return pairs.filter((pair) => pair.primary || pair.secondary || pair.imageSrc);
+  return pairs.filter((pair) => pair.primary || pair.secondary || pair.stamp);
+};
+
+const createStampElement = (stamp, className = "cs-stamp") => {
+  const normalized = normalizeStamp(stamp);
+  if (!normalized) return null;
+
+  const stampEl = document.createElement("div");
+  stampEl.className = className;
+
+  if (normalized.type === "video") {
+    const video = document.createElement("video");
+    video.className = "cs-stamp-content";
+    video.src = normalized.src;
+    video.poster = normalized.poster || "";
+    video.preload = "metadata";
+    video.controls = true;
+    video.playsInline = true;
+    video.muted = true;
+    video.loop = false;
+    if (normalized.alt) video.setAttribute("aria-label", normalized.alt);
+    stampEl.append(video);
+    return stampEl;
+  }
+
+  const image = document.createElement("img");
+  image.className = "cs-stamp-content";
+  image.src = normalized.src;
+  image.alt = normalized.alt || "";
+  stampEl.append(image);
+  return stampEl;
 };
 
 const createItemTextElement = (value, rootClassName = "cs-bullet-item-text") => {
@@ -229,14 +311,27 @@ const createBulletRowElement = (bulletRow) => {
 
   const itemCount = Math.max(1, items.length);
   for (let i = 0; i < itemCount; i += 1) {
+    const itemData = normalizeBulletItem(items[i]);
     const bulletItemEl = document.createElement("div");
     bulletItemEl.className = "cs-bullet-item";
     const bulletItemCounterEl = document.createElement("div");
     bulletItemCounterEl.className = "cs-bullet-item-counter";
     bulletItemCounterEl.textContent = String(i + 1);
 
-    const bulletItemTextEl = createItemTextElement(items[i]);
-    bulletItemEl.append(bulletItemCounterEl, bulletItemTextEl);
+    const bulletItemTextEl = createItemTextElement(itemData.text);
+
+    if (itemData.stamp) {
+      bulletItemEl.classList.add("cs-bullet-item--with-image");
+      const stampEl = createStampElement(itemData.stamp, "cs-stamp cs-bullet-item-stamp");
+      if (stampEl) {
+        bulletItemEl.append(bulletItemCounterEl, stampEl, bulletItemTextEl);
+      } else {
+        bulletItemEl.append(bulletItemCounterEl, bulletItemTextEl);
+      }
+    } else {
+      bulletItemEl.append(bulletItemCounterEl, bulletItemTextEl);
+    }
+
     bulletRowEl.append(bulletItemEl);
   }
 
@@ -297,17 +392,9 @@ const createProgressRowElement = (progressRow) => {
     secondaryAllEl.className = "cs-progress-row-div-secondaryAll";
     secondaryAllEl.append(secondaryEl);
 
-    if (pair.imageSrc) {
-      const imageWrapEl = document.createElement("div");
-      imageWrapEl.className = "cs-progress-row-item-image";
-
-      const imageEl = document.createElement("img");
-      imageEl.className = "cs-progress-row-item-image-content";
-      imageEl.src = pair.imageSrc;
-      imageEl.alt = pair.imageAlt || "";
-
-      imageWrapEl.append(imageEl);
-      secondaryAllEl.append(imageWrapEl);
+    if (pair.stamp) {
+      const stampEl = createStampElement(pair.stamp, "cs-stamp cs-progress-row-item-stamp");
+      if (stampEl) secondaryAllEl.append(stampEl);
     }
 
     itemEl.append(primaryEl, chevronEl, secondaryAllEl);

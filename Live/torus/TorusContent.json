@@ -56,8 +56,8 @@
       "id": "fig-06",
       "type": "video",
       "src": "../../Assets/Torus/Case Study/OffsetRPTool.mp4",
-      "alt": "UX of Offset RP tool being used to generate a child RP",
-      "caption": "UX of Offset RP tool being used to generate a child RP",
+      "alt": "Offset RP tool generating a child RP",
+      "caption": "Offset RP tool generating a child RP",
       "credit": "",
       "controls": true,
       "autoplay": false,
@@ -69,8 +69,8 @@
       "id": "fig-07",
       "type": "video",
       "src": "../../Assets/Torus/Case Study/SettingParameter.mp4",
-      "alt": "Setting parameter workflow in Torus",
-      "caption": "Setting parameter workflow in Torus",
+      "alt": "Setting a LENGTH parameter after generating a childRP",
+      "caption": "Setting a LENGTH parameter after generating a childRP",
       "credit": "",
       "controls": true,
       "autoplay": false,
@@ -82,8 +82,8 @@
       "id": "fig-08",
       "type": "video",
       "src": "../../Assets/Torus/Case Study/OffsetEQRPTool.mp4",
-      "alt": "Offset EQ RP tool workflow in Torus",
-      "caption": "Offset EQ RP tool workflow in Torus",
+      "alt": "Offset EQ RP tool generates a symmetrical RP pair",
+      "caption": "Offset EQ RP tool generates a symmetrical RP pair",
       "credit": "",
       "controls": true,
       "autoplay": false,
@@ -275,20 +275,29 @@
             {
               "primary": "All participants tried to hover over the tools, expecting tooltips to appear.",
               "secondary": "Add Tooltips - Add tooltips for offsetRP and offsetEQRP and increase the appearance speed.",
-              "imageSrc": "../../Assets/Torus/Case Study/section10/Tooltips.png",
-              "imageAlt": "Tooltips UI in Torus"
+              "stamp": {
+                "type": "image",
+                "src": "../../Assets/Torus/Case Study/section10/Tooltips.png",
+                "alt": "Tooltips UI in Torus"
+              }
             },
             {
               "primary": "All participants first attempted to input numbers inside the distance indicator rather than the expected parameter name.",
               "secondary": "Refactor Distance Indicator - Create two input triggers that allow users to manipulate distance or set a parameter.",
-              "imageSrc": "../../Assets/Torus/Case Study/section10/RefactorDistanceBox.png",
-              "imageAlt": "Refactored distance input UI in Torus"
+              "stamp": {
+                "type": "image",
+                "src": "../../Assets/Torus/Case Study/section10/RefactorDistanceBox.png",
+                "alt": "Refactored distance input UI in Torus"
+              }
             },
             {
               "primary": "3 participants pointed out that the parameter panel was not particularly clear.",
               "secondary": "Update Parameter Panel - Wrap name and value sets in a single container with an explicit \"=\".",
-              "imageSrc": "../../Assets/Torus/Case Study/section10/ParameterPanel.png",
-              "imageAlt": "Updated parameter panel design in Torus"
+              "stamp": {
+                "type": "image",
+                "src": "../../Assets/Torus/Case Study/section10/ParameterPanel.png",
+                "alt": "Updated parameter panel design in Torus"
+              }
             }
           ]
         },
@@ -302,6 +311,26 @@
       "id": "section-11",
       "header": "Next Steps",
       "body": "Now that the MVP can set up the parametric \"bones\" (as Matthew likes to call it), the next steps would be to enable users to create 2D geometry and then turn it into 3D geometry. I've already initiated the design process to streamline another infamous Revit function: locking 2D geometry to RPs. In overhauling Revit's lock system, I developed the \"clasp\" system, paired with color-changing, to visually communicate geometry snapping to RPs. The next logical step will be to build out this system for demo and testing.\n\nA more philosophical question also emerged during testing. Less experienced users, particularly students, leaned more on the 3D perspective view. Several participants explicitly stated a preference for working in 3D. In contrast, more experienced users valued the 2D views that enable a more precise parametric workflow. This divergence revealed a design tension: making the 3D perspective view more interactive could lower the barrier to entry for beginners, but doing so would conflict with Torus's prescriptive workflow and its core value proposition.\n\nThis finding suggests that more research is needed to better understand how experience level influences spatial workflows and mental models.",
+      "bulletRows": [
+        [
+          {
+            "text": "Build and test the clasp system for locking 2D geometry to reference planes.",
+            "stamp": {
+              "type": "image",
+              "src": "../../Assets/Image Placeholder.png",
+              "alt": "Clasp system next-step placeholder"
+            }
+          },
+          {
+            "text": "Research experience-level differences between 2D and 3D spatial workflows.",
+            "stamp": {
+              "type": "image",
+              "src": "../../Assets/Image Placeholder.png",
+              "alt": "2D and 3D workflow research placeholder"
+            }
+          }
+        ]
+      ],
       "figureIds": [
         "fig-11"
       ]

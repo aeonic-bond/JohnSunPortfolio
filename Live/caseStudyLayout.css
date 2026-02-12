@@ -25,7 +25,7 @@
 
 #case-study-root {
   display: grid;
-  row-gap: var(--space-block-800);
+  row-gap: var(--space-block-900);
 }
 
  /* Intro */
@@ -62,7 +62,7 @@
  /* Sections */
 .cs-div-sectionsALL {
   display: grid;
-  row-gap: var(--space-block-500);
+  row-gap: var(--space-block-800);
 }
 
 .cs-div-section {
@@ -109,6 +109,27 @@
     margin-left: calc(50% - 45vw);
     margin-right: calc(50% - 45vw);
   }
+
+  #section-11 .cs-bullet-row {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  #section-11 .cs-bullet-row .cs-bullet-item {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  #section-11 .cs-bullet-row .cs-bullet-item.cs-bullet-item--with-image {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  #section-11 .cs-bullet-row .cs-bullet-item.cs-bullet-item--with-image .cs-stamp {
+    width: 160px;
+    max-width: 160px;
+    flex: 0 0 160px;
+  }
 }
 
 .cs-bullet-item {
@@ -124,6 +145,24 @@
   border-radius: var(--radius-base);
   background-color: var(--color-black);
   gap: var(--space-300);
+}
+
+.cs-bullet-item.cs-bullet-item--with-image {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+#section-11 .cs-bullet-row .cs-bullet-item.cs-bullet-item--with-image {
+  gap: var(--space-500);
+}
+
+#section-11 .cs-bullet-row .cs-bullet-item.cs-bullet-item--with-image .cs-bullet-item-text {
+  order: 1;
+}
+
+#section-11 .cs-bullet-row .cs-bullet-item.cs-bullet-item--with-image .cs-stamp {
+  order: 2;
 }
 
 .cs-bullet-item-counter {
@@ -322,21 +361,8 @@
   margin-top: var(--space-300);
 }
 
-.cs-progress-row-item-image {
+.cs-progress-row-item-stamp {
   grid-column: 1 / -1;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: var(--radius-base);
-  overflow: hidden;
-  background-color: var(--color-black);
-  border: 1px solid var(--color-saffron-fade);
-}
-
-.cs-progress-row-item-image-content {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 @media (min-width: 1024px) {
@@ -371,10 +397,9 @@
     justify-self: start;
   }
 
-  .cs-progress-row-item-image {
+  .cs-progress-row-item-stamp {
     grid-column: auto;
     justify-self: start;
-    max-width: 200px;
   }
 }
 
@@ -393,6 +418,7 @@
 }
 
 .cs-fig-caption {
+  font: var(--type-caption);
   color: var(--color-saffron);
 }
 
@@ -402,4 +428,28 @@
 
 .cs-section-body li + li {
   margin-top: 0.35em;
+}
+
+ /* Stamp */
+.cs-stamp {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-base);
+  overflow: hidden;
+  background-color: var(--color-black);
+  border: 1px solid var(--color-saffron-fade);
+}
+
+.cs-stamp-content {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 1024px) {
+  .cs-stamp {
+    width: 200px;
+    max-width: 200px;
+  }
 }
