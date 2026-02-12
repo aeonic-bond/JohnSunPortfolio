@@ -135,15 +135,23 @@ const normalizeHeroMedia = (hero = {}) =>
     { variant: "hero", showCaption: false }
   );
 
-const createFigureElement = (figure = {}) => {
-  const fig = document.createElement("figure");
-  fig.className = "cs-fig";
-  fig.id = figure.id || "";
-  const media = normalizeFigureMedia(figure);
-  const mediaEl = createMediaElement(media, "cs-fig-image");
-  if (mediaEl) fig.append(mediaEl);
+const createMediaBlockElement = ({
+  id = "",
+  media = null,
+  blockClassName = "cs-fig",
+  mediaClassName = "cs-fig-image",
+  includeCaption = true,
+} = {}) => {
+  const block = document.createElement("figure");
+  block.className = blockClassName;
+  block.id = id || "";
+
+  const mediaEl = createMediaElement(media, mediaClassName);
+  if (!mediaEl) return block;
+  block.append(mediaEl);
 
   if (
+    includeCaption &&
     media &&
     media.showCaption !== false &&
     (media.caption || media.credit)
@@ -151,11 +159,28 @@ const createFigureElement = (figure = {}) => {
     const caption = document.createElement("figcaption");
     caption.className = "cs-fig-caption";
     caption.textContent = [media.caption, media.credit].filter(Boolean).join(" | ");
-    fig.append(caption);
+    block.append(caption);
   }
 
-  return fig;
+  return block;
 };
+
+const createFigureElement = (figure = {}) =>
+  createMediaBlockElement({
+    id: figure.id || "",
+    media: normalizeFigureMedia(figure),
+    blockClassName: "cs-fig",
+    mediaClassName: "cs-fig-image",
+    includeCaption: true,
+  });
+
+const createHeroMediaElement = (hero = {}) =>
+  createMediaBlockElement({
+    media: normalizeHeroMedia(hero),
+    blockClassName: "cs-fig cs-fig--hero",
+    mediaClassName: "cs-fig-image cs-hero-image",
+    includeCaption: false,
+  });
 
 const normalizeRowItems = (row) => {
   if (Array.isArray(row)) return row;
@@ -485,12 +510,11 @@ const renderCaseStudy = (content = {}, root) => {
   const introText = document.createElement("div");
   introText.className = "cs-div-intro-text";
   introText.append(title, subtitle);
-  const heroMedia = normalizeHeroMedia(content.hero || {});
 
   hero.append(introText);
 
-  const heroImage = createMediaElement(heroMedia, "cs-hero-image");
-  if (heroImage) hero.append(heroImage);
+  const heroMedia = createHeroMediaElement(content.hero || {});
+  if (heroMedia.firstChild) hero.append(heroMedia);
   for (const sectionData of content.sections || []) {
     const section = document.createElement("section");
     section.className = "cs-div-section";
