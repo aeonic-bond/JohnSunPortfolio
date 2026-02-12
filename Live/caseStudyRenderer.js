@@ -30,6 +30,16 @@ const createBodyFragment = (body = "") => {
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 let flowTrackerRafId = 0;
 let flowTrackerEventsBound = false;
+let lightboxMountEl = null;
+let lightboxPanelEl = null;
+let lightboxMediaSlotEl = null;
+let lightboxCloseEl = null;
+let lightboxEventsBound = false;
+let lightboxMediaEl = null;
+let lightboxZoom = 1;
+const LIGHTBOX_ZOOM_MIN = 1;
+const LIGHTBOX_ZOOM_MAX = 4;
+const LIGHTBOX_ZOOM_STEP = 0.12;
 
 const updateFlowRowTrackers = () => {
   const thresholdY = window.innerHeight * 0.5;
@@ -58,6 +68,142 @@ const bindFlowRowTrackerEvents = () => {
   window.addEventListener("scroll", scheduleFlowRowTrackerUpdate, { passive: true });
   window.addEventListener("resize", scheduleFlowRowTrackerUpdate);
   window.addEventListener("orientationchange", scheduleFlowRowTrackerUpdate);
+};
+
+const closeLightbox = () => {
+  if (!lightboxMountEl) return;
+  lightboxMountEl.setAttribute("aria-hidden", "true");
+  lightboxMediaSlotEl?.replaceChildren();
+  lightboxMediaEl = null;
+  lightboxZoom = 1;
+  document.body.classList.remove("cs-lightbox-open");
+};
+
+const applyLightboxZoom = () => {
+  if (!lightboxMediaEl) return;
+  lightboxMediaEl.style.transform = `scale(${lightboxZoom})`;
+};
+
+const ensureLightbox = () => {
+  if (lightboxMountEl) return;
+
+  const mount = document.createElement("div");
+  mount.className = "cs-lightbox-mount";
+  mount.setAttribute("role", "dialog");
+  mount.setAttribute("aria-modal", "true");
+  mount.setAttribute("aria-hidden", "true");
+
+  const panel = document.createElement("div");
+  panel.className = "cs-lightbox-panel";
+
+  const mediaSlot = document.createElement("div");
+  mediaSlot.className = "cs-lightbox-media-slot";
+
+  const closeButton = document.createElement("button");
+  closeButton.type = "button";
+  closeButton.className = "cs-lightbox-close";
+  closeButton.setAttribute("aria-label", "Close lightbox");
+  closeButton.textContent = "×";
+
+  panel.append(mediaSlot);
+  mount.append(panel, closeButton);
+  document.body.append(mount);
+
+  closeButton.addEventListener("click", closeLightbox);
+  mount.addEventListener("click", (event) => {
+    if (event.target === mount) closeLightbox();
+  });
+
+  if (!lightboxEventsBound) {
+    window.addEventListener(
+      "wheel",
+      (event) => {
+        if (lightboxMountEl?.getAttribute("aria-hidden") !== "false") return;
+        if (!event.ctrlKey && !event.metaKey) return;
+
+        // While lightbox is open, never allow browser/page zoom.
+        event.preventDefault();
+        event.stopPropagation();
+
+        // Only zoom when interacting over the media slot.
+        if (!lightboxMediaSlotEl || !lightboxMediaSlotEl.contains(event.target)) return;
+        if (!lightboxMediaEl) return;
+
+        const direction = event.deltaY < 0 ? 1 : -1;
+        lightboxZoom = clamp(
+          lightboxZoom + direction * LIGHTBOX_ZOOM_STEP,
+          LIGHTBOX_ZOOM_MIN,
+          LIGHTBOX_ZOOM_MAX
+        );
+        applyLightboxZoom();
+      },
+      { passive: false }
+    );
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && lightboxMountEl?.getAttribute("aria-hidden") === "false") {
+        closeLightbox();
+        return;
+      }
+
+      if (lightboxMountEl?.getAttribute("aria-hidden") !== "false") return;
+      if (!event.ctrlKey && !event.metaKey) return;
+
+      const isZoomKey =
+        event.key === "+" ||
+        event.key === "=" ||
+        event.key === "-" ||
+        event.key === "_" ||
+        event.key === "0";
+      if (!isZoomKey) return;
+
+      // While lightbox is open, never allow browser/page zoom shortcuts.
+      event.preventDefault();
+
+      if (!lightboxMediaEl) return;
+
+      if (event.key === "0") {
+        lightboxZoom = 1;
+        applyLightboxZoom();
+        return;
+      }
+
+      const direction = event.key === "+" || event.key === "=" ? 1 : -1;
+      lightboxZoom = clamp(
+        lightboxZoom + direction * LIGHTBOX_ZOOM_STEP,
+        LIGHTBOX_ZOOM_MIN,
+        LIGHTBOX_ZOOM_MAX
+      );
+      applyLightboxZoom();
+    });
+    lightboxEventsBound = true;
+  }
+
+  lightboxMountEl = mount;
+  lightboxPanelEl = panel;
+  lightboxMediaSlotEl = mediaSlot;
+  lightboxCloseEl = closeButton;
+};
+
+const openLightbox = (media) => {
+  if (!media?.src) return;
+  ensureLightbox();
+
+  const lightboxMedia = createMediaElement(
+    { ...media, controls: true, autoplay: false },
+    "cs-lightbox-media"
+  );
+  lightboxMediaSlotEl.replaceChildren();
+  if (lightboxMedia) {
+    lightboxMediaEl = lightboxMedia;
+    lightboxZoom = 1;
+    applyLightboxZoom();
+    lightboxMediaSlotEl.append(lightboxMedia);
+  }
+
+  lightboxMountEl.setAttribute("aria-hidden", "false");
+  document.body.classList.add("cs-lightbox-open");
+  lightboxCloseEl.focus();
 };
 
 const normalizeMedia = (value, defaults = {}) => {
@@ -141,6 +287,7 @@ const createMediaBlockElement = ({
   blockClassName = "cs-fig",
   mediaClassName = "cs-fig-image",
   includeCaption = true,
+  enableLightbox = false,
 } = {}) => {
   const block = document.createElement("figure");
   block.className = blockClassName;
@@ -149,6 +296,11 @@ const createMediaBlockElement = ({
   const mediaEl = createMediaElement(media, mediaClassName);
   if (!mediaEl) return block;
   block.append(mediaEl);
+
+  if (enableLightbox) {
+    mediaEl.classList.add("cs-fig-image--lightbox-trigger");
+    mediaEl.addEventListener("click", () => openLightbox(media));
+  }
 
   if (
     includeCaption &&
@@ -165,14 +317,16 @@ const createMediaBlockElement = ({
   return block;
 };
 
-const createFigureElement = (figure = {}) =>
-  createMediaBlockElement({
+const createFigureElement = (figure = {}) => {
+  return createMediaBlockElement({
     id: figure.id || "",
     media: normalizeFigureMedia(figure),
     blockClassName: "cs-fig",
     mediaClassName: "cs-fig-image",
     includeCaption: true,
+    enableLightbox: true,
   });
+};
 
 const createHeroMediaElement = (hero = {}) =>
   createMediaBlockElement({
@@ -180,6 +334,7 @@ const createHeroMediaElement = (hero = {}) =>
     blockClassName: "cs-fig cs-fig--hero",
     mediaClassName: "cs-fig-image cs-hero-image",
     includeCaption: false,
+    enableLightbox: true,
   });
 
 const normalizeRowItems = (row) => {
