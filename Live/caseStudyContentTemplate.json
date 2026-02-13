@@ -22,7 +22,6 @@
     "media": {
       "type": "image",
       "src": "",
-      "alt": "",
       "poster": "",
       "caption": "",
       "credit": "",
@@ -41,7 +40,6 @@
       "type": "image",
       "src": "",
       "poster": "",
-      "alt": "",
       "caption": "",
       "credit": "",
       "controls": true,

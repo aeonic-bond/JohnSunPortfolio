@@ -9,7 +9,7 @@
     "media": {
       "type": "image",
       "src": "../../Assets/Torus/Case Study/TorusHero.png",
-      "alt": "Torus hero image",
+      "caption": "Torus Hero Image",
       "variant": "hero",
       "showCaption": false
     }
@@ -18,42 +18,36 @@
     {
       "id": "fig-00",
       "src": "",
-      "alt": "",
       "caption": "",
       "credit": ""
     },
     {
       "id": "fig-01",
       "src": "",
-      "alt": "",
       "caption": "",
       "credit": ""
     },
     {
       "id": "fig-02",
       "src": "../../Assets/Torus/Case Study/RevitScreenshot.png",
-      "alt": "Autodesk Revit screenshot",
-      "caption": "Autodesk Revit screenshot",
+      "caption": "Screenshot of Autodesk Revit shows outdated and overwhelming UI.",
       "credit": ""
     },
     {
       "id": "fig-03",
       "src": "",
-      "alt": "",
       "caption": "",
       "credit": ""
     },
     {
       "id": "fig-04",
       "src": "../../Assets/Torus/Case Study/TorusMVP.png",
-      "alt": "Torus MVP interface",
-      "caption": "Torus MVP interface",
+      "caption": "UI of Torus MVP in the default 3D perspective view.",
       "credit": ""
     },
     {
       "id": "fig-05",
       "src": "",
-      "alt": "",
       "caption": "",
       "credit": ""
     },
@@ -62,7 +56,6 @@
       "type": "video",
       "src": "../../Assets/Torus/Case Study/OffsetRPTool.mp4",
       "poster": "../../Assets/Torus/Case Study/video previews/OffsetRPToolPreview.png",
-      "alt": "Offset RP tool generating a child RP",
       "caption": "Offset RP tool generating a child RP",
       "credit": "",
       "controls": true,
@@ -76,7 +69,6 @@
       "type": "video",
       "src": "../../Assets/Torus/Case Study/SettingParameter.mp4",
       "poster": "../../Assets/Torus/Case Study/video previews/SettingParameterPreview.png",
-      "alt": "Setting a LENGTH parameter after generating a childRP",
       "caption": "Setting a LENGTH parameter after generating a childRP",
       "credit": "",
       "controls": true,
@@ -90,7 +82,6 @@
       "type": "video",
       "src": "../../Assets/Torus/Case Study/OffsetEQRPTool.mp4",
       "poster": "../../Assets/Torus/Case Study/video previews/OffsetEQRPToolPreview.png",
-      "alt": "Offset EQ RP tool generates a symmetrical RP pair",
       "caption": "Offset EQ RP tool generates a symmetrical RP pair",
       "credit": "",
       "controls": true,
@@ -102,28 +93,24 @@
     {
       "id": "fig-09",
       "src": "",
-      "alt": "",
       "caption": "",
       "credit": ""
     },
     {
       "id": "fig-10",
       "src": "",
-      "alt": "",
       "caption": "",
       "credit": ""
     },
     {
       "id": "fig-11",
       "src": "",
-      "alt": "",
       "caption": "",
       "credit": ""
     },
     {
       "id": "fig-12",
       "src": "",
-      "alt": "",
       "caption": "",
       "credit": ""
     }
@@ -158,9 +145,9 @@
       "body": "These frustrations were echoed in the 5 user interviews my team conducted during an exploratory phase. Interview candidates were all working architects with 4-10 years of experience.\n\nAs part of my Revit research, I also learned the fundamentals of creating parametric families. Creating a good parametric family is akin to writing good code. You need a mechanism to store variable data. You need to take that data as input and generate an output. You also want to generally avoid adding unnecessary elements. Just like in code, more cumbersome families mean more bloated projects and slower processing and rendering.",
       "bulletRows": [
         [
-          "Revit families are difficult to create. - \n\n“Families are commonly used and not static...they can be tedious to set up.” - DC\n\n“It’s something I prefer not to do and takes too much of my time [because] it’s forcing us to build it like engineers.” - DI",
-          "Entire company roles are needed to help keep practices consistent. - \n\n“There are schools of thoughts, but people generally don’t follow them. Someone might say it works well when testing them in narrow cases, but I can tell they are not correctly build.” - MA",
-          "Stock families often can't be customized for unique projects. - \n\n“Everything is made new because every project is different.” - IH"
+          "Revit families are difficult to create. - \n\n“Families are commonly used and not static...they can be tedious to set up.” - Danny\n\n“It’s something I prefer not to do and takes too much of my time [because] it’s forcing us to build it like engineers.” - Dincer",
+          "Entire company roles are needed to help keep practices consistent. - \n\n“There are schools of thoughts, but people generally don’t follow them. Someone might say it works well when testing them in narrow cases, but I can tell they are not correctly build.” - Mark",
+          "Stock families often can't be customized for unique projects. - \n\n“Everything is made new because every project is different.” - Ihnil"
         ]
       ],
       "figureIds": [
@@ -286,7 +273,7 @@
               "stamp": {
                 "type": "image",
                 "src": "../../Assets/Torus/Case Study/section10/Tooltips.png",
-                "alt": "Tooltips UI in Torus"
+                "caption": "Tooltips UI in Torus"
               }
             },
             {
@@ -295,7 +282,7 @@
               "stamp": {
                 "type": "image",
                 "src": "../../Assets/Torus/Case Study/section10/RefactorDistanceBox.png",
-                "alt": "Refactored distance input UI in Torus"
+                "caption": "Refactored distance input UI in Torus"
               }
             },
             {
@@ -304,7 +291,7 @@
               "stamp": {
                 "type": "image",
                 "src": "../../Assets/Torus/Case Study/section10/ParameterPanel.png",
-                "alt": "Updated parameter panel design in Torus"
+                "caption": "Updated parameter panel design in Torus"
               }
             }
           ]
@@ -326,7 +313,7 @@
             "stamp": {
               "type": "image",
               "src": "../../Assets/Torus/Case Study/section11/Clasp.png",
-              "alt": "Clasp system concept for locking 2D geometry to reference planes"
+              "caption": "Clasp system concept for locking 2D geometry to reference planes"
             }
           },
           {
@@ -334,7 +321,7 @@
             "stamp": {
               "type": "image",
               "src": "../../Assets/Torus/Case Study/section11/3Dv2D.png",
-              "alt": "2D vs 3D workflow comparison"
+              "caption": "2D vs 3D workflow comparison"
             }
           }
         ]

@@ -68,12 +68,40 @@ const applyContainedMediaSize = (mediaMount) => {
   media.style.maxHeight = "none";
 };
 
+const getSourceMediaAccessibleText = (sourceMedia) => {
+  if (!(sourceMedia instanceof Element)) return "";
+
+  const labelledBy = sourceMedia.getAttribute("aria-labelledby");
+  if (labelledBy) {
+    const text = labelledBy
+      .split(/\s+/)
+      .map((id) => document.getElementById(id)?.textContent?.trim() || "")
+      .filter(Boolean)
+      .join(" ");
+    if (text) return text;
+  }
+
+  const captionText = sourceMedia
+    .closest(".cs-fig")
+    ?.querySelector(".cs-fig-caption")
+    ?.textContent?.trim();
+  if (captionText) return captionText;
+
+  if (sourceMedia instanceof HTMLImageElement) {
+    return sourceMedia.alt || "";
+  }
+
+  return sourceMedia.getAttribute("aria-label") || "";
+};
+
 const createLightboxMediaElement = (sourceMedia) => {
+  const accessibleText = getSourceMediaAccessibleText(sourceMedia);
+
   if (sourceMedia instanceof HTMLImageElement) {
     const image = document.createElement("img");
     image.className = "cs-lightbox-media";
     image.src = sourceMedia.currentSrc || sourceMedia.src;
-    image.alt = sourceMedia.alt || "";
+    image.alt = accessibleText;
     return image;
   }
 
@@ -87,8 +115,7 @@ const createLightboxMediaElement = (sourceMedia) => {
     video.loop = sourceMedia.loop;
     video.muted = sourceMedia.muted;
     video.playsInline = true;
-    const ariaLabel = sourceMedia.getAttribute("aria-label");
-    if (ariaLabel) video.setAttribute("aria-label", ariaLabel);
+    if (accessibleText) video.setAttribute("aria-label", accessibleText);
 
     const sourceTags = Array.from(sourceMedia.querySelectorAll("source"));
     if (sourceTags.length > 0) {

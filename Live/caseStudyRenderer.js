@@ -60,6 +60,15 @@ const bindFlowRowTrackerEvents = () => {
   window.addEventListener("orientationchange", scheduleFlowRowTrackerUpdate);
 };
 
+let mediaCaptionCounter = 0;
+
+const getMediaCaptionId = (blockId = "") => {
+  const trimmedId = String(blockId || "").trim();
+  if (trimmedId) return `${trimmedId}-caption`;
+  mediaCaptionCounter += 1;
+  return `cs-media-caption-${mediaCaptionCounter}`;
+};
+
 const normalizeMedia = (value, defaults = {}) => {
   if (!value || typeof value !== "object") return null;
 
@@ -69,13 +78,13 @@ const normalizeMedia = (value, defaults = {}) => {
 
   const hasShowCaption = Object.prototype.hasOwnProperty.call(value, "showCaption");
   const fallbackShowCaption = defaults.showCaption !== undefined ? defaults.showCaption : true;
+  const resolvedCaption = String(value.caption || value.label || value.alt || "").trim();
 
   return {
     type,
     src,
-    alt: String(value.alt || "").trim(),
     poster: String(value.poster || "").trim(),
-    caption: String(value.caption || "").trim(),
+    caption: resolvedCaption,
     credit: String(value.credit || "").trim(),
     controls: value.controls !== false,
     autoplay: Boolean(value.autoplay),
@@ -87,7 +96,7 @@ const normalizeMedia = (value, defaults = {}) => {
   };
 };
 
-const createMediaElement = (media, className) => {
+const createMediaElement = (media, className, captionId = "") => {
   if (!media?.src) return null;
 
   if (media.type === "video") {
@@ -101,14 +110,19 @@ const createMediaElement = (media, className) => {
     video.loop = Boolean(media.loop);
     video.muted = Boolean(media.muted);
     video.playsInline = true;
-    if (media.alt) video.setAttribute("aria-label", media.alt);
+    if (captionId) {
+      video.setAttribute("aria-labelledby", captionId);
+    } else if (media.caption) {
+      video.setAttribute("aria-label", media.caption);
+    }
     return video;
   }
 
   const img = document.createElement("img");
   img.className = className;
   img.src = media.src;
-  img.alt = media.alt || "";
+  img.alt = captionId ? "" : media.caption || "";
+  if (captionId) img.setAttribute("aria-labelledby", captionId);
   return img;
 };
 
@@ -120,9 +134,8 @@ const normalizeHeroMedia = (hero = {}) =>
     hero.media || {
       type: hero.type || "image",
       src: hero.imageSrc || "",
-      alt: hero.imageAlt || "",
+      caption: hero.caption || hero.label || hero.imageAlt || "",
       poster: hero.poster || "",
-      caption: hero.caption || "",
       credit: hero.credit || "",
       controls: hero.controls,
       autoplay: hero.autoplay,
@@ -130,9 +143,9 @@ const normalizeHeroMedia = (hero = {}) =>
       muted: hero.muted,
       preload: hero.preload,
       variant: "hero",
-      showCaption: false,
+      showCaption: true,
     },
-    { variant: "hero", showCaption: false }
+    { variant: "hero", showCaption: true }
   );
 
 const createMediaBlockElement = ({
@@ -146,18 +159,21 @@ const createMediaBlockElement = ({
   block.className = blockClassName;
   block.id = id || "";
 
-  const mediaEl = createMediaElement(media, mediaClassName);
-  if (!mediaEl) return block;
-  block.append(mediaEl);
-
-  if (
+  const shouldRenderCaption =
     includeCaption &&
     media &&
     media.showCaption !== false &&
-    (media.caption || media.credit)
-  ) {
+    (media.caption || media.credit);
+  const captionId = shouldRenderCaption ? getMediaCaptionId(id) : "";
+
+  const mediaEl = createMediaElement(media, mediaClassName, captionId);
+  if (!mediaEl) return block;
+  block.append(mediaEl);
+
+  if (shouldRenderCaption) {
     const caption = document.createElement("figcaption");
     caption.className = "cs-fig-caption";
+    caption.id = captionId;
     caption.textContent = [media.caption, media.credit].filter(Boolean).join(" | ");
     block.append(caption);
   }
@@ -180,7 +196,7 @@ const createHeroMediaElement = (hero = {}) =>
     media: normalizeHeroMedia(hero),
     blockClassName: "cs-fig cs-fig--hero",
     mediaClassName: "cs-fig-image cs-hero-image",
-    includeCaption: false,
+    includeCaption: true,
   });
 
 const normalizeRowItems = (row) => {
@@ -202,7 +218,7 @@ const normalizeStamp = (value) => {
   if (value && typeof value === "object") {
     const type = value.type === "video" ? "video" : "image";
     const src = String(value.src || "").trim();
-    const alt = String(value.alt || "").trim();
+    const alt = String(value.caption || value.label || value.alt || "").trim();
     const poster = String(value.poster || "").trim();
     if (!src) return null;
     return { type, src, alt, poster };
@@ -217,11 +233,11 @@ const normalizeBulletItem = (item) => {
   }
 
   if (Array.isArray(item)) {
-    const [text = "", maybeStamp = "", legacyAlt = ""] = item;
+    const [text = "", maybeStamp = "", legacyCaption = ""] = item;
     const stamp =
       typeof maybeStamp === "object"
         ? normalizeStamp(maybeStamp)
-        : normalizeStamp({ src: maybeStamp, alt: legacyAlt });
+        : normalizeStamp({ src: maybeStamp, caption: legacyCaption });
     return {
       text: String(text).trim(),
       stamp,
@@ -231,7 +247,9 @@ const normalizeBulletItem = (item) => {
   if (item && typeof item === "object") {
     const text = item.text ?? item.body ?? item.value ?? "";
     const stamp = normalizeStamp(
-      item.stamp ?? item.image ?? { src: item.imageSrc, alt: item.imageAlt }
+      item.stamp ??
+        item.image ??
+        { src: item.imageSrc, caption: item.imageCaption ?? item.imageAlt }
     );
     return {
       text: String(text).trim(),
@@ -248,11 +266,11 @@ const normalizeProgressPairs = (progressRow) => {
 
   for (const item of rawItems) {
     if (Array.isArray(item)) {
-      const [primary = "", secondary = "", maybeStamp = "", legacyAlt = ""] = item;
+      const [primary = "", secondary = "", maybeStamp = "", legacyCaption = ""] = item;
       const stamp =
         typeof maybeStamp === "object"
           ? normalizeStamp(maybeStamp)
-          : normalizeStamp({ src: maybeStamp, alt: legacyAlt });
+          : normalizeStamp({ src: maybeStamp, caption: legacyCaption });
       pairs.push({
         primary: String(primary).trim(),
         secondary: String(secondary).trim(),
@@ -265,7 +283,9 @@ const normalizeProgressPairs = (progressRow) => {
       const primary = item.primary ?? item.left ?? item.title ?? item.label ?? "";
       const secondary = item.secondary ?? item.right ?? item.value ?? item.detail ?? "";
       const stamp = normalizeStamp(
-        item.stamp ?? item.image ?? { src: item.imageSrc, alt: item.imageAlt }
+        item.stamp ??
+          item.image ??
+          { src: item.imageSrc, caption: item.imageCaption ?? item.imageAlt }
       );
       pairs.push({
         primary: String(primary).trim(),
