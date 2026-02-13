@@ -21,12 +21,14 @@
   width: 100%;
   height: 100%;
   max-width: 1400px;
+  padding-bottom: var(--space-500);
   border-radius: var(--radius-large);
-  background: gray;
+  background: var(--color-bg-forest);
   overflow: hidden;
 }
 
 .cs-lightbox-panelHeader {
+  flex: 0 0 auto;
   width: 100%;
   height: fit-content;
   background: var(--color-bg-forest);
@@ -57,27 +59,21 @@
 
 .cs-lightbox-mediaMount {
   --cs-lightbox-zoom: 1;
-  flex: 0 0 100%;
+  flex: 1 1 0;
   width: 100%;
   min-height: 0;
   display: grid;
   place-items: center;
   touch-action: none;
   overflow: hidden;
-  background-color: red;
-}
-
-.cs-lightbox-mediaMount > * {
-  transform: scale(var(--cs-lightbox-zoom));
-  transform-origin: center;
-  max-width: 100%;
-  max-height: 100%;
 }
 
 .cs-lightbox-media {
   display: block;
   width: 100%;
-  height: 200px;
+  height: auto;
+  max-height: 100%;
+  max-width: 100%;
   object-fit: contain;
 }
 

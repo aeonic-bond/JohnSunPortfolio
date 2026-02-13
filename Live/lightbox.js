@@ -25,6 +25,49 @@ const setMediaZoom = (mount, zoom) => {
   mount.style.setProperty("--cs-lightbox-zoom", String(nextZoom));
 };
 
+const getMediaIntrinsicSize = (mediaElement) => {
+  if (mediaElement instanceof HTMLImageElement) {
+    if (mediaElement.naturalWidth > 0 && mediaElement.naturalHeight > 0) {
+      return { width: mediaElement.naturalWidth, height: mediaElement.naturalHeight };
+    }
+    return null;
+  }
+
+  if (mediaElement instanceof HTMLVideoElement) {
+    if (mediaElement.videoWidth > 0 && mediaElement.videoHeight > 0) {
+      return { width: mediaElement.videoWidth, height: mediaElement.videoHeight };
+    }
+    return null;
+  }
+
+  return null;
+};
+
+const applyContainedMediaSize = (mediaMount) => {
+  if (!(mediaMount instanceof HTMLElement)) return;
+  const media = mediaMount.querySelector(".cs-lightbox-media");
+  if (!(media instanceof HTMLImageElement || media instanceof HTMLVideoElement)) return;
+
+  const intrinsicSize = getMediaIntrinsicSize(media);
+  if (!intrinsicSize) return;
+
+  const mountRect = mediaMount.getBoundingClientRect();
+  if (mountRect.width <= 0 || mountRect.height <= 0) return;
+
+  const widthScale = mountRect.width / intrinsicSize.width;
+  const heightScale = mountRect.height / intrinsicSize.height;
+  const scale = Math.min(widthScale, heightScale);
+  if (!Number.isFinite(scale) || scale <= 0) return;
+
+  const widthPx = Math.floor(intrinsicSize.width * scale);
+  const heightPx = Math.floor(intrinsicSize.height * scale);
+
+  media.style.width = `${widthPx}px`;
+  media.style.height = `${heightPx}px`;
+  media.style.maxWidth = "none";
+  media.style.maxHeight = "none";
+};
+
 const createLightboxMediaElement = (sourceMedia) => {
   if (sourceMedia instanceof HTMLImageElement) {
     const image = document.createElement("img");
@@ -74,8 +117,23 @@ const setMediaFromFigure = (figureElement) => {
   const lightboxMedia = createLightboxMediaElement(sourceMedia);
   if (!lightboxMedia) return false;
 
+  const syncMediaSize = () => applyContainedMediaSize(mediaMount);
+
+  if (lightboxMedia instanceof HTMLImageElement) {
+    lightboxMedia.addEventListener("load", syncMediaSize, { once: true });
+  }
+  if (lightboxMedia instanceof HTMLVideoElement) {
+    lightboxMedia.addEventListener("loadedmetadata", syncMediaSize, { once: true });
+  }
+
   mediaMount.replaceChildren(lightboxMedia);
   setMediaZoom(mediaMount, 1);
+  applyContainedMediaSize(mediaMount);
+
+  if (lightboxMedia instanceof HTMLImageElement && lightboxMedia.complete) {
+    window.requestAnimationFrame(syncMediaSize);
+  }
+
   return true;
 };
 
@@ -124,6 +182,10 @@ const openOverlay = (figureElement) => {
   const overlay = ensureOverlay();
   overlay.setAttribute("aria-hidden", "false");
   document.body.classList.add("cs-lightbox-active");
+
+  window.requestAnimationFrame(() => {
+    applyContainedMediaSize(getMediaMount());
+  });
 };
 
 const closeOverlay = () => {
@@ -186,6 +248,11 @@ const initLightbox = () => {
       { passive: false }
     );
   }
+
+  window.addEventListener("resize", () => {
+    if (!isOverlayOpen()) return;
+    applyContainedMediaSize(getMediaMount());
+  });
 
   document.addEventListener("keydown", (event) => {
     if (isOverlayOpen() && (event.ctrlKey || event.metaKey) && ZOOM_KEYS.has(event.key)) {
