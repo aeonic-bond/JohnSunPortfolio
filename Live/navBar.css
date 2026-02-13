@@ -1,0 +1,13 @@
+/* Nav Bar */
+.navBar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: var(--space-block-300) var(--margin-mobile-500);
+  background: var(--color-bg-forest-raise);
+}
+
+.navBar .cs-back-link {
+  color: var(--color-saffron);
+  text-decoration: none;
+}

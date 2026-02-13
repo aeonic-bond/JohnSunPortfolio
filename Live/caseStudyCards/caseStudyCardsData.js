@@ -15,6 +15,7 @@ const CASE_STUDIES = [
     title: "Blueprint",
     description: "Case study summary for Blueprint.",
     ctaLabel: "Read",
+    href: "../blueprint/index.html",
     media: {
       splineUrl: "https://prod.spline.design/5kxmLlprZtzzCVht/scene.splinecode",
     },

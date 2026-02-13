@@ -1,0 +1,35 @@
+{
+  "id": "blueprint",
+  "slug": "blueprint",
+  "status": "draft",
+  "publishedDate": "",
+  "hero": {
+    "title": "Blueprint Case Study",
+    "subtitle": "Draft in progress.",
+    "media": {
+      "type": "image",
+      "src": "",
+      "caption": "",
+      "variant": "hero",
+      "showCaption": false
+    }
+  },
+  "figures": [
+    {
+      "id": "fig-01",
+      "type": "image",
+      "src": "",
+      "caption": "",
+      "credit": "",
+      "showCaption": true
+    }
+  ],
+  "sections": [
+    {
+      "id": "section-01",
+      "header": "Executive Summary",
+      "body": "Add Blueprint case study content here.",
+      "figureIds": []
+    }
+  ]
+}
