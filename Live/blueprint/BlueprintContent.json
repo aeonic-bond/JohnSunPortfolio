@@ -26,9 +26,164 @@
   ],
   "sections": [
     {
-      "id": "section-01",
+      "id": "section-00",
       "header": "Executive Summary",
-      "body": "Add Blueprint case study content here.",
+      "figureIds": [],
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "I led Toll Brothers' migration from Sketch to Figma and created Blueprint, our first digital design system. Blueprint streamlined design and saved hundreds of hours for the design and marketing team. I later explored options to bridge the system to the development team. By leveraging the recently released Figma Model Context Protocol (MCP) and AI assistants like Codex, I codified Blueprint into a functional Storybook library with working components. I then used Storybook as context in an agentic workflow to generate functional prototypes from design frames."
+        }
+      ]
+    },
+    {
+      "id": "section-01",
+      "header": "Background",
+      "figureIds": [],
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Toll Brothers is a homebuilder with a portfolio of new home communities across 24 states that maintains a national brand. In the past, all of our branding work has been crafted in silos, disseminated through PDFs, and prioritized print media. Design ideas that influenced the site were never properly spelled out and only informally understood. This resulted in disjointed user experiences and one-off designs. I led a company-wide migration from Sketch to Figma and developed our first digital design system called Blueprint."
+        }
+      ]
+    },
+    {
+      "id": "section-02",
+      "header": "Goals",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "At the start of the Figma migration, I was given the nebulous task to create a design system for Toll Brothers. As I learned more about design systems in general, I developed 3 concrete goals. When agentic workflows became popular in 2024-2025 and the Figma MCP was released in 2025, I added a 4th goal."
+        },
+        {
+          "type": "bulletRow",
+          "items": [
+            "Research - Look at industry leading best practices and theories.",
+            "Gather - Categorize pre-existing Toll Brothers site elements.",
+            "Promote - Get multiple teams on board with using components and tokens as the common language.",
+            "Generate - Develop an agentic workflow to automatically generate working prototypes."
+          ]
+        }
+      ],
+      "figureIds": []
+    },
+    {
+      "id": "section-03",
+      "header": "Research",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "I began by compiling and indexing all design elements from the official brand guides, the live site, and previous wireframes. I surveyed the landscape of industry-leading public design systems, such as Google's Material UI (MUI) and Atlassian's Design System. While these offered best practices for systems at enormous scales, Toll Brothers has a tightly-controlled brand guideline and needed to adapt those practices for a smaller scale. To better understand the underlying theory behind creating a design system, I read several articles on the topic and picked two to highlight.\n\nThe first is \"Implementing a Pattern Library in the Real World: A Yahoo! Case Study\" by Erin Malone (2005). In this article, Erin frames the process, not as creating an artifact called a design system, but simply as solving pain points in team communication. The second is \"Building a Visual Design Language\" by Karri Saarinen (2016), detailing how his bootstrapped Airbnb's Design System. One of my favorite lines describes how principles do not naturally translate into practice.\n\n\"Traditionally, many style guides define components as atomic components, which are then used to build more complex molecules. In theory, this works well to create coherent and flexible systems. In practice, however, what often happens is that these re-usable atoms are used in many different ways, allowing all kinds of molecules to be created.\"\n\nIn synthesizing my research, I fleshed out 3 key concerns that Blueprint needed to address."
+        },
+        {
+          "type": "bulletRow",
+          "items": [
+            "Categorization - How are assets and ideas organized",
+            "Accessibility - How to make the site more accessible to users with disabilities",
+            "Tokenization - How to systematize design decisions"
+          ]
+        }
+      ],
+      "figureIds": []
+    },
+    {
+      "id": "section-04",
+      "header": "Concern 1 - Categorization",
+      "figureIds": [],
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "At time of writing, the industry-standard design systems I looked at generally converged on three major categories of design objects. After taking inventory of all our most reused visual elements on site, I organized all of our assets into Foundations, Components, and Patterns.\n\nFoundation references visual concepts like color, typography, accessibility, layouts, and spacing.\n\nComponents are the basic building blocks for digital design. A button is the quintessential example.\n\nPatterns are typically defined as things that solve a specific need, but there's more variability in how this category is used. This makes sense as patterns are more contextual to the platform itself. A form field is a quintessential example."
+        }
+      ]
+    },
+    {
+      "id": "section-05",
+      "header": "Concern 2 - Accessibility",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Accessibility can have a steep learning curve. Based on personal experience, many designers seem to only consider color contrast and component sizing because designers have the most agency over those aspects. While it's a good start, a more holistic approach to accessibility requires a more thorough understanding of WCAG 2.2, the standard authority as of 2025.\n\nI started with WCAG's Easy Checks to help assess basic accessibility concerns. Then, I read through the official 13 WCAG guidelines, focused on the ones relevant to Toll Brothers, and presented the work to designers and developers. The documentation for this auditing process is currently the bedrock for accessibility in our design system. The following are the most actionable guidelines for designers from WCAG 2.2."
+        },
+        {
+          "type": "bulletRow",
+          "items": [
+            "Guidelines 1.1 and 1.2 - Add alt text for all images, floorplans, site plans. Add captions to videos without dialogue.",
+            "Guideline 1.4 - Maintain color contrast minimums. Ensure 200% text resizing makes sense and can be navigated without two axis scrolling. Ensure obscuring overlays are easily dismissable.",
+            "Guideline 2.1 and 2.4 - Ensure the site is navigable by keyboard. Provide shortcuts and descriptive cues to aid keyboard navigation.",
+            "Guideline 3.3 - Ensure form fields are properly labeled with ARIA. Provide suggestive inputs when we can reasonably assume input. Provide suggestions for correcting incorrect inputs."
+          ]
+        }
+      ],
+      "figureIds": []
+    },
+    {
+      "id": "section-06",
+      "header": "Concern 3 - Tokenization",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "4 of the 6 design systems (Google, Atlassian, Shopify, IBM) described a tokenized approach of taking design decisions (i.e. color, spacing, typography, corner radii, object shadows) and setting each individual value into a token. As a token set scales, all 4 introduce the concept of a layered setup that resembles the following list with some variations."
+        },
+        {
+          "type": "paragraph",
+          "text": "In considering what would work best for Toll Brothers strict brand guidelines, I adapted this setup by collapsing Layer 0, 1, and 2 into a single tight set of semantic tokens for color and typography in Figma, and eventually, I coded the tokens in Storybook. I believe this is the best practice for a tightly-controlled brand to adopt tokenization.\n\nI want to quickly address the 2 exceptions to the general layering rule. Apple's Human Interface Guidelines skips recommending tokens entirely because prioritizes function over branding. Salesforce Lightning Design System-2 is moving away from tokens (present in SLDS-1) in favor of styling hooks. Styling hooks use conditional logic to derive a token value vs the token having a pre-selected value. Luckily for us, this level of strategy is overkill for Blueprint, but it might be more appropriate in the future when theming becomes a priority."
+        },
+        {
+          "type": "bulletRow",
+          "items": [
+            "(Layer 0) Raw Values - Represent all possible tokens that could ever be in the system. Not usually considered an official layer. (#0070CD)",
+            "(Layer 1) Reference Tokens - Denote a limited set of tokens that will be used in a project and each token is named with a scaling system. (blue.400)",
+            "(Layer 2) Semantic Tokens - Explains the reasoning of a single decision node. These should be the most widely token format in Figma. (background.blue)",
+            "(Layer 3) Component Tokens - Used exclusively for a specific reusable component. These should be used in development to control the final UI. (button.background)"
+          ]
+        }
+      ],
+      "figureIds": []
+    },
+    {
+      "id": "section-07",
+      "header": "Adoption",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "\"Should work in theory\" does not always translate to \"works in practice,\" and adoption can often be blocked by either user inexperience or unintuitive design. I evangelized Blueprint with explainer decks, quick reference sheets, and feedback sessions. My fellow designers provided me with valuable feedback to help me adjust and iterate on the design system, just like with any other project. Ultimately, the knowledge sharing did help the design team save hundreds of design hours and increased speed to handoff. However, we hit a wall with cross-team adoption. Since the entire company was in mid-migration to Figma, overall knowledge of Figma was still inconsistent across design and dev. This often led to awkward communication issues and constant back-and-forth. Wireframes were sometimes being interpreted visually rather than through assigned styles or tokens. Tokens were also inconsistently applied. Addressing this issue only through knowledge sharing would have been an uphill political task."
+        }
+      ],
+      "figureIds": []
+    },
+    {
+      "id": "section-08",
+      "header": "Agentic Workflow for Figma-to-Code",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "At time of writing, the Figma MCP (F-MCP) was released a few months prior, and it has profoundly shaped my current thinking for design handoff workflows. The \"source of truth\" should ideally live in a codified repository like Storybook rather than in Figma. However, we lacked the dedicated engineering resources to build it. Early on, I experimented with AI coding using Claude, Gemini, and ChatGPT to try to create a Storybook for Blueprint, but at that time, these AI tools had speed and reliability issues.\n\nThe release of the F-MCP were game changers that enabled agentic plugins like OpenAI's Codex extension in VSC to directly read Figma file exports as context. As such, I guided Codex to create a working component in code based on its construction in Figma. I dictated the exact token setup to match the intent in Figma. With guidance, Codex interpreted, added, and applied tokens from Figma into Storybook. I directed the components to be built with accessibility requirements in mind. Beyond individual components, I experimented with feeding Codex entire wireframes to generate functional prototypes. In 3 ways, this agentic workflow solved the inconsistent handoff and implementation issues by acting as a singular interpreter between design and dev."
+        },
+        {
+          "type": "bulletRow",
+          "items": [
+            "Designers no longer need to spend hours ensuring every single frame is perfectly tokenized; AI agents have the context to apply tokens correctly even if the input is imperfect.",
+            "Delivering a tokenized, coded prototype eliminates the need for developers to manually scan Figma or decipher design-centric token structures.",
+            "By hosting Blueprint in Storybook, designers can ensure accessibility requirements are met not just visually, but functionally in the code."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Full implementation of using Storybook as context for an agentic workflow are still being tested, but early tests of the automated prototyping feature have been promising. Naturally, the next steps will be to audit each component to see how much effort it will take to get them to production-ready status."
+        }
+      ],
+      "figureIds": []
+    },
+    {
+      "id": "section-09",
+      "header": "Conclusion",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Blueprint did not emerge from a linear path, but rather through ongoing feedback cycles, adaptation to new technology, and the guiding principle of meeting people where they are at. Prior to the Storybook implementation, Blueprint had already successfully facilitated a company-wide Figma migration and saved hundreds of hours in design time. Now that it is being built in code as part of an agentic workflow, Blueprint has evolved from static documentation into a living translator between design intent and functional implementation."
+        }
+      ],
       "figureIds": []
     }
   ]
