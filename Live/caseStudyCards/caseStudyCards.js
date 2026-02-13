@@ -30,7 +30,11 @@ const createCaseStudyCard = ({
   titleEl.className = "card_title";
   titleEl.textContent = title;
 
-  card.append(inner, titleEl);
+  const titleDiv = document.createElement("div");
+  titleDiv.className = "card_title_div";
+  titleDiv.append(titleEl);
+
+  card.append(inner, titleDiv);
 
   const footer = document.createElement("div");
   footer.className = "card_footer_div";
