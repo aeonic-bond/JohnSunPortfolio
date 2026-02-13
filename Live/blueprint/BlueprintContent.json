@@ -14,21 +14,10 @@
       "showCaption": false
     }
   },
-  "figures": [
-    {
-      "id": "fig-01",
-      "type": "image",
-      "src": "",
-      "caption": "",
-      "credit": "",
-      "showCaption": true
-    }
-  ],
   "sections": [
     {
       "id": "section-00",
       "header": "Executive Summary",
-      "figureIds": [],
       "blocks": [
         {
           "type": "paragraph",
@@ -39,7 +28,6 @@
     {
       "id": "section-01",
       "header": "Background",
-      "figureIds": [],
       "blocks": [
         {
           "type": "paragraph",
@@ -64,8 +52,7 @@
             "Generate - Develop an agentic workflow to automatically generate working prototypes."
           ]
         }
-      ],
-      "figureIds": []
+      ]
     },
     {
       "id": "section-03",
@@ -73,7 +60,70 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "I began by compiling and indexing all design elements from the official brand guides, the live site, and previous wireframes. I surveyed the landscape of industry-leading public design systems, such as Google's Material UI (MUI) and Atlassian's Design System. While these offered best practices for systems at enormous scales, Toll Brothers has a tightly-controlled brand guideline and needed to adapt those practices for a smaller scale. To better understand the underlying theory behind creating a design system, I read several articles on the topic and picked two to highlight.\n\nThe first is \"Implementing a Pattern Library in the Real World: A Yahoo! Case Study\" by Erin Malone (2005). In this article, Erin frames the process, not as creating an artifact called a design system, but simply as solving pain points in team communication. The second is \"Building a Visual Design Language\" by Karri Saarinen (2016), detailing how his bootstrapped Airbnb's Design System. One of my favorite lines describes how principles do not naturally translate into practice.\n\n\"Traditionally, many style guides define components as atomic components, which are then used to build more complex molecules. In theory, this works well to create coherent and flexible systems. In practice, however, what often happens is that these re-usable atoms are used in many different ways, allowing all kinds of molecules to be created.\"\n\nIn synthesizing my research, I fleshed out 3 key concerns that Blueprint needed to address."
+          "text": "I began by compiling and indexing all design elements from the official brand guides, the live site, and previous wireframes. I surveyed the landscape of industry-leading public design systems, such as Google's Material UI (MUI) and Atlassian's Design System."
+        },
+        {
+          "type": "iconGrid",
+          "items": [
+            {
+              "text": "Material Design 3",
+              "stamp": {
+                "type": "image",
+                "src": "../../Assets/Blueprint/Material Design Logo.svg",
+                "caption": "Material Design logo",
+                "variant": "small"
+              }
+            },
+            {
+              "text": "Lightning Design System 2",
+              "stamp": {
+                "type": "image",
+                "src": "../../Assets/Blueprint/Salesforce Logo.svg",
+                "caption": "Salesforce logo",
+                "variant": "small"
+              }
+            },
+            {
+              "text": "Polaris",
+              "stamp": {
+                "type": "image",
+                "src": "../../Assets/Blueprint/Shopify Logo.svg",
+                "caption": "Shopify logo",
+                "variant": "small"
+              }
+            },
+            {
+              "text": "Atlassian Design",
+              "stamp": {
+                "type": "image",
+                "src": "../../Assets/Blueprint/Atlassian Logo.svg",
+                "caption": "Atlassian logo",
+                "variant": "small"
+              }
+            },
+            {
+              "text": "Human Interface Guidelines",
+              "stamp": {
+                "type": "image",
+                "src": "../../Assets/Blueprint/Apple logo.svg",
+                "caption": "Apple logo",
+                "variant": "small"
+              }
+            },
+            {
+              "text": "IBM Carbon",
+              "stamp": {
+                "type": "image",
+                "src": "../../Assets/Blueprint/IBM Carbon Logo.svg",
+                "caption": "IBM Carbon logo",
+                "variant": "small"
+              }
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "While these offered best practices for systems at enormous scales, Toll Brothers has a tightly-controlled brand guideline and needed to adapt those practices for a smaller scale. To better understand the underlying theory behind creating a design system, I read several articles on the topic and picked two to highlight.\n\nThe first is \"Implementing a Pattern Library in the Real World: A Yahoo! Case Study\" by Erin Malone (2005). In this article, Erin frames the process, not as creating an artifact called a design system, but simply as solving pain points in team communication. The second is \"Building a Visual Design Language\" by Karri Saarinen (2016), detailing how his bootstrapped Airbnb's Design System. One of my favorite lines describes how principles do not naturally translate into practice.\n\n\"Traditionally, many style guides define components as atomic components, which are then used to build more complex molecules. In theory, this works well to create coherent and flexible systems. In practice, however, what often happens is that these re-usable atoms are used in many different ways, allowing all kinds of molecules to be created.\"\n\nIn synthesizing my research, I fleshed out 3 key concerns that Blueprint needed to address."
         },
         {
           "type": "bulletRow",
@@ -83,13 +133,11 @@
             "Tokenization - How to systematize design decisions"
           ]
         }
-      ],
-      "figureIds": []
+      ]
     },
     {
       "id": "section-04",
       "header": "Concern 1 - Categorization",
-      "figureIds": [],
       "blocks": [
         {
           "type": "paragraph",
@@ -114,8 +162,7 @@
             "Guideline 3.3 - Ensure form fields are properly labeled with ARIA. Provide suggestive inputs when we can reasonably assume input. Provide suggestions for correcting incorrect inputs."
           ]
         }
-      ],
-      "figureIds": []
+      ]
     },
     {
       "id": "section-06",
@@ -138,8 +185,7 @@
             "(Layer 3) Component Tokens - Used exclusively for a specific reusable component. These should be used in development to control the final UI. (button.background)"
           ]
         }
-      ],
-      "figureIds": []
+      ]
     },
     {
       "id": "section-07",
@@ -149,8 +195,7 @@
           "type": "paragraph",
           "text": "\"Should work in theory\" does not always translate to \"works in practice,\" and adoption can often be blocked by either user inexperience or unintuitive design. I evangelized Blueprint with explainer decks, quick reference sheets, and feedback sessions. My fellow designers provided me with valuable feedback to help me adjust and iterate on the design system, just like with any other project. Ultimately, the knowledge sharing did help the design team save hundreds of design hours and increased speed to handoff. However, we hit a wall with cross-team adoption. Since the entire company was in mid-migration to Figma, overall knowledge of Figma was still inconsistent across design and dev. This often led to awkward communication issues and constant back-and-forth. Wireframes were sometimes being interpreted visually rather than through assigned styles or tokens. Tokens were also inconsistently applied. Addressing this issue only through knowledge sharing would have been an uphill political task."
         }
-      ],
-      "figureIds": []
+      ]
     },
     {
       "id": "section-08",
@@ -169,11 +214,49 @@
           ]
         },
         {
+          "type": "progressRow",
+          "variant": "3Blocks",
+          "items": [
+            {
+              "Primary": "Figma variables and text styles",
+              "Secondary": "Storybook as library and context",
+              "Tertiary": "Codex or Claude Code to auto-generate working prototypes",
+              "PrimaryStamp": {
+                "type": "image",
+                "src": "../../Assets/Blueprint/Material Design Logo.svg",
+                "caption": "Material Design logo",
+                "variant": "small"
+              },
+              "SecondaryStamp": {
+                "type": "image",
+                "src": "../../Assets/Blueprint/Atlassian Logo.svg",
+                "caption": "Atlassian logo",
+                "variant": "small"
+              },
+              "TertiaryStamp": {
+                "type": "image",
+                "src": "../../Assets/Blueprint/IBM Carbon Logo.svg",
+                "caption": "IBM Carbon logo",
+                "variant": "small"
+              }
+            }
+          ]
+        },
+        {
           "type": "paragraph",
           "text": "Full implementation of using Storybook as context for an agentic workflow are still being tested, but early tests of the automated prototyping feature have been promising. Naturally, the next steps will be to audit each component to see how much effort it will take to get them to production-ready status."
+        },
+        {
+          "type": "figure",
+          "figure": {
+            "type": "image",
+            "src": "../../Assets/Blueprint/Storybook.png",
+            "caption": "Blueprint built in Storybook contains an interactive catalog of UI components with documented props and variants.",
+            "credit": "",
+            "showCaption": true
+          }
         }
-      ],
-      "figureIds": []
+      ]
     },
     {
       "id": "section-09",
@@ -183,8 +266,7 @@
           "type": "paragraph",
           "text": "Blueprint did not emerge from a linear path, but rather through ongoing feedback cycles, adaptation to new technology, and the guiding principle of meeting people where they are at. Prior to the Storybook implementation, Blueprint had already successfully facilitated a company-wide Figma migration and saved hundreds of hours in design time. Now that it is being built in code as part of an agentic workflow, Blueprint has evolved from static documentation into a living translator between design intent and functional implementation."
         }
-      ],
-      "figureIds": []
+      ]
     }
   ]
 }

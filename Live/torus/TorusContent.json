@@ -14,114 +14,10 @@
       "showCaption": false
     }
   },
-  "figures": [
-    {
-      "id": "fig-00",
-      "src": "",
-      "caption": "",
-      "credit": ""
-    },
-    {
-      "id": "fig-01",
-      "src": "",
-      "caption": "",
-      "credit": ""
-    },
-    {
-      "id": "fig-02",
-      "src": "../../Assets/Torus/Case Study/RevitScreenshot.png",
-      "caption": "Screenshot of Autodesk Revit shows outdated and overwhelming UI.",
-      "credit": ""
-    },
-    {
-      "id": "fig-03",
-      "src": "",
-      "caption": "",
-      "credit": ""
-    },
-    {
-      "id": "fig-04",
-      "src": "../../Assets/Torus/Case Study/TorusMVP.png",
-      "caption": "UI of Torus MVP in the default 3D perspective view.",
-      "credit": ""
-    },
-    {
-      "id": "fig-05",
-      "src": "",
-      "caption": "",
-      "credit": ""
-    },
-    {
-      "id": "fig-06",
-      "type": "video",
-      "src": "../../Assets/Torus/Case Study/OffsetRPTool.mp4",
-      "poster": "../../Assets/Torus/Case Study/video previews/OffsetRPToolPreview.png",
-      "caption": "Offset RP tool creates a child RP.",
-      "credit": "",
-      "controls": true,
-      "autoplay": false,
-      "loop": false,
-      "muted": false,
-      "preload": "metadata"
-    },
-    {
-      "id": "fig-07",
-      "type": "video",
-      "src": "../../Assets/Torus/Case Study/SettingParameter.mp4",
-      "poster": "../../Assets/Torus/Case Study/video previews/SettingParameterPreview.png",
-      "caption": "Setting a LENGTH parameter after creating a childRP.",
-      "credit": "",
-      "controls": true,
-      "autoplay": false,
-      "loop": false,
-      "muted": false,
-      "preload": "metadata"
-    },
-    {
-      "id": "fig-08",
-      "type": "video",
-      "src": "../../Assets/Torus/Case Study/OffsetEQRPTool.mp4",
-      "poster": "../../Assets/Torus/Case Study/video previews/OffsetEQRPToolPreview.png",
-      "caption": "Offset EQ RP tool creates a symmetrical RP pair.",
-      "credit": "",
-      "controls": true,
-      "autoplay": false,
-      "loop": false,
-      "muted": false,
-      "preload": "metadata"
-    },
-    {
-      "id": "fig-09",
-      "src": "",
-      "caption": "",
-      "credit": ""
-    },
-    {
-      "id": "fig-10",
-      "src": "",
-      "caption": "",
-      "credit": ""
-    },
-    {
-      "id": "fig-11",
-      "src": "",
-      "caption": "",
-      "credit": ""
-    },
-    {
-      "id": "fig-12",
-      "src": "",
-      "caption": "",
-      "credit": ""
-    }
-  ],
   "sections": [
     {
       "id": "section-00",
       "header": "Executive Summary",
-      "figureIds": [
-        "fig-00"
-      ],
       "blocks": [
         {
           "type": "paragraph",
@@ -138,9 +34,6 @@
           "Revit’s lack of prescriptive UX conflicts with modern practices that value strict logical processes.",
           "The UI simply feels unintuitive. Key tools are hidden amongst many other tools with no logical order."
         ]
-      ],
-      "figureIds": [
-        "fig-01"
       ],
       "blocks": [
         {
@@ -159,22 +52,24 @@
           "Stock families often can't be customized for unique projects. - \n\n“Everything is made new because every project is different.” - Ihnil"
         ]
       ],
-      "figureIds": [
-        "fig-02"
-      ],
       "blocks": [
         {
           "type": "paragraph",
           "text": "These frustrations were echoed in the 5 user interviews my team conducted during an exploratory phase. Interview candidates were all working architects with 4-10 years of experience.\n\nAs part of my Revit research, I also learned the fundamentals of creating parametric families. Creating a good parametric family is akin to writing good code. You need a mechanism to store variable data. You need to take that data as input and generate an output. You also want to generally avoid adding unnecessary elements. Just like in code, more cumbersome families mean more bloated projects and slower processing and rendering."
+        },
+        {
+          "type": "figure",
+          "figure": {
+            "src": "../../Assets/Torus/Case Study/RevitScreenshot.png",
+            "caption": "Screenshot of Autodesk Revit shows outdated and overwhelming UI.",
+            "credit": ""
+          }
         }
       ]
     },
     {
       "id": "section-03",
       "header": "Project Scope",
-      "figureIds": [
-        "fig-03"
-      ],
       "blocks": [
         {
           "type": "paragraph",
@@ -185,22 +80,24 @@
     {
       "id": "section-04",
       "header": "MVP Design Ideation",
-      "figureIds": [
-        "fig-04"
-      ],
       "blocks": [
         {
           "type": "paragraph",
           "text": "I led the product design and consulted Matthew and Nicky on domain knowledge. To start wireframing the MVP, I drew inspiration from Figma and Onshape. I relied on the basic arch structure, with a panel on the left and right and a toolbox on top.\n\nAt the start, I made one key decision to deviate from Revit and include an Asset Tree for two primary reasons. The obvious reason was to allow the user to see all assets being added, which would encourage them to stay organized, knowing that each new asset was being recorded. The second reason was tied to a crucial feature that Matthew and Nicky pushed for. Torus would force objects like reference planes to have strictly enforced parent/child relationships. An Asset Tree would help users visualize the logic behind those relationships significantly better than the 3D environment alone can.\n\nFor the right-side panel, I decided to keep the Parameter Panel visible, communicating that parameters are fundamental to Torus' workflow."
+        },
+        {
+          "type": "figure",
+          "figure": {
+            "src": "../../Assets/Torus/Case Study/TorusMVP.png",
+            "caption": "UI of Torus MVP in the default 3D perspective view.",
+            "credit": ""
+          }
         }
       ]
     },
     {
       "id": "section-05",
       "header": "Determining Key Functionality",
-      "figureIds": [
-        "fig-05"
-      ],
       "blocks": [
         {
           "type": "paragraph",
@@ -219,9 +116,6 @@
     {
       "id": "section-06",
       "header": "The UX of Adding Reference Planes",
-      "figureIds": [
-        "fig-06"
-      ],
       "blocks": [
         {
           "type": "paragraph",
@@ -238,41 +132,77 @@
         {
           "type": "paragraph",
           "text": "There was a design fork at Step 3. I could prompt the user to enter a distance and/or a parameter, and the child plane is generated automatically. I ultimately decided against this and opted for the user manually placing it with the cursor. I didn't want to completely strip away the pen-and-paper drafting mimicry that Revit relied on, as I was told verbatim, \"most architects are still artists at heart, and not developers.\""
+        },
+        {
+          "type": "figure",
+          "figure": {
+            "type": "video",
+            "src": "../../Assets/Torus/Case Study/OffsetRPTool.mp4",
+            "poster": "../../Assets/Torus/Case Study/video previews/OffsetRPToolPreview.png",
+            "caption": "Offset RP tool creates a child RP.",
+            "credit": "",
+            "controls": true,
+            "autoplay": false,
+            "loop": false,
+            "muted": false,
+            "preload": "metadata"
+          }
         }
       ]
     },
     {
       "id": "section-07",
       "header": "The UX of Setting Parameters",
-      "figureIds": [
-        "fig-07"
-      ],
       "blocks": [
         {
           "type": "paragraph",
           "text": "Next, I worked on streamlining the parameter-setting UX. In Revit, setting a single parameter is a minimum 2-step process with 2 different tools.\n\nFor Torus, I wanted to reduce it to 1 step and 1 feature by seamlessly integrating parameter setting with RP creation. I designed the offsetRP tool to have an automatic distance indicator. This distance indicator consisted of a dotted line connecting the RP to its parent and a value box. I designed the value box to turn into an input field where the user can type a parameter name and press Enter to confirm."
+        },
+        {
+          "type": "figure",
+          "figure": {
+            "type": "video",
+            "src": "../../Assets/Torus/Case Study/SettingParameter.mp4",
+            "poster": "../../Assets/Torus/Case Study/video previews/SettingParameterPreview.png",
+            "caption": "Setting a LENGTH parameter after creating a childRP.",
+            "credit": "",
+            "controls": true,
+            "autoplay": false,
+            "loop": false,
+            "muted": false,
+            "preload": "metadata"
+          }
         }
       ]
     },
     {
       "id": "section-08",
       "header": "The OffsetEQRP Tool",
-      "figureIds": [
-        "fig-08"
-      ],
       "blocks": [
         {
           "type": "paragraph",
           "text": "Later in the MVP design process, I slightly expanded the scope and designed the OffsetEQRP tool to accommodate a common workflow. Since many families are symmetrical, a common Revit workflow is to create pairs of parallel RPs and then constrain them to be equidistant (EQ) from a center. To streamline this particularly common flow, I designed the OffsetEQRP tool to behave similarly to OffsetRP but automatically generate a mirrored RP. Both RPs would be added to an EQ group in the asset panel, and a parameter can be applied to the total distance between them."
+        },
+        {
+          "type": "figure",
+          "figure": {
+            "type": "video",
+            "src": "../../Assets/Torus/Case Study/OffsetEQRPTool.mp4",
+            "poster": "../../Assets/Torus/Case Study/video previews/OffsetEQRPToolPreview.png",
+            "caption": "Offset EQ RP tool creates a symmetrical RP pair.",
+            "credit": "",
+            "controls": true,
+            "autoplay": false,
+            "loop": false,
+            "muted": false,
+            "preload": "metadata"
+          }
         }
       ]
     },
     {
       "id": "section-09",
       "header": "Demo Building",
-      "figureIds": [
-        "fig-09"
-      ],
       "blocks": [
         {
           "type": "paragraph",
@@ -291,9 +221,6 @@
     {
       "id": "section-10",
       "header": "Demo Testing & Iteration",
-      "figureIds": [
-        "fig-10"
-      ],
       "blocks": [
         {
           "type": "paragraph",
@@ -360,9 +287,6 @@
           }
         ]
       ],
-      "figureIds": [
-        "fig-11"
-      ],
       "blocks": [
         {
           "type": "paragraph",
@@ -373,9 +297,6 @@
     {
       "id": "section-12",
       "header": "Conclusion",
-      "figureIds": [
-        "fig-12"
-      ],
       "blocks": [
         {
           "type": "paragraph",

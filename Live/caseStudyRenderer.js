@@ -212,7 +212,7 @@ const normalizeStamp = (value) => {
 
   if (typeof value === "string") {
     const src = value.trim();
-    return src ? { type: "image", src, alt: "" } : null;
+    return src ? { type: "image", src, alt: "", variant: "" } : null;
   }
 
   if (value && typeof value === "object") {
@@ -220,8 +220,9 @@ const normalizeStamp = (value) => {
     const src = String(value.src || "").trim();
     const alt = String(value.caption || value.label || value.alt || "").trim();
     const poster = String(value.poster || "").trim();
+    const variant = String(value.variant || "").trim().toLowerCase();
     if (!src) return null;
-    return { type, src, alt, poster };
+    return { type, src, alt, poster, variant };
   }
 
   return null;
@@ -260,36 +261,102 @@ const normalizeBulletItem = (item) => {
   return { text: "", stamp: null };
 };
 
-const normalizeProgressPairs = (progressRow) => {
+const normalizeProgressPairs = (progressRow, options = {}) => {
+  const isThreeBlocks = Boolean(options.isThreeBlocks);
   const rawItems = normalizeRowItems(progressRow);
   const pairs = [];
 
   for (const item of rawItems) {
     if (Array.isArray(item)) {
-      const [primary = "", secondary = "", maybeStamp = "", legacyCaption = ""] = item;
-      const stamp =
-        typeof maybeStamp === "object"
-          ? normalizeStamp(maybeStamp)
-          : normalizeStamp({ src: maybeStamp, caption: legacyCaption });
+      const [primary = "", secondary = "", third = "", fourth = "", fifth = "", sixth = ""] = item;
+      let tertiary = "";
+      let stamp = null;
+      let primaryStamp = null;
+      let secondaryStamp = null;
+      let tertiaryStamp = null;
+
+      if (isThreeBlocks) {
+        tertiary = typeof third === "string" ? third.trim() : "";
+        primaryStamp = normalizeStamp(
+          (fourth && typeof fourth === "object" ? fourth : null) ??
+            (typeof fourth === "string" ? { src: fourth, caption: "" } : null)
+        );
+        secondaryStamp = normalizeStamp(
+          (fifth && typeof fifth === "object" ? fifth : null) ??
+            (typeof fifth === "string" ? { src: fifth, caption: "" } : null)
+        );
+        tertiaryStamp = normalizeStamp(
+          (sixth && typeof sixth === "object" ? sixth : null) ??
+            (typeof sixth === "string" ? { src: sixth, caption: "" } : null)
+        );
+      } else {
+        stamp =
+          typeof third === "object"
+            ? normalizeStamp(third)
+            : normalizeStamp({ src: third, caption: fourth });
+      }
+
       pairs.push({
         primary: String(primary).trim(),
         secondary: String(secondary).trim(),
+        tertiary: String(tertiary).trim(),
+        primaryStamp,
+        secondaryStamp,
+        tertiaryStamp,
         stamp,
       });
       continue;
     }
 
     if (item && typeof item === "object") {
-      const primary = item.primary ?? item.left ?? item.title ?? item.label ?? "";
-      const secondary = item.secondary ?? item.right ?? item.value ?? item.detail ?? "";
+      const primary =
+        item.primary ??
+        item.Primary ??
+        item.left ??
+        item.title ??
+        item.label ??
+        "";
+      const secondary =
+        item.secondary ??
+        item.Secondary ??
+        item.right ??
+        item.value ??
+        item.detail ??
+        "";
+      const tertiary =
+        item.tertiary ??
+        item.Tertiary ??
+        item.third ??
+        item.extra ??
+        "";
+      const primaryStamp = normalizeStamp(
+        item.primaryStamp ??
+          item.PrimaryStamp ??
+          { src: item.primaryImageSrc, caption: item.primaryImageCaption ?? item.primaryImageAlt }
+      );
+      const secondaryStamp = normalizeStamp(
+        item.secondaryStamp ??
+          item.SecondaryStamp ??
+          { src: item.secondaryImageSrc, caption: item.secondaryImageCaption ?? item.secondaryImageAlt }
+      );
+      const tertiaryStamp = normalizeStamp(
+        item.tertiaryStamp ??
+          item.TertiaryStamp ??
+          { src: item.tertiaryImageSrc, caption: item.tertiaryImageCaption ?? item.tertiaryImageAlt }
+      );
       const stamp = normalizeStamp(
         item.stamp ??
+          item.Stamp ??
           item.image ??
           { src: item.imageSrc, caption: item.imageCaption ?? item.imageAlt }
       );
       pairs.push({
         primary: String(primary).trim(),
         secondary: String(secondary).trim(),
+        tertiary: String(tertiary).trim(),
+        primaryStamp,
+        secondaryStamp,
+        tertiaryStamp,
         stamp,
       });
       continue;
@@ -301,19 +368,36 @@ const normalizeProgressPairs = (progressRow) => {
         pairs.push({
           primary: match[1].trim(),
           secondary: match[2].trim(),
+          tertiary: "",
+          primaryStamp: null,
+          secondaryStamp: null,
+          tertiaryStamp: null,
           stamp: null,
         });
       } else {
         pairs.push({
           primary: item.trim(),
           secondary: "",
+          tertiary: "",
+          primaryStamp: null,
+          secondaryStamp: null,
+          tertiaryStamp: null,
           stamp: null,
         });
       }
     }
   }
 
-  return pairs.filter((pair) => pair.primary || pair.secondary || pair.stamp);
+  return pairs.filter(
+    (pair) =>
+      pair.primary ||
+      pair.secondary ||
+      pair.tertiary ||
+      pair.primaryStamp ||
+      pair.secondaryStamp ||
+      pair.tertiaryStamp ||
+      pair.stamp
+  );
 };
 
 const createStampElement = (stamp, className = "cs-stamp") => {
@@ -322,6 +406,9 @@ const createStampElement = (stamp, className = "cs-stamp") => {
 
   const stampEl = document.createElement("div");
   stampEl.className = className;
+  if (normalized.variant === "small") {
+    stampEl.classList.add("cs-stamp--small");
+  }
 
   if (normalized.type === "video") {
     const video = document.createElement("video");
@@ -346,7 +433,12 @@ const createStampElement = (stamp, className = "cs-stamp") => {
   return stampEl;
 };
 
-const createItemTextElement = (value, rootClassName = "cs-bullet-item-text") => {
+const createItemTextElement = (
+  value,
+  rootClassName = "cs-bullet-item-text",
+  options = {}
+) => {
+  const titleClassName = options.titleClassName || "cs-bullet-item-title";
   const content = document.createElement("div");
   content.className = rootClassName;
 
@@ -383,7 +475,7 @@ const createItemTextElement = (value, rootClassName = "cs-bullet-item-text") => 
 
     if (titleWithOptionalBody) {
       const title = document.createElement("h3");
-      title.className = "cs-bullet-item-title";
+      title.className = titleClassName;
       title.textContent = titleWithOptionalBody[1].trim();
       content.append(title);
 
@@ -441,6 +533,51 @@ const createBulletRowElement = (bulletRow) => {
   return bulletRowEl;
 };
 
+const createIconGridElement = (iconGrid) => {
+  const iconGridEl = document.createElement("div");
+  iconGridEl.className = "cs-icon-grid";
+
+  const items = normalizeRowItems(iconGrid);
+  const itemCount = Math.max(1, items.length);
+  const columnCount =
+    itemCount <= 2
+      ? itemCount
+      : Math.min(3, Math.ceil(itemCount / 2));
+
+  iconGridEl.style.setProperty("--cs-icon-grid-cols", String(columnCount));
+  iconGridEl.dataset.iconGridCount = String(itemCount);
+
+  for (let i = 0; i < itemCount; i += 1) {
+    const itemData = normalizeBulletItem(items[i]);
+    const iconGridItemEl = document.createElement("div");
+    iconGridItemEl.className = "cs-icon-grid-item";
+
+    const iconGridItemTextEl = createItemTextElement(
+      itemData.text,
+      "cs-icon-grid-item-text",
+      { titleClassName: "cs-icon-grid-item-title" }
+    );
+
+    const iconGridStamp = itemData.stamp
+      ? { variant: "small", ...itemData.stamp }
+      : null;
+    const stampEl = createStampElement(iconGridStamp, "cs-stamp cs-icon-grid-item-stamp");
+
+    if (stampEl) {
+      iconGridItemEl.append(stampEl, iconGridItemTextEl);
+    } else {
+      const placeholderStamp = document.createElement("div");
+      placeholderStamp.className = "cs-stamp cs-stamp--small cs-icon-grid-item-stamp cs-stamp--placeholder";
+      placeholderStamp.setAttribute("aria-hidden", "true");
+      iconGridItemEl.append(placeholderStamp, iconGridItemTextEl);
+    }
+
+    iconGridEl.append(iconGridItemEl);
+  }
+
+  return iconGridEl;
+};
+
 const createFlowRowElement = (flowRow) => {
   const flowRowEl = document.createElement("div");
   flowRowEl.className = "cs-flow-row";
@@ -468,11 +605,28 @@ const createFlowRowElement = (flowRow) => {
 const createProgressRowElement = (progressRow) => {
   const progressRowEl = document.createElement("div");
   progressRowEl.className = "cs-progress-row";
+  const rawVariant =
+    progressRow && typeof progressRow === "object"
+      ? progressRow.variant || progressRow.layout || ""
+      : "";
+  const normalizedVariant = String(rawVariant)
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "");
+  if (
+    normalizedVariant === "3-blocks" ||
+    normalizedVariant === "3blocks" ||
+    normalizedVariant === "three-blocks"
+  ) {
+    progressRowEl.classList.add("cs-progress-row--3-blocks");
+  }
+  const isThreeBlocks = progressRowEl.classList.contains("cs-progress-row--3-blocks");
 
   const itemsAllEl = document.createElement("div");
   itemsAllEl.className = "cs-progress-row-itemsAll";
 
-  for (const pair of normalizeProgressPairs(progressRow)) {
+  for (const pair of normalizeProgressPairs(progressRow, { isThreeBlocks })) {
     const itemEl = document.createElement("div");
     itemEl.className = "cs-progress-row-item";
 
@@ -500,7 +654,50 @@ const createProgressRowElement = (progressRow) => {
       if (stampEl) secondaryAllEl.append(stampEl);
     }
 
-    itemEl.append(primaryEl, chevronEl, secondaryAllEl);
+    if (isThreeBlocks) {
+      const chevronEl2 = document.createElement("span");
+      chevronEl2.className = "cs-progress-row-chevron cs-progress-row-chevron--secondary";
+      chevronEl2.setAttribute("aria-hidden", "true");
+      chevronEl2.textContent = "⌄";
+
+      const primaryElText = primaryEl;
+      const secondaryElText = secondaryEl;
+      const tertiaryElText = createItemTextElement(
+        pair.tertiary,
+        "cs-progress-row-item-tertiary"
+      );
+      const primaryBlockEl = document.createElement("div");
+      primaryBlockEl.className = "cs-progress-row-item-primary-block";
+      const primaryStampEl = createStampElement(
+        pair.primaryStamp ? { variant: "small", ...pair.primaryStamp } : null,
+        "cs-stamp cs-progress-row-item-stamp-small"
+      );
+      if (primaryStampEl) primaryBlockEl.append(primaryStampEl);
+      primaryBlockEl.append(primaryElText);
+
+      const secondaryBlockEl = document.createElement("div");
+      secondaryBlockEl.className = "cs-progress-row-item-secondary-block";
+      const secondaryStampValue = pair.secondaryStamp || pair.stamp;
+      const secondaryStampEl = createStampElement(
+        secondaryStampValue ? { variant: "small", ...secondaryStampValue } : null,
+        "cs-stamp cs-progress-row-item-stamp-small"
+      );
+      if (secondaryStampEl) secondaryBlockEl.append(secondaryStampEl);
+      secondaryBlockEl.append(secondaryElText);
+
+      const tertiaryBlockEl = document.createElement("div");
+      tertiaryBlockEl.className = "cs-progress-row-item-tertiary-block";
+      const tertiaryStampEl = createStampElement(
+        pair.tertiaryStamp ? { variant: "small", ...pair.tertiaryStamp } : null,
+        "cs-stamp cs-progress-row-item-stamp-small"
+      );
+      if (tertiaryStampEl) tertiaryBlockEl.append(tertiaryStampEl);
+      tertiaryBlockEl.append(tertiaryElText);
+
+      itemEl.append(primaryBlockEl, chevronEl, secondaryBlockEl, chevronEl2, tertiaryBlockEl);
+    } else {
+      itemEl.append(primaryEl, chevronEl, secondaryAllEl);
+    }
 
     itemsAllEl.append(itemEl);
   }
@@ -512,8 +709,6 @@ const createProgressRowElement = (progressRow) => {
 const renderCaseStudy = (content = {}, root) => {
   if (!root) return;
   bindFlowRowTrackerEvents();
-
-  const figureMap = new Map((content.figures || []).map((figure) => [figure.id, figure]));
   const sectionsAll = document.createElement("article");
   sectionsAll.className = "cs-div-sectionsALL";
 
@@ -568,8 +763,22 @@ const renderCaseStudy = (content = {}, root) => {
           continue;
         }
 
+        if (block.type === "iconGrid") {
+          section.append(createIconGridElement(block.items || block));
+          continue;
+        }
+
+        if (block.type === "figure" || block.type === "fig") {
+          const inlineFigure =
+            block.figure && typeof block.figure === "object"
+              ? block.figure
+              : null;
+          if (inlineFigure) section.append(createFigureElement(inlineFigure));
+          continue;
+        }
+
         if (block.type === "progressRow") {
-          section.append(createProgressRowElement(block.items || block));
+          section.append(createProgressRowElement(block));
         }
       }
     } else {
@@ -591,15 +800,13 @@ const renderCaseStudy = (content = {}, root) => {
         section.append(createFlowRowElement(flowRow));
       }
 
+      for (const iconGrid of sectionData.iconGrids || []) {
+        section.append(createIconGridElement(iconGrid));
+      }
+
       for (const progressRow of sectionData.progressRows || []) {
         section.append(createProgressRowElement(progressRow));
       }
-    }
-
-    for (const figureId of sectionData.figureIds || []) {
-      const figure = figureMap.get(figureId);
-      if (!figure) continue;
-      section.append(createFigureElement(figure));
     }
 
     sectionsAll.append(section);
