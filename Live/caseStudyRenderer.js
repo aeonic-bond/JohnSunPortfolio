@@ -261,102 +261,33 @@ const normalizeBulletItem = (item) => {
   return { text: "", stamp: null };
 };
 
-const normalizeProgressPairs = (progressRow, options = {}) => {
-  const isThreeBlocks = Boolean(options.isThreeBlocks);
-  const rawItems = normalizeRowItems(progressRow);
+const normalizeProgressMatrixPairs = (progressMatrix) => {
+  const rawItems = normalizeRowItems(progressMatrix);
   const pairs = [];
 
   for (const item of rawItems) {
     if (Array.isArray(item)) {
-      const [primary = "", secondary = "", third = "", fourth = "", fifth = "", sixth = ""] = item;
-      let tertiary = "";
-      let stamp = null;
-      let primaryStamp = null;
-      let secondaryStamp = null;
-      let tertiaryStamp = null;
-
-      if (isThreeBlocks) {
-        tertiary = typeof third === "string" ? third.trim() : "";
-        primaryStamp = normalizeStamp(
-          (fourth && typeof fourth === "object" ? fourth : null) ??
-            (typeof fourth === "string" ? { src: fourth, caption: "" } : null)
-        );
-        secondaryStamp = normalizeStamp(
-          (fifth && typeof fifth === "object" ? fifth : null) ??
-            (typeof fifth === "string" ? { src: fifth, caption: "" } : null)
-        );
-        tertiaryStamp = normalizeStamp(
-          (sixth && typeof sixth === "object" ? sixth : null) ??
-            (typeof sixth === "string" ? { src: sixth, caption: "" } : null)
-        );
-      } else {
-        stamp =
-          typeof third === "object"
-            ? normalizeStamp(third)
-            : normalizeStamp({ src: third, caption: fourth });
-      }
+      const [primary = "", secondary = "", third = "", fourth = ""] = item;
+      const stamp =
+        typeof third === "object"
+          ? normalizeStamp(third)
+          : normalizeStamp({ src: third, caption: fourth });
 
       pairs.push({
         primary: String(primary).trim(),
         secondary: String(secondary).trim(),
-        tertiary: String(tertiary).trim(),
-        primaryStamp,
-        secondaryStamp,
-        tertiaryStamp,
         stamp,
       });
       continue;
     }
 
     if (item && typeof item === "object") {
-      const primary =
-        item.primary ??
-        item.Primary ??
-        item.left ??
-        item.title ??
-        item.label ??
-        "";
-      const secondary =
-        item.secondary ??
-        item.Secondary ??
-        item.right ??
-        item.value ??
-        item.detail ??
-        "";
-      const tertiary =
-        item.tertiary ??
-        item.Tertiary ??
-        item.third ??
-        item.extra ??
-        "";
-      const primaryStamp = normalizeStamp(
-        item.primaryStamp ??
-          item.PrimaryStamp ??
-          { src: item.primaryImageSrc, caption: item.primaryImageCaption ?? item.primaryImageAlt }
-      );
-      const secondaryStamp = normalizeStamp(
-        item.secondaryStamp ??
-          item.SecondaryStamp ??
-          { src: item.secondaryImageSrc, caption: item.secondaryImageCaption ?? item.secondaryImageAlt }
-      );
-      const tertiaryStamp = normalizeStamp(
-        item.tertiaryStamp ??
-          item.TertiaryStamp ??
-          { src: item.tertiaryImageSrc, caption: item.tertiaryImageCaption ?? item.tertiaryImageAlt }
-      );
-      const stamp = normalizeStamp(
-        item.stamp ??
-          item.Stamp ??
-          item.image ??
-          { src: item.imageSrc, caption: item.imageCaption ?? item.imageAlt }
-      );
+      const primary = item.primary ?? "";
+      const secondary = item.secondary ?? "";
+      const stamp = normalizeStamp(item.stamp);
       pairs.push({
         primary: String(primary).trim(),
         secondary: String(secondary).trim(),
-        tertiary: String(tertiary).trim(),
-        primaryStamp,
-        secondaryStamp,
-        tertiaryStamp,
         stamp,
       });
       continue;
@@ -368,20 +299,12 @@ const normalizeProgressPairs = (progressRow, options = {}) => {
         pairs.push({
           primary: match[1].trim(),
           secondary: match[2].trim(),
-          tertiary: "",
-          primaryStamp: null,
-          secondaryStamp: null,
-          tertiaryStamp: null,
           stamp: null,
         });
       } else {
         pairs.push({
           primary: item.trim(),
           secondary: "",
-          tertiary: "",
-          primaryStamp: null,
-          secondaryStamp: null,
-          tertiaryStamp: null,
           stamp: null,
         });
       }
@@ -392,10 +315,6 @@ const normalizeProgressPairs = (progressRow, options = {}) => {
     (pair) =>
       pair.primary ||
       pair.secondary ||
-      pair.tertiary ||
-      pair.primaryStamp ||
-      pair.secondaryStamp ||
-      pair.tertiaryStamp ||
       pair.stamp
   );
 };
@@ -602,108 +521,48 @@ const createFlowRowElement = (flowRow) => {
   return flowRowEl;
 };
 
-const createProgressRowElement = (progressRow) => {
-  const progressRowEl = document.createElement("div");
-  progressRowEl.className = "cs-progress-row";
-  const rawVariant =
-    progressRow && typeof progressRow === "object"
-      ? progressRow.variant || progressRow.layout || ""
-      : "";
-  const normalizedVariant = String(rawVariant)
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, "-")
-    .replace(/[^a-z0-9-]/g, "");
-  if (
-    normalizedVariant === "3-blocks" ||
-    normalizedVariant === "3blocks" ||
-    normalizedVariant === "three-blocks"
-  ) {
-    progressRowEl.classList.add("cs-progress-row--3-blocks");
-  }
-  const isThreeBlocks = progressRowEl.classList.contains("cs-progress-row--3-blocks");
+const createProgressMatrixElement = (progressMatrix) => {
+  const progressMatrixEl = document.createElement("div");
+  progressMatrixEl.className = "cs-progress-matrix";
 
   const itemsAllEl = document.createElement("div");
-  itemsAllEl.className = "cs-progress-row-itemsAll";
+  itemsAllEl.className = "cs-progress-matrix-itemsAll";
 
-  for (const pair of normalizeProgressPairs(progressRow, { isThreeBlocks })) {
+  for (const pair of normalizeProgressMatrixPairs(progressMatrix)) {
     const itemEl = document.createElement("div");
-    itemEl.className = "cs-progress-row-item";
+    itemEl.className = "cs-progress-matrix-item";
 
     const primaryEl = createItemTextElement(
       pair.primary,
-      "cs-progress-row-item-primary"
+      "cs-progress-matrix-item-primary"
     );
 
     const chevronEl = document.createElement("span");
-    chevronEl.className = "cs-progress-row-chevron";
+    chevronEl.className = "cs-progress-matrix-chevron";
     chevronEl.setAttribute("aria-hidden", "true");
     chevronEl.textContent = "⌄";
 
     const secondaryEl = createItemTextElement(
       pair.secondary,
-      "cs-progress-row-item-secondary"
+      "cs-progress-matrix-item-secondary"
     );
 
     const secondaryAllEl = document.createElement("div");
-    secondaryAllEl.className = "cs-progress-row-div-secondaryAll";
+    secondaryAllEl.className = "cs-progress-matrix-div-secondaryAll";
     secondaryAllEl.append(secondaryEl);
 
     if (pair.stamp) {
-      const stampEl = createStampElement(pair.stamp, "cs-stamp cs-progress-row-item-stamp");
+      const stampEl = createStampElement(pair.stamp, "cs-stamp cs-progress-matrix-item-stamp");
       if (stampEl) secondaryAllEl.append(stampEl);
     }
 
-    if (isThreeBlocks) {
-      const chevronEl2 = document.createElement("span");
-      chevronEl2.className = "cs-progress-row-chevron cs-progress-row-chevron--secondary";
-      chevronEl2.setAttribute("aria-hidden", "true");
-      chevronEl2.textContent = "⌄";
-
-      const primaryElText = primaryEl;
-      const secondaryElText = secondaryEl;
-      const tertiaryElText = createItemTextElement(
-        pair.tertiary,
-        "cs-progress-row-item-tertiary"
-      );
-      const primaryBlockEl = document.createElement("div");
-      primaryBlockEl.className = "cs-progress-row-item-primary-block";
-      const primaryStampEl = createStampElement(
-        pair.primaryStamp ? { variant: "small", ...pair.primaryStamp } : null,
-        "cs-stamp cs-progress-row-item-stamp-small"
-      );
-      if (primaryStampEl) primaryBlockEl.append(primaryStampEl);
-      primaryBlockEl.append(primaryElText);
-
-      const secondaryBlockEl = document.createElement("div");
-      secondaryBlockEl.className = "cs-progress-row-item-secondary-block";
-      const secondaryStampValue = pair.secondaryStamp || pair.stamp;
-      const secondaryStampEl = createStampElement(
-        secondaryStampValue ? { variant: "small", ...secondaryStampValue } : null,
-        "cs-stamp cs-progress-row-item-stamp-small"
-      );
-      if (secondaryStampEl) secondaryBlockEl.append(secondaryStampEl);
-      secondaryBlockEl.append(secondaryElText);
-
-      const tertiaryBlockEl = document.createElement("div");
-      tertiaryBlockEl.className = "cs-progress-row-item-tertiary-block";
-      const tertiaryStampEl = createStampElement(
-        pair.tertiaryStamp ? { variant: "small", ...pair.tertiaryStamp } : null,
-        "cs-stamp cs-progress-row-item-stamp-small"
-      );
-      if (tertiaryStampEl) tertiaryBlockEl.append(tertiaryStampEl);
-      tertiaryBlockEl.append(tertiaryElText);
-
-      itemEl.append(primaryBlockEl, chevronEl, secondaryBlockEl, chevronEl2, tertiaryBlockEl);
-    } else {
-      itemEl.append(primaryEl, chevronEl, secondaryAllEl);
-    }
+    itemEl.append(primaryEl, chevronEl, secondaryAllEl);
 
     itemsAllEl.append(itemEl);
   }
 
-  progressRowEl.append(itemsAllEl);
-  return progressRowEl;
+  progressMatrixEl.append(itemsAllEl);
+  return progressMatrixEl;
 };
 
 const renderCaseStudy = (content = {}, root) => {
@@ -768,7 +627,7 @@ const renderCaseStudy = (content = {}, root) => {
           continue;
         }
 
-        if (block.type === "figure" || block.type === "fig") {
+        if (block.type === "figure") {
           const inlineFigure =
             block.figure && typeof block.figure === "object"
               ? block.figure
@@ -777,8 +636,8 @@ const renderCaseStudy = (content = {}, root) => {
           continue;
         }
 
-        if (block.type === "progressRow") {
-          section.append(createProgressRowElement(block));
+        if (block.type === "progressMatrix") {
+          section.append(createProgressMatrixElement(block));
         }
       }
     } else {
@@ -804,8 +663,8 @@ const renderCaseStudy = (content = {}, root) => {
         section.append(createIconGridElement(iconGrid));
       }
 
-      for (const progressRow of sectionData.progressRows || []) {
-        section.append(createProgressRowElement(progressRow));
+      for (const progressMatrix of (sectionData.progressMatrix || [])) {
+        section.append(createProgressMatrixElement(progressMatrix));
       }
     }
 

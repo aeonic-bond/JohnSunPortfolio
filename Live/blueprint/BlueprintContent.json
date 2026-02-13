@@ -214,26 +214,32 @@
           ]
         },
         {
-          "type": "progressRow",
-          "variant": "3Blocks",
+          "type": "progressMatrix",
           "items": [
             {
-              "Primary": "Figma variables and text styles",
-              "Secondary": "Storybook as library and context",
-              "Tertiary": "Codex or Claude Code to auto-generate working prototypes",
-              "PrimaryStamp": {
+              "primary": "Figma variables and text styles",
+              "secondary": "Storybook as library and context",
+              "stamp": {
                 "type": "image",
                 "src": "../../Assets/Blueprint/Material Design Logo.svg",
                 "caption": "Material Design logo",
                 "variant": "small"
-              },
-              "SecondaryStamp": {
+              }
+            },
+            {
+              "primary": "Storybook as library and context",
+              "secondary": "Codex or Claude Code to auto-generate working prototypes",
+              "stamp": {
                 "type": "image",
                 "src": "../../Assets/Blueprint/Atlassian Logo.svg",
                 "caption": "Atlassian logo",
                 "variant": "small"
-              },
-              "TertiaryStamp": {
+              }
+            },
+            {
+              "primary": "Codex or Claude Code to auto-generate working prototypes",
+              "secondary": "",
+              "stamp": {
                 "type": "image",
                 "src": "../../Assets/Blueprint/IBM Carbon Logo.svg",
                 "caption": "IBM Carbon logo",

@@ -227,7 +227,7 @@
           "text": "Once the demo reached a testable stage, I reached out and found 6 participants who were architects or students. Their experiences with Revit ranged from a class to 10+ years. I ran 10-minute usability tests to see if users could add reference planes and set parameters. Before each session, I emphasized that this was an early-stage demo with limited capabilities.\n\n4 participants completed both tasks. 2 participants completed both with minimal guidance. This was a major accomplishment and speaks to the design's relative intuitiveness. A few participants remarked that this would have been much more difficult in Revit.\n\nI observed the following usability issues and made the following changes:"
         },
         {
-          "type": "progressRow",
+          "type": "progressMatrix",
           "items": [
             {
               "primary": "All participants tried to hover over the tools, expecting tooltips to appear.",

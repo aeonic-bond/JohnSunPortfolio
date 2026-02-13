@@ -305,16 +305,13 @@
   margin-top: var(--space-300);
 }
 
- /* Progress Row */
-.cs-progress-row {
+ /* Progress Matrix */
+.cs-progress-matrix {
   width: 100%;
 }
 
-.cs-progress-row.cs-progress-row--3-blocks {
-}
-
 @media (min-width: 1024px) {
-  .cs-progress-row {
+  .cs-progress-matrix {
     width: 90vw;
     margin-left: calc(50% - 45vw);
     margin-right: calc(50% - 45vw);
@@ -324,12 +321,12 @@
   }
 }
 
-.cs-progress-row-itemsAll {
+.cs-progress-matrix-itemsAll {
   display: grid;
   gap: var(--space-block-500);
 }
 
-.cs-progress-row-item {
+.cs-progress-matrix-item {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   justify-self: center;
@@ -348,7 +345,7 @@
 }
 
 @media (min-width: 1024px) {
-  .cs-progress-row-item {
+  .cs-progress-matrix-item {
     grid-template-columns: minmax(0, 320px) auto auto;
     width: fit-content;
     gap: var(--space-block-500);
@@ -362,19 +359,18 @@
   }
 }
 
-.cs-progress-row-item-primary,
-.cs-progress-row-item-secondary,
-.cs-progress-row-item-tertiary {
+.cs-progress-matrix-item-primary,
+.cs-progress-matrix-item-secondary {
   width: 100%;
   min-width: 0;
   font: var(--type-body2);
 }
 
-.cs-progress-row-item-primary {
+.cs-progress-matrix-item-primary {
   color: var(--color-white-off);
 }
 
-.cs-progress-row-chevron {
+.cs-progress-matrix-chevron {
   display: flex;
   align-items: center;
   justify-self: center;
@@ -386,80 +382,50 @@
   line-height: 1;
 }
 
-.cs-progress-row-item-secondary,
-.cs-progress-row-item-tertiary {
+.cs-progress-matrix-item-secondary {
   color: var(--color-white);
 }
 
-.cs-progress-row-item-primary-block,
-.cs-progress-row-item-secondary-block,
-.cs-progress-row-item-tertiary-block {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: var(--space-500);
-}
-
-.cs-progress-row--3-blocks :is(
-  .cs-progress-row-item-primary,
-  .cs-progress-row-item-secondary,
-  .cs-progress-row-item-tertiary
-) {
-  width: auto;
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-.cs-progress-row-div-secondaryAll {
+.cs-progress-matrix-div-secondaryAll {
   width: fit-content;
   display: grid;
   gap: var(--space-block-500);
 }
 
-.cs-progress-row-item-primary > * + *,
-.cs-progress-row-item-secondary > * + *,
-.cs-progress-row-item-tertiary > * + * {
+.cs-progress-matrix-item-primary > * + *,
+.cs-progress-matrix-item-secondary > * + * {
   margin-top: var(--space-300);
 }
 
-.cs-progress-row-item-stamp {
+.cs-progress-matrix-item-stamp {
   grid-column: 1 / -1;
 }
 
 @media (min-width: 1024px) {
-  .cs-progress-row--3-blocks .cs-progress-row-item {
-    grid-template-columns: minmax(0, 320px) auto minmax(0, 320px) auto minmax(0, 320px);
-  }
-
-  .cs-progress-row-item-primary {
+  .cs-progress-matrix-item-primary {
     width: 100%;
     max-width: 320px;
   }
 
-  .cs-progress-row-item-secondary,
-  .cs-progress-row-item-tertiary {
+  .cs-progress-matrix-item-secondary {
     width: 320px;
   }
 
-  .cs-progress-row-item-primary {
+  .cs-progress-matrix-item-primary {
     justify-self: end;
   }
 
-  .cs-progress-row-chevron {
+  .cs-progress-matrix-chevron {
     justify-self: center;
     align-self: center;
     transform: rotate(-90deg);
   }
 
-  .cs-progress-row-item-secondary {
+  .cs-progress-matrix-item-secondary {
     justify-self: start;
   }
 
-  .cs-progress-row-item-tertiary {
-    justify-self: start;
-  }
-
-  .cs-progress-row-div-secondaryAll {
+  .cs-progress-matrix-div-secondaryAll {
     grid-column: 3;
     display: flex;
     align-items: center;
@@ -467,7 +433,7 @@
     justify-self: start;
   }
 
-  .cs-progress-row-item-stamp {
+  .cs-progress-matrix-item-stamp {
     grid-column: auto;
     justify-self: start;
   }
