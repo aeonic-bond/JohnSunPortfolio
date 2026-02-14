@@ -267,30 +267,32 @@
     {
       "id": "section-11",
       "header": "Next Steps",
-      "bulletRows": [
-        [
-          {
-            "text": "Build and test the clasp system for locking 2D geometry to reference planes.",
-            "stamp": {
-              "type": "image",
-              "src": "../../Assets/Torus/Case Study/section11/Clasp.png",
-              "caption": "Clasp system concept for locking 2D geometry to reference planes"
-            }
-          },
-          {
-            "text": "Research how experience-level impacts workflow preferences.",
-            "stamp": {
-              "type": "image",
-              "src": "../../Assets/Torus/Case Study/section11/3Dv2D.png",
-              "caption": "2D vs 3D workflow comparison"
-            }
-          }
-        ]
-      ],
       "blocks": [
         {
           "type": "paragraph",
           "text": "Now that the MVP can set up the parametric \"bones\" (as Matthew likes to call it), the next steps would be to enable users to create 2D geometry and then turn it into 3D geometry. I've already initiated the design process to streamline another infamous Revit function: locking 2D geometry to RPs. Also, a user behavior question emerged during testing. Less experienced users, particularly students, leaned more on the 3D perspective view. In contrast, more experienced users valued the 2D views that enable the parametric workflow."
+        },
+
+        {
+          "type": "bulletRow",
+          "items": [
+            {
+              "text": "Build and test the clasp system for locking 2D geometry to reference planes.",
+              "stamp": {
+                "type": "image",
+                "src": "../../Assets/Torus/Case Study/section11/Clasp.png",
+                "caption": "Clasp system concept for locking 2D geometry to reference planes"
+              }
+            },
+            {
+              "text": "Research how experience-level impacts workflow preferences.",
+              "stamp": {
+                "type": "image",
+                "src": "../../Assets/Torus/Case Study/section11/3Dv2D.png",
+                "caption": "2D vs 3D workflow comparison"
+              }
+            }
+          ]
         }
       ]
     },

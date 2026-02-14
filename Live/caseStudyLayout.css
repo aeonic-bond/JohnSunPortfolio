@@ -85,6 +85,7 @@
     width: 90vw;
     margin-left: calc(50% - 45vw);
     margin-right: calc(50% - 45vw);
+    padding: 0;
   }
 
   #section-11 .cs-bullet-row {
@@ -370,7 +371,8 @@
   color: var(--color-white-off);
 }
 
-.cs-progress-matrix-chevron {
+.cs-progress-matrix-chevron,
+.cs-progress-row-chevron {
   display: flex;
   align-items: center;
   justify-self: center;
@@ -415,7 +417,8 @@
     justify-self: end;
   }
 
-  .cs-progress-matrix-chevron {
+  .cs-progress-matrix-chevron,
+  .cs-progress-row-chevron {
     justify-self: center;
     align-self: center;
     transform: rotate(-90deg);
@@ -439,6 +442,88 @@
   }
 }
 
+ /* Progress Row */
+.cs-progress-row {
+  width: 100%;
+  display: grid;
+  gap: var(--space-block-500);
+  padding: var(--space-700);
+  border: 1px solid transparent;
+  border-radius: var(--radius-base);
+  background:
+    linear-gradient(var(--color-black), var(--color-black)) padding-box,
+    linear-gradient(
+      to bottom,
+      var(--color-black),
+      var(--color-saffron-fade)
+    ) border-box;
+}
+
+.cs-progress-row-item {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  gap: var(--space-700);
+}
+
+.cs-progress-row-item-text {
+  width: 100%;
+  min-width: 0;
+  font: var(--type-body2);
+  color: var(--color-white-off);
+}
+
+.cs-progress-row-item-stampsAll {
+  width: fit-content;
+  display: grid;
+  gap: var(--space-block-500);
+}
+
+.cs-progress-row-item-stamp {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 1024px) {
+  .cs-progress-row {
+    display: flex;
+    align-items: flex-start;
+    width: 90vw;
+    margin-left: calc(50% - 45vw);
+    margin-right: calc(50% - 45vw);
+    width: min(max-content, 90vw);
+    margin-left: calc(50% - (min(max-content, 90vw) / 2));
+    margin-right: calc(50% - (min(max-content, 90vw) / 2));
+    background:
+      linear-gradient(var(--color-black), var(--color-black)) padding-box,
+      linear-gradient(
+        to right,
+        var(--color-black),
+        var(--color-saffron-fade)
+      ) border-box;
+  }
+
+  .cs-progress-row-item {
+    width: fit-content;
+    align-items: flex-start;
+  }
+
+  .cs-progress-row-item-text {
+    width: 100%;
+    max-width: 320px;
+    justify-self: end;
+  }
+
+  .cs-progress-row-item-stampsAll {
+    justify-self: start;
+  }
+
+  .cs-progress-row-item-stamp {
+    grid-column: auto;
+    justify-self: start;
+  }
+
+}
+
  /* Fig */
 .cs-fig {
   display: grid;
@@ -452,6 +537,12 @@
     max-width: none;
     margin-left: calc(50% - 45vw);
     margin-right: calc(50% - 45vw);
+  }
+
+  #fig-blueprint-category {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
   }
 }
 

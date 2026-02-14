@@ -319,6 +319,42 @@ const normalizeProgressMatrixPairs = (progressMatrix) => {
   );
 };
 
+const normalizeProgressRowItem = (item) => {
+  if (typeof item === "string") {
+    return { text: item, stamps: [] };
+  }
+
+  if (Array.isArray(item)) {
+    const [text = "", first = null, second = null] = item;
+    const stamps = [normalizeStamp(first), normalizeStamp(second)].filter(Boolean);
+    return {
+      text: String(text).trim(),
+      stamps: stamps.slice(0, 2),
+    };
+  }
+
+  if (item && typeof item === "object") {
+    const text = String(item.text ?? "").trim();
+    const stamps = [];
+
+    if (Array.isArray(item.stamps)) {
+      for (const stamp of item.stamps) {
+        const normalized = normalizeStamp(stamp);
+        if (normalized) stamps.push(normalized);
+      }
+    } else {
+      const first = normalizeStamp(item.stamp);
+      const second = normalizeStamp(item.stamp2);
+      if (first) stamps.push(first);
+      if (second) stamps.push(second);
+    }
+
+    return { text, stamps: stamps.slice(0, 2) };
+  }
+
+  return { text: "", stamps: [] };
+};
+
 const createStampElement = (stamp, className = "cs-stamp") => {
   const normalized = normalizeStamp(stamp);
   if (!normalized) return null;
@@ -565,6 +601,43 @@ const createProgressMatrixElement = (progressMatrix) => {
   return progressMatrixEl;
 };
 
+const createProgressRowElement = (progressRow) => {
+  const progressRowEl = document.createElement("div");
+  progressRowEl.className = "cs-progress-row";
+
+  const items = normalizeRowItems(progressRow).slice(0, 5);
+
+  for (let i = 0; i < items.length; i += 1) {
+    const item = items[i];
+    const itemData = normalizeProgressRowItem(item);
+    const itemEl = document.createElement("div");
+    itemEl.className = "cs-progress-row-item";
+
+    const stampsEl = document.createElement("div");
+    stampsEl.className = "cs-progress-row-item-stampsAll";
+    for (const stamp of itemData.stamps) {
+      const stampEl = createStampElement(stamp, "cs-stamp cs-progress-row-item-stamp");
+      if (stampEl) stampsEl.append(stampEl);
+    }
+    if (stampsEl.childElementCount > 0) itemEl.append(stampsEl);
+
+    const textEl = createItemTextElement(itemData.text, "cs-progress-row-item-text");
+    itemEl.append(textEl);
+
+    progressRowEl.append(itemEl);
+
+    if (i < items.length - 1) {
+      const chevronEl = document.createElement("span");
+      chevronEl.className = "cs-progress-row-chevron";
+      chevronEl.setAttribute("aria-hidden", "true");
+      chevronEl.textContent = "⌄";
+      progressRowEl.append(chevronEl);
+    }
+  }
+
+  return progressRowEl;
+};
+
 const renderCaseStudy = (content = {}, root) => {
   if (!root) return;
   bindFlowRowTrackerEvents();
@@ -638,6 +711,10 @@ const renderCaseStudy = (content = {}, root) => {
 
         if (block.type === "progressMatrix") {
           section.append(createProgressMatrixElement(block));
+        }
+
+        if (block.type === "progressRow") {
+          section.append(createProgressRowElement(block));
         }
       }
     } else {

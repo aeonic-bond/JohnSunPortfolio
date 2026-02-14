@@ -142,6 +142,17 @@
         {
           "type": "paragraph",
           "text": "At time of writing, the industry-standard design systems I looked at generally converged on three major categories of design objects. After taking inventory of all our most reused visual elements on site, I organized all of our assets into Foundations, Components, and Patterns.\n\nFoundation references visual concepts like color, typography, accessibility, layouts, and spacing.\n\nComponents are the basic building blocks for digital design. A button is the quintessential example.\n\nPatterns are typically defined as things that solve a specific need, but there's more variability in how this category is used. This makes sense as patterns are more contextual to the platform itself. A form field is a quintessential example."
+        },
+        {
+          "type": "figure",
+          "figure": {
+            "id": "fig-blueprint-category",
+            "type": "image",
+            "src": "../../Assets/Blueprint/Category.png",
+            "caption": "Blueprint category mapping across Foundations, Components, and Patterns.",
+            "credit": "",
+            "showCaption": true
+          }
         }
       ]
     },
@@ -177,12 +188,12 @@
           "text": "In considering what would work best for Toll Brothers strict brand guidelines, I adapted this setup by collapsing Layer 0, 1, and 2 into a single tight set of semantic tokens for color and typography in Figma, and eventually, I coded the tokens in Storybook. I believe this is the best practice for a tightly-controlled brand to adopt tokenization.\n\nI want to quickly address the 2 exceptions to the general layering rule. Apple's Human Interface Guidelines skips recommending tokens entirely because prioritizes function over branding. Salesforce Lightning Design System-2 is moving away from tokens (present in SLDS-1) in favor of styling hooks. Styling hooks use conditional logic to derive a token value vs the token having a pre-selected value. Luckily for us, this level of strategy is overkill for Blueprint, but it might be more appropriate in the future when theming becomes a priority."
         },
         {
-          "type": "bulletRow",
+          "type": "progressRow",
           "items": [
-            "(Layer 0) Raw Values - Represent all possible tokens that could ever be in the system. Not usually considered an official layer. (#0070CD)",
-            "(Layer 1) Reference Tokens - Denote a limited set of tokens that will be used in a project and each token is named with a scaling system. (blue.400)",
+            "(Layer 0) Raw Values - Represent all possible tokens that could ever be in the system. (#0070CD)",
+            "(Layer 1) Reference Tokens - Denote a limited set of tokens that will be used in a project and named with a scaling system. (blue.400)",
             "(Layer 2) Semantic Tokens - Explains the reasoning of a single decision node. These should be the most widely token format in Figma. (background.blue)",
-            "(Layer 3) Component Tokens - Used exclusively for a specific reusable component. These should be used in development to control the final UI. (button.background)"
+            "(Layer 3) Component Tokens - Used exclusively for a specific reusable component. These should control the final UI. (button.background)"
           ]
         }
       ]
@@ -203,46 +214,42 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "At time of writing, the Figma MCP (F-MCP) was released a few months prior, and it has profoundly shaped my current thinking for design handoff workflows. The \"source of truth\" should ideally live in a codified repository like Storybook rather than in Figma. However, we lacked the dedicated engineering resources to build it. Early on, I experimented with AI coding using Claude, Gemini, and ChatGPT to try to create a Storybook for Blueprint, but at that time, these AI tools had speed and reliability issues.\n\nThe release of the F-MCP were game changers that enabled agentic plugins like OpenAI's Codex extension in VSC to directly read Figma file exports as context. As such, I guided Codex to create a working component in code based on its construction in Figma. I dictated the exact token setup to match the intent in Figma. With guidance, Codex interpreted, added, and applied tokens from Figma into Storybook. I directed the components to be built with accessibility requirements in mind. Beyond individual components, I experimented with feeding Codex entire wireframes to generate functional prototypes. In 3 ways, this agentic workflow solved the inconsistent handoff and implementation issues by acting as a singular interpreter between design and dev."
+          "text": "At time of writing, the Figma MCP (F-MCP) was released a few months prior, and it has profoundly shaped my current thinking for design handoff workflows. The \"source of truth\" should ideally live in a codified repository like Storybook rather than in Figma. However, we lacked the dedicated engineering resources to build it. Early on, I experimented with AI coding using Claude, Gemini, and ChatGPT to try to create a Storybook for Blueprint, but at that time, these AI tools had speed and reliability issues.\n\nThe release of the F-MCP were game changers that enabled agentic plugins like OpenAI's Codex extension in VSC to directly read Figma file exports as context. As such, I guided Codex to create a working component in code based on its construction in Figma. I dictated the exact token setup to match the intent in Figma. With guidance, Codex interpreted, added, and applied tokens from Figma into Storybook. I directed the components to be built with accessibility requirements in mind. Beyond individual components, I experimented with feeding Codex entire wireframes to generate functional prototypes."
         },
+      
         {
-          "type": "bulletRow",
-          "items": [
-            "Designers no longer need to spend hours ensuring every single frame is perfectly tokenized; AI agents have the context to apply tokens correctly even if the input is imperfect.",
-            "Delivering a tokenized, coded prototype eliminates the need for developers to manually scan Figma or decipher design-centric token structures.",
-            "By hosting Blueprint in Storybook, designers can ensure accessibility requirements are met not just visually, but functionally in the code."
-          ]
-        },
-        {
-          "type": "progressMatrix",
+          "type": "progressRow",
           "items": [
             {
-              "primary": "Figma variables and text styles",
-              "secondary": "Storybook as library and context",
+              "text": "Figma - Stores variables and text styles used by designers",
               "stamp": {
                 "type": "image",
-                "src": "../../Assets/Blueprint/Material Design Logo.svg",
-                "caption": "Material Design logo",
+                "src": "../../Assets/Blueprint/Figma Logo.svg",
+                "caption": "Figma logo",
                 "variant": "small"
               }
             },
             {
-              "primary": "Storybook as library and context",
-              "secondary": "Codex or Claude Code to auto-generate working prototypes",
+              "text": "Storybook - Fully functional code component library and css tokens",
               "stamp": {
                 "type": "image",
-                "src": "../../Assets/Blueprint/Atlassian Logo.svg",
-                "caption": "Atlassian logo",
+                "src": "../../Assets/Blueprint/Storybook.svg",
+                "caption": "Storybook logo",
                 "variant": "small"
               }
             },
             {
-              "primary": "Codex or Claude Code to auto-generate working prototypes",
-              "secondary": "",
+              "text": "Codex or Claude Code - Use Figma's MCP and Storybook as agentic context to auto-generate working prototypes.",
               "stamp": {
                 "type": "image",
-                "src": "../../Assets/Blueprint/IBM Carbon Logo.svg",
-                "caption": "IBM Carbon logo",
+                "src": "../../Assets/Blueprint/OpenAI Logo.svg",
+                "caption": "OpenAI logo",
+                "variant": "small"
+              },
+              "stamp2": {
+                "type": "image",
+                "src": "../../Assets/Blueprint/Anthropic Logo.svg",
+                "caption": "Anthropic logo",
                 "variant": "small"
               }
             }
