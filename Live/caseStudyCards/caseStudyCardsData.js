@@ -21,10 +21,11 @@ const CASE_STUDIES = [
     },
   },
   {
-    kind: "cube",
-    title: "Cube",
-    description: "Case study summary for Cube.",
+    kind: "hcustomizer",
+    title: "Home Customizer",
+    description: "Case study summary for Home Customizer.",
     ctaLabel: "Read",
+    href: "../hcustomizer/index.html",
   },
   {
     kind: "cone",
