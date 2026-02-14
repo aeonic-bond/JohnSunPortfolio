@@ -4,12 +4,12 @@
   "status": "draft",
   "publishedDate": "",
   "hero": {
-    "title": "Blueprint Case Study",
-    "subtitle": "Draft in progress.",
+    "title": "Creating Blueprint: Toll Brothers’ First Digital Design System from Figma to Code",
+    "subtitle": "Over three years, I built Toll Brothers’ first digital design system and evolved it from a static style guide into a design-to-code workflow.",
     "media": {
       "type": "image",
-      "src": "",
-      "caption": "",
+      "src": "../../Assets/Blueprint/Blueprint Hero.png",
+      "caption": "Blueprint Hero image showing the Toll Brothers logo, 6 concept blocks, and the Figma and Storybook logo",
       "variant": "hero",
       "showCaption": false
     }
@@ -128,8 +128,8 @@
         {
           "type": "bulletRow",
           "items": [
-            "Categorization - How are assets and ideas organized",
-            "Accessibility - How to make the site more accessible to users with disabilities",
+            "Categorization - How assets and ideas are organized",
+            "Accessibility - How to adhere to WCAG 2.2",
             "Tokenization - How to systematize design decisions"
           ]
         }
@@ -147,6 +147,7 @@
           "type": "figure",
           "figure": {
             "id": "fig-blueprint-category",
+            "variant": "small",
             "type": "image",
             "src": "../../Assets/Blueprint/Category.png",
             "caption": "Blueprint category mapping across Foundations, Components, and Patterns.",
@@ -190,10 +191,10 @@
         {
           "type": "progressRow",
           "items": [
-            "(Layer 0) Raw Values - Represent all possible tokens that could ever be in the system. (#0070CD)",
-            "(Layer 1) Reference Tokens - Denote a limited set of tokens that will be used in a project and named with a scaling system. (blue.400)",
-            "(Layer 2) Semantic Tokens - Explains the reasoning of a single decision node. These should be the most widely token format in Figma. (background.blue)",
-            "(Layer 3) Component Tokens - Used exclusively for a specific reusable component. These should control the final UI. (button.background)"
+            "(Layer 0) Raw Values - Represent all possible tokens that could ever be in the system (#0070CD)",
+            "(Layer 1) Reference Tokens - Denote a limited set of tokens that will be used in a project and named with a scaling system (blue.400)",
+            "(Layer 2) Semantic Tokens - Explain the reasoning of a single decision node. These should be the most widely token format in Figma (background.blue)",
+            "(Layer 3) Component Tokens - Controls the UI of a reusable component in development (button.background)"
           ]
         }
       ]

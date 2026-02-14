@@ -532,14 +532,14 @@
 }
 
 @media (min-width: 1024px) {
-  .cs-fig {
+  .cs-fig.cs-fig--large {
     width: 90vw;
     max-width: none;
     margin-left: calc(50% - 45vw);
     margin-right: calc(50% - 45vw);
   }
 
-  #fig-blueprint-category {
+  .cs-fig.cs-fig--small {
     width: 100%;
     margin-left: 0;
     margin-right: 0;
@@ -562,6 +562,7 @@
 
 .cs-hero-image {
   max-width: none;
+  border: 0;
 }
 
 .cs-fig-caption {

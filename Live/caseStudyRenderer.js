@@ -182,10 +182,15 @@ const createMediaBlockElement = ({
 };
 
 const createFigureElement = (figure = {}) => {
+  const normalizedVariant = String(figure.variant || "large")
+    .trim()
+    .toLowerCase();
+  const sizeVariant = normalizedVariant === "small" ? "small" : "large";
+
   return createMediaBlockElement({
     id: figure.id || "",
     media: normalizeFigureMedia(figure),
-    blockClassName: "cs-fig",
+    blockClassName: `cs-fig cs-fig--${sizeVariant}`,
     mediaClassName: "cs-fig-image",
     includeCaption: true,
   });
