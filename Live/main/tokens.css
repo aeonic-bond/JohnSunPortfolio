@@ -1,17 +1,17 @@
 :root {
   /* Color tokens */
   --color-saffron: #ecbc2a;
-  --color-saffron-fade: #ecbc2a40;
-  --color-saffron-fade-partial: #ecbc2a80;
+  --color-saffron-fade: rgba(236, 188, 42, 0.2);
+  --color-saffron-fade-partial: rgba(236, 188, 42, 0.4);
 
   --color-white: #fff;
-  --color-white-off: #E0DBDB;
+  --color-white-off: #c0c0c0;
 
   --color-black: #000;
 
   /* Background color tokens */
-  --color-bg-forest: #041514;
-  --color-bg-forest-raise: #091D1C;
+  --color-bg-forest: #021615;
+  --color-bg-forest-raise: #091d1c;
 
   /* Border-Radius tokens */
   --radius-small: 4px;
@@ -19,14 +19,18 @@
   --radius-large: 12px;
 
   /* Spacing tokens */
+  --space-100: 2px;
   --space-200: 4px;
   --space-300: 8px;
   --space-400: 12px;
   --space-500: 16px;
   --space-600: 20px;
   --space-700: 24px;
-  --space-block-200: 20px;
-  --space-block-300: 24px;
+  --space-800: 32px;
+  --space-900: 36px;
+  --space-block-100: 20px;
+  --space-block-200: 24px;
+  --space-block-300: 28px;
   --space-block-400: 32px;
   --space-block-500: 40px;
   --space-block-600: 48px;

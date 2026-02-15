@@ -8,6 +8,7 @@
 }
 
 .navBar .cs-back-link {
+  font: var(--type-action);
   color: var(--color-saffron);
   text-decoration: none;
 }

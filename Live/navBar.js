@@ -7,7 +7,7 @@ const createNavBarElement = () => {
   navBar.setAttribute("aria-label", "Case Study Navigation");
 
   const link = document.createElement("a");
-  link.className = "cs-back-link type-action";
+  link.className = "cs-back-link";
   link.href = document.body.dataset.navHref || "../main/main.html";
   link.textContent = document.body.dataset.navLabel || "Back";
 

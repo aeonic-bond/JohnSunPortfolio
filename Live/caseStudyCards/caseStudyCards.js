@@ -40,11 +40,11 @@ const createCaseStudyCard = ({
   footer.className = "card_footer_div";
 
   const descriptionEl = document.createElement("p");
-  descriptionEl.className = "card_description type-body2";
+  descriptionEl.className = "card_description";
   descriptionEl.textContent = description;
 
   const ctaButton = document.createElement("button");
-  ctaButton.className = "card_cta_button type-action";
+  ctaButton.className = "card_cta_button";
   ctaButton.type = "button";
   ctaButton.textContent = ctaLabel;
 

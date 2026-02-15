@@ -31,7 +31,7 @@
 }
 
 .cs-subtitle {
-  font: var(--type-subtitle);
+  font: var(--type-subtitle-l);
   color: var(--color-white-off);
 }
 
@@ -58,12 +58,17 @@
 }
 
 .cs-section-body {
-  font: var(--type-body1);
+  font: var(--type-body-l);
   color: var(--color-white-off);
 }
 
 .cs-section-body p + p {
   margin-top: var(--space-500);
+}
+
+.cs-load-error {
+  font: var(--type-body-l);
+  color: var(--color-white-off);
 }
 
  /* Bullet Row */
@@ -161,7 +166,7 @@
 
 .cs-bullet-item-text {
   width: 100%;
-  font: var(--type-body2);
+  font: var(--type-body-m);
   color: var(--color-white-off);
 }
 
@@ -171,7 +176,7 @@
 
 .cs-bullet-item-title {
   margin: 0;
-  font: var(--type-subtitle2);
+  font: var(--type-subtitle-m);
   color: var(--color-white);
   padding-bottom: var(--space-500);
 }
@@ -193,7 +198,7 @@
 
 .cs-bullet-item-cite {
   display: block;
-  font: var(--type-body2);
+  font: var(--type-body-m);
   color: var(--color-saffron);
   font-style: normal;
 }
@@ -240,14 +245,14 @@
   flex: 1 1 auto;
   justify-content: flex-start;
   width: 100%;
-  font: var(--type-caption2);
+  font: var(--type-caption-m);
   color: var(--color-white-off);
   text-align: center;
 }
 
 .cs-icon-grid-item-title {
   margin: 0;
-  font: var(--type-subtitle2);
+  font: var(--type-subtitle-m);
   color: var(--color-white);
   padding-bottom: var(--space-500);
 }
@@ -298,7 +303,7 @@
 
 .cs-flow-row-item-text {
   width: 100%;
-  font: var(--type-body2);
+  font: var(--type-body-m);
   color: var(--color-white-off);
 }
 
@@ -364,7 +369,7 @@
 .cs-progress-matrix-item-secondary {
   width: 100%;
   min-width: 0;
-  font: var(--type-body2);
+  font: var(--type-body-m);
 }
 
 .cs-progress-matrix-item-primary {
@@ -469,7 +474,7 @@
 .cs-progress-row-item-text {
   width: 100%;
   min-width: 0;
-  font: var(--type-body2);
+  font: var(--type-body-m);
   color: var(--color-white-off);
 }
 
@@ -566,7 +571,7 @@
 }
 
 .cs-fig-caption {
-  font: var(--type-caption);
+  font: var(--type-caption-l);
   color: var(--color-saffron);
 }
 

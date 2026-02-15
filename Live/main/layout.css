@@ -24,6 +24,10 @@ body {
   padding-top: var(--space-block-800);
 }
 
+.header_div h1 {
+  font: var(--type-h1);
+}
+
 .case_studies_div {
   display: grid;
   gap: var(--space-block-800);

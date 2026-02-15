@@ -19,7 +19,6 @@ const createBodyFragment = (body = "") => {
     }
 
     const paragraph = document.createElement("p");
-    paragraph.className = "type-body1";
     paragraph.textContent = lines.join(" ");
     fragment.append(paragraph);
   }
@@ -770,7 +769,7 @@ const loadCaseStudyInto = (root, contentPath) => {
     })
     .catch((error) => {
       const message = document.createElement("p");
-      message.className = "type-body1";
+      message.className = "cs-load-error";
       message.textContent = error.message;
       root.replaceChildren(message);
     });

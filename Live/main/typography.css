@@ -1,36 +1,24 @@
+@font-face {
+  font-family: "Raleway";
+  src: local("Raleway"), local("Raleway Regular");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 :root {
+  --font-flourish: "Raleway", "Inter", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-display: "Crimson Pro", "Crimson Text", serif;
+
   /* Typography tokens */
-  --type-h1: normal 700 56px/56px "Crimson Text", serif;
-  --type-h2: normal 700 28px/28px "Crimson Text", serif;
-  --type-subtitle: normal 300 24px/32px "Inter", sans-serif;
-  --type-subtitle2: normal 600 20px/30px "Inter", sans-serif;
-  --type-body1: normal 300 19px/28px "Inter", sans-serif;
-  --type-body2: normal 300 20px/30px "Inter", sans-serif;
-  --type-action: normal 600 15px/15px "Inter", sans-serif;
-  --type-caption: normal 300 15px/21px "Inter", sans-serif;
-  --type-caption2: normal 600 14px/21px "Inter", sans-serif;
-}
-
-.type-h1 {
-  font: var(--type-h1);
-}
-
-.type-h2 {
-  font: var(--type-h2);
-}
-
-.type-subtitle {
-  font: var(--type-subtitle);
-}
-
-.type-body1 {
-  font: var(--type-body1);
-}
-
-.type-body2 {
-  font: var(--type-body2);
-}
-
-.type-action {
-  font: var(--type-action);
+  --type-h1: normal 700 56px/56px var(--font-display);
+  --type-h2: normal 700 40px/40px var(--font-display);
+  --type-subtitle-l: normal 300 24px/24px var(--font-flourish);
+  --type-subtitle-m: normal 300 18px/18px var(--font-flourish);
+  --type-body-l: normal 400 18px/18px var(--font-body);
+  --type-body-m: normal 400 16px/16px var(--font-body);
+  --type-action: normal 600 14px/14px var(--font-flourish);
+  --type-caption-l: normal 300 15px/15px var(--font-flourish);
+  --type-caption-m: normal 300 14px/14px var(--font-flourish);
 }
