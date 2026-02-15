@@ -21,8 +21,15 @@
     {
       "kind": "blueprint",
       "title": "Blueprint",
-      "description": "Case study summary for Blueprint.",
-      "tags": [],
+      "description": "I developed Toll Brothers’ first digital design system from a static style guide to a design-to-code workflow.",
+      "tags": [
+        "Systems Research",
+        "WCAG 2.2",
+        "Tokenization",
+        "AI-Assisted Development",
+        "Storybook",
+        "Agentic Prototyping"
+      ],
       "ctaLabel": "Read",
       "href": "../blueprint/index.html",
       "media": {

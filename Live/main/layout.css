@@ -28,16 +28,15 @@ body {
   font: var(--type-h1);
 }
 
-.case_studies_div {
+.case_studyAll {
   display: grid;
   gap: var(--space-block-800);
   width: 100%;
   padding: 16px;
-  max-width: 560px;
 }
 
 @media (min-width: 1024px) {
-  .case_studies_div {
-    max-width: 800px;
+  .case_studyAll {
+    width: fit-content;
   }
 }

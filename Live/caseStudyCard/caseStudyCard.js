@@ -26,7 +26,7 @@ const createCaseStudyCard = ({
   mediaEl.append(mediaMount);
 
   const content = document.createElement("div");
-  content.className = "card_content";
+  content.className = "card_textAll";
 
   const head = document.createElement("div");
   head.className = "card_head";
@@ -43,7 +43,7 @@ const createCaseStudyCard = ({
   textWrap.className = "card_text_wrap";
 
   const descriptionEl = document.createElement("p");
-  descriptionEl.className = "card_description";
+  descriptionEl.className = "card_text";
   descriptionEl.textContent = description;
   textWrap.append(descriptionEl);
 
