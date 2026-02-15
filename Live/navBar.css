@@ -4,11 +4,11 @@
   display: flex;
   align-items: center;
   padding: var(--space-block-300) var(--margin-mobile-500);
-  background: var(--color-bg-forest-raise);
+  background: var(--color-bg-elevated);
 }
 
 .navBar .cs-back-link {
   font: var(--type-action);
-  color: var(--color-saffron);
+  color: var(--color-accent);
   text-decoration: none;
 }

@@ -27,12 +27,12 @@
 
 .cs-title {
   font: var(--type-h1);
-  color: var(--color-saffron);
+  color: var(--color-accent);
 }
 
 .cs-subtitle {
   font: var(--type-subtitle-l);
-  color: var(--color-white-off);
+  color: var(--color-text-secondary);
 }
 
 
@@ -54,12 +54,12 @@
 
 .cs-section-header {
   font: var(--type-h2);
-  color: var(--color-white-off);
+  color: var(--color-text-secondary);
 }
 
 .cs-section-body {
   font: var(--type-body-l);
-  color: var(--color-white-off);
+  color: var(--color-text-secondary);
 }
 
 .cs-section-body p + p {
@@ -68,7 +68,7 @@
 
 .cs-load-error {
   font: var(--type-body-l);
-  color: var(--color-white-off);
+  color: var(--color-text-secondary);
 }
 
  /* Bullet Row */
@@ -124,9 +124,9 @@
   align-items: flex-start;
   justify-content: flex-start;
   padding: var(--space-block-500) var(--space-block-500);
-  border: 1px solid var(--color-saffron-fade);
+  border: 1px solid var(--color-accent-soft);
   border-radius: var(--radius-base);
-  background-color: var(--color-black);
+  background-color: var(--color-surface);
   gap: var(--space-300);
 }
 
@@ -157,17 +157,17 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  border: 1px solid var(--color-saffron-fade);
+  border: 1px solid var(--color-accent-soft);
   border-radius: var(--radius-base) 0 var(--radius-base) 0;
   font: var(--type-action);
-  color: var(--color-black);
-  background-color: var(--color-saffron);
+  color: var(--color-text-inverse);
+  background-color: var(--color-accent);
 }
 
 .cs-bullet-item-text {
   width: 100%;
   font: var(--type-body-m);
-  color: var(--color-white-off);
+  color: var(--color-text-secondary);
 }
 
 .cs-bullet-item-text > * + * {
@@ -177,14 +177,14 @@
 .cs-bullet-item-title {
   margin: 0;
   font: var(--type-subtitle-m);
-  color: var(--color-white);
+  color: var(--color-text-primary);
   padding-bottom: var(--space-500);
 }
 
 .cs-bullet-item-quote {
   margin: var(--space-700) 0 0;
   padding: 0 var(--space-500) 0;
-  border-left: 1px solid var(--color-saffron-fade);
+  border-left: 1px solid var(--color-accent-soft);
   font-style: italic;
 }
 
@@ -199,7 +199,7 @@
 .cs-bullet-item-cite {
   display: block;
   font: var(--type-body-m);
-  color: var(--color-saffron);
+  color: var(--color-accent);
   font-style: normal;
 }
 
@@ -212,8 +212,8 @@
   padding: 0;
   align-items: stretch;
   height: fit-content;
-  border: 1px solid var(--color-saffron-fade);
-  background-color: var(--color-saffron-fade);
+  border: 1px solid var(--color-accent-soft);
+  background-color: var(--color-accent-soft);
   border-radius: var(--radius-large);
   overflow: hidden;
 }
@@ -229,7 +229,7 @@
   justify-content: flex-start;
   padding: var(--space-500) var(--space-300) var(--space-500);
   border: 0;
-  background-color: var(--color-black);
+  background-color: var(--color-surface);
   gap: var(--space-500);
   text-align: center;
 }
@@ -246,14 +246,14 @@
   justify-content: flex-start;
   width: 100%;
   font: var(--type-caption-m);
-  color: var(--color-white-off);
+  color: var(--color-text-secondary);
   text-align: center;
 }
 
 .cs-icon-grid-item-title {
   margin: 0;
   font: var(--type-subtitle-m);
-  color: var(--color-white);
+  color: var(--color-text-primary);
   padding-bottom: var(--space-500);
 }
 
@@ -267,7 +267,7 @@
   grid-template-columns: 2px 1fr;
   width: 100%;
   height: fit-content;
-  background-color: var(--color-black);
+  background-color: var(--color-surface);
   border-radius: var(--radius-base);
   overflow: hidden;
 }
@@ -278,7 +278,7 @@
   align-self: stretch;
   background: linear-gradient(
     to bottom,
-    var(--color-saffron) 0 calc(var(--tracker-progress, 0) * 100%),
+    var(--color-accent) 0 calc(var(--tracker-progress, 0) * 100%),
     transparent calc(var(--tracker-progress, 0) * 100%) 100%
   );
   border-radius: 1000px;
@@ -304,7 +304,7 @@
 .cs-flow-row-item-text {
   width: 100%;
   font: var(--type-body-m);
-  color: var(--color-white-off);
+  color: var(--color-text-secondary);
 }
 
 .cs-flow-row-item-text > * + * {
@@ -342,11 +342,11 @@
   border: 1px solid transparent;
   border-radius: var(--radius-base);
   background:
-    linear-gradient(var(--color-black), var(--color-black)) padding-box,
+    linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
     linear-gradient(
       to bottom,
-      var(--color-black),
-      var(--color-saffron-fade)
+      var(--color-surface),
+      var(--color-accent-soft)
     ) border-box;
 }
 
@@ -356,11 +356,11 @@
     width: fit-content;
     gap: var(--space-block-500);
     background:
-      linear-gradient(var(--color-black), var(--color-black)) padding-box,
+      linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
       linear-gradient(
         to right,
-        var(--color-black),
-        var(--color-saffron-fade)
+        var(--color-surface),
+        var(--color-accent-soft)
       ) border-box;
   }
 }
@@ -373,7 +373,7 @@
 }
 
 .cs-progress-matrix-item-primary {
-  color: var(--color-white-off);
+  color: var(--color-text-secondary);
 }
 
 .cs-progress-matrix-chevron,
@@ -385,12 +385,12 @@
   height: 32px;
   font-size: 32px;
   font-weight: 400;
-  color: var(--color-saffron);
+  color: var(--color-accent);
   line-height: 1;
 }
 
 .cs-progress-matrix-item-secondary {
-  color: var(--color-white);
+  color: var(--color-text-primary);
 }
 
 .cs-progress-matrix-div-secondaryAll {
@@ -456,11 +456,11 @@
   border: 1px solid transparent;
   border-radius: var(--radius-base);
   background:
-    linear-gradient(var(--color-black), var(--color-black)) padding-box,
+    linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
     linear-gradient(
       to bottom,
-      var(--color-black),
-      var(--color-saffron-fade)
+      var(--color-surface),
+      var(--color-accent-soft)
     ) border-box;
 }
 
@@ -475,7 +475,7 @@
   width: 100%;
   min-width: 0;
   font: var(--type-body-m);
-  color: var(--color-white-off);
+  color: var(--color-text-secondary);
 }
 
 .cs-progress-row-item-stampsAll {
@@ -499,11 +499,11 @@
     margin-left: calc(50% - (min(max-content, 90vw) / 2));
     margin-right: calc(50% - (min(max-content, 90vw) / 2));
     background:
-      linear-gradient(var(--color-black), var(--color-black)) padding-box,
+      linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
       linear-gradient(
         to right,
-        var(--color-black),
-        var(--color-saffron-fade)
+        var(--color-surface),
+        var(--color-accent-soft)
       ) border-box;
   }
 
@@ -562,7 +562,7 @@
   width: 100%;
   height: auto;
   border-radius: var(--radius-base);
-  border: 1px solid var(--color-saffron-fade);
+  border: 1px solid var(--color-accent-soft);
 }
 
 .cs-hero-image {
@@ -572,7 +572,7 @@
 
 .cs-fig-caption {
   font: var(--type-caption-l);
-  color: var(--color-saffron);
+  color: var(--color-accent);
 }
 
 .cs-section-body ul {
@@ -589,8 +589,8 @@
   aspect-ratio: 1 / 1;
   border-radius: var(--radius-base);
   overflow: hidden;
-  background-color: var(--color-black);
-  border: 1px solid var(--color-saffron-fade);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-accent-soft);
 }
 
 .cs-stamp-content {

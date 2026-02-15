@@ -10,7 +10,7 @@
   align-items: center;
   width: 100%;
   padding: var(--space-500) var(--space-500) 0;
-  border: 1px solid var(--color-saffron-fade);
+  border: 1px solid var(--color-accent-soft);
   border-radius: var(--radius-large);
   background: transparent;
   perspective: 1000px;
@@ -19,7 +19,7 @@
 .card_inner_div {
   width: 100%;
   padding: var(--space-300);
-  border: 1px solid var(--color-saffron);
+  border: 1px solid var(--color-accent);
   border-radius: var(--radius-base);
   background: transparent;
   transform-style: preserve-3d;
@@ -63,7 +63,7 @@
 .card_title {
   font: var(--type-h2);
   margin: 0;
-  color: var(--color-saffron);
+  color: var(--color-accent);
   text-align: center;
 }
 
@@ -84,7 +84,7 @@
   font: var(--type-body-m);
   margin: 0;
   flex: 1 1 auto;
-  color: var(--color-white);
+  color: var(--color-text-primary);
 }
 
 .card_cta_button {
@@ -93,8 +93,8 @@
   padding: 0 12px;
   border: 0;
   border-radius: 4px;
-  background: var(--color-saffron);
-  color: #000;
+  background: var(--color-accent);
+  color: var(--color-text-inverse);
   cursor: pointer;
   white-space: nowrap;
 }
