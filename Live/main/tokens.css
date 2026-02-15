@@ -2,6 +2,7 @@
   /* Raw color tokens */
   --r-forest: #021615;
   --r-forest-raise: #091d1c;
+  --r-forest-shade: #272e2e;
   --r-saffron: #ecbc2a;
   --r-saffron-fade-partial: rgba(236, 188, 42, 0.4);
   --r-saffron-fade: rgba(236, 188, 42, 0.2);
@@ -13,6 +14,7 @@
   --color-bg-app: #101011;
   --color-bg-page: var(--r-forest);
   --color-bg-elevated: var(--r-forest-raise);
+  --color-bg-shade: var(--r-forest-shade);
   --color-surface: var(--r-black);
   --color-accent: var(--r-saffron);
   --color-accent-soft: var(--r-saffron-fade);

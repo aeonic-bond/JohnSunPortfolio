@@ -1,0 +1,48 @@
+{
+  "items": [
+    {
+      "kind": "torus",
+      "title": "Torus",
+      "description": "I designed and built a demo for a parametric architecture CAD tool to streamline parametric family creation.",
+      "tags": [
+        "User Research",
+        "Domain Research",
+        "MVP Product Design",
+        "AI-Assisted Development",
+        "Usability Testing"
+      ],
+      "ctaLabel": "Read",
+      "href": "../torus/index.html",
+      "media": {
+        "splineUrlDesktop": "https://prod.spline.design/fVaatZpFg7arBTsd/scene.splinecode",
+        "splineUrlMobile": "https://prod.spline.design/XszHhs9AMXT7tGNa/scene.splinecode"
+      }
+    },
+    {
+      "kind": "blueprint",
+      "title": "Blueprint",
+      "description": "Case study summary for Blueprint.",
+      "tags": [],
+      "ctaLabel": "Read",
+      "href": "../blueprint/index.html",
+      "media": {
+        "splineUrl": "https://prod.spline.design/5kxmLlprZtzzCVht/scene.splinecode"
+      }
+    },
+    {
+      "kind": "hcustomizer",
+      "title": "Home Customizer",
+      "description": "Case study summary for Home Customizer.",
+      "tags": [],
+      "ctaLabel": "Read",
+      "href": "../hcustomizer/index.html"
+    },
+    {
+      "kind": "cone",
+      "title": "Cone",
+      "description": "Case study summary for Cone.",
+      "tags": [],
+      "ctaLabel": "Read"
+    }
+  ]
+}

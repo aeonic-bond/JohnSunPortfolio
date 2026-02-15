@@ -1,40 +1,3 @@
-const CASE_STUDIES = [
-  {
-    kind: "torus",
-    title: "Torus",
-    description: "Default decscription text",
-    ctaLabel: "Read",
-    href: "../torus/index.html",
-    media: {
-      splineUrlDesktop: "https://prod.spline.design/fVaatZpFg7arBTsd/scene.splinecode",
-      splineUrlMobile: "https://prod.spline.design/XszHhs9AMXT7tGNa/scene.splinecode",
-    },
-  },
-  {
-    kind: "blueprint",
-    title: "Blueprint",
-    description: "Case study summary for Blueprint.",
-    ctaLabel: "Read",
-    href: "../blueprint/index.html",
-    media: {
-      splineUrl: "https://prod.spline.design/5kxmLlprZtzzCVht/scene.splinecode",
-    },
-  },
-  {
-    kind: "hcustomizer",
-    title: "Home Customizer",
-    description: "Case study summary for Home Customizer.",
-    ctaLabel: "Read",
-    href: "../hcustomizer/index.html",
-  },
-  {
-    kind: "cone",
-    title: "Cone",
-    description: "Case study summary for Cone.",
-    ctaLabel: "Read",
-  },
-];
-
 const SPLINE_CACHE_BUST = Date.now().toString();
 const withCacheBust = (url) => {
   if (!url) return "";
@@ -96,6 +59,27 @@ const renderCardMedia = ({ kind = "", mediaRoot, media } = {}) => {
   if (render) render(mediaRoot, media);
 };
 
+const CASE_STUDY_DATA_PATH = "../caseStudyCard/caseStudyCard.json";
+
+const loadCaseStudies = async () => {
+  try {
+    const response = await fetch(CASE_STUDY_DATA_PATH);
+    if (!response.ok) {
+      throw new Error(`Failed to load ${CASE_STUDY_DATA_PATH}`);
+    }
+
+    const payload = await response.json();
+    const items = Array.isArray(payload) ? payload : payload?.items;
+    window.LiveCaseStudyData.items = Array.isArray(items) ? items : [];
+  } catch (error) {
+    console.error(error);
+    window.LiveCaseStudyData.items = [];
+  }
+
+  return window.LiveCaseStudyData.items;
+};
+
 window.LiveCaseStudyData = window.LiveCaseStudyData || {};
-window.LiveCaseStudyData.items = CASE_STUDIES;
+window.LiveCaseStudyData.items = window.LiveCaseStudyData.items || [];
 window.LiveCaseStudyData.renderCardMedia = renderCardMedia;
+window.LiveCaseStudyData.loadCaseStudies = loadCaseStudies;
