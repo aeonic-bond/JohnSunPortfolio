@@ -57,22 +57,14 @@
 .card_textAll {
   display: flex;
   flex-direction: column;
-  gap: var(--space-600);
+  gap: var(--space-500);
   width: 100%;
   padding: var(--space-300);
-}
-
-.card_head {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-200);
-  width: 100%;
 }
 
 .card_title_wrap {
   display: flex;
   align-items: center;
-  min-height: 52px;
   width: 100%;
 }
 
@@ -82,10 +74,16 @@
   color: var(--color-accent);
 }
 
+.card_body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-500);
+  width: 100%;
+}
+
 .card_text_wrap {
   display: flex;
   align-items: center;
-  min-height: 140px;
   width: 100%;
 }
 
@@ -95,7 +93,7 @@
   color: var(--color-text-primary);
 }
 
-.card_tags {
+.card_tagsAll {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-100);

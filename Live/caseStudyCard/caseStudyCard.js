@@ -31,9 +31,6 @@ const createCaseStudyCard = ({
   const content = document.createElement("div");
   content.className = "card_textAll";
 
-  const head = document.createElement("div");
-  head.className = "card_head";
-
   const titleWrap = document.createElement("div");
   titleWrap.className = "card_title_wrap";
 
@@ -50,10 +47,8 @@ const createCaseStudyCard = ({
   descriptionEl.textContent = description;
   textWrap.append(descriptionEl);
 
-  head.append(titleWrap, textWrap);
-
   const tagsWrap = document.createElement("div");
-  tagsWrap.className = "card_tags";
+  tagsWrap.className = "card_tagsAll";
   for (const tagText of tags) {
     const trimmed = String(tagText || "").trim();
     if (!trimmed) continue;
@@ -63,6 +58,10 @@ const createCaseStudyCard = ({
     tagsWrap.append(tag);
   }
 
+  const body = document.createElement("div");
+  body.className = "card_body";
+  body.append(textWrap, tagsWrap);
+
   const ctaContainer = document.createElement("div");
   ctaContainer.className = "card_cta_container";
   const ctaButton = document.createElement("button");
@@ -71,7 +70,7 @@ const createCaseStudyCard = ({
   ctaButton.textContent = ctaLabel;
   ctaContainer.append(ctaButton);
 
-  content.append(head, tagsWrap, ctaContainer);
+  content.append(titleWrap, body, ctaContainer);
   card.append(mediaEl, content);
 
   if (href) {
