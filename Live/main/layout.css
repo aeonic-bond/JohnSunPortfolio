@@ -30,13 +30,6 @@ body {
 
 .case_studyAll {
   display: grid;
-  gap: var(--space-block-800);
+  justify-items: center;
   width: 100%;
-  padding: 16px;
-}
-
-@media (min-width: 1024px) {
-  .case_studyAll {
-    width: fit-content;
-  }
 }
