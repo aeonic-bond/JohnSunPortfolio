@@ -1,6 +1,6 @@
 .case-study-card-div {
   width: 100%;
-  padding: var(--space-block-500) var(--space-500);
+  padding: var(--space-block-500) 0;
   justify-items: center;
 }
 
