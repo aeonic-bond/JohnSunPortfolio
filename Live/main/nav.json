@@ -27,6 +27,14 @@
       "text": "Product Concept",
       "href": "",
       "selected": false
+    },
+
+    {
+      "id": "aboutMe",
+      "title": "About Me",
+      "text": "Info & Contacts",
+      "href": "",
+      "selected": false
     }
   ]
 }
