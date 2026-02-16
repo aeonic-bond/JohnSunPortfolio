@@ -58,13 +58,58 @@ const createNavItem = ({ title, text, targetId = "", href = "", selected = false
   return button;
 };
 
-const setActiveNavItem = (root, activeCardDivID) => {
+const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+const centerActiveNavItem = (navRoot, activeItem, { desktop = false, behavior = "auto" } = {}) => {
+  if (!(navRoot instanceof HTMLElement) || !(activeItem instanceof HTMLElement)) return;
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const resolvedBehavior = prefersReducedMotion ? "auto" : behavior;
+  const itemRect = activeItem.getBoundingClientRect();
+
+  if (desktop) {
+    const targetMidpointY = window.innerHeight * 0.5;
+    const itemMidpointY = itemRect.top + itemRect.height * 0.5;
+    const deltaY = itemMidpointY - targetMidpointY;
+    const maxScrollTop = Math.max(0, navRoot.scrollHeight - navRoot.clientHeight);
+    const nextScrollTop = clamp(navRoot.scrollTop + deltaY, 0, maxScrollTop);
+
+    navRoot.scrollTo({
+      top: nextScrollTop,
+      behavior: resolvedBehavior,
+    });
+    return;
+  }
+
+  const targetMidpointX = window.innerWidth * 0.5;
+  const itemMidpointX = itemRect.left + itemRect.width * 0.5;
+  const deltaX = itemMidpointX - targetMidpointX;
+  const maxScrollLeft = Math.max(0, navRoot.scrollWidth - navRoot.clientWidth);
+  const nextScrollLeft = clamp(navRoot.scrollLeft + deltaX, 0, maxScrollLeft);
+
+  navRoot.scrollTo({
+    left: nextScrollLeft,
+    behavior: resolvedBehavior,
+  });
+};
+
+const setActiveNavItem = (
+  root,
+  activeCardDivID,
+  { desktop = false, behavior = "auto" } = {},
+) => {
   const items = root.querySelectorAll(".case-study-nav-item");
+  let activeItem = null;
   for (const item of items) {
     if (!(item instanceof HTMLButtonElement)) continue;
     const isActive = item.dataset.targetId === activeCardDivID;
     item.classList.toggle("is-selected", isActive);
     item.setAttribute("aria-selected", isActive ? "true" : "false");
+    if (isActive) activeItem = item;
+  }
+
+  if (activeItem) {
+    centerActiveNavItem(root, activeItem, { desktop, behavior });
   }
 };
 
@@ -94,7 +139,7 @@ const loadNavItems = async () => {
 };
 
 const initCaseStudyNav = async () => {
-  const navRoot = document.querySelector(".case-study-nav");
+  const navRoot = document.querySelector(".case-study-nav-div");
   if (!(navRoot instanceof HTMLElement)) return;
 
   const desktopQuery = window.matchMedia("(min-width: 1024px)");
@@ -134,20 +179,54 @@ const initCaseStudyNav = async () => {
 
   const initialActive = window.activeCardDivID || "";
   if (initialActive) {
-    setActiveNavItem(navRoot, initialActive);
+    setActiveNavItem(navRoot, initialActive, {
+      desktop: desktopQuery.matches,
+      behavior: "auto",
+    });
   }
 
   window.addEventListener("case-study-active-change", (event) => {
     const nextId = event?.detail?.activeCardDivID;
     if (typeof nextId !== "string" || !nextId) return;
-    setActiveNavItem(navRoot, nextId);
+    setActiveNavItem(navRoot, nextId, {
+      desktop: desktopQuery.matches,
+      behavior: "smooth",
+    });
   });
 
   if (typeof desktopQuery.addEventListener === "function") {
-    desktopQuery.addEventListener("change", () => updateNavIconsForViewport(navRoot, desktopQuery));
+    desktopQuery.addEventListener("change", () => {
+      updateNavIconsForViewport(navRoot, desktopQuery);
+      const selected = navRoot.querySelector(".case-study-nav-item.is-selected");
+      if (selected instanceof HTMLElement) {
+        centerActiveNavItem(navRoot, selected, {
+          desktop: desktopQuery.matches,
+          behavior: "auto",
+        });
+      }
+    });
   } else if (typeof desktopQuery.addListener === "function") {
-    desktopQuery.addListener(() => updateNavIconsForViewport(navRoot, desktopQuery));
+    desktopQuery.addListener(() => {
+      updateNavIconsForViewport(navRoot, desktopQuery);
+      const selected = navRoot.querySelector(".case-study-nav-item.is-selected");
+      if (selected instanceof HTMLElement) {
+        centerActiveNavItem(navRoot, selected, {
+          desktop: desktopQuery.matches,
+          behavior: "auto",
+        });
+      }
+    });
   }
+
+  window.addEventListener("resize", () => {
+    const selected = navRoot.querySelector(".case-study-nav-item.is-selected");
+    if (selected instanceof HTMLElement) {
+      centerActiveNavItem(navRoot, selected, {
+        desktop: desktopQuery.matches,
+        behavior: "auto",
+      });
+    }
+  });
 };
 
 if (document.readyState === "loading") {
