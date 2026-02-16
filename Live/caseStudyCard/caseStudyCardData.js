@@ -20,7 +20,7 @@ const renderTorusMedia = (mediaRoot, media = {}) => {
   if (!initialUrl) return;
 
   const spline = document.createElement("spline-viewer");
-  spline.className = "card_media_layer torus_spline";
+  spline.className = "card-media-layer torus-spline";
   spline.setAttribute("url", initialUrl);
   mediaRoot.append(spline);
 
@@ -43,7 +43,7 @@ const renderBlueprintMedia = (mediaRoot, media = {}) => {
   if (!url) return;
 
   const spline = document.createElement("spline-viewer");
-  spline.className = "card_media_layer blueprint_spline";
+  spline.className = "card-media-layer blueprint-spline";
   spline.setAttribute("url", url);
   mediaRoot.append(spline);
 };

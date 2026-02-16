@@ -8,17 +8,17 @@ const createCaseStudyCard = ({
   media,
 } = {}) => {
   const cardWrap = document.createElement("div");
-  cardWrap.className = "case_study_card_div";
+  cardWrap.className = "case-study-card-div";
 
   const card = document.createElement("article");
-  card.className = "case_study_card";
+  card.className = "case-study-card";
   if (kind) card.dataset.cardKind = kind;
 
   const mediaEl = document.createElement("div");
-  mediaEl.className = "card_media_div";
+  mediaEl.className = "card-media-div";
 
   const mediaMount = document.createElement("div");
-  mediaMount.className = "card_media_mount";
+  mediaMount.className = "card-media-mount";
   mediaMount.setAttribute("aria-hidden", "true");
 
   window.LiveCaseStudyData?.renderCardMedia?.({
@@ -29,43 +29,43 @@ const createCaseStudyCard = ({
   mediaEl.append(mediaMount);
 
   const content = document.createElement("div");
-  content.className = "card_textAll";
+  content.className = "card-text-all";
 
   const titleWrap = document.createElement("div");
-  titleWrap.className = "card_title_wrap";
+  titleWrap.className = "card-title-wrap";
 
   const titleEl = document.createElement("h2");
-  titleEl.className = "card_title";
+  titleEl.className = "card-title";
   titleEl.textContent = title;
   titleWrap.append(titleEl);
 
   const textWrap = document.createElement("div");
-  textWrap.className = "card_text_wrap";
+  textWrap.className = "card-text-wrap";
 
   const descriptionEl = document.createElement("p");
-  descriptionEl.className = "card_text";
+  descriptionEl.className = "card-text";
   descriptionEl.textContent = description;
   textWrap.append(descriptionEl);
 
   const tagsWrap = document.createElement("div");
-  tagsWrap.className = "card_tagsAll";
+  tagsWrap.className = "card-tags-all";
   for (const tagText of tags) {
     const trimmed = String(tagText || "").trim();
     if (!trimmed) continue;
     const tag = document.createElement("span");
-    tag.className = "card_tag";
+    tag.className = "card-tag";
     tag.textContent = trimmed;
     tagsWrap.append(tag);
   }
 
   const body = document.createElement("div");
-  body.className = "card_body";
+  body.className = "card-body";
   body.append(textWrap, tagsWrap);
 
   const ctaContainer = document.createElement("div");
-  ctaContainer.className = "card_cta_container";
+  ctaContainer.className = "card-cta-container";
   const ctaButton = document.createElement("button");
-  ctaButton.className = "card_cta";
+  ctaButton.className = "card-cta";
   ctaButton.type = "button";
   ctaButton.textContent = ctaLabel;
   ctaContainer.append(ctaButton);
@@ -106,7 +106,7 @@ if (root) {
   let syncWidthRafId = 0;
 
   const syncCaseStudyCardWidths = () => {
-    const cards = Array.from(root.querySelectorAll(".case_study_card"));
+    const cards = Array.from(root.querySelectorAll(".case-study-card"));
     if (!cards.length) return;
 
     // Reset width so each card can report its natural size before we measure.
