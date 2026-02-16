@@ -1,0 +1,32 @@
+{
+  "items": [
+    {
+      "id": "torus",
+      "title": "Torus",
+      "text": "Architecture/CAD",
+      "href": "../torus/index.html",
+      "selected": true
+    },
+    {
+      "id": "blueprint",
+      "title": "Blueprint",
+      "text": "Design System",
+      "href": "../blueprint/index.html",
+      "selected": false
+    },
+    {
+      "id": "hcustomizer",
+      "title": "Customizer",
+      "text": "Customization Modules",
+      "href": "../hcustomizer/index.html",
+      "selected": false
+    },
+    {
+      "id": "cone",
+      "title": "Cone",
+      "text": "Product Concept",
+      "href": "",
+      "selected": false
+    }
+  ]
+}

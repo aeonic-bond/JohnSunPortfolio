@@ -12,8 +12,7 @@
   --r-white-off: #c0c0c0;
 
   /* Semantic color tokens */
-  --color-bg-app: var(--r-forest);
-  --color-bg-page: var(--r-forest);
+  --color-bg-main: var(--r-forest);
   --color-bg-raise: var(--r-forest-raise);
   --color-bg-shine: var(--r-forest-shine);
   --color-bg-shade: var(--r-forest-shade);

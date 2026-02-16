@@ -8,7 +8,7 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: "Inter", sans-serif;
-  background: var(--color-bg-app);
+  background: var(--color-bg-main);
   color: var(--color-text-primary);
 }
 
@@ -22,10 +22,6 @@ body {
 .header-div {
   height: 1000px;
   padding-top: var(--space-block-800);
-}
-
-.header-div h1 {
-  font: var(--type-h1);
 }
 
 .case-study-showcase {
@@ -46,12 +42,65 @@ body {
   top: 0;
   z-index: 10;
   align-self: flex-start;
-  background-color: var(--color-bg-page);
+  background-color: var(--color-bg-main);
   border-bottom: 1px solid var(--color-bg-raise);
   width: 100%;
   height: 64px;
+  padding: var(--space-200) var(--space-300);
+  overflow-x: auto;
+}
 
+.case-study-nav-list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-300);
+  min-height: 100%;
+}
 
+.case-study-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-300);
+  padding: var(--space-200) var(--space-300);
+  border: 0;
+  border-radius: var(--radius-base);
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.case-study-nav-icon {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+}
+
+.case-study-text-all {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--space-200);
+}
+
+.case-study-nav-title {
+  margin: 0;
+  font: var(--type-navH);
+  line-height: 1;
+  color: var(--color-text-primary);
+}
+
+.case-study-nav-subtitle {
+  margin: 0;
+  font: var(--type-subtitle-s);
+  line-height: 1;
+  color: var(--color-text-secondary);
+}
+
+.case-study-nav-item.is-selected .case-study-nav-title {
+  color: var(--color-accent);
 }
 
 @media (min-width: 1024px) {
@@ -64,10 +113,41 @@ body {
 
   .case-study-nav {
     height: 100vw;
+    width: 400px;
     border-right: 1px solid var(--color-bg-raise);
+    border-bottom: 0;
+    padding: var(--space-500);
+    overflow-x: visible;
+    overflow-y: auto;
+  }
+
+  .case-study-nav-list {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-500);
+  }
+
+  .case-study-nav-item {
+    justify-content: flex-start;
+    gap: var(--space-500);
+    padding: var(--space-500);
+    width: 100%;
+  }
+
+  .case-study-nav-icon {
+    width: 32px;
+    height: 32px;
+    flex-basis: 32px;
+  }
+
+  .case-study-nav-item.is-selected {
+    background: var(--color-bg-raise);
   }
 
   .case-study-all {
+    flex: 1 1 auto;
+    min-width: 0;
     padding-inline: var(--space-block-900);
   }
 }
