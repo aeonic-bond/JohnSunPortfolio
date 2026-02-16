@@ -1,23 +1,38 @@
 const DESKTOP_ICON_SRC = "http://localhost:3845/assets/2370a2c22219829ffcd883885dd9e935e0ea2c7a.svg";
 const MOBILE_ICON_SRC = "http://localhost:3845/assets/0253910616877c7d6156a2ffec07d136fe9deba6.svg";
 
+const normalizeTargetId = (item = {}) => {
+  if (typeof item?.targetId === "string" && item.targetId.trim()) {
+    return item.targetId.trim();
+  }
+  const base = String(item?.id || item?.kind || item?.title || "").trim().toLowerCase();
+  if (!base) return "";
+  const slug = base.replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  return slug ? `case-study-${slug}` : "";
+};
+
 const buildNavItems = (items = []) => {
   const normalized = items
     .map((item) => ({
       title: String(item?.title || item?.kind || "Untitled").trim() || "Untitled",
       text: String(item?.text || item?.subtitle || item?.category || item?.kind || "").trim(),
+      targetId: normalizeTargetId(item),
+      href: String(item?.href || "").trim(),
+      selected: item?.selected === true,
     }))
     .filter((item) => item.title);
 
   if (normalized.length > 0) return normalized;
-  return [{ title: "Torus", text: "Architecture/CAD" }];
+  return [{ title: "Torus", text: "Architecture/CAD", targetId: "case-study-torus", href: "", selected: true }];
 };
 
-const createNavItem = ({ title, text, selected = false } = {}) => {
+const createNavItem = ({ title, text, targetId = "", href = "", selected = false } = {}) => {
   const button = document.createElement("button");
   button.type = "button";
   button.className = "case-study-nav-item";
   if (selected) button.classList.add("is-selected");
+  if (targetId) button.dataset.targetId = targetId;
+  if (href) button.dataset.href = href;
 
   const icon = document.createElement("img");
   icon.className = "case-study-nav-icon";
@@ -41,6 +56,16 @@ const createNavItem = ({ title, text, selected = false } = {}) => {
   textWrap.append(titleEl, subtitleEl);
   button.append(icon, textWrap);
   return button;
+};
+
+const setActiveNavItem = (root, activeCardDivID) => {
+  const items = root.querySelectorAll(".case-study-nav-item");
+  for (const item of items) {
+    if (!(item instanceof HTMLButtonElement)) continue;
+    const isActive = item.dataset.targetId === activeCardDivID;
+    item.classList.toggle("is-selected", isActive);
+    item.setAttribute("aria-selected", isActive ? "true" : "false");
+  }
 };
 
 const updateNavIconsForViewport = (root, mediaQuery) => {
@@ -84,15 +109,39 @@ const initCaseStudyNav = async () => {
   for (const [index, item] of navItems.entries()) {
     const navItem = createNavItem({
       ...item,
-      selected: item?.selected === true || (item?.selected == null && index === 0),
+      selected: item?.selected === true || (item?.selected === false ? false : index === 0),
     });
     navItem.setAttribute("role", "tab");
     navItem.setAttribute("aria-selected", navItem.classList.contains("is-selected") ? "true" : "false");
+
+    navItem.addEventListener("click", () => {
+      const targetId = navItem.dataset.targetId;
+      if (targetId) {
+        const target = document.getElementById(targetId);
+        if (target instanceof HTMLElement) {
+          target.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      } else if (navItem.dataset.href) {
+        window.location.href = navItem.dataset.href;
+      }
+    });
+
     navList.append(navItem);
   }
 
   navRoot.replaceChildren(navList);
   updateNavIconsForViewport(navRoot, desktopQuery);
+
+  const initialActive = window.activeCardDivID || "";
+  if (initialActive) {
+    setActiveNavItem(navRoot, initialActive);
+  }
+
+  window.addEventListener("case-study-active-change", (event) => {
+    const nextId = event?.detail?.activeCardDivID;
+    if (typeof nextId !== "string" || !nextId) return;
+    setActiveNavItem(navRoot, nextId);
+  });
 
   if (typeof desktopQuery.addEventListener === "function") {
     desktopQuery.addEventListener("change", () => updateNavIconsForViewport(navRoot, desktopQuery));

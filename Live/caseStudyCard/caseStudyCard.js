@@ -9,6 +9,9 @@ const createCaseStudyCard = ({
 } = {}) => {
   const cardWrap = document.createElement("div");
   cardWrap.className = "case-study-card-div";
+  if (kind) {
+    cardWrap.id = `case-study-${String(kind).trim().toLowerCase()}`;
+  }
 
   const card = document.createElement("article");
   card.className = "case-study-card";
@@ -104,6 +107,79 @@ const root = document.getElementById("case-studies-root");
 if (root) {
   const desktopQuery = window.matchMedia("(min-width: 1024px)");
   let syncWidthRafId = 0;
+  let activeSyncRafId = 0;
+  let activeCardDivID = "";
+  const previousMidpointMap = new WeakMap();
+  window.activeCardDivID = activeCardDivID;
+
+  const getActiveThresholdY = () => {
+    const raw = getComputedStyle(root).getPropertyValue("--active-card-threshold-vh").trim();
+    const thresholdVh = Number.parseFloat(raw);
+    const normalized = Number.isFinite(thresholdVh) ? thresholdVh : 50;
+    return (window.innerHeight * normalized) / 100;
+  };
+
+  const setActiveCardDivID = (nextId) => {
+    if (!nextId || nextId === activeCardDivID) return;
+    activeCardDivID = nextId;
+    window.activeCardDivID = nextId;
+    root.dataset.activeCardDivId = nextId;
+    window.dispatchEvent(
+      new CustomEvent("case-study-active-change", {
+        detail: { activeCardDivID: nextId },
+      }),
+    );
+  };
+
+  const updateActiveCardDivID = () => {
+    const thresholdY = getActiveThresholdY();
+    const cardDivs = Array.from(root.querySelectorAll(".case-study-card-div"));
+    if (!cardDivs.length) return;
+
+    let crossingCandidateId = "";
+    let crossingDistance = Number.POSITIVE_INFINITY;
+    let nearestId = "";
+    let nearestDistance = Number.POSITIVE_INFINITY;
+
+    for (const cardDiv of cardDivs) {
+      if (!(cardDiv instanceof HTMLElement)) continue;
+      const rect = cardDiv.getBoundingClientRect();
+      const midpointY = rect.top + rect.height * 0.5;
+      const currentDelta = midpointY - thresholdY;
+      const currentDistance = Math.abs(currentDelta);
+
+      if (currentDistance < nearestDistance) {
+        nearestDistance = currentDistance;
+        nearestId = cardDiv.id;
+      }
+
+      const previousMidpointY = previousMidpointMap.get(cardDiv);
+      if (typeof previousMidpointY === "number") {
+        const previousDelta = previousMidpointY - thresholdY;
+        const crossedThreshold =
+          currentDelta === 0 ||
+          previousDelta === 0 ||
+          (previousDelta < 0 && currentDelta > 0) ||
+          (previousDelta > 0 && currentDelta < 0);
+
+        if (crossedThreshold && currentDistance <= crossingDistance) {
+          crossingDistance = currentDistance;
+          crossingCandidateId = cardDiv.id;
+        }
+      }
+
+      previousMidpointMap.set(cardDiv, midpointY);
+    }
+
+    if (crossingCandidateId) {
+      setActiveCardDivID(crossingCandidateId);
+      return;
+    }
+
+    if (!activeCardDivID && nearestId) {
+      setActiveCardDivID(nearestId);
+    }
+  };
 
   const syncCaseStudyCardWidths = () => {
     const cards = Array.from(root.querySelectorAll(".case-study-card"));
@@ -135,9 +211,18 @@ if (root) {
     });
   };
 
+  const scheduleActiveSync = () => {
+    if (activeSyncRafId) return;
+    activeSyncRafId = window.requestAnimationFrame(() => {
+      activeSyncRafId = 0;
+      updateActiveCardDivID();
+    });
+  };
+
   const renderCards = (caseStudies = []) => {
     root.replaceChildren(...caseStudies.map((item) => createCaseStudyCard(item)));
     scheduleWidthSync();
+    scheduleActiveSync();
   };
 
   const load = window.LiveCaseStudyData?.loadCaseStudies;
@@ -147,14 +232,27 @@ if (root) {
     renderCards(window.LiveCaseStudyData?.items || []);
   }
 
-  window.addEventListener("resize", scheduleWidthSync);
+  window.addEventListener("scroll", scheduleActiveSync, { passive: true });
+  window.addEventListener("resize", () => {
+    scheduleWidthSync();
+    scheduleActiveSync();
+  });
   if (typeof desktopQuery.addEventListener === "function") {
-    desktopQuery.addEventListener("change", scheduleWidthSync);
+    desktopQuery.addEventListener("change", () => {
+      scheduleWidthSync();
+      scheduleActiveSync();
+    });
   } else if (typeof desktopQuery.addListener === "function") {
-    desktopQuery.addListener(scheduleWidthSync);
+    desktopQuery.addListener(() => {
+      scheduleWidthSync();
+      scheduleActiveSync();
+    });
   }
 
   if (document.fonts?.ready) {
-    document.fonts.ready.then(scheduleWidthSync);
+    document.fonts.ready.then(() => {
+      scheduleWidthSync();
+      scheduleActiveSync();
+    });
   }
 }

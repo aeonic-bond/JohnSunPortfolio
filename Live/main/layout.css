@@ -31,6 +31,7 @@ body {
 }
 
 .case-study-all {
+  --active-card-threshold-vh: 50;
   display: grid;
   justify-items: center;
   width: 100%;
@@ -112,7 +113,7 @@ body {
   }
 
   .case-study-nav {
-    height: 100vw;
+    height: 100vh;
     width: 400px;
     border-right: 1px solid var(--color-bg-raise);
     border-bottom: 0;
