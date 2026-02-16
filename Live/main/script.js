@@ -175,11 +175,11 @@ const initCaseStudyNav = async () => {
   }
 
   navRoot.replaceChildren(navList);
-  updateNavIconsForViewport(navRoot, desktopQuery);
+  updateNavIconsForViewport(navList, desktopQuery);
 
   const initialActive = window.activeCardDivID || "";
   if (initialActive) {
-    setActiveNavItem(navRoot, initialActive, {
+    setActiveNavItem(navList, initialActive, {
       desktop: desktopQuery.matches,
       behavior: "auto",
     });
@@ -188,7 +188,7 @@ const initCaseStudyNav = async () => {
   window.addEventListener("case-study-active-change", (event) => {
     const nextId = event?.detail?.activeCardDivID;
     if (typeof nextId !== "string" || !nextId) return;
-    setActiveNavItem(navRoot, nextId, {
+    setActiveNavItem(navList, nextId, {
       desktop: desktopQuery.matches,
       behavior: "smooth",
     });
@@ -196,10 +196,10 @@ const initCaseStudyNav = async () => {
 
   if (typeof desktopQuery.addEventListener === "function") {
     desktopQuery.addEventListener("change", () => {
-      updateNavIconsForViewport(navRoot, desktopQuery);
-      const selected = navRoot.querySelector(".case-study-nav-item.is-selected");
+      updateNavIconsForViewport(navList, desktopQuery);
+      const selected = navList.querySelector(".case-study-nav-item.is-selected");
       if (selected instanceof HTMLElement) {
-        centerActiveNavItem(navRoot, selected, {
+        centerActiveNavItem(navList, selected, {
           desktop: desktopQuery.matches,
           behavior: "auto",
         });
@@ -207,10 +207,10 @@ const initCaseStudyNav = async () => {
     });
   } else if (typeof desktopQuery.addListener === "function") {
     desktopQuery.addListener(() => {
-      updateNavIconsForViewport(navRoot, desktopQuery);
-      const selected = navRoot.querySelector(".case-study-nav-item.is-selected");
+      updateNavIconsForViewport(navList, desktopQuery);
+      const selected = navList.querySelector(".case-study-nav-item.is-selected");
       if (selected instanceof HTMLElement) {
-        centerActiveNavItem(navRoot, selected, {
+        centerActiveNavItem(navList, selected, {
           desktop: desktopQuery.matches,
           behavior: "auto",
         });
@@ -219,9 +219,9 @@ const initCaseStudyNav = async () => {
   }
 
   window.addEventListener("resize", () => {
-    const selected = navRoot.querySelector(".case-study-nav-item.is-selected");
+    const selected = navList.querySelector(".case-study-nav-item.is-selected");
     if (selected instanceof HTMLElement) {
-      centerActiveNavItem(navRoot, selected, {
+      centerActiveNavItem(navList, selected, {
         desktop: desktopQuery.matches,
         behavior: "auto",
       });
