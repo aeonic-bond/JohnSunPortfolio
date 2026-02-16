@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   padding: var(--space-block-300) var(--margin-mobile-500);
-  background: var(--color-bg-elevated);
+  background: var(--color-bg-raise);
 }
 
 .navBar .cs-back-link {
