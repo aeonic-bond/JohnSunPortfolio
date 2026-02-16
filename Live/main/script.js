@@ -60,8 +60,19 @@ const createNavItem = ({ title, text, targetId = "", href = "", selected = false
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
-const centerActiveNavItem = (navRoot, activeItem, { desktop = false, behavior = "auto" } = {}) => {
+const isElementVisibleInViewport = (element) => {
+  if (!(element instanceof HTMLElement)) return false;
+  const rect = element.getBoundingClientRect();
+  return rect.bottom > 0 && rect.top < window.innerHeight && rect.right > 0 && rect.left < window.innerWidth;
+};
+
+const centerActiveNavItem = (
+  navRoot,
+  activeItem,
+  { desktop = false, behavior = "auto", viewportElement = null } = {},
+) => {
   if (!(navRoot instanceof HTMLElement) || !(activeItem instanceof HTMLElement)) return;
+  if (viewportElement instanceof HTMLElement && !isElementVisibleInViewport(viewportElement)) return;
 
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const resolvedBehavior = prefersReducedMotion ? "auto" : behavior;
@@ -96,7 +107,7 @@ const centerActiveNavItem = (navRoot, activeItem, { desktop = false, behavior = 
 const setActiveNavItem = (
   root,
   activeCardDivID,
-  { desktop = false, behavior = "auto" } = {},
+  { desktop = false, behavior = "auto", viewportElement = null } = {},
 ) => {
   const items = root.querySelectorAll(".case-study-nav-item");
   let activeItem = null;
@@ -109,7 +120,7 @@ const setActiveNavItem = (
   }
 
   if (activeItem) {
-    centerActiveNavItem(root, activeItem, { desktop, behavior });
+    centerActiveNavItem(root, activeItem, { desktop, behavior, viewportElement });
   }
 };
 
@@ -182,6 +193,7 @@ const initCaseStudyNav = async () => {
     setActiveNavItem(navList, initialActive, {
       desktop: desktopQuery.matches,
       behavior: "auto",
+      viewportElement: navRoot,
     });
   }
 
@@ -191,6 +203,7 @@ const initCaseStudyNav = async () => {
     setActiveNavItem(navList, nextId, {
       desktop: desktopQuery.matches,
       behavior: "smooth",
+      viewportElement: navRoot,
     });
   });
 
@@ -202,6 +215,7 @@ const initCaseStudyNav = async () => {
         centerActiveNavItem(navList, selected, {
           desktop: desktopQuery.matches,
           behavior: "auto",
+          viewportElement: navRoot,
         });
       }
     });
@@ -213,6 +227,7 @@ const initCaseStudyNav = async () => {
         centerActiveNavItem(navList, selected, {
           desktop: desktopQuery.matches,
           behavior: "auto",
+          viewportElement: navRoot,
         });
       }
     });
@@ -224,6 +239,7 @@ const initCaseStudyNav = async () => {
       centerActiveNavItem(navList, selected, {
         desktop: desktopQuery.matches,
         behavior: "auto",
+        viewportElement: navRoot,
       });
     }
   });
