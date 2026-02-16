@@ -89,8 +89,8 @@
 
 .card_text {
   margin: 0;
-  font: normal 400 24px/24px var(--font-flourish);
-  color: var(--color-text-primary);
+  font: var(--type-subtitle-l);
+  color: var(--color-text-secondary);
 }
 
 .card_tagsAll {
