@@ -110,14 +110,22 @@ if (root) {
   let activeSyncRafId = 0;
   let activeID = "";
   let scrollObserveActiveIDEnabled = true;
-  const previousMidpointMap = new WeakMap();
   window.activeID = activeID;
 
-  const getActiveThresholdY = () => {
-    const raw = getComputedStyle(root).getPropertyValue("--active-card-threshold-vh").trim();
-    const thresholdVh = Number.parseFloat(raw);
-    const normalized = Number.isFinite(thresholdVh) ? thresholdVh : 50;
-    return (window.innerHeight * normalized) / 100;
+  const getActiveThresholdRangeY = () => {
+    const styles = getComputedStyle(root);
+    const startRaw = styles.getPropertyValue("--active-card-threshold-start-vh").trim();
+    const endRaw = styles.getPropertyValue("--active-card-threshold-end-vh").trim();
+    const startVh = Number.parseFloat(startRaw);
+    const endVh = Number.parseFloat(endRaw);
+    const normalizedStart = Number.isFinite(startVh) ? startVh : 40;
+    const normalizedEnd = Number.isFinite(endVh) ? endVh : 60;
+    const lowerVh = Math.min(normalizedStart, normalizedEnd);
+    const upperVh = Math.max(normalizedStart, normalizedEnd);
+    const startY = (window.innerHeight * lowerVh) / 100;
+    const endY = (window.innerHeight * upperVh) / 100;
+    const centerY = startY + (endY - startY) * 0.5;
+    return { startY, endY, centerY };
   };
 
   const setActiveID = (nextId) => {
@@ -133,12 +141,12 @@ if (root) {
   const scrollObserveActiveID = () => {
     if (!scrollObserveActiveIDEnabled) return;
 
-    const thresholdY = getActiveThresholdY();
+    const { startY, endY, centerY } = getActiveThresholdRangeY();
     const cardDivs = Array.from(root.querySelectorAll(".case-study-card-div"));
     if (!cardDivs.length) return;
 
-    let crossingCandidateId = "";
-    let crossingDistance = Number.POSITIVE_INFINITY;
+    let inRangeCandidateId = "";
+    let inRangeDistance = Number.POSITIVE_INFINITY;
     let nearestId = "";
     let nearestDistance = Number.POSITIVE_INFINITY;
 
@@ -146,34 +154,22 @@ if (root) {
       if (!(cardDiv instanceof HTMLElement)) continue;
       const rect = cardDiv.getBoundingClientRect();
       const midpointY = rect.top + rect.height * 0.5;
-      const currentDelta = midpointY - thresholdY;
-      const currentDistance = Math.abs(currentDelta);
+      const currentDistance = Math.abs(midpointY - centerY);
+      const inRange = midpointY >= startY && midpointY <= endY;
 
       if (currentDistance < nearestDistance) {
         nearestDistance = currentDistance;
         nearestId = cardDiv.id;
       }
 
-      const previousMidpointY = previousMidpointMap.get(cardDiv);
-      if (typeof previousMidpointY === "number") {
-        const previousDelta = previousMidpointY - thresholdY;
-        const crossedThreshold =
-          currentDelta === 0 ||
-          previousDelta === 0 ||
-          (previousDelta < 0 && currentDelta > 0) ||
-          (previousDelta > 0 && currentDelta < 0);
-
-        if (crossedThreshold && currentDistance <= crossingDistance) {
-          crossingDistance = currentDistance;
-          crossingCandidateId = cardDiv.id;
-        }
+      if (inRange && currentDistance < inRangeDistance) {
+        inRangeDistance = currentDistance;
+        inRangeCandidateId = cardDiv.id;
       }
-
-      previousMidpointMap.set(cardDiv, midpointY);
     }
 
-    if (crossingCandidateId) {
-      setActiveID(crossingCandidateId);
+    if (inRangeCandidateId) {
+      setActiveID(inRangeCandidateId);
       return;
     }
 

@@ -31,7 +31,8 @@ body {
 }
 
 .case-study-all {
-  --active-card-threshold-vh: 50;
+  --active-card-threshold-start-vh: 40;
+  --active-card-threshold-end-vh: 60;
   display: grid;
   justify-items: center;
   width: 100%;
