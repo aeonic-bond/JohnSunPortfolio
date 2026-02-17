@@ -109,6 +109,7 @@ if (root) {
   let syncWidthRafId = 0;
   let activeSyncRafId = 0;
   let activeID = "";
+  let scrollObserveActiveIDEnabled = true;
   const previousMidpointMap = new WeakMap();
   window.activeID = activeID;
 
@@ -130,6 +131,8 @@ if (root) {
   };
 
   const scrollObserveActiveID = () => {
+    if (!scrollObserveActiveIDEnabled) return;
+
     const thresholdY = getActiveThresholdY();
     const cardDivs = Array.from(root.querySelectorAll(".case-study-card-div"));
     if (!cardDivs.length) return;
@@ -216,6 +219,19 @@ if (root) {
       scrollObserveActiveID();
     });
   };
+
+  const disableScrollObserveActiveID = () => {
+    scrollObserveActiveIDEnabled = false;
+  };
+
+  const enableScrollObserveActiveID = () => {
+    scrollObserveActiveIDEnabled = true;
+    scheduleActiveSync();
+  };
+
+  window.setActiveID = setActiveID;
+  window.disableScrollObserveActiveID = disableScrollObserveActiveID;
+  window.enableScrollObserveActiveID = enableScrollObserveActiveID;
 
   const renderCards = (caseStudies = []) => {
     root.replaceChildren(...caseStudies.map((item) => createCaseStudyCard(item)));

@@ -132,16 +132,69 @@ const updateNavIconsForViewport = (root, mediaQuery) => {
   }
 };
 
-const clickUpdateActiveID = (navItem) => {
+const clickNavUpdateActiveID = (navItem) => {
   if (!(navItem instanceof HTMLElement)) return;
 
   const targetId = navItem.dataset.targetId;
-  if (targetId) {
-    const target = document.getElementById(targetId);
-    if (target instanceof HTMLElement) {
-      target.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
+  if (!targetId) return;
+
+  const target = document.getElementById(targetId);
+  if (!(target instanceof HTMLElement)) return;
+
+  if (typeof window.disableScrollObserveActiveID === "function") {
+    window.disableScrollObserveActiveID();
   }
+
+  if (typeof window.setActiveID === "function") {
+    window.setActiveID(targetId);
+  }
+
+  let didReenable = false;
+  const reenableObserve = () => {
+    if (didReenable) return;
+    didReenable = true;
+    if (typeof window.enableScrollObserveActiveID === "function") {
+      window.enableScrollObserveActiveID();
+    }
+  };
+
+  target.scrollIntoView({ behavior: "smooth", block: "center" });
+  const scroller = document.scrollingElement || document.documentElement;
+  const maxWaitMs = 4000;
+  const stableFrameTarget = 6;
+  const positionTolerancePx = 1;
+  const startAt = performance.now();
+  let stableFrames = 0;
+  let lastTop = scroller.scrollTop;
+  let lastLeft = scroller.scrollLeft;
+
+  const waitForScrollSettle = () => {
+    if (didReenable) return;
+
+    const nextTop = scroller.scrollTop;
+    const nextLeft = scroller.scrollLeft;
+    const deltaTop = Math.abs(nextTop - lastTop);
+    const deltaLeft = Math.abs(nextLeft - lastLeft);
+    const moved = deltaTop > positionTolerancePx || deltaLeft > positionTolerancePx;
+
+    if (moved) {
+      stableFrames = 0;
+      lastTop = nextTop;
+      lastLeft = nextLeft;
+    } else {
+      stableFrames += 1;
+    }
+
+    const timedOut = performance.now() - startAt >= maxWaitMs;
+    if (stableFrames >= stableFrameTarget || timedOut) {
+      reenableObserve();
+      return;
+    }
+
+    window.requestAnimationFrame(waitForScrollSettle);
+  };
+
+  window.requestAnimationFrame(waitForScrollSettle);
 };
 
 const loadNavItems = async () => {
@@ -183,7 +236,7 @@ const initCaseStudyNav = async () => {
     navItem.setAttribute("aria-selected", navItem.classList.contains("is-selected") ? "true" : "false");
 
     navItem.addEventListener("click", () => {
-      clickUpdateActiveID(navItem);
+      clickNavUpdateActiveID(navItem);
     });
 
     navList.append(navItem);
