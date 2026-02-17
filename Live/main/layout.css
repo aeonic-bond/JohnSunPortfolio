@@ -56,8 +56,6 @@ body {
   align-items: center;
   gap: var(--space-300);
   min-height: 100%;
-  border-top: 20px solid red;
-  border-bottom: 20px solid red;
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
@@ -159,8 +157,9 @@ body {
 
   .case-study-nav-list::before,
   .case-study-nav-list::after {
-    flex-basis: 50vh;
+    content: none;
   }
+
 
   .case-study-nav-item {
     justify-content: flex-start;
