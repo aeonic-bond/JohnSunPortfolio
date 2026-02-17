@@ -43,8 +43,8 @@ body {
   top: 0;
   z-index: 10;
   align-self: flex-start;
-  background-color: var(--color-bg-main);
-  border-bottom: 1px solid var(--color-bg-raise);
+  background-color: var(--color-bg-raise);
+  border-bottom: 1px solid var(--color-bg-shine);
   width: 100%;
   height: 64px;
   padding: var(--space-200) var(--space-300);
@@ -54,7 +54,7 @@ body {
 .case-study-nav-list {
   display: flex;
   align-items: center;
-  gap: var(--space-300);
+  gap: var(--space-700);
   min-height: 100%;
   overflow-x: auto;
   overflow-y: hidden;
@@ -137,7 +137,7 @@ body {
 
   .case-study-nav-div {
     height: 100vh;
-    width: 400px;
+    width: 25vw;
     border-right: 1px solid var(--color-bg-raise);
     border-bottom: 0;
     padding: var(--space-500);
@@ -181,6 +181,6 @@ body {
   .case-study-all {
     flex: 1 1 auto;
     min-width: 0;
-    padding-inline: var(--space-block-900);
+    padding-inline: var(--space-block-500);
   }
 }
