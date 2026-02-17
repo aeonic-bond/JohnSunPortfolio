@@ -2,6 +2,7 @@
   /* Raw color tokens */
   --r-forest: #021615;
   --r-forest-raise: #091d1c;
+  --r-forest-sink: #020f0a;
   --r-forest-shine: #0c5d51;
   --r-forest-shade: #272e2e;
   --r-saffron: #ecbc2a;
@@ -14,6 +15,7 @@
   /* Semantic color tokens */
   --color-bg-main: var(--r-forest);
   --color-bg-raise: var(--r-forest-raise);
+  --color-bg-sink: var(--r-forest-sink);
   --color-bg-shine: var(--r-forest-shine);
   --color-bg-shade: var(--r-forest-shade);
   --color-surface: var(--r-black);

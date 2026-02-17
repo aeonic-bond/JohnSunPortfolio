@@ -43,7 +43,7 @@ body {
   top: 0;
   z-index: 10;
   align-self: flex-start;
-  background-color: var(--color-bg-raise);
+  background-color: var(--color-bg-sink);
   border-bottom: 1px solid var(--color-bg-shine);
   width: 100%;
   height: 64px;
@@ -175,7 +175,7 @@ body {
   }
 
   .case-study-nav-item.is-selected {
-    background: var(--color-bg-raise);
+    background: var(--color-bg-main);
   }
 
   .case-study-all {
