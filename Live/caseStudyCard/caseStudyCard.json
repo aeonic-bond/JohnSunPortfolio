@@ -46,9 +46,9 @@
       "href": "../hcustomizer/index.html"
     },
     {
-      "kind": "cone",
-      "title": "Cone",
-      "description": "Case study summary for Cone.",
+      "kind": "tolley",
+      "title": "Tolley",
+      "description": "I designed Toll Brothers' first AI Chatbot to be contextual home search experience.",
       "tags": [],
       "ctaLabel": "Read"
     }

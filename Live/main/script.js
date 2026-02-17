@@ -3,6 +3,7 @@ const MOBILE_ICON_SRC = "http://localhost:3845/assets/0253910616877c7d6156a2ffec
 const TORUS_ICON_SRC = "/Assets/TorusIcon.svg";
 const BLUEPRINT_ICON_SRC = "/Assets/BlueprintIcon.svg";
 const CUSTOMIZER_ICON_SRC = "/Assets/CustomizerIcon.svg";
+const TOLLEY_ICON_SRC = "/Assets/TolleyIcon.svg";
 
 const normalizeTargetId = (item = {}) => {
   if (typeof item?.targetId === "string" && item.targetId.trim()) {
@@ -44,6 +45,7 @@ const createNavItem = ({ title, text, targetId = "", href = "", selected = false
     String(title || "").trim().toLowerCase() === "blueprint" || targetId === "case-study-blueprint";
   const isCustomizerItem =
     String(title || "").trim().toLowerCase() === "customizer" || targetId === "case-study-hcustomizer";
+  const isTolleyItem = String(title || "").trim().toLowerCase() === "tolley" || targetId === "case-study-tolley";
   let desktopIconSrc = DESKTOP_ICON_SRC;
   let mobileIconSrc = MOBILE_ICON_SRC;
   if (isTorusItem) {
@@ -55,6 +57,9 @@ const createNavItem = ({ title, text, targetId = "", href = "", selected = false
   } else if (isCustomizerItem) {
     desktopIconSrc = CUSTOMIZER_ICON_SRC;
     mobileIconSrc = CUSTOMIZER_ICON_SRC;
+  } else if (isTolleyItem) {
+    desktopIconSrc = TOLLEY_ICON_SRC;
+    mobileIconSrc = TOLLEY_ICON_SRC;
   }
   icon.src = desktopIconSrc;
   icon.alt = "";

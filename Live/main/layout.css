@@ -35,6 +35,7 @@ body {
   display: grid;
   justify-items: center;
   width: 100%;
+  padding-block: var(--space-block-900);
   padding-inline: var(--space-500);
 }
 
@@ -46,7 +47,6 @@ body {
   flex-direction: column;
   align-self: flex-start;
   background-color: var(--color-bg-sink);
-  border-bottom: 1px solid var(--color-bg-shine);
   width: 100%;
   height: 80px;
   padding: var(--space-200) var(--space-300);
