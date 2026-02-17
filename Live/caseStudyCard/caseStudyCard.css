@@ -5,14 +5,49 @@
 }
 
 .case-study-card {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--space-300);
   width: 100%;
   max-width: 640px;
-  padding: var(--space-300);
+  border: 1px solid transparent;
   border-radius: var(--radius-large);
   background: transparent;
+}
+
+.case-study-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--color-accent);
+  border-radius: inherit;
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .case-study-card.is-active::after {
+    animation: case-study-border-reveal 0.7s ease-out forwards;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case-study-card.is-active::after {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes case-study-border-reveal {
+  from {
+    opacity: 1;
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
 }
 
 .card-media-div {
@@ -58,7 +93,7 @@
   flex-direction: column;
   gap: var(--space-500);
   width: 100%;
-  padding: var(--space-300);
+  padding: var(--space-700);
 }
 
 .card-title-wrap {
@@ -138,7 +173,6 @@
     align-items: center;
     width: 100%;
     max-width: none;
-    padding: var(--space-500) var(--space-500) var(--space-300);
     gap: var(--space-block-500);
   }
 

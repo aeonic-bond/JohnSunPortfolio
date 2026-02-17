@@ -128,11 +128,24 @@ if (root) {
     return { startY, endY, centerY };
   };
 
+  const syncActiveCardByID = (nextId) => {
+    const cards = root.querySelectorAll(".case-study-card-div .case-study-card");
+    for (const card of cards) {
+      card.classList.remove("is-active");
+    }
+    if (!nextId) return;
+
+    const activeCard = root.querySelector(`.case-study-card-div#${CSS.escape(nextId)} .case-study-card`);
+    if (!(activeCard instanceof HTMLElement)) return;
+    activeCard.classList.add("is-active");
+  };
+
   const setActiveID = (nextId) => {
     if (!nextId || nextId === activeID) return;
     activeID = nextId;
     window.activeID = nextId;
     root.dataset.activeId = nextId;
+    syncActiveCardByID(nextId);
     if (typeof window.syncCaseStudyNavActiveID === "function") {
       window.syncCaseStudyNavActiveID(nextId, "smooth");
     }
@@ -231,6 +244,7 @@ if (root) {
 
   const renderCards = (caseStudies = []) => {
     root.replaceChildren(...caseStudies.map((item) => createCaseStudyCard(item)));
+    syncActiveCardByID(activeID);
     scheduleWidthSync();
     scheduleActiveSync();
   };
