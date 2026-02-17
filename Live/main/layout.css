@@ -42,11 +42,13 @@ body {
   position: sticky;
   top: 0;
   z-index: 10;
+  display: flex;
+  flex-direction: column;
   align-self: flex-start;
   background-color: var(--color-bg-sink);
   border-bottom: 1px solid var(--color-bg-shine);
   width: 100%;
-  height: fit-content;
+  height: 80px;
   padding: var(--space-200) var(--space-300);
   overflow: hidden;
   opacity: 0;
