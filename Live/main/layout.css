@@ -46,18 +46,21 @@ body {
   background-color: var(--color-bg-sink);
   border-bottom: 1px solid var(--color-bg-shine);
   width: 100%;
-  height: 64px;
+  height: fit-content;
   padding: var(--space-200) var(--space-300);
   overflow: hidden;
   opacity: 0;
   pointer-events: none;
   clip-path: inset(0 50% 0 50%);
+  transition:
+    clip-path 1.2s ease,
+    opacity 1.2s ease;
 }
 
 .case-study-nav-div.is-visible {
   opacity: 1;
   pointer-events: auto;
-  animation: navDivReveal 1.2s ease both;
+  clip-path: inset(0 0 0 0);
 }
 
 .case-study-nav-list {
@@ -103,9 +106,9 @@ body {
 }
 
 .case-study-nav-icon {
-  width: 20px;
-  height: 20px;
-  flex: 0 0 20px;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
 }
 
 .case-study-text-all {
@@ -154,10 +157,6 @@ body {
     clip-path: inset(0 0 100% 0);
   }
 
-  .case-study-nav-div.is-visible {
-    animation-name: navDivRevealDesktop;
-  }
-
   .case-study-nav-list {
     width: 100%;
     height: 100%;
@@ -196,27 +195,5 @@ body {
     flex: 1 1 auto;
     min-width: 0;
     padding-inline: var(--space-block-500);
-  }
-}
-
-@keyframes navDivReveal {
-  from {
-    opacity: 0;
-    clip-path: inset(0 50% 0 50%);
-  }
-  to {
-    opacity: 1;
-    clip-path: inset(0 0 0 0);
-  }
-}
-
-@keyframes navDivRevealDesktop {
-  from {
-    opacity: 0;
-    clip-path: inset(0 0 100% 0);
-  }
-  to {
-    opacity: 1;
-    clip-path: inset(0 0 0 0);
   }
 }

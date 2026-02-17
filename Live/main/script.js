@@ -1,5 +1,8 @@
 const DESKTOP_ICON_SRC = "http://localhost:3845/assets/2370a2c22219829ffcd883885dd9e935e0ea2c7a.svg";
 const MOBILE_ICON_SRC = "http://localhost:3845/assets/0253910616877c7d6156a2ffec07d136fe9deba6.svg";
+const TORUS_ICON_SRC = "/Assets/TorusIcon.svg";
+const BLUEPRINT_ICON_SRC = "/Assets/BlueprintIcon.svg";
+const CUSTOMIZER_ICON_SRC = "/Assets/CustomizerIcon.svg";
 
 const normalizeTargetId = (item = {}) => {
   if (typeof item?.targetId === "string" && item.targetId.trim()) {
@@ -36,11 +39,28 @@ const createNavItem = ({ title, text, targetId = "", href = "", selected = false
 
   const icon = document.createElement("img");
   icon.className = "case-study-nav-icon";
-  icon.src = DESKTOP_ICON_SRC;
+  const isTorusItem = String(title || "").trim().toLowerCase() === "torus" || targetId === "case-study-torus";
+  const isBlueprintItem =
+    String(title || "").trim().toLowerCase() === "blueprint" || targetId === "case-study-blueprint";
+  const isCustomizerItem =
+    String(title || "").trim().toLowerCase() === "customizer" || targetId === "case-study-hcustomizer";
+  let desktopIconSrc = DESKTOP_ICON_SRC;
+  let mobileIconSrc = MOBILE_ICON_SRC;
+  if (isTorusItem) {
+    desktopIconSrc = TORUS_ICON_SRC;
+    mobileIconSrc = TORUS_ICON_SRC;
+  } else if (isBlueprintItem) {
+    desktopIconSrc = BLUEPRINT_ICON_SRC;
+    mobileIconSrc = BLUEPRINT_ICON_SRC;
+  } else if (isCustomizerItem) {
+    desktopIconSrc = CUSTOMIZER_ICON_SRC;
+    mobileIconSrc = CUSTOMIZER_ICON_SRC;
+  }
+  icon.src = desktopIconSrc;
   icon.alt = "";
   icon.setAttribute("aria-hidden", "true");
-  icon.dataset.desktopSrc = DESKTOP_ICON_SRC;
-  icon.dataset.mobileSrc = MOBILE_ICON_SRC;
+  icon.dataset.desktopSrc = desktopIconSrc;
+  icon.dataset.mobileSrc = mobileIconSrc;
 
   const textWrap = document.createElement("span");
   textWrap.className = "case-study-text-all";
