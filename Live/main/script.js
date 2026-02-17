@@ -132,6 +132,18 @@ const updateNavIconsForViewport = (root, mediaQuery) => {
   }
 };
 
+const clickUpdateActiveID = (navItem) => {
+  if (!(navItem instanceof HTMLElement)) return;
+
+  const targetId = navItem.dataset.targetId;
+  if (targetId) {
+    const target = document.getElementById(targetId);
+    if (target instanceof HTMLElement) {
+      target.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }
+};
+
 const loadNavItems = async () => {
   try {
     const response = await fetch("./nav.json", { cache: "no-store" });
@@ -171,15 +183,7 @@ const initCaseStudyNav = async () => {
     navItem.setAttribute("aria-selected", navItem.classList.contains("is-selected") ? "true" : "false");
 
     navItem.addEventListener("click", () => {
-      const targetId = navItem.dataset.targetId;
-      if (targetId) {
-        const target = document.getElementById(targetId);
-        if (target instanceof HTMLElement) {
-          target.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
-      } else if (navItem.dataset.href) {
-        window.location.href = navItem.dataset.href;
-      }
+      clickUpdateActiveID(navItem);
     });
 
     navList.append(navItem);
