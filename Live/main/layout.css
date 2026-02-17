@@ -59,6 +59,24 @@ body {
     opacity 1.2s ease;
 }
 
+.selector {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-main) 0%,
+    var(--color-bg-shine) 50%,
+    var(--color-bg-main) 100%
+  );
+  border-radius: 999px;
+  pointer-events: none;
+  transition: width 220ms ease;
+}
+
 .case-study-nav-div.is-visible {
   opacity: 1;
   pointer-events: auto;
@@ -173,6 +191,10 @@ body {
   .case-study-nav-list::before,
   .case-study-nav-list::after {
     content: none;
+  }
+
+  .selector {
+    display: none;
   }
 
 

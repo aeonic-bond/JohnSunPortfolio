@@ -127,7 +127,7 @@ const centerNavActiveID = (
 const setActiveNavItem = (
   root,
   activeID,
-  { desktop = false, behavior = "auto", viewportElement = null } = {},
+  { desktop = false, behavior = "auto", viewportElement = null, selectorEl = null } = {},
 ) => {
   const items = root.querySelectorAll(".case-study-nav-item");
   let activeItem = null;
@@ -142,6 +142,16 @@ const setActiveNavItem = (
   if (activeItem) {
     centerNavActiveID(root, activeItem, { desktop, behavior, viewportElement });
   }
+  updateSelectorWidth(activeItem, selectorEl);
+};
+
+const updateSelectorWidth = (activeItem, selectorEl) => {
+  if (!(selectorEl instanceof HTMLElement)) return;
+  if (!(activeItem instanceof HTMLElement)) {
+    selectorEl.style.width = "0px";
+    return;
+  }
+  selectorEl.style.width = `${Math.round(activeItem.getBoundingClientRect().width)}px`;
 };
 
 const updateNavIconsForViewport = (root, mediaQuery) => {
@@ -254,6 +264,9 @@ const initCaseStudyNav = async () => {
   navList.className = "case-study-nav-list";
   navList.setAttribute("role", "tablist");
   navList.setAttribute("aria-label", "Case Studies");
+  const selector = document.createElement("div");
+  selector.className = "selector";
+  selector.setAttribute("aria-hidden", "true");
 
   const navItems = buildNavItems(items);
   for (const [index, item] of navItems.entries()) {
@@ -271,7 +284,7 @@ const initCaseStudyNav = async () => {
     navList.append(navItem);
   }
 
-  navRoot.replaceChildren(navList);
+  navRoot.replaceChildren(selector, navList);
   updateNavIconsForViewport(navList, desktopQuery);
   navDivReveal(navRoot, showcaseRoot);
 
@@ -287,6 +300,7 @@ const initCaseStudyNav = async () => {
       desktop: desktopQuery.matches,
       behavior,
       viewportElement: navRoot,
+      selectorEl: selector,
     });
   };
 
@@ -305,6 +319,7 @@ const initCaseStudyNav = async () => {
           behavior: "auto",
           viewportElement: navRoot,
         });
+        updateSelectorWidth(selected, selector);
       }
     });
   } else if (typeof desktopQuery.addListener === "function") {
@@ -317,6 +332,7 @@ const initCaseStudyNav = async () => {
           behavior: "auto",
           viewportElement: navRoot,
         });
+        updateSelectorWidth(selected, selector);
       }
     });
   }
@@ -329,6 +345,7 @@ const initCaseStudyNav = async () => {
         behavior: "auto",
         viewportElement: navRoot,
       });
+      updateSelectorWidth(selected, selector);
     }
   });
 };
