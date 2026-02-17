@@ -66,7 +66,7 @@ const isElementVisibleInViewport = (element) => {
   return rect.bottom > 0 && rect.top < window.innerHeight && rect.right > 0 && rect.left < window.innerWidth;
 };
 
-const centerActiveNavItem = (
+const centerNavActiveID = (
   navRoot,
   activeItem,
   { desktop = false, behavior = "auto", viewportElement = null } = {},
@@ -106,21 +106,21 @@ const centerActiveNavItem = (
 
 const setActiveNavItem = (
   root,
-  activeCardDivID,
+  activeID,
   { desktop = false, behavior = "auto", viewportElement = null } = {},
 ) => {
   const items = root.querySelectorAll(".case-study-nav-item");
   let activeItem = null;
   for (const item of items) {
     if (!(item instanceof HTMLButtonElement)) continue;
-    const isActive = item.dataset.targetId === activeCardDivID;
+    const isActive = item.dataset.targetId === activeID;
     item.classList.toggle("is-selected", isActive);
     item.setAttribute("aria-selected", isActive ? "true" : "false");
     if (isActive) activeItem = item;
   }
 
   if (activeItem) {
-    centerActiveNavItem(root, activeItem, { desktop, behavior, viewportElement });
+    centerNavActiveID(root, activeItem, { desktop, behavior, viewportElement });
   }
 };
 
@@ -188,31 +188,26 @@ const initCaseStudyNav = async () => {
   navRoot.replaceChildren(navList);
   updateNavIconsForViewport(navList, desktopQuery);
 
-  const initialActive = window.activeCardDivID || "";
-  if (initialActive) {
-    setActiveNavItem(navList, initialActive, {
-      desktop: desktopQuery.matches,
-      behavior: "auto",
-      viewportElement: navRoot,
-    });
-  }
-
-  window.addEventListener("case-study-active-change", (event) => {
-    const nextId = event?.detail?.activeCardDivID;
+  window.syncCaseStudyNavActiveID = (nextId, behavior = "smooth") => {
     if (typeof nextId !== "string" || !nextId) return;
     setActiveNavItem(navList, nextId, {
       desktop: desktopQuery.matches,
-      behavior: "smooth",
+      behavior,
       viewportElement: navRoot,
     });
-  });
+  };
+
+  const initialActive = window.activeID || "";
+  if (initialActive) {
+    window.syncCaseStudyNavActiveID(initialActive, "auto");
+  }
 
   if (typeof desktopQuery.addEventListener === "function") {
     desktopQuery.addEventListener("change", () => {
       updateNavIconsForViewport(navList, desktopQuery);
       const selected = navList.querySelector(".case-study-nav-item.is-selected");
       if (selected instanceof HTMLElement) {
-        centerActiveNavItem(navList, selected, {
+        centerNavActiveID(navList, selected, {
           desktop: desktopQuery.matches,
           behavior: "auto",
           viewportElement: navRoot,
@@ -224,7 +219,7 @@ const initCaseStudyNav = async () => {
       updateNavIconsForViewport(navList, desktopQuery);
       const selected = navList.querySelector(".case-study-nav-item.is-selected");
       if (selected instanceof HTMLElement) {
-        centerActiveNavItem(navList, selected, {
+        centerNavActiveID(navList, selected, {
           desktop: desktopQuery.matches,
           behavior: "auto",
           viewportElement: navRoot,
@@ -236,7 +231,7 @@ const initCaseStudyNav = async () => {
   window.addEventListener("resize", () => {
     const selected = navList.querySelector(".case-study-nav-item.is-selected");
     if (selected instanceof HTMLElement) {
-      centerActiveNavItem(navList, selected, {
+      centerNavActiveID(navList, selected, {
         desktop: desktopQuery.matches,
         behavior: "auto",
         viewportElement: navRoot,

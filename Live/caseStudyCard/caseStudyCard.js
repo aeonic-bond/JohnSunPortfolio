@@ -108,9 +108,9 @@ if (root) {
   const desktopQuery = window.matchMedia("(min-width: 1024px)");
   let syncWidthRafId = 0;
   let activeSyncRafId = 0;
-  let activeCardDivID = "";
+  let activeID = "";
   const previousMidpointMap = new WeakMap();
-  window.activeCardDivID = activeCardDivID;
+  window.activeID = activeID;
 
   const getActiveThresholdY = () => {
     const raw = getComputedStyle(root).getPropertyValue("--active-card-threshold-vh").trim();
@@ -119,19 +119,17 @@ if (root) {
     return (window.innerHeight * normalized) / 100;
   };
 
-  const setActiveCardDivID = (nextId) => {
-    if (!nextId || nextId === activeCardDivID) return;
-    activeCardDivID = nextId;
-    window.activeCardDivID = nextId;
-    root.dataset.activeCardDivId = nextId;
-    window.dispatchEvent(
-      new CustomEvent("case-study-active-change", {
-        detail: { activeCardDivID: nextId },
-      }),
-    );
+  const setActiveID = (nextId) => {
+    if (!nextId || nextId === activeID) return;
+    activeID = nextId;
+    window.activeID = nextId;
+    root.dataset.activeId = nextId;
+    if (typeof window.syncCaseStudyNavActiveID === "function") {
+      window.syncCaseStudyNavActiveID(nextId, "smooth");
+    }
   };
 
-  const updateActiveCardDivID = () => {
+  const scrollObserveActiveID = () => {
     const thresholdY = getActiveThresholdY();
     const cardDivs = Array.from(root.querySelectorAll(".case-study-card-div"));
     if (!cardDivs.length) return;
@@ -172,12 +170,12 @@ if (root) {
     }
 
     if (crossingCandidateId) {
-      setActiveCardDivID(crossingCandidateId);
+      setActiveID(crossingCandidateId);
       return;
     }
 
-    if (!activeCardDivID && nearestId) {
-      setActiveCardDivID(nearestId);
+    if (!activeID && nearestId) {
+      setActiveID(nearestId);
     }
   };
 
@@ -215,7 +213,7 @@ if (root) {
     if (activeSyncRafId) return;
     activeSyncRafId = window.requestAnimationFrame(() => {
       activeSyncRafId = 0;
-      updateActiveCardDivID();
+      scrollObserveActiveID();
     });
   };
 
