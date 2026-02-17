@@ -49,6 +49,15 @@ body {
   height: 64px;
   padding: var(--space-200) var(--space-300);
   overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  clip-path: inset(0 50% 0 50%);
+}
+
+.case-study-nav-div.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  animation: navDivReveal 1.2s ease both;
 }
 
 .case-study-nav-list {
@@ -142,6 +151,11 @@ body {
     border-bottom: 0;
     padding: var(--space-500);
     overflow: hidden;
+    clip-path: inset(0 0 100% 0);
+  }
+
+  .case-study-nav-div.is-visible {
+    animation-name: navDivRevealDesktop;
   }
 
   .case-study-nav-list {
@@ -182,5 +196,27 @@ body {
     flex: 1 1 auto;
     min-width: 0;
     padding-inline: var(--space-block-500);
+  }
+}
+
+@keyframes navDivReveal {
+  from {
+    opacity: 0;
+    clip-path: inset(0 50% 0 50%);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes navDivRevealDesktop {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
   }
 }

@@ -214,9 +214,18 @@ const loadNavItems = async () => {
   return window.LiveCaseStudyData?.items || [];
 };
 
+const navDivReveal = (navRoot, showcaseRoot) => {
+  if (!(navRoot instanceof HTMLElement) || !(showcaseRoot instanceof HTMLElement)) return;
+  const showcaseTop = showcaseRoot.getBoundingClientRect().top;
+  const revealOffsetPx = window.matchMedia("(min-width: 1024px)").matches ? 160 : 80;
+  navRoot.classList.toggle("is-visible", showcaseTop <= revealOffsetPx);
+};
+
 const initCaseStudyNav = async () => {
   const navRoot = document.querySelector(".case-study-nav-div");
   if (!(navRoot instanceof HTMLElement)) return;
+  const showcaseRoot = document.querySelector(".case-study-showcase");
+  if (!(showcaseRoot instanceof HTMLElement)) return;
 
   const desktopQuery = window.matchMedia("(min-width: 1024px)");
   const items = await loadNavItems();
@@ -244,6 +253,13 @@ const initCaseStudyNav = async () => {
 
   navRoot.replaceChildren(navList);
   updateNavIconsForViewport(navList, desktopQuery);
+  navDivReveal(navRoot, showcaseRoot);
+
+  const scheduleNavDivReveal = () => {
+    window.requestAnimationFrame(() => navDivReveal(navRoot, showcaseRoot));
+  };
+  window.addEventListener("scroll", scheduleNavDivReveal, { passive: true });
+  window.addEventListener("resize", scheduleNavDivReveal);
 
   window.syncCaseStudyNavActiveID = (nextId, behavior = "smooth") => {
     if (typeof nextId !== "string" || !nextId) return;
