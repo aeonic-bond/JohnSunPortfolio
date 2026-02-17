@@ -22,13 +22,13 @@
   border: 1px solid var(--color-accent);
   border-radius: inherit;
   opacity: 0;
-  clip-path: inset(0 100% 0 0);
+  clip-path: polygon(0 0, 0 0, 0 0, 0 0);
   pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .case-study-card.is-active::after {
-    animation: case-study-border-reveal 0.7s ease-out forwards;
+    animation: case-study-border-reveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 }
 
@@ -42,11 +42,11 @@
 @keyframes case-study-border-reveal {
   from {
     opacity: 1;
-    clip-path: inset(0 100% 0 0);
+    clip-path: polygon(0 0, 0 0, 0 0, 0 0);
   }
   to {
     opacity: 1;
-    clip-path: inset(0 0 0 0);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   }
 }
 
