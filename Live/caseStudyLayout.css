@@ -79,14 +79,18 @@
   line-height: 1;
   color: var(--color-accent);
   text-align: center;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: var(--cs-header-title-width, 320px);
   transition:
-    opacity 0.5s ease-out,
-    transform 0.5s ease-out;
+    max-width 0.5s ease-out,
+    opacity 0.5s ease-out;
 }
 
 .cs-header-bar.is-sticky .cs-header-title {
+  max-width: 0;
   opacity: 0;
-  transform: scale(0.96);
   pointer-events: none;
 }
 

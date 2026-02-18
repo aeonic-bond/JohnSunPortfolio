@@ -59,14 +59,18 @@ const HEADER_CURRENT_SIGN_CLASS = "cs-header-current-sign";
 const HEADER_TITLE_CLASS = "cs-header-title";
 const HEADER_SIGN_ICON_CLASS = "cs-header-sign-icon";
 const HEADER_CHEVRON_CLASS = "cs-header-chevron";
-const HEADER_STICKY_THRESHOLD_PX = 40;
+const HEADER_STICKY_ENTER_THRESHOLD_PX = 44;
+const HEADER_STICKY_EXIT_THRESHOLD_PX = 36;
 const HEADER_NAV_DATA_PATH = "../main/nav.json";
 const HEADER_BACK_HREF = "../main/main.html";
 const BACK_BUTTON_ICON_SRC = "../../Assets/BackButton.svg";
+const HEADER_STICKY_TRANSITION_LOCK_MS = 1000;
 
 let headerBarRafId = 0;
 let headerBarEventsBound = false;
 let headerNavItemsPromise = null;
+let headerStickyTransitionLock = false;
+let headerStickyTransitionLockTimeoutId = 0;
 
 const loadHeaderNavItems = async () => {
   if (!headerNavItemsPromise) {
@@ -130,9 +134,9 @@ const ensureHeaderBar = () => {
 
   const chevron = document.createElement("span");
   chevron.className = HEADER_CHEVRON_CLASS;
-  chevron.setAttribute("aria-hidden", "true");
+  chevron.setAttribute("aria-label", "Open case study menu");
 
-  currentSign.append(title, signIcon);
+  currentSign.append(signIcon, title);
   menu.append(currentSign, chevron);
   backLink.append(backIcon);
   headerBar.append(backLink, menu);
@@ -158,6 +162,7 @@ const applyHeaderBarContent = (content = {}, navItems = []) => {
   const navItem = findHeaderNavItem(content, navItems);
   const resolvedTitle = String(navItem?.title || "").trim();
   title.textContent = resolvedTitle;
+  title.style.setProperty("--cs-header-title-width", `${Math.ceil(title.scrollWidth)}px`);
 
   const signIconSrc = String(navItem?.icon || "").trim();
   if (signIconSrc) {
@@ -169,15 +174,31 @@ const applyHeaderBarContent = (content = {}, navItems = []) => {
   }
 };
 
+const lockHeaderStickyTransition = () => {
+  headerStickyTransitionLock = true;
+  if (headerStickyTransitionLockTimeoutId) {
+    window.clearTimeout(headerStickyTransitionLockTimeoutId);
+  }
+  headerStickyTransitionLockTimeoutId = window.setTimeout(() => {
+    headerStickyTransitionLock = false;
+    headerStickyTransitionLockTimeoutId = 0;
+  }, HEADER_STICKY_TRANSITION_LOCK_MS);
+};
+
 const updateHeaderBarStickyState = () => {
   const headerBar = document.querySelector(`.${HEADER_BAR_CLASS}`);
   if (!(headerBar instanceof HTMLElement)) return;
-  if (window.scrollY > HEADER_STICKY_THRESHOLD_PX) {
+  if (headerStickyTransitionLock) return;
+  const isSticky = headerBar.classList.contains(HEADER_BAR_STICKY_CLASS);
+
+  if (!isSticky && window.scrollY >= HEADER_STICKY_ENTER_THRESHOLD_PX) {
     headerBar.classList.add(HEADER_BAR_STICKY_CLASS);
+    lockHeaderStickyTransition();
     return;
   }
-  if (window.scrollY < HEADER_STICKY_THRESHOLD_PX) {
+  if (isSticky && window.scrollY <= HEADER_STICKY_EXIT_THRESHOLD_PX) {
     headerBar.classList.remove(HEADER_BAR_STICKY_CLASS);
+    lockHeaderStickyTransition();
   }
 };
 
