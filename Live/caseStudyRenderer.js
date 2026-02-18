@@ -55,10 +55,14 @@ const HEADER_BAR_STICKY_CLASS = "is-sticky";
 const HEADER_BACK_CLASS = "cs-header-back";
 const HEADER_BACK_ICON_CLASS = "cs-header-back-icon";
 const HEADER_MENU_CLASS = "cs-header-menu";
+const HEADER_MENU_ANCHOR_CLASS = "cs-header-menu-anchor";
 const HEADER_CURRENT_SIGN_CLASS = "cs-header-current-sign";
 const HEADER_TITLE_CLASS = "cs-header-title";
 const HEADER_SIGN_ICON_CLASS = "cs-header-sign-icon";
 const HEADER_CHEVRON_CLASS = "cs-header-chevron";
+const HEADER_DROPDOWN_CLASS = "cs-header-dropdown";
+const HEADER_DROPDOWN_LIST_CLASS = "cs-header-dropdown-list";
+const HEADER_DROPDOWN_OPEN_CLASS = "is-dropdown-open";
 const HEADER_STICKY_ENTER_THRESHOLD_PX = 44;
 const HEADER_STICKY_EXIT_THRESHOLD_PX = 36;
 const HEADER_NAV_DATA_PATH = "../main/nav.json";
@@ -99,6 +103,115 @@ const findHeaderNavItem = (content = {}, navItems = []) => {
   );
 };
 
+const closeCaseStudyDropdown = (headerBar) => {
+  if (!(headerBar instanceof HTMLElement)) return;
+  headerBar.classList.remove(HEADER_DROPDOWN_OPEN_CLASS);
+  const menu = headerBar.querySelector(`.${HEADER_MENU_CLASS}`);
+  const dropdown = headerBar.querySelector(`.${HEADER_DROPDOWN_CLASS}`);
+  if (menu instanceof HTMLButtonElement) {
+    menu.setAttribute("aria-expanded", "false");
+  }
+  if (dropdown instanceof HTMLElement) {
+    dropdown.setAttribute("aria-hidden", "true");
+  }
+};
+
+const toggleCaseStudyDropdown = (headerBar) => {
+  if (!(headerBar instanceof HTMLElement)) return;
+  const shouldOpen = !headerBar.classList.contains(HEADER_DROPDOWN_OPEN_CLASS);
+  headerBar.classList.toggle(HEADER_DROPDOWN_OPEN_CLASS, shouldOpen);
+  const menu = headerBar.querySelector(`.${HEADER_MENU_CLASS}`);
+  const dropdown = headerBar.querySelector(`.${HEADER_DROPDOWN_CLASS}`);
+  if (menu instanceof HTMLButtonElement) {
+    menu.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
+  }
+  if (dropdown instanceof HTMLElement) {
+    dropdown.setAttribute("aria-hidden", shouldOpen ? "false" : "true");
+  }
+};
+
+const createCaseStudyDropdown = () => {
+  const dropdown = document.createElement("div");
+  dropdown.className = HEADER_DROPDOWN_CLASS;
+  dropdown.setAttribute("aria-hidden", "true");
+
+  const navList = document.createElement("div");
+  navList.className = `case-study-nav-list case-study-nav-list--dropdown ${HEADER_DROPDOWN_LIST_CLASS}`;
+  navList.setAttribute("role", "menu");
+  navList.setAttribute("aria-label", "Case studies");
+
+  dropdown.append(navList);
+  return dropdown;
+};
+
+const createCaseStudyDropdownNavItem = (item, activeId = "") => {
+  const navItem = document.createElement("button");
+  navItem.type = "button";
+  navItem.className = "case-study-nav-item";
+  navItem.setAttribute("role", "menuitem");
+
+  const itemId = String(item?.id || "").trim().toLowerCase();
+  if (itemId && itemId === activeId) navItem.classList.add("is-selected");
+
+  const href = String(item?.href || "").trim();
+  if (href) navItem.dataset.href = href;
+
+  const title = String(item?.title || "").trim();
+  const subtitle = String(item?.subtitle || "").trim();
+  const iconSrc = String(item?.icon || "").trim();
+
+  const icon = document.createElement("img");
+  icon.className = "case-study-nav-icon";
+  icon.alt = "";
+  icon.setAttribute("aria-hidden", "true");
+  if (iconSrc) {
+    icon.src = iconSrc;
+  } else {
+    icon.hidden = true;
+  }
+
+  const textAll = document.createElement("span");
+  textAll.className = "case-study-nav-text-all";
+
+  const titleEl = document.createElement("span");
+  titleEl.className = "case-study-nav-title";
+  titleEl.textContent = title;
+
+  const subtitleEl = document.createElement("span");
+  subtitleEl.className = "case-study-nav-subtitle";
+  subtitleEl.textContent = subtitle;
+
+  textAll.append(titleEl, subtitleEl);
+  navItem.append(icon, textAll);
+
+  navItem.addEventListener("click", () => {
+    const nextHref = navItem.dataset.href || "";
+    if (nextHref) {
+      window.location.href = nextHref;
+      return;
+    }
+    const headerBar = document.querySelector(`.${HEADER_BAR_CLASS}`);
+    closeCaseStudyDropdown(headerBar);
+  });
+
+  return navItem;
+};
+
+const renderCaseStudyDropdown = (headerBar, navItems = [], content = {}) => {
+  if (!(headerBar instanceof HTMLElement)) return;
+  const navList = headerBar.querySelector(`.${HEADER_DROPDOWN_LIST_CLASS}`);
+  if (!(navList instanceof HTMLElement)) return;
+
+  const activeId = String(content?.id || "").trim().toLowerCase();
+  const elements = [];
+  for (const item of navItems) {
+    const title = String(item?.title || "").trim();
+    if (!title) continue;
+    elements.push(createCaseStudyDropdownNavItem(item, activeId));
+  }
+  navList.replaceChildren(...elements);
+};
+
 const setWindowActiveIDFromContent = (content = {}) => {
   const contentId = String(content?.id || "").trim().toLowerCase();
   if (!contentId) return;
@@ -124,8 +237,15 @@ const ensureHeaderBar = () => {
   backIcon.alt = "";
   backIcon.setAttribute("aria-hidden", "true");
 
-  const menu = document.createElement("div");
+  const menuAnchor = document.createElement("div");
+  menuAnchor.className = HEADER_MENU_ANCHOR_CLASS;
+
+  const menu = document.createElement("button");
+  menu.type = "button";
   menu.className = HEADER_MENU_CLASS;
+  menu.setAttribute("aria-label", "Open case study menu");
+  menu.setAttribute("aria-haspopup", "menu");
+  menu.setAttribute("aria-expanded", "false");
 
   const currentSign = document.createElement("div");
   currentSign.className = HEADER_CURRENT_SIGN_CLASS;
@@ -140,12 +260,15 @@ const ensureHeaderBar = () => {
 
   const chevron = document.createElement("span");
   chevron.className = HEADER_CHEVRON_CLASS;
-  chevron.setAttribute("aria-label", "Open case study menu");
+  chevron.setAttribute("aria-hidden", "true");
+
+  const dropdown = createCaseStudyDropdown();
 
   currentSign.append(signIcon, title);
   menu.append(currentSign, chevron);
+  menuAnchor.append(menu, dropdown);
   backLink.append(backIcon);
-  headerBar.append(backLink, menu);
+  headerBar.append(backLink, menuAnchor);
 
   const main = document.querySelector(".cs-main");
   if (main?.parentNode) {
@@ -153,6 +276,23 @@ const ensureHeaderBar = () => {
   } else {
     document.body.prepend(headerBar);
   }
+
+  menu.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    toggleCaseStudyDropdown(headerBar);
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!(event.target instanceof Node)) return;
+    if (headerBar.contains(event.target)) return;
+    closeCaseStudyDropdown(headerBar);
+  });
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    closeCaseStudyDropdown(headerBar);
+  });
 
   return headerBar;
 };
@@ -178,6 +318,8 @@ const applyHeaderBarContent = (content = {}, navItems = []) => {
     signIcon.removeAttribute("src");
     signIcon.hidden = true;
   }
+
+  renderCaseStudyDropdown(headerBar, navItems, content);
 };
 
 const lockHeaderStickyTransition = () => {
