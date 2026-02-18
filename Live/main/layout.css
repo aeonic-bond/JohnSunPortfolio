@@ -166,6 +166,10 @@ body {
   color: var(--color-accent);
 }
 
+.case-study-nav-item:hover {
+  background: var(--color-bg-raise);
+}
+
 .case-study-nav-list--dropdown .case-study-nav-item {
   flex-direction: row;
   justify-content: flex-start;
@@ -209,7 +213,7 @@ body {
     height: 100%;
     flex-direction: column;
     align-items: stretch;
-    gap: var(--space-500);
+    gap: var(--space-300);
     overflow-x: hidden;
     overflow-y: auto;
     scroll-snap-type: y mandatory;
