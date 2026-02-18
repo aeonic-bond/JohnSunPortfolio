@@ -68,7 +68,7 @@ const createNavItem = ({ title, text, targetId = "", href = "", selected = false
   icon.dataset.mobileSrc = mobileIconSrc;
 
   const textWrap = document.createElement("span");
-  textWrap.className = "case-study-text-all";
+  textWrap.className = "case-study-nav-text-all";
 
   const titleEl = document.createElement("span");
   titleEl.className = "case-study-nav-title";

@@ -132,7 +132,7 @@ body {
   flex: 0 0 24px;
 }
 
-.case-study-text-all {
+.case-study-nav-text-all {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
