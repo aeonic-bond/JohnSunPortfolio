@@ -182,6 +182,7 @@ const lockHeaderStickyTransition = () => {
   headerStickyTransitionLockTimeoutId = window.setTimeout(() => {
     headerStickyTransitionLock = false;
     headerStickyTransitionLockTimeoutId = 0;
+    scheduleHeaderBarStickyStateUpdate();
   }, HEADER_STICKY_TRANSITION_LOCK_MS);
 };
 
