@@ -87,7 +87,7 @@ body {
 .case-study-nav-list {
   display: flex;
   align-items: center;
-  gap: var(--space-700);
+  gap: var(--space-900);
   min-height: 100%;
   overflow-x: auto;
   overflow-y: hidden;
@@ -111,6 +111,7 @@ body {
 
 .case-study-nav-item {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   flex: 0 0 auto;
@@ -127,9 +128,9 @@ body {
 }
 
 .case-study-nav-icon {
-  width: 24px;
-  height: 24px;
-  flex: 0 0 24px;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
 }
 
 .case-study-nav-text-all {
@@ -138,6 +139,7 @@ body {
   align-items: flex-start;
   justify-content: center;
   gap: var(--space-200);
+  width: 100%;
 }
 
 .case-study-nav-title {
@@ -145,15 +147,19 @@ body {
   font: var(--type-navH);
   line-height: 1;
   color: var(--color-text-primary);
+  width: 100%;
+  text-align: center;
   white-space: nowrap;
 }
 
 .case-study-nav-subtitle {
+  display: none;
   margin: 0;
   font: var(--type-subtitle-s);
   line-height: 1;
   color: var(--color-text-secondary);
   white-space: nowrap;
+  width: 100%;
 }
 
 .case-study-nav-item.is-selected .case-study-nav-title {
@@ -200,16 +206,19 @@ body {
 
 
   .case-study-nav-item {
+    flex-direction: row;
     justify-content: flex-start;
     gap: var(--space-500);
     padding: var(--space-500);
     width: 100%;
   }
 
-  .case-study-nav-icon {
-    width: 32px;
-    height: 32px;
-    flex-basis: 32px;
+  .case-study-nav-subtitle {
+    display: block;
+  }
+
+  .case-study-nav-title {
+    text-align: left;
   }
 
   .case-study-nav-item.is-selected {

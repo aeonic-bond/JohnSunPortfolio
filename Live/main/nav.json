@@ -3,28 +3,28 @@
     {
       "id": "torus",
       "title": "Torus",
-      "text": "Architecture/CAD",
+      "subtitle": "Architecture/CAD",
       "href": "../torus/index.html",
       "selected": true
     },
     {
       "id": "blueprint",
       "title": "Blueprint",
-      "text": "Design System",
+      "subtitle": "Design System",
       "href": "../blueprint/index.html",
       "selected": false
     },
     {
       "id": "hcustomizer",
       "title": "Customizer",
-      "text": "Home Customization",
+      "subtitle": "Home Customization",
       "href": "../hcustomizer/index.html",
       "selected": false
     },
     {
       "id": "tolley",
       "title": "Tolley",
-      "text": "AI Chatbot",
+      "subtitle": "AI Chatbot",
       "href": "",
       "selected": false
     },
@@ -32,7 +32,7 @@
     {
       "id": "aboutMe",
       "title": "About Me",
-      "text": "Info & Contacts",
+      "subtitle": "Info & Contacts",
       "href": "",
       "selected": false
     }
