@@ -51,7 +51,9 @@
   --space-block-800: 80px;
   --space-block-900: 120px;
 
-    /* Margin tokens */
+  /* Margin tokens */
+  --margin-header-mobile: 16px;
+  --margin-header-desktop: 60px;
   --margin-mobile-500: 24px;
   --margin-bottom-500: 400px;
 

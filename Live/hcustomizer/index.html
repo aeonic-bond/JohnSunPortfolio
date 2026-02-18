@@ -7,11 +7,15 @@
     <link rel="stylesheet" href="../main/tokens.css" />
     <link rel="stylesheet" href="../main/typography.css" />
     <link rel="stylesheet" href="../main/layout.css" />
-    <link rel="stylesheet" href="../navBar.css" />
     <link rel="stylesheet" href="../caseStudyLayout.css" />
     <link rel="stylesheet" href="../lightbox.css" />
   </head>
-  <body data-nav-href="../main/main.html" data-nav-label="Back">
+  <body>
+    <header class="headerBar">
+      <a class="headerBar-back" href="../main/main.html" aria-label="Back to case studies">
+        <img class="headerBar-back-icon" src="../../Assets/BackButton.svg" alt="" aria-hidden="true" />
+      </a>
+    </header>
     <main class="live-main cs-main">
       <article
         id="case-study-root"
@@ -19,7 +23,6 @@
         aria-label="Home Customizer Case Study"
       ></article>
     </main>
-    <script src="../navBar.js" defer></script>
     <script src="../caseStudyRenderer.js" defer></script>
     <script src="../lightbox.js" defer></script>
   </body>
