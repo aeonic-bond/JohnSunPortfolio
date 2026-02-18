@@ -99,6 +99,12 @@ const findHeaderNavItem = (content = {}, navItems = []) => {
   );
 };
 
+const setWindowActiveIDFromContent = (content = {}) => {
+  const contentId = String(content?.id || "").trim().toLowerCase();
+  if (!contentId) return;
+  window.activeID = `case-study-${contentId}`;
+};
+
 const ensureHeaderBar = () => {
   const existing = document.querySelector(`.${HEADER_BAR_CLASS}`);
   if (existing instanceof HTMLElement) return existing;
@@ -935,6 +941,7 @@ const loadCaseStudyInto = (root, contentPath) => {
       return response.json();
     })
     .then(async (content) => {
+      setWindowActiveIDFromContent(content);
       const navItems = await loadHeaderNavItems();
       applyHeaderBarContent(content, navItems);
       renderCaseStudy(content, root);
