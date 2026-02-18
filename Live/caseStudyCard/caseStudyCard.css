@@ -2,6 +2,9 @@
   width: 100%;
   padding: var(--space-block-700) 0;
   justify-items: center;
+  overflow: visible;
+  clip-path: none;
+  mask: none;
 }
 
 .case-study-card {
@@ -13,6 +16,9 @@
   border: 1px solid transparent;
   border-radius: var(--radius-large);
   background: transparent;
+  overflow: visible;
+  clip-path: none;
+  mask: none;
 }
 
 .case-study-card::after {
@@ -58,6 +64,9 @@
   aspect-ratio: 3 / 4;
   padding: var(--space-300);
   background: transparent;
+  overflow: visible;
+  clip-path: none;
+  mask: none;
 }
 
 .card-media-mount {
@@ -65,10 +74,12 @@
   display: block;
   width: 100%;
   aspect-ratio: 3 / 4;
-  overflow: hidden;
+  overflow: visible;
   border-radius: var(--radius-base);
   isolation: isolate;
   background: var(--color-bg-shade);
+  clip-path: none;
+  mask: none;
 }
 
 .card-media-mount > spline-viewer,
