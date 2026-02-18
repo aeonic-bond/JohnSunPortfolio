@@ -4,6 +4,7 @@
       "id": "torus",
       "title": "Torus",
       "subtitle": "Architecture/CAD",
+      "icon": "/Assets/TorusIcon.svg",
       "href": "../torus/index.html",
       "selected": true
     },
@@ -11,6 +12,7 @@
       "id": "blueprint",
       "title": "Blueprint",
       "subtitle": "Design System",
+      "icon": "/Assets/BlueprintIcon.svg",
       "href": "../blueprint/index.html",
       "selected": false
     },
@@ -18,6 +20,7 @@
       "id": "hcustomizer",
       "title": "Customizer",
       "subtitle": "Home Customization",
+      "icon": "/Assets/CustomizerIcon.svg",
       "href": "../hcustomizer/index.html",
       "selected": false
     },
@@ -25,6 +28,7 @@
       "id": "tolley",
       "title": "Tolley",
       "subtitle": "AI Chatbot",
+      "icon": "/Assets/TolleyIcon.svg",
       "href": "",
       "selected": false
     },

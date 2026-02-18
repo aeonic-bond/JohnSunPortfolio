@@ -50,6 +50,152 @@ const scheduleFlowRowTrackerUpdate = () => {
   });
 };
 
+const HEADER_BAR_CLASS = "cs-header-bar";
+const HEADER_BAR_STICKY_CLASS = "is-sticky";
+const HEADER_BACK_CLASS = "cs-header-back";
+const HEADER_BACK_ICON_CLASS = "cs-header-back-icon";
+const HEADER_MENU_CLASS = "cs-header-menu";
+const HEADER_CURRENT_SIGN_CLASS = "cs-header-current-sign";
+const HEADER_TITLE_CLASS = "cs-header-title";
+const HEADER_SIGN_ICON_CLASS = "cs-header-sign-icon";
+const HEADER_CHEVRON_CLASS = "cs-header-chevron";
+const HEADER_STICKY_THRESHOLD_PX = 40;
+const HEADER_NAV_DATA_PATH = "../main/nav.json";
+const HEADER_BACK_HREF = "../main/main.html";
+const BACK_BUTTON_ICON_SRC = "../../Assets/BackButton.svg";
+
+let headerBarRafId = 0;
+let headerBarEventsBound = false;
+let headerNavItemsPromise = null;
+
+const loadHeaderNavItems = async () => {
+  if (!headerNavItemsPromise) {
+    headerNavItemsPromise = fetch(HEADER_NAV_DATA_PATH, { cache: "no-store" })
+      .then((response) => {
+        if (!response.ok) throw new Error(`Failed to load ${HEADER_NAV_DATA_PATH}: ${response.status}`);
+        return response.json();
+      })
+      .then((payload) => {
+        const items = Array.isArray(payload) ? payload : payload?.items;
+        return Array.isArray(items) ? items : [];
+      })
+      .catch((error) => {
+        console.warn("[case-study-header] Failed to load nav items.", error);
+        return [];
+      });
+  }
+  return headerNavItemsPromise;
+};
+
+const findHeaderNavItem = (content = {}, navItems = []) => {
+  const contentId = String(content?.id || "").trim().toLowerCase();
+  if (!contentId) return null;
+  return (
+    navItems.find((item) => String(item?.id || "").trim().toLowerCase() === contentId) || null
+  );
+};
+
+const ensureHeaderBar = () => {
+  const existing = document.querySelector(`.${HEADER_BAR_CLASS}`);
+  if (existing instanceof HTMLElement) return existing;
+  if (!(document.body instanceof HTMLBodyElement)) return null;
+
+  const headerBar = document.createElement("header");
+  headerBar.className = HEADER_BAR_CLASS;
+
+  const backLink = document.createElement("a");
+  backLink.className = HEADER_BACK_CLASS;
+  backLink.href = HEADER_BACK_HREF;
+  backLink.setAttribute("aria-label", "Back to case studies");
+
+  const backIcon = document.createElement("img");
+  backIcon.className = HEADER_BACK_ICON_CLASS;
+  backIcon.src = BACK_BUTTON_ICON_SRC;
+  backIcon.alt = "";
+  backIcon.setAttribute("aria-hidden", "true");
+
+  const menu = document.createElement("div");
+  menu.className = HEADER_MENU_CLASS;
+
+  const currentSign = document.createElement("div");
+  currentSign.className = HEADER_CURRENT_SIGN_CLASS;
+
+  const title = document.createElement("p");
+  title.className = HEADER_TITLE_CLASS;
+
+  const signIcon = document.createElement("img");
+  signIcon.className = HEADER_SIGN_ICON_CLASS;
+  signIcon.alt = "";
+  signIcon.setAttribute("aria-hidden", "true");
+
+  const chevron = document.createElement("span");
+  chevron.className = HEADER_CHEVRON_CLASS;
+  chevron.setAttribute("aria-hidden", "true");
+
+  currentSign.append(title, signIcon);
+  menu.append(currentSign, chevron);
+  backLink.append(backIcon);
+  headerBar.append(backLink, menu);
+
+  const main = document.querySelector(".cs-main");
+  if (main?.parentNode) {
+    main.parentNode.insertBefore(headerBar, main);
+  } else {
+    document.body.prepend(headerBar);
+  }
+
+  return headerBar;
+};
+
+const applyHeaderBarContent = (content = {}, navItems = []) => {
+  const headerBar = ensureHeaderBar();
+  if (!(headerBar instanceof HTMLElement)) return;
+
+  const title = headerBar.querySelector(`.${HEADER_TITLE_CLASS}`);
+  const signIcon = headerBar.querySelector(`.${HEADER_SIGN_ICON_CLASS}`);
+  if (!(title instanceof HTMLElement) || !(signIcon instanceof HTMLImageElement)) return;
+
+  const navItem = findHeaderNavItem(content, navItems);
+  const resolvedTitle = String(navItem?.title || "").trim();
+  title.textContent = resolvedTitle;
+
+  const signIconSrc = String(navItem?.icon || "").trim();
+  if (signIconSrc) {
+    signIcon.src = signIconSrc;
+    signIcon.hidden = false;
+  } else {
+    signIcon.removeAttribute("src");
+    signIcon.hidden = true;
+  }
+};
+
+const updateHeaderBarStickyState = () => {
+  const headerBar = document.querySelector(`.${HEADER_BAR_CLASS}`);
+  if (!(headerBar instanceof HTMLElement)) return;
+  if (window.scrollY > HEADER_STICKY_THRESHOLD_PX) {
+    headerBar.classList.add(HEADER_BAR_STICKY_CLASS);
+    return;
+  }
+  if (window.scrollY < HEADER_STICKY_THRESHOLD_PX) {
+    headerBar.classList.remove(HEADER_BAR_STICKY_CLASS);
+  }
+};
+
+const scheduleHeaderBarStickyStateUpdate = () => {
+  if (headerBarRafId) return;
+  headerBarRafId = window.requestAnimationFrame(() => {
+    headerBarRafId = 0;
+    updateHeaderBarStickyState();
+  });
+};
+
+const bindHeaderBarEvents = () => {
+  if (headerBarEventsBound) return;
+  headerBarEventsBound = true;
+  window.addEventListener("scroll", scheduleHeaderBarStickyStateUpdate, { passive: true });
+  window.addEventListener("resize", scheduleHeaderBarStickyStateUpdate);
+};
+
 const bindFlowRowTrackerEvents = () => {
   if (flowTrackerEventsBound) return;
   flowTrackerEventsBound = true;
@@ -644,6 +790,8 @@ const createProgressRowElement = (progressRow) => {
 
 const renderCaseStudy = (content = {}, root) => {
   if (!root) return;
+  bindHeaderBarEvents();
+  updateHeaderBarStickyState();
   bindFlowRowTrackerEvents();
   const sectionsAll = document.createElement("article");
   sectionsAll.className = "cs-div-sectionsALL";
@@ -764,7 +912,9 @@ const loadCaseStudyInto = (root, contentPath) => {
       if (!response.ok) throw new Error(`Failed to load ${contentPath}`);
       return response.json();
     })
-    .then((content) => {
+    .then(async (content) => {
+      const navItems = await loadHeaderNavItems();
+      applyHeaderBarContent(content, navItems);
       renderCaseStudy(content, root);
     })
     .catch((error) => {

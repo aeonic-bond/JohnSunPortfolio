@@ -9,6 +9,119 @@
   margin: 0;
 }
 
+.cs-header-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: var(--color-bg-main);
+  padding-block: var(--space-700);
+  padding-inline: var(--margin-header-mobile);
+  transition: padding 0.5s ease-out;
+}
+
+.cs-header-bar.is-sticky {
+  padding-block: var(--space-500);
+  padding-inline: var(--margin-header-mobile);
+}
+
+.cs-header-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  text-decoration: none;
+  transition:
+    width 0.5s ease-out,
+    height 0.5s ease-out,
+    flex-basis 0.5s ease-out;
+}
+
+.cs-header-bar.is-sticky .cs-header-back {
+  width: 40px;
+  height: 40px;
+  flex-basis: 40px;
+}
+
+.cs-header-back-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.cs-header-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-400);
+}
+
+.cs-header-current-sign {
+  display: flex;
+  align-items: center;
+  gap: var(--space-300);
+  transition: gap 0.5s ease-out;
+}
+
+.cs-header-bar.is-sticky .cs-header-current-sign {
+  gap: 0;
+}
+
+.cs-header-title {
+  margin: 0;
+  font: var(--type-navH);
+  line-height: 1;
+  color: var(--color-accent);
+  text-align: center;
+  transition:
+    opacity 0.5s ease-out,
+    transform 0.5s ease-out;
+}
+
+.cs-header-bar.is-sticky .cs-header-title {
+  opacity: 0;
+  transform: scale(0.96);
+  pointer-events: none;
+}
+
+.cs-header-sign-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.cs-header-chevron {
+  width: 12px;
+  height: 12px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cs-header-chevron::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid var(--color-text-primary);
+  border-bottom: 1.5px solid var(--color-text-primary);
+  transform: rotate(45deg) translate(-1px, -1px);
+  transform-origin: center;
+}
+
+@media (min-width: 1024px) {
+  .cs-header-bar,
+  .cs-header-bar.is-sticky {
+    padding-inline: var(--margin-header-desktop);
+  }
+}
+
 #case-study-root {
   display: grid;
   row-gap: var(--space-block-900);
