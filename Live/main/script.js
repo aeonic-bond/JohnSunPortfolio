@@ -251,9 +251,15 @@ const loadNavItems = async () => {
 
 const navDivReveal = (navRoot, showcaseRoot) => {
   if (!(navRoot instanceof HTMLElement) || !(showcaseRoot instanceof HTMLElement)) return;
-  const showcaseTop = showcaseRoot.getBoundingClientRect().top;
-  const revealOffsetPx = window.matchMedia("(min-width: 1024px)").matches ? 160 : 80;
-  navRoot.classList.toggle("is-visible", showcaseTop <= revealOffsetPx);
+  const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+  if (isDesktop) {
+    const showcaseTop = showcaseRoot.getBoundingClientRect().top;
+    navRoot.classList.toggle("is-visible", showcaseTop <= 160);
+    return;
+  }
+
+  const navTop = navRoot.getBoundingClientRect().top;
+  navRoot.classList.toggle("is-visible", navTop <= 0);
 };
 
 const initCaseStudyNav = async () => {

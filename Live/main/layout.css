@@ -56,8 +56,8 @@ body {
   pointer-events: none;
   clip-path: inset(0 50% 0 50%);
   transition:
-    clip-path 1.2s ease,
-    opacity 1.2s ease;
+    clip-path 0.5s ease,
+    opacity 0.5s ease;
 }
 
 .selector {
