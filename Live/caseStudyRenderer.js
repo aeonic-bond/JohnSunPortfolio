@@ -66,6 +66,12 @@ const HEADER_DROPDOWN_OPEN_CLASS = "is-dropdown-open";
 const HEADER_STICKY_ENTER_THRESHOLD_PX = 44;
 const HEADER_STICKY_EXIT_THRESHOLD_PX = 36;
 const HEADER_NAV_DATA_PATH = "../main/nav.json";
+const HEADER_CASE_STUDY_STATUS_PATHS = {
+  torus: "../torus/TorusContent.json",
+  blueprint: "../blueprint/BlueprintContent.json",
+  hcustomizer: "../hcustomizer/HCustomizerContent.json",
+  tolley: "../tolley/TolleyContent.json",
+};
 const HEADER_BACK_HREF = "../main/main.html";
 const BACK_BUTTON_ICON_SRC = "../../Assets/BackButton.svg";
 const HEADER_STICKY_TRANSITION_LOCK_MS = 1000;
@@ -74,9 +80,17 @@ const SPLINE_VIEWER_SCRIPT_SRC = "https://unpkg.com/@splinetool/viewer@1.12.58/b
 let headerBarRafId = 0;
 let headerBarEventsBound = false;
 let headerNavItemsPromise = null;
+const headerStatusByKindPromise = new Map();
 let headerStickyTransitionLock = false;
 let headerStickyTransitionLockTimeoutId = 0;
 let splineViewerScriptPromise = null;
+
+const normalizeHeaderItemStatus = (value) => {
+  const status = String(value || "").trim().toLowerCase();
+  if (status === "ready") return "ready";
+  if (status === "draft") return "draft";
+  return "";
+};
 
 const loadHeaderNavItems = async () => {
   if (!headerNavItemsPromise) {
@@ -103,6 +117,49 @@ const findHeaderNavItem = (content = {}, navItems = []) => {
   return (
     navItems.find((item) => String(item?.id || "").trim().toLowerCase() === contentId) || null
   );
+};
+
+const loadHeaderStatusForKind = async (kind = "") => {
+  const normalizedKind = String(kind || "").trim().toLowerCase();
+  if (!normalizedKind) return "";
+  if (headerStatusByKindPromise.has(normalizedKind)) {
+    return headerStatusByKindPromise.get(normalizedKind);
+  }
+
+  const path = HEADER_CASE_STUDY_STATUS_PATHS[normalizedKind];
+  if (!path) {
+    headerStatusByKindPromise.set(normalizedKind, Promise.resolve(""));
+    return "";
+  }
+
+  const promise = fetch(path, { cache: "no-store" })
+    .then((response) => {
+      if (!response.ok) throw new Error(`Failed to load ${path}`);
+      return response.json();
+    })
+    .then((content) => normalizeHeaderItemStatus(content?.status))
+    .catch((error) => {
+      console.warn(`[case-study-header] Failed to load status for ${normalizedKind}.`, error);
+      return "";
+    });
+
+  headerStatusByKindPromise.set(normalizedKind, promise);
+  return promise;
+};
+
+const resolveHeaderDropdownItems = async (navItems = []) => {
+  const results = await Promise.all(
+    navItems.map(async (item) => {
+      const href = String(item?.href || "").trim();
+      if (!href) return null;
+
+      const id = String(item?.id || "").trim().toLowerCase();
+      const status = await loadHeaderStatusForKind(id);
+      if (status === "draft") return null;
+      return item;
+    })
+  );
+  return results.filter(Boolean);
 };
 
 const closeCaseStudyDropdown = (headerBar) => {
@@ -199,14 +256,15 @@ const createCaseStudyDropdownNavItem = (item, activeId = "") => {
   return navItem;
 };
 
-const renderCaseStudyDropdown = (headerBar, navItems = [], content = {}) => {
+const renderCaseStudyDropdown = async (headerBar, navItems = [], content = {}) => {
   if (!(headerBar instanceof HTMLElement)) return;
   const navList = headerBar.querySelector(`.${HEADER_DROPDOWN_LIST_CLASS}`);
   if (!(navList instanceof HTMLElement)) return;
 
+  const filteredItems = await resolveHeaderDropdownItems(navItems);
   const activeId = String(content?.id || "").trim().toLowerCase();
   const elements = [];
-  for (const item of navItems) {
+  for (const item of filteredItems) {
     const title = String(item?.title || "").trim();
     if (!title) continue;
     elements.push(createCaseStudyDropdownNavItem(item, activeId));
@@ -321,7 +379,7 @@ const applyHeaderBarContent = (content = {}, navItems = []) => {
     signIcon.hidden = true;
   }
 
-  renderCaseStudyDropdown(headerBar, navItems, content);
+  void renderCaseStudyDropdown(headerBar, navItems, content);
 };
 
 const lockHeaderStickyTransition = () => {
