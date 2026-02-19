@@ -843,7 +843,18 @@ const createItemTextElement = (
   }
 
   const blocks = rawText.split("\n\n").map((block) => block.trim()).filter(Boolean);
-  for (const block of blocks) {
+  for (const rawBlock of blocks) {
+    const overlinePrefix = rawBlock.match(/^\(([^)]+)\)\s*(.*)$/);
+    const block = overlinePrefix ? overlinePrefix[2].trim() : rawBlock;
+
+    if (overlinePrefix) {
+      const overline = document.createElement("span");
+      overline.className = "cs-item-overline";
+      overline.textContent = overlinePrefix[1].trim();
+      content.append(overline);
+      if (!block) continue;
+    }
+
     const quoteWithCite = block.match(/^(["“].*["”])\s*-\s*(.+)$/);
     const quoteOnly = /^["“].*["”]$/.test(block);
     const titleWithOptionalBody = block.match(/^([^"\n].*?)\s+-\s*(.*)$/);

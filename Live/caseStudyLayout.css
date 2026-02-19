@@ -342,11 +342,29 @@
   margin-top: var(--space-300);
 }
 
+.cs-item-overline {
+  display: inline-flex;
+  width: fit-content;
+  padding: var(--space-200);
+  margin-bottom: var(--space-300);
+  border: 1px solid var(--color-bg-shade);
+  font: var(--type-caption-m);
+  color: var(--color-text-secondary);
+}
+
+.cs-item-overline + * {
+  margin-top: 0;
+}
+
 .cs-bullet-item-title {
   margin: 0;
-  font: var(--type-subtitle-m);
+  font: var(--type-subtitle-l);
   color: var(--color-text-primary);
-  padding-bottom: var(--space-500);
+  padding-bottom: calc(var(--space-500) + var(--space-300));
+}
+
+.cs-bullet-item-title + .cs-bullet-item-text-block {
+  margin-top: 0;
 }
 
 .cs-bullet-item-quote {
@@ -420,7 +438,7 @@
 
 .cs-icon-grid-item-title {
   margin: 0;
-  font: var(--type-subtitle-m);
+  font: var(--type-subtitle-s);
   color: var(--color-text-primary);
   padding-bottom: var(--space-500);
 }
@@ -471,7 +489,7 @@
 
 .cs-flow-row-item-text {
   width: 100%;
-  font: var(--type-body-m);
+  font: var(--type-subtitle-m);
   color: var(--color-text-secondary);
 }
 
@@ -765,7 +783,7 @@
 }
 
 .cs-fig-caption {
-  font: var(--type-caption-l);
+  font: var(--type-caption-m);
   color: var(--color-accent);
 }
 
