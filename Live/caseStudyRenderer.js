@@ -614,7 +614,6 @@ const createHeroVisualElement = (hero = {}) => {
   const spline = normalizeHeroSpline(hero);
   if (!spline) return createHeroMediaElement(hero);
 
-  const fallbackMedia = normalizeHeroMedia(hero);
   const block = document.createElement("figure");
   block.className = "cs-fig cs-fig--hero";
 
@@ -622,11 +621,6 @@ const createHeroVisualElement = (hero = {}) => {
   frame.className = "cs-hero-media-mount";
   if (spline.aspectRatio) {
     frame.style.setProperty("--cs-hero-spline-aspect", spline.aspectRatio);
-  }
-
-  const fallbackEl = createMediaElement(fallbackMedia, "cs-hero-spline-fallback");
-  if (fallbackEl instanceof HTMLElement) {
-    frame.append(fallbackEl);
   }
 
   const embed = createHeroSplineEmbedElement(spline, hero);
@@ -637,19 +631,6 @@ const createHeroVisualElement = (hero = {}) => {
     frame.classList.add("is-ready");
   });
   block.append(frame);
-
-  const shouldRenderCaption =
-    fallbackMedia &&
-    fallbackMedia.showCaption !== false &&
-    (fallbackMedia.caption || fallbackMedia.credit);
-  if (shouldRenderCaption) {
-    const caption = document.createElement("figcaption");
-    caption.className = "cs-fig-caption";
-    caption.textContent = [fallbackMedia.caption, fallbackMedia.credit]
-      .filter(Boolean)
-      .join(" | ");
-    block.append(caption);
-  }
 
   return block;
 };
