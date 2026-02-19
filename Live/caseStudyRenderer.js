@@ -69,12 +69,14 @@ const HEADER_NAV_DATA_PATH = "../main/nav.json";
 const HEADER_BACK_HREF = "../main/main.html";
 const BACK_BUTTON_ICON_SRC = "../../Assets/BackButton.svg";
 const HEADER_STICKY_TRANSITION_LOCK_MS = 1000;
+const SPLINE_VIEWER_SCRIPT_SRC = "https://unpkg.com/@splinetool/viewer@1.12.58/build/spline-viewer.js";
 
 let headerBarRafId = 0;
 let headerBarEventsBound = false;
 let headerNavItemsPromise = null;
 let headerStickyTransitionLock = false;
 let headerStickyTransitionLockTimeoutId = 0;
+let splineViewerScriptPromise = null;
 
 const loadHeaderNavItems = async () => {
   if (!headerNavItemsPromise) {
@@ -463,6 +465,65 @@ const normalizeHeroMedia = (hero = {}) =>
     { variant: "hero", showCaption: true }
   );
 
+const normalizeHeroSpline = (hero = {}) => {
+  const spline = hero?.spline;
+  if (typeof spline === "string") {
+    const srcDefault = spline.trim();
+    if (!srcDefault) return null;
+    return { srcDefault, srcDesktop: "", title: "", aspectRatio: "" };
+  }
+
+  if (spline && typeof spline === "object") {
+    const srcDefault = String(
+      spline.srcDefault || spline.srcMobile || spline.src || spline.url || ""
+    ).trim();
+    const srcDesktop = String(
+      spline.srcDesktop || spline.src || spline.url || srcDefault
+    ).trim();
+    if (!srcDefault && !srcDesktop) return null;
+    return {
+      srcDefault,
+      srcDesktop,
+      title: String(spline.title || "").trim(),
+      aspectRatio: String(spline.aspectRatio || "").trim(),
+    };
+  }
+  return null;
+};
+
+const ensureSplineViewerScript = () => {
+  if (customElements.get("spline-viewer")) return Promise.resolve();
+  if (splineViewerScriptPromise) return splineViewerScriptPromise;
+
+  splineViewerScriptPromise = new Promise((resolve, reject) => {
+    const existing = document.querySelector(`script[src="${SPLINE_VIEWER_SCRIPT_SRC}"]`);
+    if (existing instanceof HTMLScriptElement) {
+      if (customElements.get("spline-viewer")) {
+        resolve();
+        return;
+      }
+      existing.addEventListener("load", () => resolve(), { once: true });
+      existing.addEventListener("error", () => reject(new Error("Failed to load spline-viewer script.")), {
+        once: true,
+      });
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src = SPLINE_VIEWER_SCRIPT_SRC;
+    script.addEventListener("load", () => resolve(), { once: true });
+    script.addEventListener("error", () => reject(new Error("Failed to load spline-viewer script.")), {
+      once: true,
+    });
+    document.head.append(script);
+  }).catch((error) => {
+    console.warn("[case-study-hero] Unable to load spline-viewer.", error);
+  });
+
+  return splineViewerScriptPromise;
+};
+
 const createMediaBlockElement = ({
   id = "",
   media = null,
@@ -518,6 +579,80 @@ const createHeroMediaElement = (hero = {}) =>
     mediaClassName: "cs-fig-image cs-hero-image",
     includeCaption: true,
   });
+
+const createHeroSplineEmbedElement = (spline = {}, hero = {}) => {
+  const desktopQuery = window.matchMedia("(min-width: 1024px)");
+  const getUrl = () =>
+    desktopQuery.matches
+      ? (spline.srcDesktop || spline.srcDefault || "")
+      : (spline.srcDefault || spline.srcDesktop || "");
+  const initialUrl = getUrl();
+  if (!initialUrl) return null;
+
+  const viewer = document.createElement("spline-viewer");
+  viewer.className = "cs-hero-spline-embed";
+  viewer.setAttribute("url", initialUrl);
+  viewer.setAttribute("aria-label", spline.title || hero?.title || "Interactive 3D scene");
+  const updateUrl = () => {
+    const nextUrl = getUrl();
+    if (nextUrl && nextUrl !== viewer.getAttribute("url")) {
+      viewer.setAttribute("url", nextUrl);
+    }
+  };
+  if (typeof desktopQuery.addEventListener === "function") {
+    desktopQuery.addEventListener("change", updateUrl);
+  } else if (typeof desktopQuery.addListener === "function") {
+    desktopQuery.addListener(updateUrl);
+  }
+  const ready = ensureSplineViewerScript().then(() => {
+    updateUrl();
+  });
+  return { element: viewer, ready };
+};
+
+const createHeroVisualElement = (hero = {}) => {
+  const spline = normalizeHeroSpline(hero);
+  if (!spline) return createHeroMediaElement(hero);
+
+  const fallbackMedia = normalizeHeroMedia(hero);
+  const block = document.createElement("figure");
+  block.className = "cs-fig cs-fig--hero";
+
+  const frame = document.createElement("div");
+  frame.className = "cs-hero-media-mount";
+  if (spline.aspectRatio) {
+    frame.style.setProperty("--cs-hero-spline-aspect", spline.aspectRatio);
+  }
+
+  const fallbackEl = createMediaElement(fallbackMedia, "cs-hero-spline-fallback");
+  if (fallbackEl instanceof HTMLElement) {
+    frame.append(fallbackEl);
+  }
+
+  const embed = createHeroSplineEmbedElement(spline, hero);
+  if (!embed) return createHeroMediaElement(hero);
+  const { element: embedEl, ready } = embed;
+  frame.append(embedEl);
+  Promise.resolve(ready).then(() => {
+    frame.classList.add("is-ready");
+  });
+  block.append(frame);
+
+  const shouldRenderCaption =
+    fallbackMedia &&
+    fallbackMedia.showCaption !== false &&
+    (fallbackMedia.caption || fallbackMedia.credit);
+  if (shouldRenderCaption) {
+    const caption = document.createElement("figcaption");
+    caption.className = "cs-fig-caption";
+    caption.textContent = [fallbackMedia.caption, fallbackMedia.credit]
+      .filter(Boolean)
+      .join(" | ");
+    block.append(caption);
+  }
+
+  return block;
+};
 
 const normalizeRowItems = (row) => {
   if (Array.isArray(row)) return row;
@@ -983,7 +1118,7 @@ const renderCaseStudy = (content = {}, root) => {
 
   hero.append(introText);
 
-  const heroMedia = createHeroMediaElement(content.hero || {});
+  const heroMedia = createHeroVisualElement(content.hero || {});
   if (heroMedia.firstChild) hero.append(heroMedia);
   for (const sectionData of content.sections || []) {
     const section = document.createElement("section");

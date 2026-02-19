@@ -6,6 +6,11 @@
   "hero": {
     "title": "Designing Torus to Streamline Parametric Object Building",
     "subtitle": "Working with 2 senior architects, I designed the core functionality for a modern browser-based architect platform to create parametric objects.",
+    "spline": {
+      "srcDefault": "https://prod.spline.design/36vF5SPQ7MVdXHIg/scene.splinecode",
+      "srcDesktop": "https://prod.spline.design/GTJTFdRVRCBQdJgy/scene.splinecode",
+      "title": "Torus hero scene"
+    },
     "media": {
       "type": "image",
       "src": "../../Assets/Torus/Case Study/TorusHero.png",
