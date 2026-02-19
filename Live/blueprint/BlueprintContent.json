@@ -1,7 +1,7 @@
 {
   "id": "blueprint",
   "slug": "blueprint",
-  "status": "published",
+  "status": "ready",
   "publishedDate": "",
   "hero": {
     "title": "Creating Blueprint: Toll Brothers’ First Digital Design System from Figma to Code",
@@ -128,7 +128,7 @@
         },
         {
           "type": "paragraph",
-          "text": "While these offered best practices for systems at enormous scales, Toll Brothers has a tightly-controlled brand guideline and needed to adapt those practices for a smaller scale. To better understand the underlying theory behind creating a design system, I read several articles on the topic and picked two to highlight.\n\nThe first is \"Implementing a Pattern Library in the Real World: A Yahoo! Case Study\" by Erin Malone (2005). In this article, Erin frames the process, not as creating an artifact called a design system, but simply as solving pain points in team communication. The second is \"Building a Visual Design Language\" by Karri Saarinen (2016), detailing how his bootstrapped Airbnb's Design System. One of my favorite lines describes how principles do not naturally translate into practice.\n\n\"Traditionally, many style guides define components as atomic components, which are then used to build more complex molecules. In theory, this works well to create coherent and flexible systems. In practice, however, what often happens is that these re-usable atoms are used in many different ways, allowing all kinds of molecules to be created.\"\n\nIn synthesizing my research, I fleshed out 3 key concerns that Blueprint needed to address."
+          "text": "While these offered best practices for systems at enormous scales, Toll Brothers has a tightly-controlled brand guideline and needed to adapt those practices for a smaller scale. To better understand the underlying theory behind creating a design system, I read several articles on the topic and picked two to highlight.\n\nThe first is \"Implementing a Pattern Library in the Real World: A Yahoo! Case Study\" by Erin Malone (2005). In this article, Erin frames the process, not as creating an artifact called a design system, but simply as solving pain points in team communication. The second is \"Building a Visual Design Language\" by Karri Saarinen (2016), detailing how he bootstrapped Airbnb’s design system. One of my favorite lines describes how principles do not naturally translate into practice.\n\n\"Traditionally, many style guides define components as atomic components, which are then used to build more complex molecules. In theory, this works well to create coherent and flexible systems. In practice, however, what often happens is that these re-usable atoms are used in many different ways, allowing all kinds of molecules to be created.\"\n\nIn synthesizing my research, I fleshed out 3 key concerns that Blueprint needed to address."
         },
         {
           "type": "bulletRow",
@@ -146,7 +146,7 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "At time of writing, the industry-standard design systems I looked at generally converged on three major categories of design objects. After taking inventory of all our most reused visual elements on site, I organized all of our assets into Foundations, Components, and Patterns.\n\nFoundation references visual concepts like color, typography, accessibility, layouts, and spacing.\n\nComponents are the basic building blocks for digital design. A button is the quintessential example.\n\nPatterns are typically defined as things that solve a specific need, but there's more variability in how this category is used. This makes sense as patterns are more contextual to the platform itself. A form field is a quintessential example."
+          "text": "At the time of writing, the industry-standard design systems I looked at generally converged on three major categories of design objects. After taking inventory of all our most reused visual elements on site, I organized all of our assets into Foundations, Components, and Patterns.\n\nFoundation references visual concepts like color, typography, accessibility, layouts, and spacing.\n\nComponents are the basic building blocks for digital design. A button is the quintessential example.\n\nPatterns are typically defined as things that solve a specific need, but there's more variability in how this category is used. This makes sense as patterns are more contextual to the platform itself. A form field is a quintessential example."
         },
         {
           "type": "figure",
@@ -220,7 +220,7 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "At time of writing, the Figma MCP (F-MCP) was released a few months prior, and it has profoundly shaped my current thinking for design handoff workflows. The \"source of truth\" should ideally live in a codified repository like Storybook rather than in Figma. However, we lacked the dedicated engineering resources to build it. Early on, I experimented with AI coding using Claude, Gemini, and ChatGPT to try to create a Storybook for Blueprint, but at that time, these AI tools had speed and reliability issues.\n\nThe release of the F-MCP were game changers that enabled agentic plugins like OpenAI's Codex extension in VSC to directly read Figma file exports as context. As such, I guided Codex to create a working component in code based on its construction in Figma. I dictated the exact token setup to match the intent in Figma. With guidance, Codex interpreted, added, and applied tokens from Figma into Storybook. I directed the components to be built with accessibility requirements in mind. Beyond individual components, I experimented with feeding Codex entire wireframes to generate functional prototypes."
+          "text": "At the time of writing, the Figma MCP (F-MCP) was released a few months prior, and it has profoundly shaped my current thinking for design handoff workflows. The \"source of truth\" should ideally live in a codified repository like Storybook rather than in Figma. However, we lacked the dedicated engineering resources to build it. Early on, I experimented with AI coding using Claude, Gemini, and ChatGPT to try to create a Storybook for Blueprint, but at that time, these AI tools had speed and reliability issues.\n\nThe release of F-MCP was a game changer that enabled agentic plugins like OpenAI's Codex extension in VSC to directly read Figma file exports as context. As such, I guided Codex to create a working component in code based on its construction in Figma. I dictated the exact token setup to match the intent in Figma. With guidance, Codex interpreted, added, and applied tokens from Figma into Storybook. I directed the components to be built with accessibility requirements in mind. Beyond individual components, I experimented with feeding Codex entire wireframes to generate functional prototypes."
         },
       
         {

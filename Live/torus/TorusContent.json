@@ -1,7 +1,7 @@
 {
   "id": "torus",
   "slug": "torus",
-  "status": "published",
+  "status": "ready",
   "publishedDate": "",
   "hero": {
     "title": "Designing Torus to Streamline Parametric Object Building",
@@ -286,7 +286,7 @@
               "stamp": {
                 "type": "image",
                 "src": "../../Assets/Torus/Case Study/section11/Clasp.png",
-                "caption": "Clasp system concept for locking 2D geometry to reference planes"
+                "caption": "Clasp system concept for locking 2D geometry to reference planes."
               }
             },
             {
@@ -294,7 +294,7 @@
               "stamp": {
                 "type": "image",
                 "src": "../../Assets/Torus/Case Study/section11/3Dv2D.png",
-                "caption": "2D vs 3D workflow comparison"
+                "caption": "2D vs 3D workflow comparison."
               }
             }
           ]

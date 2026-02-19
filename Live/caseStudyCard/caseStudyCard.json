@@ -41,8 +41,12 @@
       "kind": "hcustomizer",
       "title": "Home Customizer",
       "description": "Under Construction: I designed multiple home customization modules.",
-      "tags": [],
-      "ctaLabel": "Read",
+      "tags": [
+        "Domain Research",
+        "Wireframes & Prototypes",
+        "Usability Testing"
+      ],
+      "ctaLabel": "Soon!",
       "href": "../hcustomizer/index.html",
       "media": {
         "splineUrl": "https://prod.spline.design/qlMDUHRdu8EDsFoQ/scene.splinecode"
@@ -51,9 +55,13 @@
     {
       "kind": "tolley",
       "title": "Tolley",
-      "description": "Under Construction: I designed Toll Brothers' first AI Chatbot to be a contextual home search experience.",
-      "tags": [],
-      "ctaLabel": "Read",
+      "description": "Under Construction: I designed Toll Brothers' first AI chatbot to be a contextual home search experience.",
+      "tags": [
+        "Domain Research",
+        "Wireframes and Prototypes",
+        "Module Library"
+      ],
+      "ctaLabel": "Soon!",
        "media": {
         "splineUrl": "https://prod.spline.design/qlMDUHRdu8EDsFoQ/scene.splinecode"
       }
@@ -62,8 +70,15 @@
       "kind": "aboutMe",
       "title": "About Me",
       "description": "Under Construction: There will be something cool here soon! For now, imagine a digital vinyl player with my favorite albums.",
-      "tags": [],
-      "ctaLabel": "Read",
+      "manualDisabled": true,
+      "tags": [
+        "Music",
+        "FKA Twigs",
+        "Rosalia",
+        "Arca",
+        "Charli XCX"
+      ],
+      "ctaLabel": "Soon!",
        "media": {
         "splineUrl": "https://prod.spline.design/qlMDUHRdu8EDsFoQ/scene.splinecode"
       }

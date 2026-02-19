@@ -1,31 +1,71 @@
 const SPLINE_CACHE_BUST = Date.now().toString();
+const CASE_STUDY_STATUS_PATHS = {
+  torus: "../torus/TorusContent.json",
+  blueprint: "../blueprint/BlueprintContent.json",
+  hcustomizer: "../hcustomizer/HCustomizerContent.json",
+  tolley: "../tolley/TolleyContent.json",
+};
+const statusLoadByKind = new Map();
+
 const withCacheBust = (url) => {
   if (!url) return "";
   const separator = url.includes("?") ? "&" : "?";
   return `${url}${separator}v=${SPLINE_CACHE_BUST}`;
 };
 
-const renderTorusMedia = (mediaRoot, media = {}) => {
-  const desktopQuery = window.matchMedia("(min-width: 1024px)");
-  const getUrl = () => {
-    if (desktopQuery.matches) {
-      return withCacheBust(media?.splineUrlDesktop || media?.splineUrl);
-    }
-    return withCacheBust(
-      media?.splineUrlMobile || media?.splineUrlDesktop || media?.splineUrl,
-    );
-  };
+const normalizeStatus = (value) => {
+  const status = String(value || "").trim().toLowerCase();
+  if (status === "ready") return "ready";
+  if (status === "draft") return "draft";
+  return "";
+};
 
-  const initialUrl = getUrl();
+const loadStatusForKind = async (kind = "") => {
+  const normalizedKind = String(kind || "").trim().toLowerCase();
+  if (!normalizedKind) return "";
+  if (statusLoadByKind.has(normalizedKind)) return statusLoadByKind.get(normalizedKind);
+
+  const path = CASE_STUDY_STATUS_PATHS[normalizedKind];
+  if (!path) {
+    statusLoadByKind.set(normalizedKind, Promise.resolve(""));
+    return "";
+  }
+
+  const promise = fetch(path, { cache: "no-store" })
+    .then((response) => {
+      if (!response.ok) throw new Error(`Failed to load ${path}`);
+      return response.json();
+    })
+    .then((content) => normalizeStatus(content?.status))
+    .catch((error) => {
+      console.warn(`[case-study-status] Failed to load status for ${normalizedKind}.`, error);
+      return "";
+    });
+
+  statusLoadByKind.set(normalizedKind, promise);
+  return promise;
+};
+
+const getSplineUrlForViewport = (media = {}, desktopQuery) => {
+  const isDesktop = Boolean(desktopQuery?.matches);
+  if (isDesktop) {
+    return withCacheBust(media?.splineUrlDesktop || media?.splineUrl || media?.splineUrlMobile);
+  }
+  return withCacheBust(media?.splineUrlMobile || media?.splineUrl || media?.splineUrlDesktop);
+};
+
+const renderSplineMedia = (mediaRoot, media = {}) => {
+  const desktopQuery = window.matchMedia("(min-width: 1024px)");
+  const initialUrl = getSplineUrlForViewport(media, desktopQuery);
   if (!initialUrl) return;
 
   const spline = document.createElement("spline-viewer");
-  spline.className = "card-media-layer torus-spline";
+  spline.className = "card-media-layer";
   spline.setAttribute("url", initialUrl);
   mediaRoot.append(spline);
 
   const updateUrl = () => {
-    const nextUrl = getUrl();
+    const nextUrl = getSplineUrlForViewport(media, desktopQuery);
     if (nextUrl && nextUrl !== spline.getAttribute("url")) {
       spline.setAttribute("url", nextUrl);
     }
@@ -38,25 +78,10 @@ const renderTorusMedia = (mediaRoot, media = {}) => {
   }
 };
 
-const renderBlueprintMedia = (mediaRoot, media = {}) => {
-  const url = withCacheBust(media?.splineUrl);
-  if (!url) return;
-
-  const spline = document.createElement("spline-viewer");
-  spline.className = "card-media-layer blueprint-spline";
-  spline.setAttribute("url", url);
-  mediaRoot.append(spline);
-};
-
-const MEDIA_RENDERERS = {
-  blueprint: renderBlueprintMedia,
-  torus: renderTorusMedia,
-};
-
 const renderCardMedia = ({ kind = "", mediaRoot, media } = {}) => {
+  void kind;
   if (!mediaRoot) return;
-  const render = MEDIA_RENDERERS[kind];
-  if (render) render(mediaRoot, media);
+  renderSplineMedia(mediaRoot, media);
 };
 
 const CASE_STUDY_DATA_PATH = "../caseStudyCard/caseStudyCard.json";
@@ -69,8 +94,28 @@ const loadCaseStudies = async () => {
     }
 
     const payload = await response.json();
-    const items = Array.isArray(payload) ? payload : payload?.items;
-    window.LiveCaseStudyData.items = Array.isArray(items) ? items : [];
+    const rawItems = Array.isArray(payload) ? payload : payload?.items;
+    const items = Array.isArray(rawItems) ? rawItems : [];
+
+    const resolvedItems = await Promise.all(
+      items.map(async (item = {}) => {
+        const kind = String(item?.kind || "").trim().toLowerCase();
+        const manualDisabled = item?.manualDisabled === true || kind === "aboutme";
+        if (manualDisabled) {
+          return {
+            ...item,
+            manualDisabled: true,
+            status: "draft",
+          };
+        }
+
+        const statusFromContent = await loadStatusForKind(kind);
+        const status = statusFromContent || normalizeStatus(item?.status) || "draft";
+        return { ...item, status };
+      })
+    );
+
+    window.LiveCaseStudyData.items = resolvedItems;
   } catch (error) {
     console.error(error);
     window.LiveCaseStudyData.items = [];

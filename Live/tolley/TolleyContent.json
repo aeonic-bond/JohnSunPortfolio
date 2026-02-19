@@ -1,0 +1,29 @@
+{
+  "id": "tolley",
+  "slug": "tolley",
+  "status": "draft",
+  "publishedDate": "",
+  "hero": {
+    "title": "Tolley",
+    "subtitle": "Case study in progress.",
+    "media": {
+      "type": "image",
+      "src": "",
+      "caption": "",
+      "variant": "hero",
+      "showCaption": false
+    }
+  },
+  "sections": [
+    {
+      "id": "section-00",
+      "header": "Executive Summary",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": ""
+        }
+      ]
+    }
+  ]
+}

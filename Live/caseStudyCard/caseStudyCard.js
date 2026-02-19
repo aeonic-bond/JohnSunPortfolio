@@ -1,6 +1,7 @@
 const createCaseStudyCard = ({
   kind = "",
-  status = "ready",
+  status = "draft",
+  manualDisabled = false,
   title = "Title",
   description = "",
   tags = [],
@@ -9,8 +10,8 @@ const createCaseStudyCard = ({
   media,
 } = {}) => {
   const normalizedStatus = String(status || "ready").trim().toLowerCase();
-  const isDraft = normalizedStatus === "draft" || normalizedStatus === "in_progress";
-  const isNavigable = Boolean(href) && !isDraft;
+  const isDisabled = manualDisabled || normalizedStatus !== "ready";
+  const isNavigable = Boolean(href) && !isDisabled;
 
   const cardWrap = document.createElement("div");
   cardWrap.className = "case-study-card-div";
@@ -20,8 +21,9 @@ const createCaseStudyCard = ({
 
   const card = document.createElement("article");
   card.className = "case-study-card";
-  if (isDraft) card.classList.add("is-draft");
+  if (isDisabled) card.classList.add("is-draft");
   card.dataset.status = normalizedStatus;
+  if (manualDisabled) card.dataset.manualDisabled = "true";
   if (kind) card.dataset.cardKind = kind;
 
   const mediaEl = document.createElement("div");
@@ -78,7 +80,7 @@ const createCaseStudyCard = ({
   ctaButton.className = "card-cta";
   ctaButton.type = "button";
   ctaButton.textContent = ctaLabel;
-  if (!isNavigable) {
+  if (isDisabled) {
     ctaButton.disabled = true;
     ctaButton.setAttribute("aria-disabled", "true");
   }
