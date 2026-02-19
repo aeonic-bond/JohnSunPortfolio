@@ -40,24 +40,33 @@
     {
       "kind": "hcustomizer",
       "title": "Home Customizer",
-      "description": "In Progress: I designed multiple home customization modules.",
+      "description": "Under Construction: I designed multiple home customization modules.",
       "tags": [],
       "ctaLabel": "Read",
-      "href": "../hcustomizer/index.html"
+      "href": "../hcustomizer/index.html",
+      "media": {
+        "splineUrl": "https://prod.spline.design/qlMDUHRdu8EDsFoQ/scene.splinecode"
+      }
     },
     {
       "kind": "tolley",
       "title": "Tolley",
-      "description": "In Progress: I designed Toll Brothers' first AI Chatbot to be a contextual home search experience.",
+      "description": "Under Construction: I designed Toll Brothers' first AI Chatbot to be a contextual home search experience.",
       "tags": [],
-      "ctaLabel": "Read"
+      "ctaLabel": "Read",
+       "media": {
+        "splineUrl": "https://prod.spline.design/qlMDUHRdu8EDsFoQ/scene.splinecode"
+      }
     },
     {
       "kind": "aboutMe",
       "title": "About Me",
-      "description": "Hello",
+      "description": "Under Construction: There will be something cool here soon! For now, imagine a digital vinyl player with my favorite albums.",
       "tags": [],
-      "ctaLabel": "Read"
+      "ctaLabel": "Read",
+       "media": {
+        "splineUrl": "https://prod.spline.design/qlMDUHRdu8EDsFoQ/scene.splinecode"
+      }
     }
   ]
 }

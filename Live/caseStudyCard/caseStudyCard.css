@@ -182,6 +182,10 @@
   cursor: pointer;
 }
 
+.case-study-card.is-draft {
+  cursor: default;
+}
+
 @media (min-width: 1024px) {
 
   .case-study-card-div {

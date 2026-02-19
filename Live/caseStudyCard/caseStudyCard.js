@@ -1,5 +1,6 @@
 const createCaseStudyCard = ({
   kind = "",
+  status = "ready",
   title = "Title",
   description = "",
   tags = [],
@@ -7,6 +8,10 @@ const createCaseStudyCard = ({
   href = "",
   media,
 } = {}) => {
+  const normalizedStatus = String(status || "ready").trim().toLowerCase();
+  const isDraft = normalizedStatus === "draft" || normalizedStatus === "in_progress";
+  const isNavigable = Boolean(href) && !isDraft;
+
   const cardWrap = document.createElement("div");
   cardWrap.className = "case-study-card-div";
   if (kind) {
@@ -15,6 +20,8 @@ const createCaseStudyCard = ({
 
   const card = document.createElement("article");
   card.className = "case-study-card";
+  if (isDraft) card.classList.add("is-draft");
+  card.dataset.status = normalizedStatus;
   if (kind) card.dataset.cardKind = kind;
 
   const mediaEl = document.createElement("div");
@@ -71,7 +78,7 @@ const createCaseStudyCard = ({
   ctaButton.className = "card-cta";
   ctaButton.type = "button";
   ctaButton.textContent = ctaLabel;
-  if (!href) {
+  if (!isNavigable) {
     ctaButton.disabled = true;
     ctaButton.setAttribute("aria-disabled", "true");
   }
@@ -80,7 +87,7 @@ const createCaseStudyCard = ({
   content.append(titleWrap, body, ctaContainer);
   card.append(mediaEl, content);
 
-  if (href) {
+  if (isNavigable) {
     const navigate = () => {
       window.location.href = href;
     };
