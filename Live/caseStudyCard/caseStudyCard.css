@@ -102,7 +102,7 @@
   touch-action: auto;
 }
 
-.card-text-all {
+.card-texts-group {
   display: flex;
   flex-direction: column;
   gap: var(--space-500);
@@ -141,7 +141,7 @@
   color: var(--color-text-secondary);
 }
 
-.card-tags-all {
+.card-tags-group {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-100);
@@ -218,7 +218,7 @@
     z-index: 3;
   }
 
-  .card-text-all {
+  .card-texts-group {
     width: 100%;
     flex: 0 1 auto;
   }

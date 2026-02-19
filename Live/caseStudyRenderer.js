@@ -172,8 +172,8 @@ const createCaseStudyDropdownNavItem = (item, activeId = "") => {
     icon.hidden = true;
   }
 
-  const textAll = document.createElement("span");
-  textAll.className = "case-study-nav-text-all";
+  const textGroup = document.createElement("span");
+  textGroup.className = "case-study-nav-texts-group";
 
   const titleEl = document.createElement("span");
   titleEl.className = "case-study-nav-title";
@@ -183,8 +183,8 @@ const createCaseStudyDropdownNavItem = (item, activeId = "") => {
   subtitleEl.className = "case-study-nav-subtitle";
   subtitleEl.textContent = subtitle;
 
-  textAll.append(titleEl, subtitleEl);
-  navItem.append(icon, textAll);
+  textGroup.append(titleEl, subtitleEl);
+  navItem.append(icon, textGroup);
 
   navItem.addEventListener("click", () => {
     const nextHref = navItem.dataset.href || "";
@@ -985,8 +985,8 @@ const createFlowRowElement = (flowRow) => {
   flowRowEl.className = "cs-flow-row";
   const flowTrackerEl = document.createElement("div");
   flowTrackerEl.className = "cs-flow-row-tracker";
-  const flowItemsAllEl = document.createElement("div");
-  flowItemsAllEl.className = "cs-flow-row-itemsAll";
+  const flowItemsGroupEl = document.createElement("div");
+  flowItemsGroupEl.className = "cs-flow-row-items-group";
 
   const items = normalizeRowItems(flowRow);
   const itemCount = Math.max(1, items.length);
@@ -997,10 +997,10 @@ const createFlowRowElement = (flowRow) => {
 
     const flowTextEl = createItemTextElement(items[i], "cs-flow-row-item-text");
     flowItemEl.append(flowTextEl);
-    flowItemsAllEl.append(flowItemEl);
+    flowItemsGroupEl.append(flowItemEl);
   }
 
-  flowRowEl.append(flowTrackerEl, flowItemsAllEl);
+  flowRowEl.append(flowTrackerEl, flowItemsGroupEl);
   return flowRowEl;
 };
 
@@ -1008,8 +1008,8 @@ const createProgressMatrixElement = (progressMatrix) => {
   const progressMatrixEl = document.createElement("div");
   progressMatrixEl.className = "cs-progress-matrix";
 
-  const itemsAllEl = document.createElement("div");
-  itemsAllEl.className = "cs-progress-matrix-itemsAll";
+  const itemsGroupEl = document.createElement("div");
+  itemsGroupEl.className = "cs-progress-matrix-items-group";
 
   for (const pair of normalizeProgressMatrixPairs(progressMatrix)) {
     const itemEl = document.createElement("div");
@@ -1030,21 +1030,21 @@ const createProgressMatrixElement = (progressMatrix) => {
       "cs-progress-matrix-item-secondary"
     );
 
-    const secondaryAllEl = document.createElement("div");
-    secondaryAllEl.className = "cs-progress-matrix-div-secondaryAll";
-    secondaryAllEl.append(secondaryEl);
+    const secondaryGroupEl = document.createElement("div");
+    secondaryGroupEl.className = "cs-progress-matrix-secondary-items-group";
+    secondaryGroupEl.append(secondaryEl);
 
     if (pair.stamp) {
       const stampEl = createStampElement(pair.stamp, "cs-stamp cs-progress-matrix-item-stamp");
-      if (stampEl) secondaryAllEl.append(stampEl);
+      if (stampEl) secondaryGroupEl.append(stampEl);
     }
 
-    itemEl.append(primaryEl, chevronEl, secondaryAllEl);
+    itemEl.append(primaryEl, chevronEl, secondaryGroupEl);
 
-    itemsAllEl.append(itemEl);
+    itemsGroupEl.append(itemEl);
   }
 
-  progressMatrixEl.append(itemsAllEl);
+  progressMatrixEl.append(itemsGroupEl);
   return progressMatrixEl;
 };
 
@@ -1061,7 +1061,7 @@ const createProgressRowElement = (progressRow) => {
     itemEl.className = "cs-progress-row-item";
 
     const stampsEl = document.createElement("div");
-    stampsEl.className = "cs-progress-row-item-stampsAll";
+    stampsEl.className = "cs-progress-row-item-stamps-group";
     for (const stamp of itemData.stamps) {
       const stampEl = createStampElement(stamp, "cs-stamp cs-progress-row-item-stamp");
       if (stampEl) stampsEl.append(stampEl);
@@ -1090,8 +1090,8 @@ const renderCaseStudy = (content = {}, root) => {
   bindHeaderBarEvents();
   updateHeaderBarStickyState();
   bindFlowRowTrackerEvents();
-  const sectionsAll = document.createElement("article");
-  sectionsAll.className = "cs-div-sectionsALL";
+  const sectionsGroup = document.createElement("article");
+  sectionsGroup.className = "cs-sections-group";
 
   const hero = document.createElement("header");
   hero.className = "cs-div-intro";
@@ -1194,10 +1194,10 @@ const renderCaseStudy = (content = {}, root) => {
       }
     }
 
-    sectionsAll.append(section);
+    sectionsGroup.append(section);
   }
 
-  root.replaceChildren(hero, sectionsAll);
+  root.replaceChildren(hero, sectionsGroup);
   scheduleFlowRowTrackerUpdate();
 };
 

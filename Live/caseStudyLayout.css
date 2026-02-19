@@ -205,7 +205,7 @@
 
 
  /* Sections */
-.cs-div-sectionsALL {
+.cs-sections-group {
   display: grid;
   row-gap: var(--space-block-800);
 }
@@ -470,7 +470,7 @@
   border-radius: 1000px;
 }
 
-.cs-flow-row-itemsAll {
+.cs-flow-row-items-group {
   display: grid;
   grid-template-columns: 1fr;
   height: fit-content;
@@ -513,7 +513,7 @@
   }
 }
 
-.cs-progress-matrix-itemsAll {
+.cs-progress-matrix-items-group {
   display: grid;
   gap: var(--space-block-500);
 }
@@ -579,7 +579,7 @@
   color: var(--color-text-primary);
 }
 
-.cs-progress-matrix-div-secondaryAll {
+.cs-progress-matrix-secondary-items-group {
   width: fit-content;
   display: grid;
   gap: var(--space-block-500);
@@ -619,7 +619,7 @@
     justify-self: start;
   }
 
-  .cs-progress-matrix-div-secondaryAll {
+  .cs-progress-matrix-secondary-items-group {
     grid-column: 3;
     display: flex;
     align-items: center;
@@ -664,7 +664,7 @@
   color: var(--color-text-secondary);
 }
 
-.cs-progress-row-item-stampsAll {
+.cs-progress-row-item-stamps-group {
   width: fit-content;
   display: grid;
   gap: var(--space-block-500);
@@ -704,7 +704,7 @@
     justify-self: end;
   }
 
-  .cs-progress-row-item-stampsAll {
+  .cs-progress-row-item-stamps-group {
     justify-self: start;
   }
 

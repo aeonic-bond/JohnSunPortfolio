@@ -41,7 +41,7 @@ const createCaseStudyCard = ({
   mediaEl.append(mediaMount);
 
   const content = document.createElement("div");
-  content.className = "card-text-all";
+  content.className = "card-texts-group";
 
   const titleWrap = document.createElement("div");
   titleWrap.className = "card-title-wrap";
@@ -60,7 +60,7 @@ const createCaseStudyCard = ({
   textWrap.append(descriptionEl);
 
   const tagsWrap = document.createElement("div");
-  tagsWrap.className = "card-tags-all";
+  tagsWrap.className = "card-tags-group";
   for (const tagText of tags) {
     const trimmed = String(tagText || "").trim();
     if (!trimmed) continue;

@@ -72,7 +72,7 @@ const createNavItem = ({ title, text, icon: iconOverride = "", targetId = "", hr
   icon.dataset.mobileSrc = mobileIconSrc;
 
   const textWrap = document.createElement("span");
-  textWrap.className = "case-study-nav-text-all";
+  textWrap.className = "case-study-nav-texts-group";
 
   const titleEl = document.createElement("span");
   titleEl.className = "case-study-nav-title";
