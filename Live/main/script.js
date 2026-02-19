@@ -20,6 +20,7 @@ const buildNavItems = (items = []) => {
     .map((item) => ({
       title: String(item?.title || item?.kind || "Untitled").trim() || "Untitled",
       text: String(item?.text || item?.subtitle || item?.category || item?.kind || "").trim(),
+      icon: String(item?.icon || "").trim(),
       targetId: normalizeTargetId(item),
       href: String(item?.href || "").trim(),
       selected: item?.selected === true,
@@ -30,7 +31,7 @@ const buildNavItems = (items = []) => {
   return [{ title: "Torus", text: "Architecture/CAD", targetId: "case-study-torus", href: "", selected: true }];
 };
 
-const createNavItem = ({ title, text, targetId = "", href = "", selected = false } = {}) => {
+const createNavItem = ({ title, text, icon: iconOverride = "", targetId = "", href = "", selected = false } = {}) => {
   const button = document.createElement("button");
   button.type = "button";
   button.className = "case-study-nav-item";
@@ -48,7 +49,10 @@ const createNavItem = ({ title, text, targetId = "", href = "", selected = false
   const isTolleyItem = String(title || "").trim().toLowerCase() === "tolley" || targetId === "case-study-tolley";
   let desktopIconSrc = DESKTOP_ICON_SRC;
   let mobileIconSrc = MOBILE_ICON_SRC;
-  if (isTorusItem) {
+  if (iconOverride) {
+    desktopIconSrc = iconOverride;
+    mobileIconSrc = iconOverride;
+  } else if (isTorusItem) {
     desktopIconSrc = TORUS_ICON_SRC;
     mobileIconSrc = TORUS_ICON_SRC;
   } else if (isBlueprintItem) {

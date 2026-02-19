@@ -37,6 +37,7 @@
       "id": "aboutMe",
       "title": "About Me",
       "subtitle": "Info & Contacts",
+      "icon": "/Assets/AboutMe.svg",
       "href": "",
       "selected": false
     }

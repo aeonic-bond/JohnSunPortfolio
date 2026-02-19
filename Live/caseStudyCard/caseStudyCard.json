@@ -40,7 +40,7 @@
     {
       "kind": "hcustomizer",
       "title": "Home Customizer",
-      "description": "Case study summary for Home Customizer.",
+      "description": "In Progress: I designed multiple home customization modules.",
       "tags": [],
       "ctaLabel": "Read",
       "href": "../hcustomizer/index.html"
@@ -48,7 +48,14 @@
     {
       "kind": "tolley",
       "title": "Tolley",
-      "description": "I designed Toll Brothers' first AI Chatbot to be contextual home search experience.",
+      "description": "In Progress: I designed Toll Brothers' first AI Chatbot to be a contextual home search experience.",
+      "tags": [],
+      "ctaLabel": "Read"
+    },
+    {
+      "kind": "aboutMe",
+      "title": "About Me",
+      "description": "Hello",
       "tags": [],
       "ctaLabel": "Read"
     }
