@@ -71,6 +71,10 @@ const createCaseStudyCard = ({
   ctaButton.className = "card-cta";
   ctaButton.type = "button";
   ctaButton.textContent = ctaLabel;
+  if (!href) {
+    ctaButton.disabled = true;
+    ctaButton.setAttribute("aria-disabled", "true");
+  }
   ctaContainer.append(ctaButton);
 
   content.append(titleWrap, body, ctaContainer);

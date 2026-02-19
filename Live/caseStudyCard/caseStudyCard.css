@@ -172,6 +172,12 @@
   cursor: pointer;
 }
 
+.card-cta:disabled,
+.card-cta[aria-disabled="true"] {
+  background: var(--color-bg-shade);
+  cursor: not-allowed;
+}
+
 .case-study-card[role="link"] {
   cursor: pointer;
 }
