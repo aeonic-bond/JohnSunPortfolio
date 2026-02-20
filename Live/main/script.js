@@ -296,7 +296,7 @@ const navDivReveal = (navRoot, showcaseRoot) => {
   const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
   if (isDesktop) {
     const showcaseTop = showcaseRoot.getBoundingClientRect().top;
-    navRoot.classList.toggle("is-visible", showcaseTop <= 160);
+    navRoot.classList.toggle("is-visible", showcaseTop <= window.innerHeight * 0.8);
     return;
   }
 
