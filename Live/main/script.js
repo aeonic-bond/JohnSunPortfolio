@@ -222,17 +222,42 @@ const centerNavActiveID = (
     return;
   }
 
-  const navRect = navRoot.getBoundingClientRect();
-  const targetMidpointX = navRect.left + navRect.width * 0.5;
-  const itemMidpointX = itemRect.left + itemRect.width * 0.5;
-  const deltaX = itemMidpointX - targetMidpointX;
-  const maxScrollLeft = Math.max(0, navRoot.scrollWidth - navRoot.clientWidth);
-  const nextScrollLeft = clamp(navRoot.scrollLeft + deltaX, 0, maxScrollLeft);
+  // Cancel any pending center operation
+  if (navRoot._centerRafId) {
+    window.cancelAnimationFrame(navRoot._centerRafId);
+    navRoot._centerRafId = null;
+  }
+  if (navRoot._centerTimeoutId) {
+    window.clearTimeout(navRoot._centerTimeoutId);
+    navRoot._centerTimeoutId = null;
+  }
 
-  withTemporarilyDisabledHorizontalSnap(navRoot, () => {
-    navRoot.scrollTo({
-      left: nextScrollLeft,
-      behavior: resolvedBehavior,
+  const performCenter = () => {
+    // Ensure spacers are correctly sized
+    const spacers = navRoot.querySelectorAll('.case-study-nav-edge-spacer');
+    const basis = Math.max(0, Math.round(navRoot.clientWidth * 0.5));
+    for (const spacer of spacers) {
+      if (spacer instanceof HTMLElement) spacer.style.flexBasis = `${basis}px`;
+    }
+
+    // Use offsetLeft (relative to navRoot) instead of getBoundingClientRect,
+    // so we get an absolute position independent of current scroll state
+    const itemOffsetLeft = activeItem.offsetLeft;
+    const itemWidth = activeItem.offsetWidth;
+    const navWidth = navRoot.clientWidth;
+
+    const targetScrollLeft = itemOffsetLeft + itemWidth * 0.5 - navWidth * 0.5;
+    const maxScrollLeft = Math.max(0, navRoot.scrollWidth - navRoot.clientWidth);
+    const nextScrollLeft = clamp(targetScrollLeft, 0, maxScrollLeft);
+
+    withTemporarilyDisabledHorizontalSnap(navRoot, () => {
+      navRoot.scrollTo({ left: nextScrollLeft, behavior: resolvedBehavior });
+    });
+  };
+
+  navRoot._centerRafId = window.requestAnimationFrame(() => {
+    navRoot._centerRafId = window.requestAnimationFrame(() => {
+      navRoot._centerTimeoutId = window.setTimeout(performCenter, 50);
     });
   });
 };
