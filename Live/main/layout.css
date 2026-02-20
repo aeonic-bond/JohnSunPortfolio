@@ -232,7 +232,7 @@ body.is-nav-sticky {
   text-align: left;
   cursor: pointer;
   scroll-snap-align: center;
-  scroll-snap-stop: always;
+  scroll-snap-stop: normal;
 }
 
 .case-study-nav-icon {
