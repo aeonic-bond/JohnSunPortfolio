@@ -12,23 +12,6 @@ body {
   color: var(--color-text-primary);
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: env(safe-area-inset-top, 0px);
-  background: transparent;
-  pointer-events: none;
-  z-index: 1000;
-  transition: background 200ms ease;
-}
-
-body:has(.case-study-nav-div.is-visible)::before {
-  background: var(--color-bg-sink);
-}
-
 .live-main {
   display: flex;
   flex-direction: column;
