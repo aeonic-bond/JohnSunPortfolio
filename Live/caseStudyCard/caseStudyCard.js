@@ -121,6 +121,8 @@ if (root) {
   const desktopQuery = window.matchMedia("(min-width: 1024px)");
   let syncWidthRafId = 0;
   let activeSyncRafId = 0;
+  let activeCardObserver = null;
+  const activeCardIntersectionByElement = new Map();
   let activeID = "";
   let scrollObserveActiveIDEnabled = true;
   window.activeID = activeID;
@@ -164,11 +166,59 @@ if (root) {
     }
   };
 
+  const getObservedCardDivs = () =>
+    Array.from(root.querySelectorAll(".case-study-card-container")).filter(
+      (cardDiv) => cardDiv instanceof HTMLElement
+    );
+
+  const getActiveObserverRootMargin = () => {
+    const { startY, endY } = getActiveThresholdRangeY();
+    const topInset = Math.max(0, Math.min(startY, window.innerHeight));
+    const bottomInset = Math.max(0, window.innerHeight - endY);
+    return `${-Math.round(topInset)}px 0px ${-Math.round(bottomInset)}px 0px`;
+  };
+
+  const disconnectActiveCardObserver = () => {
+    if (activeCardObserver instanceof IntersectionObserver) {
+      activeCardObserver.disconnect();
+    }
+    activeCardObserver = null;
+    activeCardIntersectionByElement.clear();
+  };
+
+  const observeActiveCards = () => {
+    disconnectActiveCardObserver();
+
+    const cardDivs = getObservedCardDivs();
+    if (!cardDivs.length) return;
+    if (typeof IntersectionObserver !== "function") return;
+
+    activeCardObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!(entry.target instanceof HTMLElement)) continue;
+          activeCardIntersectionByElement.set(entry.target, entry.isIntersecting);
+        }
+        scheduleActiveSync();
+      },
+      {
+        root: null,
+        rootMargin: getActiveObserverRootMargin(),
+        threshold: 0,
+      }
+    );
+
+    for (const cardDiv of cardDivs) {
+      activeCardIntersectionByElement.set(cardDiv, false);
+      activeCardObserver.observe(cardDiv);
+    }
+  };
+
   const scrollObserveActiveID = () => {
     if (!scrollObserveActiveIDEnabled) return;
 
     const { startY, endY, centerY } = getActiveThresholdRangeY();
-    const cardDivs = Array.from(root.querySelectorAll(".case-study-card-container"));
+    const cardDivs = getObservedCardDivs();
     if (!cardDivs.length) return;
 
     let inRangeCandidateId = "";
@@ -177,11 +227,13 @@ if (root) {
     let nearestDistance = Number.POSITIVE_INFINITY;
 
     for (const cardDiv of cardDivs) {
-      if (!(cardDiv instanceof HTMLElement)) continue;
       const rect = cardDiv.getBoundingClientRect();
       const midpointY = rect.top + rect.height * 0.5;
       const currentDistance = Math.abs(midpointY - centerY);
-      const inRange = midpointY >= startY && midpointY <= endY;
+      const inRange =
+        activeCardObserver instanceof IntersectionObserver
+          ? activeCardIntersectionByElement.get(cardDiv) === true
+          : midpointY >= startY && midpointY <= endY;
 
       if (currentDistance < nearestDistance) {
         nearestDistance = currentDistance;
@@ -257,6 +309,7 @@ if (root) {
 
   const renderCards = (caseStudies = []) => {
     root.replaceChildren(...caseStudies.map((item) => createCaseStudyCard(item)));
+    observeActiveCards();
     syncActiveCardByID(activeID);
     scheduleWidthSync();
     scheduleActiveSync();
@@ -271,16 +324,19 @@ if (root) {
 
   window.addEventListener("scroll", scheduleActiveSync, { passive: true });
   window.addEventListener("resize", () => {
+    observeActiveCards();
     scheduleWidthSync();
     scheduleActiveSync();
   });
   if (typeof desktopQuery.addEventListener === "function") {
     desktopQuery.addEventListener("change", () => {
+      observeActiveCards();
       scheduleWidthSync();
       scheduleActiveSync();
     });
   } else if (typeof desktopQuery.addListener === "function") {
     desktopQuery.addListener(() => {
+      observeActiveCards();
       scheduleWidthSync();
       scheduleActiveSync();
     });
