@@ -4,6 +4,30 @@
     {
       "source": "/",
       "destination": "/Live/main/main.html"
+    },
+    {
+      "source": "/main/main",
+      "destination": "/Live/main/main.html"
+    },
+    {
+      "source": "/Live/main/main",
+      "destination": "/Live/main/main.html"
+    },
+    {
+      "source": "/Live/torus",
+      "destination": "/Live/torus/index.html"
+    },
+    {
+      "source": "/Live/blueprint",
+      "destination": "/Live/blueprint/index.html"
+    },
+    {
+      "source": "/Live/hcustomizer",
+      "destination": "/Live/hcustomizer/index.html"
+    },
+    {
+      "source": "/Live/tolley",
+      "destination": "/Live/tolley/index.html"
     }
   ]
 }

@@ -72,7 +72,7 @@ const HEADER_CASE_STUDY_STATUS_PATHS = {
   hcustomizer: "../hcustomizer/HCustomizerContent.json",
   tolley: "../tolley/TolleyContent.json",
 };
-const HEADER_BACK_HREF = "../main/main.html";
+const HEADER_BACK_HREF = "/";
 const BACK_BUTTON_ICON_SRC = "../../Assets/BackButton.svg";
 const HEADER_STICKY_TRANSITION_LOCK_MS = 1000;
 const SPLINE_VIEWER_SCRIPT_SRC = "https://unpkg.com/@splinetool/viewer@1.12.58/build/spline-viewer.js";
