@@ -22,7 +22,7 @@ body {
 .intro-div {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,6 +39,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: var(--space-block-500);
+  transform: translateY(calc(-1 * var(--space-700)));
 }
 
 .intro-media-mount {
