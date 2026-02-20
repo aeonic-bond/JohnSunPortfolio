@@ -6,6 +6,16 @@ const CUSTOMIZER_ICON_SRC = "/Assets/CustomizerIcon.svg";
 const TOLLEY_ICON_SRC = "/Assets/TolleyIcon.svg";
 const MAIN_SCROLL_STORAGE_KEY = "live.main.scroll_y";
 const MAIN_SCROLL_RESTORE_FLAG_KEY = "live.main.restore_scroll";
+const NAV_REVEAL_MOBILE_ENTER_PX = 8;
+const NAV_REVEAL_MOBILE_EXIT_PX = 26;
+const NAV_REVEAL_DESKTOP_ENTER_RATIO = 0.8;
+const NAV_REVEAL_DESKTOP_EXIT_RATIO = 0.9;
+const NAV_REVEAL_TRANSITION_LOCK_MS = 1000;
+
+let navRevealTransitionLock = false;
+let navRevealTransitionLockTimeoutId = 0;
+let navRevealRootRef = null;
+let navRevealShowcaseRootRef = null;
 
 const saveMainScrollPosition = () => {
   try {
@@ -293,15 +303,42 @@ const loadNavItems = async () => {
 
 const navDivReveal = (navRoot, showcaseRoot) => {
   if (!(navRoot instanceof HTMLElement) || !(showcaseRoot instanceof HTMLElement)) return;
+  navRevealRootRef = navRoot;
+  navRevealShowcaseRootRef = showcaseRoot;
+  const currentlyVisible = navRoot.classList.contains("is-visible");
   const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+  let shouldShow = false;
+
   if (isDesktop) {
     const showcaseTop = showcaseRoot.getBoundingClientRect().top;
-    navRoot.classList.toggle("is-visible", showcaseTop <= window.innerHeight * 0.8);
-    return;
+    const enterThreshold = window.innerHeight * NAV_REVEAL_DESKTOP_ENTER_RATIO;
+    const exitThreshold = window.innerHeight * NAV_REVEAL_DESKTOP_EXIT_RATIO;
+    shouldShow = currentlyVisible ? showcaseTop <= exitThreshold : showcaseTop <= enterThreshold;
+  } else {
+    const navTop = navRoot.getBoundingClientRect().top;
+    shouldShow = currentlyVisible ? navTop <= NAV_REVEAL_MOBILE_EXIT_PX : navTop <= NAV_REVEAL_MOBILE_ENTER_PX;
   }
 
-  const navTop = navRoot.getBoundingClientRect().top;
-  navRoot.classList.toggle("is-visible", navTop <= 0);
+  if (shouldShow === currentlyVisible) return;
+  if (navRevealTransitionLock) return;
+
+  navRoot.classList.toggle("is-visible", shouldShow);
+  navRevealTransitionLock = true;
+  if (navRevealTransitionLockTimeoutId) {
+    window.clearTimeout(navRevealTransitionLockTimeoutId);
+  }
+  navRevealTransitionLockTimeoutId = window.setTimeout(() => {
+    navRevealTransitionLock = false;
+    navRevealTransitionLockTimeoutId = 0;
+    if (
+      navRevealRootRef instanceof HTMLElement &&
+      navRevealShowcaseRootRef instanceof HTMLElement
+    ) {
+      window.requestAnimationFrame(() =>
+        navDivReveal(navRevealRootRef, navRevealShowcaseRootRef)
+      );
+    }
+  }, NAV_REVEAL_TRANSITION_LOCK_MS);
 };
 
 const initCaseStudyNav = async () => {
