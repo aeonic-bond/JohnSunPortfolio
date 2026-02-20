@@ -213,7 +213,7 @@ body.is-nav-sticky {
 .case-study-nav-list::before,
 .case-study-nav-list::after {
   content: "";
-  flex: 0 0 50%;
+  flex: 0 0 50vw;
 }
 
 .case-study-nav-item {

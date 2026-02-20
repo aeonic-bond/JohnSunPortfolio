@@ -175,10 +175,11 @@ const centerNavActiveID = (
     return;
   }
 
+  const targetMidpointX = window.innerWidth * 0.5;
+  const itemMidpointX = itemRect.left + itemRect.width * 0.5;
+  const deltaX = itemMidpointX - targetMidpointX;
   const maxScrollLeft = Math.max(0, navRoot.scrollWidth - navRoot.clientWidth);
-  const itemMidpointX = activeItem.offsetLeft + activeItem.offsetWidth * 0.5;
-  const targetMidpointX = navRoot.clientWidth * 0.5;
-  const nextScrollLeft = clamp(itemMidpointX - targetMidpointX, 0, maxScrollLeft);
+  const nextScrollLeft = clamp(navRoot.scrollLeft + deltaX, 0, maxScrollLeft);
 
   navRoot.scrollTo({
     left: nextScrollLeft,
@@ -391,22 +392,6 @@ const initCaseStudyNav = async () => {
   window.addEventListener("scroll", scheduleNavDivReveal, { passive: true });
   window.addEventListener("resize", scheduleNavDivReveal);
 
-  let recenterSelectedRafId = 0;
-  const scheduleSelectedNavRecenter = () => {
-    if (recenterSelectedRafId) return;
-    recenterSelectedRafId = window.requestAnimationFrame(() => {
-      recenterSelectedRafId = 0;
-      const selected = navList.querySelector(".case-study-nav-item.is-selected");
-      if (!(selected instanceof HTMLElement)) return;
-      centerNavActiveID(navList, selected, {
-        desktop: desktopQuery.matches,
-        behavior: "auto",
-        viewportElement: navRoot,
-      });
-      updateSelectorWidth(selected, selector);
-    });
-  };
-
   window.syncCaseStudyNavActiveID = (nextId, behavior = "smooth") => {
     if (typeof nextId !== "string" || !nextId) return;
     setActiveNavItem(navList, nextId, {
@@ -425,20 +410,42 @@ const initCaseStudyNav = async () => {
   if (typeof desktopQuery.addEventListener === "function") {
     desktopQuery.addEventListener("change", () => {
       updateNavIconsForViewport(navList, desktopQuery);
-      scheduleSelectedNavRecenter();
+      const selected = navList.querySelector(".case-study-nav-item.is-selected");
+      if (selected instanceof HTMLElement) {
+        centerNavActiveID(navList, selected, {
+          desktop: desktopQuery.matches,
+          behavior: "auto",
+          viewportElement: navRoot,
+        });
+        updateSelectorWidth(selected, selector);
+      }
     });
   } else if (typeof desktopQuery.addListener === "function") {
     desktopQuery.addListener(() => {
       updateNavIconsForViewport(navList, desktopQuery);
-      scheduleSelectedNavRecenter();
+      const selected = navList.querySelector(".case-study-nav-item.is-selected");
+      if (selected instanceof HTMLElement) {
+        centerNavActiveID(navList, selected, {
+          desktop: desktopQuery.matches,
+          behavior: "auto",
+          viewportElement: navRoot,
+        });
+        updateSelectorWidth(selected, selector);
+      }
     });
   }
 
-  window.addEventListener("resize", scheduleSelectedNavRecenter);
-  if (window.visualViewport) {
-    window.visualViewport.addEventListener("resize", scheduleSelectedNavRecenter);
-    window.visualViewport.addEventListener("scroll", scheduleSelectedNavRecenter);
-  }
+  window.addEventListener("resize", () => {
+    const selected = navList.querySelector(".case-study-nav-item.is-selected");
+    if (selected instanceof HTMLElement) {
+      centerNavActiveID(navList, selected, {
+        desktop: desktopQuery.matches,
+        behavior: "auto",
+        viewportElement: navRoot,
+      });
+      updateSelectorWidth(selected, selector);
+    }
+  });
 };
 
 const initIntroScrollIndicator = () => {
