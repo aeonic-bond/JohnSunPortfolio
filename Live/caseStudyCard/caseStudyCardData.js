@@ -1,4 +1,6 @@
-const SPLINE_CACHE_BUST = Date.now().toString();
+// Overridden at runtime from caseStudyCard.json's "splineVersion" field.
+// Bump that field when you update a Spline scene to force browsers to re-fetch.
+let SPLINE_CACHE_BUST = "1";
 const CASE_STUDY_STATUS_PATHS = {
   torus: "../torus/TorusContent.json",
   blueprint: "../blueprint/BlueprintContent.json",
@@ -32,7 +34,7 @@ const loadStatusForKind = async (kind = "") => {
     return "";
   }
 
-  const promise = fetch(path, { cache: "no-store" })
+  const promise = fetch(path, { cache: "default" })
     .then((response) => {
       if (!response.ok) throw new Error(`Failed to load ${path}`);
       return response.json();
@@ -123,6 +125,9 @@ const loadCaseStudies = async () => {
     }
 
     const payload = await response.json();
+    if (payload?.splineVersion != null) {
+      SPLINE_CACHE_BUST = String(payload.splineVersion);
+    }
     const rawItems = Array.isArray(payload) ? payload : payload?.items;
     const items = Array.isArray(rawItems) ? rawItems : [];
 
