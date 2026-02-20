@@ -6,6 +6,7 @@ const CASE_STUDY_STATUS_PATHS = {
   tolley: "../tolley/TolleyContent.json",
 };
 const statusLoadByKind = new Map();
+const prewarmedSplineUrls = new Set();
 
 const withCacheBust = (url) => {
   if (!url) return "";
@@ -52,6 +53,34 @@ const getSplineUrlForViewport = (media = {}, desktopQuery) => {
     return withCacheBust(media?.splineUrlDesktop || media?.splineUrl || media?.splineUrlMobile);
   }
   return withCacheBust(media?.splineUrlMobile || media?.splineUrl || media?.splineUrlDesktop);
+};
+
+const collectSplineUrls = (media = {}) => {
+  const urls = [
+    withCacheBust(media?.splineUrlDesktop),
+    withCacheBust(media?.splineUrlMobile),
+    withCacheBust(media?.splineUrl),
+  ];
+  return urls.filter(Boolean);
+};
+
+const prewarmSplineUrl = (url) => {
+  if (!url || prewarmedSplineUrls.has(url)) return;
+  prewarmedSplineUrls.add(url);
+
+  fetch(url, { mode: "no-cors", cache: "force-cache" }).catch(() => {
+    // Best effort preload; viewer still loads the scene when mounted.
+  });
+};
+
+const prewarmCaseStudySplineMedia = (items = []) => {
+  for (const item of items) {
+    const media = item?.media;
+    if (!media || typeof media !== "object") continue;
+    for (const url of collectSplineUrls(media)) {
+      prewarmSplineUrl(url);
+    }
+  }
 };
 
 const renderSplineMedia = (mediaRoot, media = {}) => {
@@ -116,6 +145,7 @@ const loadCaseStudies = async () => {
     );
 
     window.LiveCaseStudyData.items = resolvedItems;
+    prewarmCaseStudySplineMedia(resolvedItems);
   } catch (error) {
     console.error(error);
     window.LiveCaseStudyData.items = [];
