@@ -175,23 +175,16 @@ const centerNavActiveID = (
     return;
   }
 
-  activeItem.scrollIntoView({
+  const navRect = navRoot.getBoundingClientRect();
+  const targetMidpointX = navRect.left + navRect.width * 0.5;
+  const itemMidpointX = itemRect.left + itemRect.width * 0.5;
+  const deltaX = itemMidpointX - targetMidpointX;
+  const maxScrollLeft = Math.max(0, navRoot.scrollWidth - navRoot.clientWidth);
+  const nextScrollLeft = clamp(navRoot.scrollLeft + deltaX, 0, maxScrollLeft);
+
+  navRoot.scrollTo({
+    left: nextScrollLeft,
     behavior: resolvedBehavior,
-    block: "nearest",
-    inline: "center",
-  });
-
-  // Safari can still settle slightly off-center when browser chrome changes.
-  window.requestAnimationFrame(() => {
-    const maxScrollLeft = Math.max(0, navRoot.scrollWidth - navRoot.clientWidth);
-    const itemMidpointX = activeItem.offsetLeft + activeItem.offsetWidth * 0.5;
-    const targetMidpointX = navRoot.clientWidth * 0.5;
-    const nextScrollLeft = clamp(itemMidpointX - targetMidpointX, 0, maxScrollLeft);
-
-    navRoot.scrollTo({
-      left: nextScrollLeft,
-      behavior: "auto",
-    });
   });
 };
 
@@ -454,6 +447,21 @@ const initCaseStudyNav = async () => {
       updateSelectorWidth(selected, selector);
     }
   });
+
+  if (window.visualViewport) {
+    const recenterSelectedNavItem = () => {
+      const selected = navList.querySelector(".case-study-nav-item.is-selected");
+      if (!(selected instanceof HTMLElement)) return;
+      centerNavActiveID(navList, selected, {
+        desktop: desktopQuery.matches,
+        behavior: "auto",
+        viewportElement: navRoot,
+      });
+      updateSelectorWidth(selected, selector);
+    };
+    window.visualViewport.addEventListener("resize", recenterSelectedNavItem);
+    window.visualViewport.addEventListener("scroll", recenterSelectedNavItem);
+  }
 };
 
 const initIntroScrollIndicator = () => {
