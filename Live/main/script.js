@@ -160,6 +160,16 @@ const updateNavEdgeSpacerWidths = (navList, { desktop = false } = {}) => {
   }
 };
 
+const getOffsetLeftRelativeTo = (element, ancestor) => {
+  let offset = 0;
+  let el = element;
+  while (el && el !== ancestor) {
+    offset += el.offsetLeft;
+    el = el.offsetParent;
+  }
+  return offset;
+};
+
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
 const isElementVisibleInViewport = (element) => {
@@ -233,6 +243,13 @@ const centerNavActiveID = (
   }
 
   const performCenter = () => {
+    console.log({
+      itemOffsetLeft: activeItem.offsetLeft,
+      itemOffsetParent: activeItem.offsetParent,
+      navRoot: navRoot,
+      offsetParentIsNavRoot: activeItem.offsetParent === navRoot,
+    });
+
     // Ensure spacers are correctly sized
     const spacers = navRoot.querySelectorAll('.case-study-nav-edge-spacer');
     const basis = Math.max(0, Math.round(navRoot.clientWidth * 0.5));
@@ -242,7 +259,7 @@ const centerNavActiveID = (
 
     // Use offsetLeft (relative to navRoot) instead of getBoundingClientRect,
     // so we get an absolute position independent of current scroll state
-    const itemOffsetLeft = activeItem.offsetLeft;
+    const itemOffsetLeft = getOffsetLeftRelativeTo(activeItem, navRoot);
     const itemWidth = activeItem.offsetWidth;
     const navWidth = navRoot.clientWidth;
 

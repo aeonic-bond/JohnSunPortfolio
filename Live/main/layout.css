@@ -192,6 +192,7 @@ body.is-nav-sticky {
 }
 
 .case-study-nav-list {
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--space-900);
