@@ -156,7 +156,10 @@ const updateNavEdgeSpacerWidths = (navList, { desktop = false } = {}) => {
   const basis = desktop ? 0 : Math.max(0, Math.round(navList.clientWidth * 0.5));
   for (const spacer of spacers) {
     if (!(spacer instanceof HTMLElement)) continue;
+    // Set both flexBasis and width: Safari computes scrollWidth from width, not flex-basis,
+    // so without setting width the spacers don't expand maxScrollLeft on Safari.
     spacer.style.flexBasis = `${basis}px`;
+    spacer.style.width = `${basis}px`;
   }
 };
 
@@ -243,18 +246,15 @@ const centerNavActiveID = (
   }
 
   const performCenter = () => {
-    console.log({
-      itemOffsetLeft: activeItem.offsetLeft,
-      itemOffsetParent: activeItem.offsetParent,
-      navRoot: navRoot,
-      offsetParentIsNavRoot: activeItem.offsetParent === navRoot,
-    });
-
-    // Ensure spacers are correctly sized
+    // Ensure spacers are correctly sized.
+    // Set both flexBasis and width: Safari computes scrollWidth from width, not flex-basis,
+    // so without setting width the spacers don't expand maxScrollLeft on Safari.
     const spacers = navRoot.querySelectorAll('.case-study-nav-edge-spacer');
     const basis = Math.max(0, Math.round(navRoot.clientWidth * 0.5));
     for (const spacer of spacers) {
-      if (spacer instanceof HTMLElement) spacer.style.flexBasis = `${basis}px`;
+      if (!(spacer instanceof HTMLElement)) continue;
+      spacer.style.flexBasis = `${basis}px`;
+      spacer.style.width = `${basis}px`;
     }
 
     // Use offsetLeft (relative to navRoot) instead of getBoundingClientRect,
