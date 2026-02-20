@@ -151,16 +151,35 @@ const createNavEdgeSpacer = (side = "start") => {
 
 const updateNavEdgeSpacerWidths = (navList, { desktop = false } = {}) => {
   if (!(navList instanceof HTMLElement)) return;
-  const spacers = navList.querySelectorAll(".case-study-nav-edge-spacer");
-  if (!spacers.length) return;
-  const basis = desktop ? 0 : Math.max(0, Math.round(navList.clientWidth * 0.5));
-  for (const spacer of spacers) {
-    if (!(spacer instanceof HTMLElement)) continue;
-    // Set both flexBasis and width: Safari computes scrollWidth from width, not flex-basis,
-    // so without setting width the spacers don't expand maxScrollLeft on Safari.
-    spacer.style.flexBasis = `${basis}px`;
-    spacer.style.width = `${basis}px`;
+  const leadingSpacer = navList.querySelector(".case-study-nav-edge-spacer--start");
+  const trailingSpacer = navList.querySelector(".case-study-nav-edge-spacer--end");
+  const navItems = navList.querySelectorAll(".case-study-nav-item");
+  const lastNavItem = navItems.length > 0 ? navItems[navItems.length - 1] : null;
+
+  if (desktop) {
+    if (leadingSpacer instanceof HTMLElement) {
+      leadingSpacer.style.flexBasis = "";
+      leadingSpacer.style.width = "";
+    }
+    if (trailingSpacer instanceof HTMLElement) trailingSpacer.style.display = "";
+    if (lastNavItem instanceof HTMLElement) lastNavItem.style.marginInlineEnd = "";
+    return;
   }
+
+  const basis = Math.max(0, Math.round(navList.clientWidth * 0.5));
+
+  // Leading spacer: width approach works on all browsers.
+  if (leadingSpacer instanceof HTMLElement) {
+    leadingSpacer.style.flexBasis = `${basis}px`;
+    leadingSpacer.style.width = `${basis}px`;
+  }
+
+  // Trailing: Safari ignores trailing flex items for scrollable overflow,
+  // so the spacer element is hidden (which also removes the flex gap before it)
+  // and margin-inline-end on the last nav item is used instead —
+  // Safari reliably scrolls into item margins.
+  if (trailingSpacer instanceof HTMLElement) trailingSpacer.style.display = "none";
+  if (lastNavItem instanceof HTMLElement) lastNavItem.style.marginInlineEnd = `${basis}px`;
 };
 
 const getOffsetLeftRelativeTo = (element, ancestor) => {
@@ -246,19 +265,8 @@ const centerNavActiveID = (
   }
 
   const performCenter = () => {
-    // Ensure spacers are correctly sized.
-    // Set both flexBasis and width: Safari computes scrollWidth from width, not flex-basis,
-    // so without setting width the spacers don't expand maxScrollLeft on Safari.
-    const spacers = navRoot.querySelectorAll('.case-study-nav-edge-spacer');
-    const basis = Math.max(0, Math.round(navRoot.clientWidth * 0.5));
-    for (const spacer of spacers) {
-      if (!(spacer instanceof HTMLElement)) continue;
-      spacer.style.flexBasis = `${basis}px`;
-      spacer.style.width = `${basis}px`;
-    }
+    updateNavEdgeSpacerWidths(navRoot, { desktop: false });
 
-    // Use offsetLeft (relative to navRoot) instead of getBoundingClientRect,
-    // so we get an absolute position independent of current scroll state
     const itemOffsetLeft = getOffsetLeftRelativeTo(activeItem, navRoot);
     const itemWidth = activeItem.offsetWidth;
     const navWidth = navRoot.clientWidth;
