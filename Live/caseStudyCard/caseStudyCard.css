@@ -96,6 +96,16 @@
   background: transparent;
 }
 
+.card-media-mount > .card-media-draft-placeholder {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 50%;
+  object-fit: contain;
+}
+
 .card-media-mount > spline-viewer {
   z-index: 3;
   pointer-events: auto;

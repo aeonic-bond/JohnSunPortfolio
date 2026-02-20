@@ -37,6 +37,7 @@ const createCaseStudyCard = ({
     kind,
     mediaRoot: mediaMount,
     media,
+    isDisabled,
   });
   mediaEl.append(mediaMount);
 

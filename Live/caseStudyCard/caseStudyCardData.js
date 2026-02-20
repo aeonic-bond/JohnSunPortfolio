@@ -109,9 +109,20 @@ const renderSplineMedia = (mediaRoot, media = {}) => {
   }
 };
 
-const renderCardMedia = ({ kind = "", mediaRoot, media } = {}) => {
+const COMING_SOON_IMG_SRC = "/Assets/ComingSoon.png";
+
+const renderCardMedia = ({ kind = "", mediaRoot, media, isDisabled = false } = {}) => {
   void kind;
   if (!mediaRoot) return;
+  if (isDisabled) {
+    const img = document.createElement("img");
+    img.className = "card-media-draft-placeholder";
+    img.src = COMING_SOON_IMG_SRC;
+    img.alt = "";
+    img.setAttribute("aria-hidden", "true");
+    mediaRoot.append(img);
+    return;
+  }
   renderSplineMedia(mediaRoot, media);
 };
 
