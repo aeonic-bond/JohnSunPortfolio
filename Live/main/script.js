@@ -175,8 +175,7 @@ const centerNavActiveID = (
     return;
   }
 
-  const navRect = navRoot.getBoundingClientRect();
-  const targetMidpointX = navRect.left + navRect.width * 0.5;
+  const targetMidpointX = window.innerWidth * 0.5;
   const itemMidpointX = itemRect.left + itemRect.width * 0.5;
   const deltaX = itemMidpointX - targetMidpointX;
   const maxScrollLeft = Math.max(0, navRoot.scrollWidth - navRoot.clientWidth);
@@ -447,21 +446,6 @@ const initCaseStudyNav = async () => {
       updateSelectorWidth(selected, selector);
     }
   });
-
-  if (window.visualViewport) {
-    const recenterSelectedNavItem = () => {
-      const selected = navList.querySelector(".case-study-nav-item.is-selected");
-      if (!(selected instanceof HTMLElement)) return;
-      centerNavActiveID(navList, selected, {
-        desktop: desktopQuery.matches,
-        behavior: "auto",
-        viewportElement: navRoot,
-      });
-      updateSelectorWidth(selected, selector);
-    };
-    window.visualViewport.addEventListener("resize", recenterSelectedNavItem);
-    window.visualViewport.addEventListener("scroll", recenterSelectedNavItem);
-  }
 };
 
 const initIntroScrollIndicator = () => {
