@@ -297,16 +297,20 @@ const setActiveNavItem = (
   if (activeItem) {
     centerNavActiveID(root, activeItem, { desktop, behavior, viewportElement });
   }
-  updateSelectorWidth(activeItem, selectorEl);
+  updateSelectorPosition(activeItem, selectorEl);
 };
 
-const updateSelectorWidth = (activeItem, selectorEl) => {
+const updateSelectorPosition = (activeItem, selectorEl) => {
   if (!(selectorEl instanceof HTMLElement)) return;
   if (!(activeItem instanceof HTMLElement)) {
     selectorEl.style.width = "0px";
     return;
   }
-  selectorEl.style.width = `${Math.round(activeItem.getBoundingClientRect().width)}px`;
+  const navDivRect = selectorEl.parentElement?.getBoundingClientRect();
+  if (!navDivRect) return;
+  const itemRect = activeItem.getBoundingClientRect();
+  selectorEl.style.left = `${itemRect.left - navDivRect.left + itemRect.width * 0.5}px`;
+  selectorEl.style.width = `${Math.round(itemRect.width)}px`;
 };
 
 const updateNavIconsForViewport = (root, mediaQuery) => {
@@ -483,6 +487,11 @@ const initCaseStudyNav = async () => {
   updateNavIconsForViewport(navList, desktopQuery);
   navDivReveal(navRoot, showcaseRoot);
 
+  navList.addEventListener("scroll", () => {
+    const selected = navList.querySelector(".case-study-nav-item.is-selected");
+    updateSelectorPosition(selected instanceof HTMLElement ? selected : null, selector);
+  }, { passive: true });
+
   const scheduleNavDivReveal = () => {
     window.requestAnimationFrame(() => navDivReveal(navRoot, showcaseRoot));
   };
@@ -515,7 +524,7 @@ const initCaseStudyNav = async () => {
           behavior: "auto",
           viewportElement: navRoot,
         });
-        updateSelectorWidth(selected, selector);
+        updateSelectorPosition(selected, selector);
       }
     });
   } else if (typeof desktopQuery.addListener === "function") {
@@ -529,7 +538,7 @@ const initCaseStudyNav = async () => {
           behavior: "auto",
           viewportElement: navRoot,
         });
-        updateSelectorWidth(selected, selector);
+        updateSelectorPosition(selected, selector);
       }
     });
   }
@@ -543,7 +552,7 @@ const initCaseStudyNav = async () => {
         behavior: "auto",
         viewportElement: navRoot,
       });
-      updateSelectorWidth(selected, selector);
+      updateSelectorPosition(selected, selector);
     }
   });
 };
