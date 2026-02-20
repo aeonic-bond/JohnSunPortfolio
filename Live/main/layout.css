@@ -39,7 +39,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: var(--space-block-500);
-  transform: translateY(calc(-1 * var(--space-700)));
+  transform: translateY(calc(-1 * var(--space-block-500)));
 }
 
 .intro-media-mount {
@@ -81,7 +81,7 @@ body {
 .intro-scroll-indicator {
   position: absolute;
   left: 50%;
-  bottom: var(--space-700);
+  bottom: var(--space-block-500);
   transform: translateX(-50%);
   width: 40px;
   height: 40px;
