@@ -76,6 +76,7 @@ const HEADER_BACK_HREF = "/";
 const BACK_BUTTON_ICON_SRC = "../../Assets/BackButton.svg";
 const HEADER_STICKY_TRANSITION_LOCK_MS = 1000;
 const SPLINE_VIEWER_SCRIPT_SRC = "https://unpkg.com/@splinetool/viewer@1.12.58/build/spline-viewer.js";
+const MAIN_SCROLL_RESTORE_FLAG_KEY = "live.main.restore_scroll";
 
 let headerBarRafId = 0;
 let headerBarEventsBound = false;
@@ -329,6 +330,31 @@ const ensureHeaderBar = () => {
   menuAnchor.append(menu, dropdown);
   backLink.append(backIcon);
   headerBar.append(backLink, menuAnchor);
+
+  backLink.addEventListener("click", (event) => {
+    event.preventDefault();
+    try {
+      window.sessionStorage?.setItem(MAIN_SCROLL_RESTORE_FLAG_KEY, "1");
+    } catch (error) {
+      void error;
+    }
+
+    const hasSameOriginReferrer = (() => {
+      try {
+        if (!document.referrer) return false;
+        return new URL(document.referrer).origin === window.location.origin;
+      } catch (error) {
+        void error;
+        return false;
+      }
+    })();
+
+    if (hasSameOriginReferrer && window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    window.location.assign(HEADER_BACK_HREF);
+  });
 
   const main = document.querySelector(".cs-main");
   if (main?.parentNode) {

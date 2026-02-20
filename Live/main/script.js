@@ -4,6 +4,44 @@ const TORUS_ICON_SRC = "/Assets/TorusIcon.svg";
 const BLUEPRINT_ICON_SRC = "/Assets/BlueprintIcon.svg";
 const CUSTOMIZER_ICON_SRC = "/Assets/CustomizerIcon.svg";
 const TOLLEY_ICON_SRC = "/Assets/TolleyIcon.svg";
+const MAIN_SCROLL_STORAGE_KEY = "live.main.scroll_y";
+const MAIN_SCROLL_RESTORE_FLAG_KEY = "live.main.restore_scroll";
+
+const saveMainScrollPosition = () => {
+  try {
+    window.sessionStorage?.setItem(MAIN_SCROLL_STORAGE_KEY, String(window.scrollY || 0));
+  } catch (error) {
+    void error;
+  }
+};
+
+const restoreMainScrollPositionIfNeeded = () => {
+  let shouldRestore = false;
+  let scrollY = 0;
+  try {
+    shouldRestore = window.sessionStorage?.getItem(MAIN_SCROLL_RESTORE_FLAG_KEY) === "1";
+    if (!shouldRestore) return;
+    window.sessionStorage?.removeItem(MAIN_SCROLL_RESTORE_FLAG_KEY);
+    scrollY = Number.parseFloat(window.sessionStorage?.getItem(MAIN_SCROLL_STORAGE_KEY) || "");
+  } catch (error) {
+    void error;
+    return;
+  }
+
+  if (!Number.isFinite(scrollY)) return;
+  const apply = () => {
+    window.scrollTo({ top: scrollY, left: 0, behavior: "auto" });
+  };
+  apply();
+  window.requestAnimationFrame(apply);
+  window.setTimeout(apply, 200);
+};
+
+const bindMainScrollPersistence = () => {
+  window.addEventListener("scroll", saveMainScrollPosition, { passive: true });
+  window.addEventListener("pagehide", saveMainScrollPosition);
+  window.addEventListener("beforeunload", saveMainScrollPosition);
+};
 
 const normalizeTargetId = (item = {}) => {
   if (typeof item?.targetId === "string" && item.targetId.trim()) {
@@ -385,12 +423,16 @@ if (document.readyState === "loading") {
   document.addEventListener(
     "DOMContentLoaded",
     () => {
+      restoreMainScrollPositionIfNeeded();
+      bindMainScrollPersistence();
       initCaseStudyNav();
       initIntroScrollIndicator();
     },
     { once: true }
   );
 } else {
+  restoreMainScrollPositionIfNeeded();
+  bindMainScrollPersistence();
   initCaseStudyNav();
   initIntroScrollIndicator();
 }
