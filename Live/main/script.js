@@ -175,15 +175,23 @@ const centerNavActiveID = (
     return;
   }
 
-  const targetMidpointX = window.innerWidth * 0.5;
-  const itemMidpointX = itemRect.left + itemRect.width * 0.5;
-  const deltaX = itemMidpointX - targetMidpointX;
-  const maxScrollLeft = Math.max(0, navRoot.scrollWidth - navRoot.clientWidth);
-  const nextScrollLeft = clamp(navRoot.scrollLeft + deltaX, 0, maxScrollLeft);
-
-  navRoot.scrollTo({
-    left: nextScrollLeft,
+  activeItem.scrollIntoView({
     behavior: resolvedBehavior,
+    block: "nearest",
+    inline: "center",
+  });
+
+  // Safari can still settle slightly off-center when browser chrome changes.
+  window.requestAnimationFrame(() => {
+    const maxScrollLeft = Math.max(0, navRoot.scrollWidth - navRoot.clientWidth);
+    const itemMidpointX = activeItem.offsetLeft + activeItem.offsetWidth * 0.5;
+    const targetMidpointX = navRoot.clientWidth * 0.5;
+    const nextScrollLeft = clamp(itemMidpointX - targetMidpointX, 0, maxScrollLeft);
+
+    navRoot.scrollTo({
+      left: nextScrollLeft,
+      behavior: "auto",
+    });
   });
 };
 
