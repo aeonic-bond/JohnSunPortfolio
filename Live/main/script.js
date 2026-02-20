@@ -175,10 +175,15 @@ const centerNavActiveID = (
     return;
   }
 
-  activeItem.scrollIntoView({
+  const targetMidpointX = window.innerWidth * 0.5;
+  const itemMidpointX = itemRect.left + itemRect.width * 0.5;
+  const deltaX = itemMidpointX - targetMidpointX;
+  const maxScrollLeft = Math.max(0, navRoot.scrollWidth - navRoot.clientWidth);
+  const nextScrollLeft = clamp(navRoot.scrollLeft + deltaX, 0, maxScrollLeft);
+
+  navRoot.scrollTo({
+    left: nextScrollLeft,
     behavior: resolvedBehavior,
-    block: "nearest",
-    inline: "center",
   });
 };
 

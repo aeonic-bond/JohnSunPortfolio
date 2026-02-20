@@ -131,6 +131,7 @@ body.is-nav-sticky {
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding-bottom: var(--space-block-500);
 }
 
 .case-study-all {
