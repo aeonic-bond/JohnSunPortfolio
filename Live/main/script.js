@@ -391,6 +391,22 @@ const initCaseStudyNav = async () => {
   window.addEventListener("scroll", scheduleNavDivReveal, { passive: true });
   window.addEventListener("resize", scheduleNavDivReveal);
 
+  let recenterSelectedRafId = 0;
+  const scheduleSelectedNavRecenter = () => {
+    if (recenterSelectedRafId) return;
+    recenterSelectedRafId = window.requestAnimationFrame(() => {
+      recenterSelectedRafId = 0;
+      const selected = navList.querySelector(".case-study-nav-item.is-selected");
+      if (!(selected instanceof HTMLElement)) return;
+      centerNavActiveID(navList, selected, {
+        desktop: desktopQuery.matches,
+        behavior: "auto",
+        viewportElement: navRoot,
+      });
+      updateSelectorWidth(selected, selector);
+    });
+  };
+
   window.syncCaseStudyNavActiveID = (nextId, behavior = "smooth") => {
     if (typeof nextId !== "string" || !nextId) return;
     setActiveNavItem(navList, nextId, {
@@ -409,42 +425,20 @@ const initCaseStudyNav = async () => {
   if (typeof desktopQuery.addEventListener === "function") {
     desktopQuery.addEventListener("change", () => {
       updateNavIconsForViewport(navList, desktopQuery);
-      const selected = navList.querySelector(".case-study-nav-item.is-selected");
-      if (selected instanceof HTMLElement) {
-        centerNavActiveID(navList, selected, {
-          desktop: desktopQuery.matches,
-          behavior: "auto",
-          viewportElement: navRoot,
-        });
-        updateSelectorWidth(selected, selector);
-      }
+      scheduleSelectedNavRecenter();
     });
   } else if (typeof desktopQuery.addListener === "function") {
     desktopQuery.addListener(() => {
       updateNavIconsForViewport(navList, desktopQuery);
-      const selected = navList.querySelector(".case-study-nav-item.is-selected");
-      if (selected instanceof HTMLElement) {
-        centerNavActiveID(navList, selected, {
-          desktop: desktopQuery.matches,
-          behavior: "auto",
-          viewportElement: navRoot,
-        });
-        updateSelectorWidth(selected, selector);
-      }
+      scheduleSelectedNavRecenter();
     });
   }
 
-  window.addEventListener("resize", () => {
-    const selected = navList.querySelector(".case-study-nav-item.is-selected");
-    if (selected instanceof HTMLElement) {
-      centerNavActiveID(navList, selected, {
-        desktop: desktopQuery.matches,
-        behavior: "auto",
-        viewportElement: navRoot,
-      });
-      updateSelectorWidth(selected, selector);
-    }
-  });
+  window.addEventListener("resize", scheduleSelectedNavRecenter);
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", scheduleSelectedNavRecenter);
+    window.visualViewport.addEventListener("scroll", scheduleSelectedNavRecenter);
+  }
 };
 
 const initIntroScrollIndicator = () => {
