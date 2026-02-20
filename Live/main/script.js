@@ -11,11 +11,17 @@ const NAV_REVEAL_MOBILE_EXIT_PX = 26;
 const NAV_REVEAL_DESKTOP_ENTER_RATIO = 0.8;
 const NAV_REVEAL_DESKTOP_EXIT_RATIO = 0.9;
 const NAV_REVEAL_TRANSITION_LOCK_MS = 1000;
+const MAIN_BODY_NAV_STICKY_CLASS = "is-nav-sticky";
 
 let navRevealTransitionLock = false;
 let navRevealTransitionLockTimeoutId = 0;
 let navRevealRootRef = null;
 let navRevealShowcaseRootRef = null;
+
+const syncMainBodyNavStickyState = (isSticky) => {
+  if (!(document.body instanceof HTMLBodyElement)) return;
+  document.body.classList.toggle(MAIN_BODY_NAV_STICKY_CLASS, isSticky);
+};
 
 const saveMainScrollPosition = () => {
   try {
@@ -306,6 +312,7 @@ const navDivReveal = (navRoot, showcaseRoot) => {
   navRevealRootRef = navRoot;
   navRevealShowcaseRootRef = showcaseRoot;
   const currentlyVisible = navRoot.classList.contains("is-visible");
+  syncMainBodyNavStickyState(currentlyVisible);
   const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
   let shouldShow = false;
 
@@ -323,6 +330,7 @@ const navDivReveal = (navRoot, showcaseRoot) => {
   if (navRevealTransitionLock) return;
 
   navRoot.classList.toggle("is-visible", shouldShow);
+  syncMainBodyNavStickyState(shouldShow);
   navRevealTransitionLock = true;
   if (navRevealTransitionLockTimeoutId) {
     window.clearTimeout(navRevealTransitionLockTimeoutId);

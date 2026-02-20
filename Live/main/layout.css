@@ -10,6 +10,11 @@ body {
   font-family: "Inter", sans-serif;
   background: var(--color-bg-main);
   color: var(--color-text-primary);
+  transition: background 220ms ease;
+}
+
+body.is-nav-sticky {
+  background: var(--color-bg-sink);
 }
 
 .live-main {
