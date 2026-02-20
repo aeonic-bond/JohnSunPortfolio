@@ -17,6 +17,7 @@ let navRevealTransitionLock = false;
 let navRevealTransitionLockTimeoutId = 0;
 let navRevealRootRef = null;
 let navRevealShowcaseRootRef = null;
+const navSnapRestoreTimeoutByElement = new WeakMap();
 
 const syncMainBodyNavStickyState = (isSticky) => {
   if (!(document.body instanceof HTMLBodyElement)) return;
@@ -167,6 +168,34 @@ const isElementVisibleInViewport = (element) => {
   return rect.bottom > 0 && rect.top < window.innerHeight && rect.right > 0 && rect.left < window.innerWidth;
 };
 
+const withTemporarilyDisabledHorizontalSnap = (navRoot, action) => {
+  if (!(navRoot instanceof HTMLElement) || typeof action !== "function") return;
+  const previousInlineSnapType = navRoot.style.scrollSnapType;
+  navRoot.style.scrollSnapType = "none";
+
+  action();
+
+  const restore = () => {
+    navRoot.style.scrollSnapType = previousInlineSnapType;
+  };
+
+  const previousTimeoutId = navSnapRestoreTimeoutByElement.get(navRoot);
+  if (previousTimeoutId) {
+    window.clearTimeout(previousTimeoutId);
+  }
+
+  if ("onscrollend" in window) {
+    const onScrollEnd = () => {
+      navRoot.removeEventListener("scrollend", onScrollEnd);
+      restore();
+    };
+    navRoot.addEventListener("scrollend", onScrollEnd, { once: true });
+  }
+
+  const timeoutId = window.setTimeout(restore, 260);
+  navSnapRestoreTimeoutByElement.set(navRoot, timeoutId);
+};
+
 const centerNavActiveID = (
   navRoot,
   activeItem,
@@ -200,9 +229,11 @@ const centerNavActiveID = (
   const maxScrollLeft = Math.max(0, navRoot.scrollWidth - navRoot.clientWidth);
   const nextScrollLeft = clamp(navRoot.scrollLeft + deltaX, 0, maxScrollLeft);
 
-  navRoot.scrollTo({
-    left: nextScrollLeft,
-    behavior: resolvedBehavior,
+  withTemporarilyDisabledHorizontalSnap(navRoot, () => {
+    navRoot.scrollTo({
+      left: nextScrollLeft,
+      behavior: resolvedBehavior,
+    });
   });
 };
 
