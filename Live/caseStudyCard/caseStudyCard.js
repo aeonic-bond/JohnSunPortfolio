@@ -14,7 +14,7 @@ const createCaseStudyCard = ({
   const isNavigable = Boolean(href) && !isDisabled;
 
   const cardWrap = document.createElement("div");
-  cardWrap.className = "case-study-card-div";
+  cardWrap.className = "case-study-card-container";
   if (kind) {
     cardWrap.id = `case-study-${String(kind).trim().toLowerCase()}`;
   }
@@ -142,13 +142,13 @@ if (root) {
   };
 
   const syncActiveCardByID = (nextId) => {
-    const cards = root.querySelectorAll(".case-study-card-div .case-study-card");
+    const cards = root.querySelectorAll(".case-study-card-container .case-study-card");
     for (const card of cards) {
       card.classList.remove("is-active");
     }
     if (!nextId) return;
 
-    const activeCard = root.querySelector(`.case-study-card-div#${CSS.escape(nextId)} .case-study-card`);
+    const activeCard = root.querySelector(`.case-study-card-container#${CSS.escape(nextId)} .case-study-card`);
     if (!(activeCard instanceof HTMLElement)) return;
     activeCard.classList.add("is-active");
   };
@@ -168,7 +168,7 @@ if (root) {
     if (!scrollObserveActiveIDEnabled) return;
 
     const { startY, endY, centerY } = getActiveThresholdRangeY();
-    const cardDivs = Array.from(root.querySelectorAll(".case-study-card-div"));
+    const cardDivs = Array.from(root.querySelectorAll(".case-study-card-container"));
     if (!cardDivs.length) return;
 
     let inRangeCandidateId = "";

@@ -365,8 +365,32 @@ const initCaseStudyNav = async () => {
   });
 };
 
+const initIntroScrollIndicator = () => {
+  const trigger = document.querySelector(".intro-scroll-indicator");
+  if (!(trigger instanceof HTMLButtonElement)) return;
+
+  trigger.addEventListener("click", () => {
+    const target = document.querySelector(".case-study-showcase");
+    if (!(target instanceof HTMLElement)) return;
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    target.scrollIntoView({
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+      block: "start",
+    });
+  });
+};
+
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initCaseStudyNav, { once: true });
+  document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+      initCaseStudyNav();
+      initIntroScrollIndicator();
+    },
+    { once: true }
+  );
 } else {
   initCaseStudyNav();
+  initIntroScrollIndicator();
 }

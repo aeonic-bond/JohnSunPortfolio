@@ -19,9 +19,99 @@ body {
   margin: 0 auto;
 }
 
-.header-div {
-  height: 1000px;
-  padding-top: var(--space-block-800);
+.intro-div {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--space-block-900);
+  background: var(--color-bg-main);
+}
+
+.intro-content {
+  width: 100%;
+  max-width: 760px;
+  padding-inline: var(--space-block-500);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-block-500);
+}
+
+.intro-media-mount {
+  width: 120px;
+  height: 120px;
+  flex: 0 0 120px;
+}
+
+.intro-texts-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-500);
+}
+
+.intro-title {
+  margin: 0;
+  width: 100%;
+  font: var(--type-h1);
+  color: var(--color-accent);
+}
+
+.intro-subtitle {
+  margin: 0;
+  width: 100%;
+  font: var(--type-subtitle-l);
+  color: var(--color-text-primary);
+}
+
+.intro-scroll-indicator {
+  position: absolute;
+  left: 50%;
+  bottom: var(--space-700);
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: transparent;
+  color: var(--color-accent);
+  cursor: pointer;
+}
+
+.intro-scroll-indicator::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translate(-50%, -60%) rotate(45deg);
+  animation: intro-scroll-indicator-bob 1.2s ease-in-out 1.7s infinite;
+}
+
+@keyframes intro-scroll-indicator-bob {
+  0%,
+  100% {
+    transform: translate(-50%, -68%) rotate(45deg);
+    opacity: 0.75;
+  }
+  50% {
+    transform: translate(-50%, -48%) rotate(45deg);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-scroll-indicator::before {
+    animation: none;
+  }
 }
 
 .case-study-showcase {
@@ -36,7 +126,7 @@ body {
   display: grid;
   justify-items: center;
   width: 100%;
-  padding-block: var(--space-block-900);
+  padding-block: var(--space-block-500);
   padding-inline: var(--space-500);
 }
 
@@ -191,11 +281,14 @@ body {
 }
 
 @media (min-width: 1024px) {
+  .intro-content {
+    max-width: 760px;
+  }
+
   .case-study-showcase {
     flex-direction: row;
     align-items: flex-start;
     height: fit-content;
-    border-top: 1px solid var(--color-bg-raise);
   }
 
   .case-study-nav-div {

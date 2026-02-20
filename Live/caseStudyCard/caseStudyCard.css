@@ -1,4 +1,4 @@
-.case-study-card-div {
+.case-study-card-container {
   width: 100%;
   padding: var(--space-block-700) 0;
   justify-items: center;
@@ -188,7 +188,7 @@
 
 @media (min-width: 1024px) {
 
-  .case-study-card-div {
+  .case-study-card-container {
     padding-inline: 0;
   }
   

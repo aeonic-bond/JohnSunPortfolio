@@ -10,14 +10,33 @@
     <link rel="stylesheet" href="../caseStudyCard/caseStudyCard.css" />
     <script
       type="module"
-      src="https://unpkg.com/@splinetool/viewer@1.12.51/build/spline-viewer.js"
+      src="https://unpkg.com/@splinetool/viewer@1.12.58/build/spline-viewer.js"
     ></script>
   </head>
   <body>
     <main class="live-main">
-      <div class="header-div">
-        <h1>Header</h1>
-      </div>
+      <header class="intro-div" aria-labelledby="intro-title">
+        <div class="intro-content">
+          <div class="intro-media-mount" aria-hidden="true">
+            <spline-viewer url="https://prod.spline.design/CGyqftycjmiHKd-M/scene.splinecode"></spline-viewer>
+          </div>
+          <div class="intro-texts-group">
+            <h1 class="intro-title" id="intro-title">John Sun</h1>
+            <p class="intro-subtitle">
+              I’m a product designer based in San Francisco.
+            </p>
+            <p class="intro-subtitle">
+              I’m currently obsessed with Figma’s MCP and agentic design-to-code workflows, so I built this
+              portfolio with it.
+            </p>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="intro-scroll-indicator"
+          aria-label="Scroll to case studies"
+        ></button>
+      </header>
       <div class="case-study-showcase">
         <div class="case-study-nav-div" aria-label="Case Study Navigation Placeholder"></div>
         <section class="case-study-all" id="case-studies-root" aria-label="Case Studies"></section>
