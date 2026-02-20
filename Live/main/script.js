@@ -141,6 +141,24 @@ const createNavItem = ({ title, text, icon: iconOverride = "", targetId = "", hr
   return button;
 };
 
+const createNavEdgeSpacer = (side = "start") => {
+  const spacer = document.createElement("div");
+  spacer.className = `case-study-nav-edge-spacer case-study-nav-edge-spacer--${side}`;
+  spacer.setAttribute("aria-hidden", "true");
+  return spacer;
+};
+
+const updateNavEdgeSpacerWidths = (navList, { desktop = false } = {}) => {
+  if (!(navList instanceof HTMLElement)) return;
+  const spacers = navList.querySelectorAll(".case-study-nav-edge-spacer");
+  if (!spacers.length) return;
+  const basis = desktop ? 0 : Math.max(0, Math.round(navList.clientWidth * 0.5));
+  for (const spacer of spacers) {
+    if (!(spacer instanceof HTMLElement)) continue;
+    spacer.style.flexBasis = `${basis}px`;
+  }
+};
+
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
 const isElementVisibleInViewport = (element) => {
@@ -175,7 +193,8 @@ const centerNavActiveID = (
     return;
   }
 
-  const targetMidpointX = window.innerWidth * 0.5;
+  const navRect = navRoot.getBoundingClientRect();
+  const targetMidpointX = navRect.left + navRect.width * 0.5;
   const itemMidpointX = itemRect.left + itemRect.width * 0.5;
   const deltaX = itemMidpointX - targetMidpointX;
   const maxScrollLeft = Math.max(0, navRoot.scrollWidth - navRoot.clientWidth);
@@ -362,11 +381,14 @@ const initCaseStudyNav = async () => {
   navList.className = "case-study-nav-list";
   navList.setAttribute("role", "tablist");
   navList.setAttribute("aria-label", "Case Studies");
+  const leadingSpacer = createNavEdgeSpacer("start");
+  const trailingSpacer = createNavEdgeSpacer("end");
   const selector = document.createElement("div");
   selector.className = "selector";
   selector.setAttribute("aria-hidden", "true");
 
   const navItems = buildNavItems(items);
+  navList.append(leadingSpacer);
   for (const [index, item] of navItems.entries()) {
     const navItem = createNavItem({
       ...item,
@@ -381,8 +403,10 @@ const initCaseStudyNav = async () => {
 
     navList.append(navItem);
   }
+  navList.append(trailingSpacer);
 
   navRoot.replaceChildren(selector, navList);
+  updateNavEdgeSpacerWidths(navList, { desktop: desktopQuery.matches });
   updateNavIconsForViewport(navList, desktopQuery);
   navDivReveal(navRoot, showcaseRoot);
 
@@ -409,6 +433,7 @@ const initCaseStudyNav = async () => {
 
   if (typeof desktopQuery.addEventListener === "function") {
     desktopQuery.addEventListener("change", () => {
+      updateNavEdgeSpacerWidths(navList, { desktop: desktopQuery.matches });
       updateNavIconsForViewport(navList, desktopQuery);
       const selected = navList.querySelector(".case-study-nav-item.is-selected");
       if (selected instanceof HTMLElement) {
@@ -422,6 +447,7 @@ const initCaseStudyNav = async () => {
     });
   } else if (typeof desktopQuery.addListener === "function") {
     desktopQuery.addListener(() => {
+      updateNavEdgeSpacerWidths(navList, { desktop: desktopQuery.matches });
       updateNavIconsForViewport(navList, desktopQuery);
       const selected = navList.querySelector(".case-study-nav-item.is-selected");
       if (selected instanceof HTMLElement) {
@@ -436,6 +462,7 @@ const initCaseStudyNav = async () => {
   }
 
   window.addEventListener("resize", () => {
+    updateNavEdgeSpacerWidths(navList, { desktop: desktopQuery.matches });
     const selected = navList.querySelector(".case-study-nav-item.is-selected");
     if (selected instanceof HTMLElement) {
       centerNavActiveID(navList, selected, {

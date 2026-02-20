@@ -210,10 +210,11 @@ body.is-nav-sticky {
   display: none;
 }
 
-.case-study-nav-list::before,
-.case-study-nav-list::after {
-  content: "";
-  flex: 0 0 50vw;
+.case-study-nav-edge-spacer {
+  flex: 0 0 0;
+  width: 0;
+  min-width: 0;
+  pointer-events: none;
 }
 
 .case-study-nav-item {
@@ -330,9 +331,8 @@ body.is-nav-sticky {
     scroll-snap-type: y mandatory;
   }
 
-  .case-study-nav-list::before,
-  .case-study-nav-list::after {
-    content: none;
+  .case-study-nav-edge-spacer {
+    display: none;
   }
 
   .selector {
