@@ -46,7 +46,7 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "At the start of the Figma migration, I was given the nebulous task to create a design system for Toll Brothers. As I learned more about design systems in general, I developed 3 concrete goals. When agentic workflows became popular in 2024-2025 and the Figma MCP was released in 2025, I added a 4th goal."
+          "text": "At the start of the Figma migration, I was given the nebulous task to create a design system for Toll Brothers. As I learned more about design systems in general, I developed 3 concrete goals. When agentic workflows became popular in 2024-2025 and Figma's MCP was released in 2025, I added a 4th goal."
         },
         {
           "type": "bulletRow",
@@ -220,7 +220,7 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "At the time of writing, the Figma MCP (F-MCP) was released a few months prior, and it has profoundly shaped my current thinking for design handoff workflows. The \"source of truth\" should ideally live in a codified repository like Storybook rather than in Figma. However, we lacked the dedicated engineering resources to build it. Early on, I experimented with AI coding using Claude, Gemini, and ChatGPT to try to create a Storybook for Blueprint, but at that time, these AI tools had speed and reliability issues.\n\nThe release of F-MCP was a game changer that enabled agentic plugins like OpenAI's Codex extension in VSC to directly read Figma file exports as context. As such, I guided Codex to create a working component in code based on its construction in Figma. I dictated the exact token setup to match the intent in Figma. With guidance, Codex interpreted, added, and applied tokens from Figma into Storybook. I directed the components to be built with accessibility requirements in mind. Beyond individual components, I experimented with feeding Codex entire wireframes to generate functional prototypes."
+          "text": "At the time of writing, Figma's MCP was released a few months prior, and it has profoundly shaped my current thinking for design handoff workflows. The \"source of truth\" should ideally live in a codified repository like Storybook rather than in Figma. However, we lacked the dedicated engineering resources to build it. Early on, I experimented with AI coding using Claude, Gemini, and ChatGPT to try to create a Storybook for Blueprint, but at that time, these AI tools had speed and reliability issues.\n\nThe release of Figma's MCP was a game changer that enabled agentic plugins like OpenAI's Codex extension in VSC to directly read Figma file exports as context. As such, I guided Codex to create a working component in code based on its construction in Figma. I dictated the exact token setup to match the intent in Figma. With guidance, Codex interpreted, added, and applied tokens from Figma into Storybook. I directed the components to be built with accessibility requirements in mind. Beyond individual components, I experimented with feeding Codex entire wireframes to generate functional prototypes."
         },
       
         {
