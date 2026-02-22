@@ -502,9 +502,9 @@
   .cs-progress-row {
     display: flex;
     align-items: flex-start;
-    width: min(max-content, var(--cs-breakout-width));
-    margin-left: calc(50% - (min(max-content, var(--cs-breakout-width)) / 2));
-    margin-right: calc(50% - (min(max-content, var(--cs-breakout-width)) / 2));
+    width: var(--cs-breakout-width);
+    margin-left: var(--cs-breakout-margin);
+    margin-right: var(--cs-breakout-margin);
     background:
       linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
       linear-gradient(
