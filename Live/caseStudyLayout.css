@@ -22,6 +22,11 @@
   row-gap: var(--space-block-900);
 }
 
+.cs-load-error {
+  font: var(--type-body-l);
+  color: var(--color-text-secondary);
+}
+
  /* Intro */
 .cs-div-intro {
   display: grid;
@@ -60,17 +65,21 @@
   color: var(--color-text-secondary);
 }
 
-.cs-section-body {
+
+/* Paragraph Block */
+.cs-paragraph {
   font: var(--type-body-l);
   color: var(--color-text-secondary);
 }
 
-.cs-section-body p + p {
-  margin-top: var(--space-500);
+/* Paragraph Subsection Block */
+.cs-paragraph-subsection {
+  display: grid;
+  row-gap: var(--space-500);
 }
 
-.cs-load-error {
-  font: var(--type-body-l);
+.cs-paragraph-subtitle {
+  font: var(--type-subtitle-l);
   color: var(--color-text-secondary);
 }
 
@@ -601,14 +610,6 @@
 .cs-fig-caption {
   font: var(--type-caption-m);
   color: var(--color-accent);
-}
-
-.cs-section-body ul {
-  padding-left: 1.2em;
-}
-
-.cs-section-body li + li {
-  margin-top: 0.35em;
 }
 
  /* Stamp */

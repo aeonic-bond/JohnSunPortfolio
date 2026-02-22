@@ -1,7 +1,7 @@
 {
   "id": "hcustomizer",
   "slug": "home-customizer",
-  "status": "draft",
+  "status": "ready",
   "publishedDate": "",
   "hero": {
     "title": "Home Customization Experiences on Two Fronts: User Personalization and Designer Curation",
@@ -22,6 +22,22 @@
         {
           "type": "paragraph",
           "text": "I led design for major Toll Brothers home customization modules, both internal and external. The three projects I selected showcase elegant UI built on problem solving."
+        }
+      ]
+    },
+    {
+      "id": "section-01",
+      "header": "Design-Your-Own-Home",
+      "blocks": [
+        {
+          "type": "paragraph-subsection",
+          "subtitle": "Module",
+          "text": "In order to redesign the experience around mobile-first principles, I needed a core pattern to house both the visual floorplan and the list data. I picked the popular bottom sheet pattern that can dynamically alter size based on current focus."
+        },
+        {
+          "type": "paragraph-subsection",
+          "subtitle": "List",
+          "text": "In order to redesign the experience around mobile-first principles, I needed a core pattern to house both the visual floorplan and the list data. I picked the popular bottom sheet pattern that can dynamically alter size based on current focus."
         }
       ]
     }

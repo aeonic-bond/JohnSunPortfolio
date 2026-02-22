@@ -26,6 +26,41 @@ const createBodyFragment = (body = "") => {
   return fragment;
 };
 
+const normalizeParagraphSubsection = (value = {}) => {
+  if (typeof value === "string") {
+    return { subtitle: "", text: value.trim() };
+  }
+
+  if (!value || typeof value !== "object") {
+    return { subtitle: "", text: "" };
+  }
+
+  return {
+    subtitle: String(value.subtitle || value.title || value.header || "").trim(),
+    text: String(value.text || value.body || "").trim(),
+  };
+};
+
+const createParagraphSubsectionElement = (block = {}) => {
+  const subsection = normalizeParagraphSubsection(block);
+  const subsectionEl = document.createElement("div");
+  subsectionEl.className = "cs-paragraph-subsection";
+
+  if (subsection.subtitle) {
+    const subtitleEl = document.createElement("h3");
+    subtitleEl.className = "cs-paragraph-subtitle";
+    subtitleEl.textContent = subsection.subtitle;
+    subsectionEl.append(subtitleEl);
+  }
+
+  const bodyEl = document.createElement("div");
+  bodyEl.className = "cs-paragraph";
+  bodyEl.append(createBodyFragment(subsection.text || ""));
+  subsectionEl.append(bodyEl);
+
+  return subsectionEl;
+};
+
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 let flowTrackerRafId = 0;
 let flowTrackerEventsBound = false;
@@ -865,9 +900,14 @@ const renderCaseStudy = (content = {}, root) => {
 
       if (block.type === "paragraph") {
         const bodyWrap = document.createElement("div");
-        bodyWrap.className = "cs-section-body";
+        bodyWrap.className = "cs-paragraph";
         bodyWrap.append(createBodyFragment(block.text || ""));
         section.append(bodyWrap);
+        continue;
+      }
+
+      if (block.type === "paragraph-subsection" || block.type === "paragraphSubsection") {
+        section.append(createParagraphSubsectionElement(block));
         continue;
       }
 
