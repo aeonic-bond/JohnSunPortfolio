@@ -1,7 +1,7 @@
  /* Main */
 .cs-main {
   width: 100%;
-  max-width: 680px;
+  max-width: 800px;
   padding: var(--space-block-500) var(--margin-mobile-500) var(--margin-bottom-500);
 }
 
@@ -53,11 +53,6 @@
 .cs-div-section {
   display: grid;
   row-gap: var(--space-block-500);
-}
-
-.cs-div-section-text {
-  display: grid;
-  row-gap: var(--space-500);
 }
 
 .cs-section-header {

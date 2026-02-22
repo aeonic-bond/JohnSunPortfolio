@@ -1,11 +1,11 @@
 {
   "id": "hcustomizer",
   "slug": "home-customizer",
-  "status": "draft",
+  "status": "ready",
   "publishedDate": "",
   "hero": {
-    "title": "Home Customizer",
-    "subtitle": "Case study in progress.",
+    "title": "Home Customization Experiences on Two Fronts: User Personalization and Designer Curation",
+    "subtitle": "I showcase several designs that cover all aspects of home customization on the user side and the internal product side.",
     "media": {
       "type": "image",
       "src": "",
@@ -21,7 +21,7 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": ""
+          "text": "I led design for major Toll Brothers home customization modules, both internal and external. The three projects I selected showcase elegant UI built on problem solving."
         }
       ]
     }

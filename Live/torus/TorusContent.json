@@ -33,34 +33,36 @@
     {
       "id": "section-01",
       "header": "Background on Autodesk Revit",
-      "bulletRows": [
-        [
-          "Revit has awkward workflows are outdated, designed to mirror paper and pencil drafting.",
-          "Revit’s lack of prescriptive UX conflicts with modern practices that value strict logical processes.",
-          "The UI simply feels unintuitive. Key tools are hidden amongst many other tools with no logical order."
-        ]
-      ],
       "blocks": [
         {
           "type": "paragraph",
           "text": "Torus is born out of frustration with Autodesk Revit's family creation process. Revit is the dominant architecture tool and uses the term \"family\" to refer to reusable 3D components. Families are ideally built parametrically, meaning they are systematically generated with variables controlling aspects such as length and width. Creating families in Revit has a steep learning curve due to Revit's outdated UX.\n\nWorking alongside two senior architects, Matthew and Nicky, I set out to improve the UX of family creation. As a team, we settled on exploring this idea by designing and creating a separate browser-based family editor that can export to Revit. In my research of Revit, I identified 3 key frustrations:"
+        },
+        {
+          "type": "bulletRow",
+          "items": [
+            "Revit has awkward workflows are outdated, designed to mirror paper and pencil drafting.",
+            "Revit’s lack of prescriptive UX conflicts with modern practices that value strict logical processes.",
+            "The UI simply feels unintuitive. Key tools are hidden amongst many other tools with no logical order."
+          ]
         }
       ]
     },
     {
       "id": "section-02",
       "header": "User Research and Learning Revit",
-      "bulletRows": [
-        [
-          "Revit families are difficult to create. - \n\n“Families are commonly used and not static...they can be tedious to set up.” - Danny\n\n“It’s something I prefer not to do and takes too much of my time [because] it’s forcing us to build it like engineers.” - Dincer",
-          "Entire company roles are needed to help keep practices consistent. - \n\n“There are schools of thoughts, but people generally don’t follow them. Someone might say it works well when testing them in narrow cases, but I can tell they are not correctly build.” - Mark",
-          "Stock families often can't be customized for unique projects. - \n\n“Everything is made new because every project is different.” - Ihnil"
-        ]
-      ],
       "blocks": [
         {
           "type": "paragraph",
           "text": "These frustrations were echoed in the 5 user interviews my team conducted during an exploratory phase. Interview candidates were all working architects with 4-10 years of experience.\n\nAs part of my Revit research, I also learned the fundamentals of creating parametric families. Creating a good parametric family is akin to writing good code. You need a mechanism to store variable data. You need to take that data as input and generate an output. You also want to generally avoid adding unnecessary elements. Just like in code, more cumbersome families mean more bloated projects and slower processing and rendering."
+        },
+        {
+          "type": "bulletRow",
+          "items": [
+            "Revit families are difficult to create. - \n\n“Families are commonly used and not static...they can be tedious to set up.” - Danny\n\n“It’s something I prefer not to do and takes too much of my time [because] it’s forcing us to build it like engineers.” - Dincer",
+            "Entire company roles are needed to help keep practices consistent. - \n\n“There are schools of thoughts, but people generally don’t follow them. Someone might say it works well when testing them in narrow cases, but I can tell they are not correctly build.” - Mark",
+            "Stock families often can't be customized for unique projects. - \n\n“Everything is made new because every project is different.” - Ihnil"
+          ]
         },
         {
           "type": "figure",

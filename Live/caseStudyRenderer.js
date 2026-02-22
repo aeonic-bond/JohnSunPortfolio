@@ -858,76 +858,49 @@ const renderCaseStudy = (content = {}, root) => {
     header.className = "cs-section-header";
     header.textContent = sectionData.header || "";
 
-    if (Array.isArray(sectionData.blocks) && sectionData.blocks.length > 0) {
-      section.append(header);
-      for (const block of sectionData.blocks) {
-        if (!block || typeof block !== "object") continue;
+    section.append(header);
+    const blocks = Array.isArray(sectionData.blocks) ? sectionData.blocks : [];
+    for (const block of blocks) {
+      if (!block || typeof block !== "object") continue;
 
-        if (block.type === "paragraph") {
-          const bodyWrap = document.createElement("div");
-          bodyWrap.className = "cs-section-body";
-          bodyWrap.append(createBodyFragment(block.text || ""));
-          section.append(bodyWrap);
-          continue;
-        }
-
-        if (block.type === "bulletRow") {
-          section.append(createBulletRowElement(block.items || block));
-          continue;
-        }
-
-        if (block.type === "flowRow") {
-          section.append(createFlowRowElement(block.items || block));
-          continue;
-        }
-
-        if (block.type === "iconGrid") {
-          section.append(createIconGridElement(block.items || block));
-          continue;
-        }
-
-        if (block.type === "figure") {
-          const inlineFigure =
-            block.figure && typeof block.figure === "object"
-              ? block.figure
-              : null;
-          if (inlineFigure) section.append(createFigureElement(inlineFigure));
-          continue;
-        }
-
-        if (block.type === "progressMatrix") {
-          section.append(createProgressMatrixElement(block));
-        }
-
-        if (block.type === "progressRow") {
-          section.append(createProgressRowElement(block));
-        }
-      }
-    } else {
-      const bodyWrap = document.createElement("div");
-      bodyWrap.className = "cs-section-body";
-      bodyWrap.append(createBodyFragment(sectionData.body || ""));
-
-      const sectionText = document.createElement("div");
-      sectionText.className = "cs-div-section-text";
-      sectionText.append(header, bodyWrap);
-
-      section.append(sectionText);
-
-      for (const bulletRow of sectionData.bulletRows || []) {
-        section.append(createBulletRowElement(bulletRow));
+      if (block.type === "paragraph") {
+        const bodyWrap = document.createElement("div");
+        bodyWrap.className = "cs-section-body";
+        bodyWrap.append(createBodyFragment(block.text || ""));
+        section.append(bodyWrap);
+        continue;
       }
 
-      for (const flowRow of sectionData.flowRows || []) {
-        section.append(createFlowRowElement(flowRow));
+      if (block.type === "bulletRow") {
+        section.append(createBulletRowElement(block.items || block));
+        continue;
       }
 
-      for (const iconGrid of sectionData.iconGrids || []) {
-        section.append(createIconGridElement(iconGrid));
+      if (block.type === "flowRow") {
+        section.append(createFlowRowElement(block.items || block));
+        continue;
       }
 
-      for (const progressMatrix of (sectionData.progressMatrix || [])) {
-        section.append(createProgressMatrixElement(progressMatrix));
+      if (block.type === "iconGrid") {
+        section.append(createIconGridElement(block.items || block));
+        continue;
+      }
+
+      if (block.type === "figure") {
+        const inlineFigure =
+          block.figure && typeof block.figure === "object"
+            ? block.figure
+            : null;
+        if (inlineFigure) section.append(createFigureElement(inlineFigure));
+        continue;
+      }
+
+      if (block.type === "progressMatrix") {
+        section.append(createProgressMatrixElement(block));
+      }
+
+      if (block.type === "progressRow") {
+        section.append(createProgressRowElement(block));
       }
     }
 
