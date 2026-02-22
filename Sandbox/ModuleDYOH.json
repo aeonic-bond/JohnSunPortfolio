@@ -22,6 +22,26 @@
           "iconSrc": "/Assets/DYOH-Icons/GlassWall.svg"
         }
       ]
+    },
+    {
+      "type": "closeConflict",
+      "options": [
+        {
+          "optionText": "Traditional Fireplace",
+          "state": "unselected",
+          "iconSrc": "http://localhost:3845/assets/e452a891f3ff7f6647aaa3767037ab91762098ac.svg"
+        },
+        {
+          "optionText": "Linear Fireplace - 48\"",
+          "state": "unselected",
+          "iconSrc": "http://localhost:3845/assets/e452a891f3ff7f6647aaa3767037ab91762098ac.svg"
+        },
+        {
+          "optionText": "Linear Fireplace - 60\"",
+          "state": "unselected",
+          "iconSrc": "http://localhost:3845/assets/e452a891f3ff7f6647aaa3767037ab91762098ac.svg"
+        }
+      ]
     }
   ]
 }

@@ -107,13 +107,28 @@
   width: 100%;
 }
 
+.options-container > .option-group:not(:last-child) {
+  border-bottom: 1px solid var(--sb-functional-light-gray, #e9edf0);
+}
+
 .option-group--parent-child {
+  isolation: isolate;
+  position: relative;
+}
+
+.option-group--close-conflict {
   isolation: isolate;
   position: relative;
 }
 
 .option-group--parent-child .option,
 .option-group--parent-child .option-group__children {
+  position: relative;
+  z-index: 2;
+}
+
+.option-group--close-conflict .option-group__conflict-options,
+.option-group--close-conflict .option {
   position: relative;
   z-index: 2;
 }
@@ -125,6 +140,25 @@
   z-index: 4;
 }
 
+.option-group__or-markers {
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 4;
+}
+
+.option-group__or-marker {
+  border-radius: 999px;
+  color: var(--sb-functional-dark-gray, #858585);
+  font: var(--tb-type-g-s-700, 700 12px/18px "Gotham", sans-serif);
+  left: 0;
+  line-height: 1;
+  padding: 2px 6px;
+  position: absolute;
+  top: 0;
+  transform: translate(-50%, -50%);
+}
+
 .option-group__connector-line {
   background: var(--sb-functional-light-gray, #e9edf0);
   position: absolute;
@@ -133,6 +167,10 @@
 }
 
 .option-group__children {
+  width: 100%;
+}
+
+.option-group__conflict-options {
   width: 100%;
 }
 
@@ -161,6 +199,10 @@
 
 .option--selected .option__row {
   background: var(--sb-functional-light-gray, #e9edf0);
+}
+
+.option--can-swap .option__row {
+  background: var(--sb-functional-white, #ffffff);
 }
 
 .option__left {
@@ -212,6 +254,16 @@
   width: 40px;
 }
 
+.option--can-swap .option__icon-container {
+  height: 48px;
+  width: 48px;
+}
+
+.option--can-swap .option__symbol {
+  height: 40px;
+  width: 40px;
+}
+
 .option--disabled .option__row {
   background: var(--sb-functional-white, #ffffff);
   cursor: default;
@@ -248,6 +300,10 @@
   color: var(--sb-functional-dark-gray, #858585);
 }
 
+.option--can-swap .option__label {
+  color: var(--sb-functional-dark-gray, #858585);
+}
+
 .option__cta-wrap {
   align-items: center;
   display: flex;
@@ -273,6 +329,14 @@
 }
 
 .option__remove {
+  color: var(--sb-brand-medium, #004876);
+  font: var(--tb-type-g-s-500, 500 12px/18px "Gotham", sans-serif);
+  margin: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.option__swap {
   color: var(--sb-brand-medium, #004876);
   font: var(--tb-type-g-s-500, 500 12px/18px "Gotham", sans-serif);
   margin: 0;
