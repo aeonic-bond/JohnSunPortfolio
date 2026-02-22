@@ -63,16 +63,6 @@ export const Option = {
     symbol.appendChild(icon);
     iconContainer.appendChild(symbol);
 
-    if (normalizedType === "parent") {
-      iconContainer.appendChild(el("div", "option__parent-line"));
-    }
-    if (normalizedType === "child") {
-      iconContainer.appendChild(el("div", "option__child-line-1"));
-      if (!isLastChild) {
-        iconContainer.appendChild(el("div", "option__child-line-2"));
-      }
-    }
-
     left.append(iconContainer, label);
     
     function renderState() {
@@ -177,6 +167,48 @@ OptionGroup.create = function createOptionGroup({
     });
     handleParentToggle(parentNode.optionApi?.getState() || "unselected");
     root.appendChild(childrenContainer);
+
+    const connectorsLayer = el("div", "option-group__connectors");
+    root.appendChild(connectorsLayer);
+
+    const optionNodes = [parentNode, ...childNodes];
+    const drawConnectorLines = () => {
+      connectorsLayer.innerHTML = "";
+      if (optionNodes.length < 2) return;
+
+      const rootRect = root.getBoundingClientRect();
+      for (let i = 0; i < optionNodes.length - 1; i += 1) {
+        const currentAnchor = i === 0
+          ? optionNodes[i]?.querySelector(".option__icon-container")
+          : optionNodes[i]?.querySelector(".option__symbol");
+        const nextAnchor = optionNodes[i + 1]?.querySelector(".option__symbol");
+        if (!currentAnchor || !nextAnchor) continue;
+
+        const currentRect = currentAnchor.getBoundingClientRect();
+        const nextRect = nextAnchor.getBoundingClientRect();
+        const lineTop = currentRect.bottom - rootRect.top;
+        const lineBottom = nextRect.top - rootRect.top;
+        const lineHeight = Math.max(0, lineBottom - lineTop);
+        if (lineHeight === 0) continue;
+
+        const lineClass =
+          i === 0
+            ? "option-group__connector-line option-group__connector-line--parent-child"
+            : "option-group__connector-line option-group__connector-line--child-child";
+        const line = el("div", lineClass);
+        line.style.left = `${currentRect.left - rootRect.left + currentRect.width / 2}px`;
+        line.style.top = `${lineTop}px`;
+        line.style.height = `${lineHeight}px`;
+        connectorsLayer.appendChild(line);
+      }
+    };
+
+    requestAnimationFrame(() => {
+      drawConnectorLines();
+      requestAnimationFrame(drawConnectorLines);
+    });
+    setTimeout(drawConnectorLines, 0);
+    window.addEventListener("resize", drawConnectorLines);
   }
   return root;
 };
