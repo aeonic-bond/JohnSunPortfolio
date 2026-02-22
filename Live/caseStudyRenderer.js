@@ -52,6 +52,37 @@ const scheduleFlowRowTrackerUpdate = () => {
 
 const SPLINE_VIEWER_SCRIPT_SRC = "https://unpkg.com/@splinetool/viewer@1.12.58/build/spline-viewer.js";
 let splineViewerScriptPromise = null;
+let splineNetworkHintsApplied = false;
+
+const applySplineNetworkHints = () => {
+  if (splineNetworkHintsApplied) return;
+  splineNetworkHintsApplied = true;
+  try {
+    const { origin } = new URL(SPLINE_VIEWER_SCRIPT_SRC);
+    const hintKey = origin.replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+
+    const existingPreconnect = document.querySelector(`link[data-spline-hint="preconnect-${hintKey}"]`);
+    if (!existingPreconnect) {
+      const preconnect = document.createElement("link");
+      preconnect.rel = "preconnect";
+      preconnect.href = origin;
+      preconnect.crossOrigin = "anonymous";
+      preconnect.dataset.splineHint = `preconnect-${hintKey}`;
+      document.head.append(preconnect);
+    }
+
+    const existingDnsPrefetch = document.querySelector(`link[data-spline-hint="dns-${hintKey}"]`);
+    if (!existingDnsPrefetch) {
+      const dnsPrefetch = document.createElement("link");
+      dnsPrefetch.rel = "dns-prefetch";
+      dnsPrefetch.href = origin;
+      dnsPrefetch.dataset.splineHint = `dns-${hintKey}`;
+      document.head.append(dnsPrefetch);
+    }
+  } catch (error) {
+    void error;
+  }
+};
 
 const bindFlowRowTrackerEvents = () => {
   if (flowTrackerEventsBound) return;
@@ -179,6 +210,7 @@ const normalizeHeroSpline = (hero = {}) => {
 const ensureSplineViewerScript = () => {
   if (customElements.get("spline-viewer")) return Promise.resolve();
   if (splineViewerScriptPromise) return splineViewerScriptPromise;
+  applySplineNetworkHints();
 
   splineViewerScriptPromise = new Promise((resolve, reject) => {
     const existing = document.querySelector(`script[src="${SPLINE_VIEWER_SCRIPT_SRC}"]`);
@@ -197,6 +229,8 @@ const ensureSplineViewerScript = () => {
     const script = document.createElement("script");
     script.type = "module";
     script.src = SPLINE_VIEWER_SCRIPT_SRC;
+    script.crossOrigin = "anonymous";
+    script.fetchPriority = "high";
     script.addEventListener("load", () => resolve(), { once: true });
     script.addEventListener("error", () => reject(new Error("Failed to load spline-viewer script.")), {
       once: true,
@@ -787,6 +821,9 @@ const createProgressRowElement = (progressRow) => {
 
 const renderCaseStudy = (content = {}, root) => {
   if (!root) return;
+  if (normalizeHeroSpline(content.hero || {})) {
+    void ensureSplineViewerScript();
+  }
   bindHeaderBarEvents();
   updateHeaderBarStickyState();
   bindFlowRowTrackerEvents();
