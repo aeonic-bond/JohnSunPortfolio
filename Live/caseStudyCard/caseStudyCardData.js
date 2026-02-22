@@ -126,7 +126,7 @@ const renderCardMedia = ({ kind = "", mediaRoot, media, isDisabled = false } = {
   renderSplineMedia(mediaRoot, media);
 };
 
-const CASE_STUDY_DATA_PATH = "../caseStudyCard/caseStudyCard.json";
+const CASE_STUDY_DATA_PATH = "/Live/caseStudyCard/caseStudyCard.json";
 
 const loadCaseStudies = async () => {
   try {

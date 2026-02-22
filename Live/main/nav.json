@@ -5,7 +5,7 @@
       "title": "Torus",
       "subtitle": "Architecture/CAD",
       "icon": "/Assets/TorusIcon.svg",
-      "href": "/Live/casestudy.html?id=torus",
+      "href": "/casestudy/?id=torus",
       "selected": true
     },
     {
@@ -13,7 +13,7 @@
       "title": "Blueprint",
       "subtitle": "Design System",
       "icon": "/Assets/BlueprintIcon.svg",
-      "href": "/Live/casestudy.html?id=blueprint",
+      "href": "/casestudy/?id=blueprint",
       "selected": false
     },
     {
@@ -21,7 +21,7 @@
       "title": "Customizer",
       "subtitle": "Home Customization",
       "icon": "/Assets/CustomizerIcon.svg",
-      "href": "/Live/casestudy.html?id=hcustomizer",
+      "href": "/casestudy/?id=hcustomizer",
       "selected": false
     },
     {

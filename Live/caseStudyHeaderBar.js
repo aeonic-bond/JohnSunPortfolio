@@ -20,7 +20,7 @@ const HEADER_CASE_STUDY_STATUS_PATHS = {
   hcustomizer: "/Live/hcustomizer/HCustomizerContent.json",
   tolley: "/Live/tolley/TolleyContent.json",
 };
-const HEADER_BACK_HREF = "/";
+const HEADER_BACK_HREF = "/home";
 const BACK_BUTTON_ICON_SRC = "/Assets/BackButton.svg";
 const HEADER_STICKY_TRANSITION_LOCK_MS = 1000;
 const MAIN_SCROLL_RESTORE_FLAG_KEY = "live.main.restore_scroll";

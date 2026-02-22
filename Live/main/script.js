@@ -360,7 +360,7 @@ const clickNavUpdateActiveID = (navItem) => {
 
 const loadNavItems = async () => {
   try {
-    const response = await fetch("./nav.json", { cache: "default" });
+    const response = await fetch("/Live/main/nav.json", { cache: "default" });
     if (!response.ok) throw new Error(`Failed to load nav.json: ${response.status}`);
     const payload = await response.json();
     const items = Array.isArray(payload?.items) ? payload.items : [];
