@@ -234,39 +234,102 @@ OptionGroup.create = function createOptionGroup({
   if (normalizedType === "closeConflict") {
     const conflictContainer = el("div", "option-group__conflict-options");
     const rawOptions = Array.isArray(options) ? options : [];
-    const conflictNodes = [];
+    const conflictParticipants = [];
     const markerAnchors = [];
-    const registerNode = (node) => {
-      conflictNodes.push(node);
+    const nodeParticipantMap = new Map();
+    const nodeInternalStateMap = new Map();
+    let participantSeed = 0;
+    const createParticipant = () => {
+      const participant = {
+        id: `close-conflict-participant-${participantSeed}`,
+        nodes: [],
+      };
+      participantSeed += 1;
+      conflictParticipants.push(participant);
+      return participant;
     };
-    const applyConflictSelection = (selectedIndex) => {
-      conflictNodes.forEach((conflictNode, index) => {
-        conflictNode.optionApi?.setState(index === selectedIndex ? "selected" : "canswap");
+    const normalizeInternalState = (state) => {
+      const normalized = String(state || "unselected").toLowerCase();
+      return normalized === "selected" || normalized === "disabled" ? normalized : "unselected";
+    };
+    const registerNodeToParticipant = (node, participant) => {
+      if (!node || !participant) return;
+      participant.nodes.push(node);
+      nodeParticipantMap.set(node, participant.id);
+      nodeInternalStateMap.set(
+        node,
+        normalizeInternalState(node.optionApi?.getState?.() || "unselected"),
+      );
+    };
+    const findParticipantById = (participantId) =>
+      conflictParticipants.find((participant) => participant.id === participantId) || null;
+    const participantHasSelection = (participant) =>
+      participant.nodes.some((node) => nodeInternalStateMap.get(node) === "selected");
+    const setParticipantMode = (participant, mode, focusNode = null) => {
+      participant.nodes.forEach((node) => {
+        const internalState = nodeInternalStateMap.get(node) || "unselected";
+        if (mode === "canswap") {
+          node.optionApi?.setState(internalState === "disabled" ? "disabled" : "canswap");
+          return;
+        }
+        if (mode === "unselected") {
+          if (internalState === "disabled") {
+            node.optionApi?.setState("disabled");
+            return;
+          }
+          nodeInternalStateMap.set(node, "unselected");
+          node.optionApi?.setState("unselected");
+          return;
+        }
+        if (focusNode && node === focusNode) {
+          nodeInternalStateMap.set(node, "selected");
+          node.optionApi?.setState("selected");
+          return;
+        }
+        node.optionApi?.setState(internalState);
+      });
+    };
+    const applyActiveParticipant = (activeParticipant, focusNode = null) => {
+      conflictParticipants.forEach((participant) => {
+        setParticipantMode(
+          participant,
+          participant.id === activeParticipant.id ? "active" : "canswap",
+          participant.id === activeParticipant.id ? focusNode : null,
+        );
       });
       if (typeof onToggle === "function") onToggle("selected");
     };
     const clearConflictSelection = () => {
-      conflictNodes.forEach((conflictNode) => {
-        conflictNode.optionApi?.setState("unselected");
+      conflictParticipants.forEach((participant) => {
+        setParticipantMode(participant, "unselected");
       });
       if (typeof onToggle === "function") onToggle("unselected");
     };
-    const handleConflictToggle = (index, nextState) => {
-      if (nextState === "unselected") {
-        clearConflictSelection();
+    const handleConflictOptionToggle = (optionNode, nextState) => {
+      const participantId = nodeParticipantMap.get(optionNode);
+      const participant = findParticipantById(participantId);
+      if (!participant) return;
+      const normalizedState = String(nextState || "unselected").toLowerCase();
+      if (normalizedState === "disabled") return;
+      if (normalizedState === "canswap") {
+        nodeInternalStateMap.set(optionNode, "selected");
+        applyActiveParticipant(participant, optionNode);
         return;
       }
-      applyConflictSelection(index);
-    };
-    const handleConflictOptionToggle = (optionNode, nextState) => {
-      const optionIndex = conflictNodes.indexOf(optionNode);
-      if (optionIndex < 0) return;
-      handleConflictToggle(optionIndex, nextState);
+      nodeInternalStateMap.set(
+        optionNode,
+        normalizedState === "selected" ? "selected" : "unselected",
+      );
+      if (participantHasSelection(participant)) {
+        applyActiveParticipant(participant);
+        return;
+      }
+      clearConflictSelection();
     };
 
     rawOptions.forEach((conflictOption) => {
+      const participant = createParticipant();
       if (conflictOption?.bundle === true) {
-        const bundleConflictNodes = [];
         conflictContainer.appendChild(
           OptionGroup.create({
             type: "optionBundle",
@@ -275,17 +338,14 @@ OptionGroup.create = function createOptionGroup({
               ? conflictOption.entries
               : (Array.isArray(conflictOption.options) ? conflictOption.options : []),
             onToggle,
-            registerConflictNode: (node) => {
-              registerNode(node);
-              bundleConflictNodes.push(node);
-            },
+            registerConflictNode: (node) => registerNodeToParticipant(node, participant),
             onConflictToggle: handleConflictOptionToggle,
           }),
         );
-        if (bundleConflictNodes.length > 0) {
+        if (participant.nodes.length > 0) {
           markerAnchors.push({
-            firstNode: bundleConflictNodes[0],
-            lastNode: bundleConflictNodes[bundleConflictNodes.length - 1],
+            firstNode: participant.nodes[0],
+            lastNode: participant.nodes[participant.nodes.length - 1],
           });
         }
         return;
@@ -299,7 +359,7 @@ OptionGroup.create = function createOptionGroup({
         state: optionState,
         onToggle: (nextState) => handleConflictOptionToggle(conflictNode, nextState),
       });
-      registerNode(conflictNode);
+      registerNodeToParticipant(conflictNode, participant);
       markerAnchors.push({
         firstNode: conflictNode,
         lastNode: conflictNode,
@@ -307,11 +367,11 @@ OptionGroup.create = function createOptionGroup({
       conflictContainer.appendChild(conflictNode);
     });
 
-    const preselectedIndex = conflictNodes.findIndex(
-      (conflictNode) => conflictNode.optionApi?.getState() === "selected",
+    const preselectedParticipant = conflictParticipants.find(
+      (participant) => participantHasSelection(participant),
     );
-    if (preselectedIndex >= 0) {
-      applyConflictSelection(preselectedIndex);
+    if (preselectedParticipant) {
+      applyActiveParticipant(preselectedParticipant);
     }
 
     root.appendChild(conflictContainer);
