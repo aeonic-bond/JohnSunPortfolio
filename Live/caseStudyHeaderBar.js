@@ -21,7 +21,7 @@ const HEADER_CASE_STUDY_STATUS_PATHS = {
   tolley: "/Live/tolley/TolleyContent.json",
 };
 const HEADER_BACK_HREF = "/home";
-const BACK_BUTTON_ICON_SRC = "/Assets/BackButton.svg";
+const BACK_BUTTON_ICON_SRC = "/Assets/JSLogo.svg";
 const HEADER_STICKY_TRANSITION_LOCK_MS = 1000;
 const MAIN_SCROLL_RESTORE_FLAG_KEY = "live.main.restore_scroll";
 
@@ -31,6 +31,8 @@ let headerNavItemsPromise = null;
 const headerStatusByKindPromise = new Map();
 let headerStickyTransitionLock = false;
 let headerStickyTransitionLockTimeoutId = 0;
+let headerLastScrollY = 0;
+let headerUpwardScrollAccumulator = 0;
 
 const normalizeHeaderItemStatus = (value) => {
   const status = String(value || "").trim().toLowerCase();
@@ -238,10 +240,9 @@ const ensureHeaderBar = () => {
   backLink.href = HEADER_BACK_HREF;
   backLink.setAttribute("aria-label", "Back to case studies");
 
-  const backIcon = document.createElement("img");
+  const backIcon = document.createElement("span");
   backIcon.className = HEADER_BACK_ICON_CLASS;
-  backIcon.src = BACK_BUTTON_ICON_SRC;
-  backIcon.alt = "";
+  backIcon.style.setProperty("--back-icon-src", `url("${BACK_BUTTON_ICON_SRC}")`);
   backIcon.setAttribute("aria-hidden", "true");
 
   const menuAnchor = document.createElement("div");
@@ -369,16 +370,40 @@ const lockHeaderStickyTransition = () => {
 const updateHeaderBarStickyState = () => {
   const headerBar = document.querySelector(`.${HEADER_BAR_CLASS}`);
   if (!(headerBar instanceof HTMLElement)) return;
-  if (headerStickyTransitionLock) return;
-  const isSticky = headerBar.classList.contains(HEADER_BAR_STICKY_CLASS);
 
-  if (!isSticky && window.scrollY >= HEADER_STICKY_ENTER_THRESHOLD_PX) {
+  const currentScrollY = window.scrollY;
+  const delta = currentScrollY - headerLastScrollY;
+  headerLastScrollY = currentScrollY;
+
+  // Accumulate upward scroll distance; reset whenever the user scrolls down.
+  if (delta < 0) {
+    headerUpwardScrollAccumulator += Math.abs(delta);
+  } else if (delta > 0) {
+    headerUpwardScrollAccumulator = 0;
+  }
+
+  const isCompact = headerBar.classList.contains(HEADER_BAR_STICKY_CLASS);
+
+  // Always revert to default near the top, regardless of lock or accumulator.
+  if (currentScrollY <= HEADER_STICKY_EXIT_THRESHOLD_PX) {
+    if (isCompact) headerBar.classList.remove(HEADER_BAR_STICKY_CLASS);
+    headerUpwardScrollAccumulator = 0;
+    return;
+  }
+
+  if (headerStickyTransitionLock) return;
+
+  // Compact when scrolling down past the enter threshold.
+  if (!isCompact && delta > 0 && currentScrollY >= HEADER_STICKY_ENTER_THRESHOLD_PX) {
     headerBar.classList.add(HEADER_BAR_STICKY_CLASS);
     lockHeaderStickyTransition();
     return;
   }
-  if (isSticky && window.scrollY <= HEADER_STICKY_EXIT_THRESHOLD_PX) {
+
+  // Revert to default visual only after scrolling up at least 100vh.
+  if (isCompact && headerUpwardScrollAccumulator >= window.innerHeight * 2) {
     headerBar.classList.remove(HEADER_BAR_STICKY_CLASS);
+    headerUpwardScrollAccumulator = 0;
     lockHeaderStickyTransition();
   }
 };

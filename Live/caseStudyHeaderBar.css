@@ -38,10 +38,23 @@
 }
 
 .cs-header-back-icon {
+  display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  display: block;
+  background-color: var(--color-accent);
+  mask-image: var(--back-icon-src);
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-image: var(--back-icon-src);
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  transition: background-color 0.5s ease-out;
+}
+
+.cs-header-bar.is-sticky .cs-header-back-icon {
+  background-color: var(--color-text-secondary);
 }
 
 .cs-header-menu {
