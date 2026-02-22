@@ -1,0 +1,21 @@
+:root {
+  /* Brand tokens (Figma node 1:9) */
+  --sb-brand-primary: #0c223f;
+  --sb-brand-medium: #004876;
+  --sb-brand-accent: #0070cd;
+  --sb-brand-gray: #8195a2;
+
+  /* Functional tokens (Figma node 1:38) */
+  --sb-functional-black: #000000;
+  --sb-functional-off-black: #595959;
+  --sb-functional-dark-gray: #858585;
+  --sb-functional-med-gray: #d8d8d8;
+  --sb-functional-light-gray: #e9edf0;
+  --sb-functional-off-white: #e3e3e3;
+  --sb-functional-white: #ffffff;
+  --sb-functional-qmi-purple: #bda6d8;
+  --sb-functional-chat-on: #009d47;
+  --sb-functional-success-bg: #e4f6ea;
+  --sb-functional-error-text: #a42337;
+  --sb-functional-error-bg: #f7e6e9;
+}

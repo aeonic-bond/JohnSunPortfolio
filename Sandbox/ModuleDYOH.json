@@ -1,0 +1,19 @@
+{
+  "options": [
+    {
+      "optionText": "Alternate Kitchen Island",
+      "state": "Unselected",
+      "iconSrc": "/Assets/DYOH-Icons/KitchenIsland.svg"
+    },
+    {
+      "optionText": "Multi Slide Stacked Door 15X8-Great Room",
+      "state": "Unselected",
+      "iconSrc": "/Assets/DYOH-Icons/StackedDoor.svg"
+    },
+    {
+      "optionText": "Dedicated Home Office",
+      "state": "Unselected",
+      "iconSrc": "/Assets/DYOH-Icons/Office.svg"
+    }
+  ]
+}

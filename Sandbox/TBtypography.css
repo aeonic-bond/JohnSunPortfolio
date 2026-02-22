@@ -1,0 +1,57 @@
+:root {
+  --tb-font-header: "Domaine Display", "Crimson Pro", serif;
+  --tb-font-gotham: "Gotham", "Avenir Next", "Segoe UI", sans-serif;
+  --tb-font-gotham-narrow: "Gotham Narrow", "Avenir Next Condensed", "Arial Narrow", sans-serif;
+
+  /* Header scale */
+  --tb-type-h1-700: normal 700 48px/60px var(--tb-font-header);
+  --tb-type-h1-400: normal 400 48px/60px var(--tb-font-header);
+  --tb-type-h2-700: normal 700 40px/50px var(--tb-font-header);
+  --tb-type-h2-400: normal 400 40px/50px var(--tb-font-header);
+  --tb-type-h3-700: normal 700 33px/41px var(--tb-font-header);
+  --tb-type-h3-400: normal 400 33px/41px var(--tb-font-header);
+  --tb-type-h4-700: normal 700 28px/35px var(--tb-font-header);
+  --tb-type-h4-400: normal 400 28px/35px var(--tb-font-header);
+  --tb-type-h5-700: normal 700 23px/29px var(--tb-font-header);
+  --tb-type-h5-400: normal 400 23px/29px var(--tb-font-header);
+  --tb-type-h6-700: normal 700 19px/24px var(--tb-font-header);
+  --tb-type-h6-400: normal 400 19px/24px var(--tb-font-header);
+  --tb-type-overline: normal 700 11px/17px var(--tb-font-gotham);
+  --tb-type-overline-tracking: 0.2em;
+
+  /* Gotham Narrow scale */
+  --tb-type-gn-l-700: normal 700 18px/27px var(--tb-font-gotham-narrow);
+  --tb-type-gn-l-500: normal 500 18px/27px var(--tb-font-gotham-narrow);
+  --tb-type-gn-l-400: normal 400 18px/27px var(--tb-font-gotham-narrow);
+  --tb-type-gn-l-300: normal 300 18px/27px var(--tb-font-gotham-narrow);
+  --tb-type-gn-b-700: normal 700 16px/24px var(--tb-font-gotham-narrow);
+  --tb-type-gn-b-500: normal 500 16px/24px var(--tb-font-gotham-narrow);
+  --tb-type-gn-b-400: normal 400 16px/24px var(--tb-font-gotham-narrow);
+  --tb-type-gn-b-300: normal 300 16px/24px var(--tb-font-gotham-narrow);
+  --tb-type-gn-s-700: normal 700 13px/20px var(--tb-font-gotham-narrow);
+  --tb-type-gn-s-500: normal 500 13px/20px var(--tb-font-gotham-narrow);
+  --tb-type-gn-s-400: normal 400 13px/20px var(--tb-font-gotham-narrow);
+  --tb-type-gn-s-300: normal 300 13px/20px var(--tb-font-gotham-narrow);
+  --tb-type-gn-xs-700: normal 700 11px/17px var(--tb-font-gotham-narrow);
+  --tb-type-gn-xs-500: normal 500 11px/17px var(--tb-font-gotham-narrow);
+  --tb-type-gn-xs-400: normal 400 11px/17px var(--tb-font-gotham-narrow);
+  --tb-type-gn-xs-300: normal 300 11px/17px var(--tb-font-gotham-narrow);
+
+  /* Gotham scale */
+  --tb-type-g-l-700: normal 700 16px/24px var(--tb-font-gotham);
+  --tb-type-g-l-500: normal 500 16px/24px var(--tb-font-gotham);
+  --tb-type-g-l-400: normal 400 16px/24px var(--tb-font-gotham);
+  --tb-type-g-l-300: normal 300 16px/24px var(--tb-font-gotham);
+  --tb-type-g-b-700: normal 700 14px/21px var(--tb-font-gotham);
+  --tb-type-g-b-500: normal 500 14px/21px var(--tb-font-gotham);
+  --tb-type-g-b-400: normal 400 14px/21px var(--tb-font-gotham);
+  --tb-type-g-b-300: normal 300 14px/21px var(--tb-font-gotham);
+  --tb-type-g-s-700: normal 700 12px/18px var(--tb-font-gotham);
+  --tb-type-g-s-500: normal 500 12px/18px var(--tb-font-gotham);
+  --tb-type-g-s-400: normal 400 12px/18px var(--tb-font-gotham);
+  --tb-type-g-s-300: normal 300 12px/18px var(--tb-font-gotham);
+  --tb-type-g-xs-700: normal 700 11px/17px var(--tb-font-gotham);
+  --tb-type-g-xs-500: normal 500 11px/17px var(--tb-font-gotham);
+  --tb-type-g-xs-400: normal 400 11px/17px var(--tb-font-gotham);
+  --tb-type-g-xs-300: normal 300 11px/17px var(--tb-font-gotham);
+}

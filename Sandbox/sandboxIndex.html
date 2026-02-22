@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sandbox</title>
+    <link rel="stylesheet" href="/Live/main/tokens.css" />
+    <link rel="stylesheet" href="/Live/main/typography.css" />
+    <link rel="stylesheet" href="/Sandbox/TBTokens.css" />
+    <link rel="stylesheet" href="/Sandbox/TBtypography.css" />
+    <link rel="stylesheet" href="/Sandbox/ModuleMount.css" />
+    <link rel="stylesheet" href="/Sandbox/ModuleDYOH.css" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--color-bg-main);
+        min-height: 100vh;
+      }
+      body {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+      }
+      #app {
+        display: flex;
+        justify-content: center;
+        padding-left: var(--margin-mobile-500, 24px);
+        padding-right: var(--margin-mobile-500, 24px);
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="app"></main>
+    <script type="module">
+      import { createModuleDYOH } from "/Sandbox/ModuleDYOH.js";
+
+      const app = document.getElementById("app");
+      const response = await fetch("/Sandbox/ModuleDYOH.json");
+      const config = await response.json();
+      createModuleDYOH(app, config);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+.module-mount {
+  align-items: flex-start;
+  background: var(--bg-raise, #091d1c);
+  border: 1px solid var(--accent-fade, rgba(236, 188, 42, 0.2));
+  border-radius: 8px;
+  display: flex;
+  height: fit-content;
+  justify-content: center;
+  max-width: 375px;
+  padding: 16px;
+  width: 100%;
+}

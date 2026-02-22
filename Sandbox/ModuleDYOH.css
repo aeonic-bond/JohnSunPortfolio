@@ -1,0 +1,225 @@
+.module-dyoh {
+  aspect-ratio: 9 / 16;
+  background: var(--sb-functional-white, #ffffff);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
+  width: 100%;
+}
+
+.module-dyoh__floorplan-container {
+  align-items: center;
+  display: flex;
+  height: 50%;
+  justify-content: center;
+  padding: 16px;
+  transition: height 220ms ease;
+  width: 100%;
+}
+
+.module-dyoh--panel .module-dyoh__floorplan-container {
+  height: 25%;
+}
+
+.module-dyoh__floorplan {
+  aspect-ratio: 270 / 280;
+  height: 100%;
+  object-fit: contain;
+}
+
+.module-dyoh__panel {
+  background: var(--sb-functional-white, #ffffff);
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 -4px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  width: 100%;
+}
+
+.module-dyoh__panel-indicator {
+  align-self: center;
+  background: var(--sb-functional-med-gray, #d8d8d8);
+  border-radius: 100px;
+  height: 4px;
+  margin-top: 8px;
+  width: 40px;
+}
+
+.module-dyoh__tabs {
+  border-bottom: 1px solid var(--sb-functional-med-gray, #d8d8d8);
+  display: flex;
+  width: 100%;
+}
+
+.module-dyoh__tab {
+  flex: 1 0 0;
+  font: var(--tb-type-g-b-700, 700 14px/21px "Gotham", sans-serif);
+  margin: 0;
+  padding: 12px 8px 10px;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+.module-dyoh__tab--active {
+  border-bottom: 2px solid var(--sb-brand-accent, #0070cd);
+  color: var(--sb-functional-black, #000000);
+}
+
+.module-dyoh__tab--inactive {
+  color: var(--sb-functional-dark-gray, #858585);
+}
+
+.module-dyoh__meta {
+  color: var(--sb-functional-black, #000000);
+  display: flex;
+  font: var(--tb-type-g-xs-700, 700 11px/17px "Gotham", sans-serif);
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.module-dyoh__meta-count,
+.module-dyoh__meta-added {
+  margin: 0;
+}
+
+.module-dyoh__meta-added {
+  font: var(--tb-type-g-xs-400, 400 11px/17px "Gotham", sans-serif);
+}
+
+.module-dyoh__option-wrap {
+  border-bottom: 1px solid var(--sb-functional-med-gray, #d8d8d8);
+  width: 100%;
+}
+
+.options-container {
+  width: 100%;
+}
+
+.option {
+  align-items: flex-start;
+  display: flex;
+  position: relative;
+  width: 100%;
+}
+
+.option__row {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  flex: 1 0 0;
+  gap: 8px;
+  min-height: 0;
+  min-width: 0;
+  overflow: clip;
+  padding: 12px;
+}
+
+.option--unselected .option__row {
+  background: var(--sb-functional-white, #ffffff);
+}
+
+.option--selected .option__row {
+  background: var(--sb-functional-light-gray, #e9edf0);
+}
+
+.option__left {
+  align-items: center;
+  display: flex;
+  flex: 1 0 0;
+  gap: 8px;
+  min-height: 0;
+  min-width: 0;
+}
+
+.option__symbol {
+  align-items: center;
+  border-radius: 4px;
+  display: flex;
+  height: 48px;
+  justify-content: center;
+  width: 48px;
+}
+
+.option--unselected .option__symbol {
+  background: var(--sb-functional-light-gray, #e9edf0);
+}
+
+.option--selected .option__symbol {
+  background: var(--sb-brand-medium, #004876);
+}
+
+.option--disabled .option__row {
+  background: var(--sb-functional-white, #ffffff);
+  cursor: default;
+}
+
+.option--disabled .option__symbol {
+  background: #e7eaec;
+}
+
+.option__icon {
+  height: 32px;
+  width: 32px;
+}
+
+.option--selected .option__icon {
+  filter: brightness(0) invert(1);
+}
+
+.option--disabled .option__icon {
+  filter: grayscale(1) brightness(0.65);
+  opacity: 0.65;
+}
+
+.option__label {
+  color: var(--sb-functional-black, #000000);
+  flex: 1 0 0;
+  font: var(--tb-type-gn-s-500, 500 13px/20px "Gotham Narrow", sans-serif);
+  margin: 0;
+  min-height: 0;
+  min-width: 0;
+}
+
+.option--disabled .option__label {
+  color: var(--sb-functional-dark-gray, #858585);
+}
+
+.option__cta-wrap {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 40px;
+  justify-content: center;
+  width: 56px;
+}
+
+.option__pill {
+  align-items: center;
+  background: var(--sb-brand-medium, #004876);
+  border: 0;
+  border-radius: 100px;
+  color: var(--sb-functional-white, #ffffff);
+  cursor: pointer;
+  display: flex;
+  font: var(--tb-type-g-s-700, 700 12px/18px "Gotham", sans-serif);
+  height: 24px;
+  justify-content: center;
+  padding: 0;
+  width: 100%;
+}
+
+.option__remove {
+  color: var(--sb-brand-medium, #004876);
+  font: var(--tb-type-g-s-500, 500 12px/18px "Gotham", sans-serif);
+  margin: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.option--disabled .option__pill {
+  background: transparent;
+  color: var(--sb-functional-dark-gray, #858585);
+  cursor: default;
+}
