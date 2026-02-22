@@ -5,6 +5,13 @@
   padding: var(--space-block-500) var(--margin-mobile-500) var(--margin-bottom-500);
 }
 
+@media (min-width: 1024px) {
+  .cs-main {
+    --cs-breakout-width: min(90vw, 1440px);
+    --cs-breakout-margin: calc(50% - (var(--cs-breakout-width) / 2));
+  }
+}
+
 .cs-main * {
   margin: 0;
 }
@@ -255,9 +262,9 @@
 
 @media (min-width: 1024px) {
   .cs-bullet-row {
-    width: 90vw;
-    margin-left: calc(50% - 45vw);
-    margin-right: calc(50% - 45vw);
+    width: var(--cs-breakout-width);
+    margin-left: var(--cs-breakout-margin);
+    margin-right: var(--cs-breakout-margin);
     padding: 0;
   }
 
@@ -504,9 +511,9 @@
 
 @media (min-width: 1024px) {
   .cs-progress-matrix {
-    width: 90vw;
-    margin-left: calc(50% - 45vw);
-    margin-right: calc(50% - 45vw);
+    width: var(--cs-breakout-width);
+    margin-left: var(--cs-breakout-margin);
+    margin-right: var(--cs-breakout-margin);
   }
 }
 
@@ -662,12 +669,9 @@
   .cs-progress-row {
     display: flex;
     align-items: flex-start;
-    width: 90vw;
-    margin-left: calc(50% - 45vw);
-    margin-right: calc(50% - 45vw);
-    width: min(max-content, 90vw);
-    margin-left: calc(50% - (min(max-content, 90vw) / 2));
-    margin-right: calc(50% - (min(max-content, 90vw) / 2));
+    width: min(max-content, var(--cs-breakout-width));
+    margin-left: calc(50% - (min(max-content, var(--cs-breakout-width)) / 2));
+    margin-right: calc(50% - (min(max-content, var(--cs-breakout-width)) / 2));
     background:
       linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
       linear-gradient(
@@ -708,10 +712,10 @@
 
 @media (min-width: 1024px) {
   .cs-fig.cs-fig--large {
-    width: 90vw;
+    width: var(--cs-breakout-width);
     max-width: none;
-    margin-left: calc(50% - 45vw);
-    margin-right: calc(50% - 45vw);
+    margin-left: var(--cs-breakout-margin);
+    margin-right: var(--cs-breakout-margin);
   }
 
   .cs-fig.cs-fig--small {
