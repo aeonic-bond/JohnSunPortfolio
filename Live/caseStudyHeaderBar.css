@@ -172,7 +172,7 @@
   align-items: stretch;
   overflow-x: hidden;
   overflow-y: auto;
-  gap: 0;
+  gap: var(--space-300);
   min-height: 0;
   scroll-snap-type: none;
 }
