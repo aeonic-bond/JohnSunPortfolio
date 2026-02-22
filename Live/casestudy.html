@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blueprint Case Study</title>
+    <title>Case Study</title>
     <link rel="stylesheet" href="/Live/main/tokens.css" />
     <link rel="stylesheet" href="/Live/main/typography.css" />
     <link rel="stylesheet" href="/Live/main/layout.css" />
@@ -15,10 +15,24 @@
     <main class="live-main cs-main">
       <article
         id="case-study-root"
-        data-content-src="/Live/blueprint/BlueprintContent.json"
-        aria-label="Blueprint Case Study"
+        aria-label="Case Study"
       ></article>
     </main>
+    <script>
+      (function () {
+        const CONTENT_PATHS = {
+          torus: "/Live/torus/TorusContent.json",
+          blueprint: "/Live/blueprint/BlueprintContent.json",
+          hcustomizer: "/Live/hcustomizer/HCustomizerContent.json",
+          tolley: "/Live/tolley/TolleyContent.json",
+        };
+        const id = new URLSearchParams(location.search).get("id") || "";
+        const root = document.getElementById("case-study-root");
+        if (root && CONTENT_PATHS[id]) {
+          root.dataset.contentSrc = CONTENT_PATHS[id];
+        }
+      })();
+    </script>
     <script src="/Live/caseStudyHeaderBar.js" defer></script>
     <script src="/Live/caseStudyRenderer.js" defer></script>
     <script src="/Live/lightbox.js" defer></script>

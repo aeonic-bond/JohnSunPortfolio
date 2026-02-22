@@ -13,15 +13,15 @@ const HEADER_DROPDOWN_LIST_CLASS = "cs-header-dropdown-list";
 const HEADER_DROPDOWN_OPEN_CLASS = "is-dropdown-open";
 const HEADER_STICKY_ENTER_THRESHOLD_PX = 44;
 const HEADER_STICKY_EXIT_THRESHOLD_PX = 36;
-const HEADER_NAV_DATA_PATH = "../main/nav.json";
+const HEADER_NAV_DATA_PATH = "/Live/main/nav.json";
 const HEADER_CASE_STUDY_STATUS_PATHS = {
-  torus: "../torus/TorusContent.json",
-  blueprint: "../blueprint/BlueprintContent.json",
-  hcustomizer: "../hcustomizer/HCustomizerContent.json",
-  tolley: "../tolley/TolleyContent.json",
+  torus: "/Live/torus/TorusContent.json",
+  blueprint: "/Live/blueprint/BlueprintContent.json",
+  hcustomizer: "/Live/hcustomizer/HCustomizerContent.json",
+  tolley: "/Live/tolley/TolleyContent.json",
 };
 const HEADER_BACK_HREF = "/";
-const BACK_BUTTON_ICON_SRC = "../../Assets/BackButton.svg";
+const BACK_BUTTON_ICON_SRC = "/Assets/BackButton.svg";
 const HEADER_STICKY_TRANSITION_LOCK_MS = 1000;
 const MAIN_SCROLL_RESTORE_FLAG_KEY = "live.main.restore_scroll";
 

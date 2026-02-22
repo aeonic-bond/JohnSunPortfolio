@@ -13,7 +13,7 @@
         "Usability Testing"
       ],
       "ctaLabel": "Read",
-      "href": "../torus/",
+      "href": "/Live/casestudy.html?id=torus",
       "media": {
         "splineUrlDesktop": "https://prod.spline.design/AvFrf9aDLLmls19K/scene.splinecode",
         "splineUrlMobile": "https://prod.spline.design/AvFrf9aDLLmls19K/scene.splinecode"
@@ -34,7 +34,7 @@
         "Agentic Prototyping"
       ],
       "ctaLabel": "Read",
-      "href": "../blueprint/",
+      "href": "/Live/casestudy.html?id=blueprint",
       "media": {
         "splineUrl": "https://prod.spline.design/TfAWC07q1JgAQDBS/scene.splinecode"
       }
@@ -49,7 +49,7 @@
         "Usability Testing"
       ],
       "ctaLabel": "Soon!",
-      "href": "../hcustomizer/",
+      "href": "/Live/casestudy.html?id=hcustomizer",
       "media": {
         "splineUrl": "https://prod.spline.design/qlMDUHRdu8EDsFoQ/scene.splinecode"
       }

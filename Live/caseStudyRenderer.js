@@ -912,6 +912,11 @@ const loadCaseStudyInto = (root, contentPath) => {
     .then(async (content) => {
       setWindowActiveIDFromContent(content);
       const navItems = await loadHeaderNavItems();
+      const navItem = findHeaderNavItem(content, navItems);
+      if (navItem?.title) {
+        document.title = `${navItem.title} Case Study`;
+        root.setAttribute("aria-label", `${navItem.title} Case Study`);
+      }
       applyHeaderBarContent(content, navItems);
       renderCaseStudy(content, root);
     })

@@ -2,10 +2,10 @@
 // Bump that field when you update a Spline scene to force browsers to re-fetch.
 let SPLINE_CACHE_BUST = "1";
 const CASE_STUDY_STATUS_PATHS = {
-  torus: "../torus/TorusContent.json",
-  blueprint: "../blueprint/BlueprintContent.json",
-  hcustomizer: "../hcustomizer/HCustomizerContent.json",
-  tolley: "../tolley/TolleyContent.json",
+  torus: "/Live/torus/TorusContent.json",
+  blueprint: "/Live/blueprint/BlueprintContent.json",
+  hcustomizer: "/Live/hcustomizer/HCustomizerContent.json",
+  tolley: "/Live/tolley/TolleyContent.json",
 };
 const statusLoadByKind = new Map();
 const prewarmedSplineUrls = new Set();
