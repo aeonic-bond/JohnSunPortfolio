@@ -50,27 +50,45 @@
 }
 
 .module-dyoh__tabs {
+  align-items: stretch;
   border-bottom: 1px solid var(--sb-functional-med-gray, #d8d8d8);
   display: flex;
+  position: relative;
   width: 100%;
 }
 
 .module-dyoh__tab {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
   flex: 1 0 0;
   font: var(--tb-type-g-b-700, 700 14px/21px "Gotham", sans-serif);
   margin: 0;
+  outline-offset: -2px;
   padding: 12px 8px 10px;
   text-align: center;
   letter-spacing: 0.05em;
+  transition: color 220ms ease;
+  z-index: 1;
 }
 
 .module-dyoh__tab--active {
-  border-bottom: 2px solid var(--sb-brand-accent, #0070cd);
   color: var(--sb-functional-black, #000000);
 }
 
 .module-dyoh__tab--inactive {
   color: var(--sb-functional-dark-gray, #858585);
+}
+
+.module-dyoh__tab-selector {
+  background: var(--sb-brand-accent, #0070cd);
+  bottom: -1px;
+  height: 2px;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  transition: transform 220ms ease;
+  width: 50%;
 }
 
 .module-dyoh__meta {

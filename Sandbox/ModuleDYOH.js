@@ -344,12 +344,12 @@ OptionGroup.create = function createOptionGroup({
 
 export const ModuleDYOH = {
   name: "module-dyoh",
-  create({ state = "default", optionGroup = [OptionGroup.defaults] } = {}) {
-    const normalizedOptionGroup = Array.isArray(optionGroup) && optionGroup.length > 0
-      ? optionGroup
-      : [OptionGroup.defaults];
+  create({ state = "default", F1List, F2List } = {}) {
+    const normalizedF1List = Array.isArray(F1List) ? F1List : [OptionGroup.defaults];
+    const normalizedF2List = Array.isArray(F2List) ? F2List : [];
     const root = el("div", "module-dyoh");
     let currentState = state === "panel" ? "panel" : "default";
+    let currentFloor = "first";
 
     function applyState(nextState) {
       currentState = nextState === "panel" ? "panel" : "default";
@@ -368,9 +368,12 @@ export const ModuleDYOH = {
     const panel = el("div", "module-dyoh__panel");
     const panelIndicator = el("div", "module-dyoh__panel-indicator");
     const tabs = el("div", "module-dyoh__tabs");
-    const tabOne = el("p", "module-dyoh__tab module-dyoh__tab--active", "1st Floor");
-    const tabTwo = el("p", "module-dyoh__tab module-dyoh__tab--inactive", "2nd Floor");
-    tabs.append(tabOne, tabTwo);
+    const tabOne = el("button", "module-dyoh__tab", "1st Floor");
+    const tabTwo = el("button", "module-dyoh__tab", "2nd Floor");
+    const tabSelector = el("div", "module-dyoh__tab-selector");
+    tabOne.type = "button";
+    tabTwo.type = "button";
+    tabs.append(tabOne, tabTwo, tabSelector);
 
     const meta = el("div", "module-dyoh__meta");
     const metaCount = el("p", "module-dyoh__meta-count");
@@ -378,16 +381,33 @@ export const ModuleDYOH = {
     meta.append(metaCount, metaAdded);
 
     const optionWrap = el("div", "module-dyoh__option-wrap");
-    const optionsContainer = el("div", "options-container");
+    const f1OptionsContainer = el("div", "options-container options-container--f1");
+    const f2OptionsContainer = el("div", "options-container options-container--f2");
+    function getActiveOptionsContainer() {
+      return currentFloor === "second" ? f2OptionsContainer : f1OptionsContainer;
+    }
     function updateMeta() {
-      const total = optionsContainer.querySelectorAll(".option").length;
-      const selectedCount = optionsContainer.querySelectorAll('.option[data-state="selected"]').length;
+      const activeOptionsContainer = getActiveOptionsContainer();
+      const total = activeOptionsContainer.querySelectorAll(".option").length;
+      const selectedCount = activeOptionsContainer.querySelectorAll('.option[data-state="selected"]').length;
       const suffix = total > 1 ? "s" : "";
       metaCount.textContent = `${total} upgrade option${suffix} available`;
       metaAdded.textContent = `${selectedCount} added`;
     }
+    function applyFloor(nextFloor) {
+      currentFloor = nextFloor === "second" ? "second" : "first";
+      const isFirstFloor = currentFloor === "first";
+      tabOne.className = `module-dyoh__tab ${isFirstFloor ? "module-dyoh__tab--active" : "module-dyoh__tab--inactive"}`;
+      tabTwo.className = `module-dyoh__tab ${isFirstFloor ? "module-dyoh__tab--inactive" : "module-dyoh__tab--active"}`;
+      tabOne.setAttribute("aria-pressed", String(isFirstFloor));
+      tabTwo.setAttribute("aria-pressed", String(!isFirstFloor));
+      tabSelector.style.transform = `translateX(${isFirstFloor ? 0 : 100}%)`;
+      f1OptionsContainer.hidden = !isFirstFloor;
+      f2OptionsContainer.hidden = isFirstFloor;
+      updateMeta();
+    }
 
-    normalizedOptionGroup.forEach((groupConfig) => {
+    function buildGroupPayload(groupConfig) {
       const normalizedType =
         String(groupConfig.type || OptionGroup.defaults.type).toLowerCase() === "parentchild"
           ? "parentChild"
@@ -410,9 +430,13 @@ export const ModuleDYOH = {
             state: conflictOption?.state ? String(conflictOption.state).toLowerCase() : "unselected",
           }))
         : [];
-      const groupPayload = normalizedType === "closeConflict"
+      return normalizedType === "closeConflict"
         ? {
             type: normalizedType,
+            option: {
+              ...optionConfig,
+              state: normalizedState,
+            },
             options: normalizedOptions,
             onToggle: updateMeta,
           }
@@ -426,10 +450,19 @@ export const ModuleDYOH = {
             options: normalizedOptions,
             onToggle: updateMeta,
           };
-      optionsContainer.appendChild(OptionGroup.create(groupPayload));
+    }
+
+    normalizedF1List.forEach((groupConfig) => {
+      f1OptionsContainer.appendChild(OptionGroup.create(buildGroupPayload(groupConfig)));
     });
-    updateMeta();
-    optionWrap.appendChild(optionsContainer);
+    normalizedF2List.forEach((groupConfig) => {
+      f2OptionsContainer.appendChild(OptionGroup.create(buildGroupPayload(groupConfig)));
+    });
+
+    optionWrap.append(f1OptionsContainer, f2OptionsContainer);
+    tabOne.addEventListener("click", () => applyFloor("first"));
+    tabTwo.addEventListener("click", () => applyFloor("second"));
+    applyFloor("first");
 
     panel.addEventListener("click", () => {
       if (currentState !== "panel") applyState("panel");
