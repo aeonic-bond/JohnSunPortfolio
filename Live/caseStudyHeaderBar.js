@@ -20,7 +20,7 @@ const HEADER_CASE_STUDY_STATUS_PATHS = {
   hcustomizer: "/Live/hcustomizer/HCustomizerContent.json",
   tolley: "/Live/tolley/TolleyContent.json",
 };
-const HEADER_BACK_HREF = "/home";
+const HEADER_BACK_HREF = "/home.html";
 const BACK_BUTTON_ICON_SRC = "/Assets/JSLogo.svg";
 const HEADER_STICKY_TRANSITION_LOCK_MS = 1000;
 const MAIN_SCROLL_RESTORE_FLAG_KEY = "live.main.restore_scroll";
@@ -286,17 +286,21 @@ const ensureHeaderBar = () => {
       void error;
     }
 
-    const hasSameOriginReferrer = (() => {
+    const referrerIsHome = (() => {
       try {
         if (!document.referrer) return false;
-        return new URL(document.referrer).origin === window.location.origin;
+        const ref = new URL(document.referrer);
+        return (
+          ref.origin === window.location.origin &&
+          (ref.pathname === "/home" || ref.pathname === "/home.html")
+        );
       } catch (error) {
         void error;
         return false;
       }
     })();
 
-    if (hasSameOriginReferrer && window.history.length > 1) {
+    if (referrerIsHome && window.history.length > 1) {
       window.history.back();
       return;
     }
