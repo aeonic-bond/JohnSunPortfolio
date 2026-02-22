@@ -139,6 +139,10 @@
   position: relative;
 }
 
+.option-group--option-bundle {
+  width: 100%;
+}
+
 .option-group--parent-child .option,
 .option-group--parent-child .option-group__children {
   position: relative;
@@ -189,6 +193,10 @@
 }
 
 .option-group__conflict-options {
+  width: 100%;
+}
+
+.option-group__bundle {
   width: 100%;
 }
 

@@ -150,14 +150,62 @@ export const Option = {
 
 OptionGroup.create = function createOptionGroup({
   type = "independent",
+  bundle = false,
   option,
   children = [],
   options = [],
+  entries = [],
   onToggle = null,
+  registerConflictNode = null,
+  onConflictToggle = null,
 } = {}) {
+  const createConflictOptionNode = (entry) => {
+    const optionState = entry?.state ? String(entry.state).toLowerCase() : "unselected";
+    let optionNode = null;
+    optionNode = Option.create({
+      ...entry,
+      state: optionState,
+      onToggle: (nextState) => {
+        if (typeof onConflictToggle === "function") {
+          onConflictToggle(optionNode, nextState);
+          return;
+        }
+        if (typeof onToggle === "function") onToggle(nextState);
+      },
+    });
+    if (typeof registerConflictNode === "function") {
+      registerConflictNode(optionNode);
+    }
+    return optionNode;
+  };
+
+  const appendBundleEntries = (bundleEntries, container) => {
+    const rawEntries = Array.isArray(bundleEntries) ? bundleEntries : [];
+    rawEntries.forEach((bundleEntry) => {
+      if (bundleEntry?.bundle === true) {
+        container.appendChild(
+          OptionGroup.create({
+            type: "optionBundle",
+            bundle: true,
+            entries: Array.isArray(bundleEntry.entries)
+              ? bundleEntry.entries
+              : (Array.isArray(bundleEntry.options) ? bundleEntry.options : []),
+            onToggle,
+            registerConflictNode,
+            onConflictToggle,
+          }),
+        );
+        return;
+      }
+      container.appendChild(createConflictOptionNode(bundleEntry));
+    });
+  };
+
   const rawType = String(type).toLowerCase();
   const normalizedType =
-    rawType === "parentchild"
+    bundle || rawType === "optionbundle"
+      ? "optionBundle"
+      : rawType === "parentchild"
       ? "parentChild"
       : rawType === "closeconflict"
         ? "closeConflict"
@@ -165,7 +213,9 @@ OptionGroup.create = function createOptionGroup({
   const normalizedParent = option || OptionGroup.defaults.option;
   const root = el("div", "option-group");
   root.className = `option-group ${
-    normalizedType === "parentChild"
+    normalizedType === "optionBundle"
+      ? "option-group--option-bundle"
+      : normalizedType === "parentChild"
       ? "option-group--parent-child"
       : normalizedType === "closeConflict"
         ? "option-group--close-conflict"
@@ -173,10 +223,22 @@ OptionGroup.create = function createOptionGroup({
   }`;
   root.dataset.type = normalizedType;
 
+  if (normalizedType === "optionBundle") {
+    const bundleContainer = el("div", "option-group__bundle");
+    const rawEntries = Array.isArray(entries) ? entries : options;
+    appendBundleEntries(rawEntries, bundleContainer);
+    root.appendChild(bundleContainer);
+    return root;
+  }
+
   if (normalizedType === "closeConflict") {
     const conflictContainer = el("div", "option-group__conflict-options");
     const rawOptions = Array.isArray(options) ? options : [];
     const conflictNodes = [];
+    const markerAnchors = [];
+    const registerNode = (node) => {
+      conflictNodes.push(node);
+    };
     const applyConflictSelection = (selectedIndex) => {
       conflictNodes.forEach((conflictNode, index) => {
         conflictNode.optionApi?.setState(index === selectedIndex ? "selected" : "canswap");
@@ -196,17 +258,52 @@ OptionGroup.create = function createOptionGroup({
       }
       applyConflictSelection(index);
     };
+    const handleConflictOptionToggle = (optionNode, nextState) => {
+      const optionIndex = conflictNodes.indexOf(optionNode);
+      if (optionIndex < 0) return;
+      handleConflictToggle(optionIndex, nextState);
+    };
 
-    rawOptions.forEach((conflictOption, index) => {
+    rawOptions.forEach((conflictOption) => {
+      if (conflictOption?.bundle === true) {
+        const bundleConflictNodes = [];
+        conflictContainer.appendChild(
+          OptionGroup.create({
+            type: "optionBundle",
+            bundle: true,
+            entries: Array.isArray(conflictOption.entries)
+              ? conflictOption.entries
+              : (Array.isArray(conflictOption.options) ? conflictOption.options : []),
+            onToggle,
+            registerConflictNode: (node) => {
+              registerNode(node);
+              bundleConflictNodes.push(node);
+            },
+            onConflictToggle: handleConflictOptionToggle,
+          }),
+        );
+        if (bundleConflictNodes.length > 0) {
+          markerAnchors.push({
+            firstNode: bundleConflictNodes[0],
+            lastNode: bundleConflictNodes[bundleConflictNodes.length - 1],
+          });
+        }
+        return;
+      }
       const optionState = conflictOption?.state
         ? String(conflictOption.state).toLowerCase()
         : "unselected";
-      const conflictNode = Option.create({
+      let conflictNode = null;
+      conflictNode = Option.create({
         ...conflictOption,
         state: optionState,
-        onToggle: (nextState) => handleConflictToggle(index, nextState),
+        onToggle: (nextState) => handleConflictOptionToggle(conflictNode, nextState),
       });
-      conflictNodes.push(conflictNode);
+      registerNode(conflictNode);
+      markerAnchors.push({
+        firstNode: conflictNode,
+        lastNode: conflictNode,
+      });
       conflictContainer.appendChild(conflictNode);
     });
 
@@ -224,14 +321,16 @@ OptionGroup.create = function createOptionGroup({
 
     const drawOrMarkers = () => {
       orMarkersLayer.innerHTML = "";
-      if (conflictNodes.length < 2) return;
+      if (markerAnchors.length < 2) return;
       const rootRect = root.getBoundingClientRect();
       if (!rootRect.width || !rootRect.height) return;
 
-      for (let i = 0; i < conflictNodes.length - 1; i += 1) {
-        const currentRow = conflictNodes[i]?.querySelector(".option__row");
-        const nextRow = conflictNodes[i + 1]?.querySelector(".option__row");
-        const anchor = conflictNodes[i]?.querySelector(".option__symbol");
+      for (let i = 0; i < markerAnchors.length - 1; i += 1) {
+        const currentNode = markerAnchors[i]?.lastNode;
+        const nextNode = markerAnchors[i + 1]?.firstNode;
+        const currentRow = currentNode?.querySelector(".option__row");
+        const nextRow = nextNode?.querySelector(".option__row");
+        const anchor = currentNode?.querySelector(".option__symbol");
         if (!currentRow || !nextRow || !anchor) continue;
 
         const currentRect = currentRow.getBoundingClientRect();
@@ -253,6 +352,11 @@ OptionGroup.create = function createOptionGroup({
     });
     setTimeout(drawOrMarkers, 0);
     window.addEventListener("resize", drawOrMarkers);
+    root.optionGroupApi = {
+      redraw() {
+        drawOrMarkers();
+      },
+    };
     return root;
   }
 
@@ -263,7 +367,7 @@ OptionGroup.create = function createOptionGroup({
     if (typeof onToggle === "function") onToggle(parentState);
   };
   let parentNode = null;
-  if (normalizedType !== "closeConflict") {
+  if (normalizedType !== "closeConflict" && normalizedType !== "optionBundle") {
     parentNode = Option.create({
       ...normalizedParent,
       type: normalizedType === "parentChild" ? "parent" : "",
@@ -337,6 +441,11 @@ OptionGroup.create = function createOptionGroup({
     });
     setTimeout(drawConnectorLines, 0);
     window.addEventListener("resize", drawConnectorLines);
+    root.optionGroupApi = {
+      redraw() {
+        drawConnectorLines();
+      },
+    };
   }
 
   return root;
@@ -405,13 +514,22 @@ export const ModuleDYOH = {
       f1OptionsContainer.hidden = !isFirstFloor;
       f2OptionsContainer.hidden = isFirstFloor;
       updateMeta();
+      requestAnimationFrame(() => {
+        const activeOptionsContainer = getActiveOptionsContainer();
+        activeOptionsContainer.querySelectorAll(".option-group").forEach((groupNode) => {
+          groupNode.optionGroupApi?.redraw?.();
+        });
+      });
     }
 
     function buildGroupPayload(groupConfig) {
+      const rawType = String(groupConfig.type || "").toLowerCase();
       const normalizedType =
-        String(groupConfig.type || OptionGroup.defaults.type).toLowerCase() === "parentchild"
+        groupConfig?.bundle === true || rawType === "optionbundle"
+          ? "optionBundle"
+          : rawType === "parentchild"
           ? "parentChild"
-          : String(groupConfig.type || OptionGroup.defaults.type).toLowerCase() === "closeconflict"
+          : rawType === "closeconflict"
             ? "closeConflict"
             : "independent";
       const optionConfig = groupConfig.option || OptionGroup.defaults.option;
@@ -430,6 +548,17 @@ export const ModuleDYOH = {
             state: conflictOption?.state ? String(conflictOption.state).toLowerCase() : "unselected",
           }))
         : [];
+      const normalizedEntries = Array.isArray(groupConfig.entries)
+        ? groupConfig.entries
+        : normalizedOptions;
+      if (normalizedType === "optionBundle") {
+        return {
+          type: normalizedType,
+          bundle: true,
+          entries: normalizedEntries,
+          onToggle: updateMeta,
+        };
+      }
       return normalizedType === "closeConflict"
         ? {
             type: normalizedType,

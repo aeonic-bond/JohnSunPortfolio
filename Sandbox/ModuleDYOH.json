@@ -29,20 +29,46 @@
         {
           "optionText": "Traditional Fireplace",
           "state": "unselected",
-          "iconSrc": "http://localhost:3845/assets/e452a891f3ff7f6647aaa3767037ab91762098ac.svg"
+          "iconSrc": "/Assets/DYOH-Icons/Fireplace.svg"
         },
         {
           "optionText": "Linear Fireplace - 48\"",
           "state": "unselected",
-          "iconSrc": "http://localhost:3845/assets/e452a891f3ff7f6647aaa3767037ab91762098ac.svg"
+          "iconSrc": "/Assets/DYOH-Icons/Fireplace.svg"
         },
         {
           "optionText": "Linear Fireplace - 60\"",
           "state": "unselected",
-          "iconSrc": "http://localhost:3845/assets/e452a891f3ff7f6647aaa3767037ab91762098ac.svg"
+          "iconSrc": "/Assets/DYOH-Icons/Fireplace.svg"
         }
       ]
     }
   ],
-  "F2List": []
+  "F2List": [
+    {
+      "type": "closeConflict",
+      "options": [
+        {
+          "optionText": "Primary Bath Luxury Package",
+          "state": "unselected",
+          "iconSrc": "/Assets/DYOH-Icons/Bath.svg"
+        },
+        {
+          "bundle": true,
+          "entries": [
+            {
+              "optionText": "Grand Primary Bedroom Suite",
+              "state": "unselected",
+              "iconSrc": "/Assets/DYOH-Icons/Suite.svg"
+            },
+            {
+              "optionText": "Ultra Shower",
+              "state": "unselected",
+              "iconSrc": "/Assets/DYOH-Icons/Bath.svg"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
