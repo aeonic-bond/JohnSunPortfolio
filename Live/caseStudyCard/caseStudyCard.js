@@ -75,17 +75,10 @@ const createCaseStudyCard = ({
   body.className = "card-body";
   body.append(textWrap, tagsWrap);
 
-  const ctaContainer = document.createElement("div");
-  ctaContainer.className = "card-cta-container";
-  const ctaButton = document.createElement("button");
-  ctaButton.className = "card-cta";
-  ctaButton.type = "button";
-  ctaButton.textContent = ctaLabel;
-  if (isDisabled) {
-    ctaButton.disabled = true;
-    ctaButton.setAttribute("aria-disabled", "true");
-  }
-  ctaContainer.append(ctaButton);
+  const { container: ctaContainer, button: ctaButton } = window.LivePrimitives.createCtaButton({
+    label: ctaLabel,
+    disabled: isDisabled,
+  });
 
   content.append(titleWrap, body, ctaContainer);
   card.append(mediaEl, content);
