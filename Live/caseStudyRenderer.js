@@ -796,7 +796,8 @@ const normalizeProgressMatrixPairs = (progressMatrix) => {
       pairs.push({
         primary: String(primary).trim(),
         secondary: String(secondary).trim(),
-        stamp,
+        primaryStamp: null,
+        secondaryStamp: stamp,
       });
       continue;
     }
@@ -804,11 +805,13 @@ const normalizeProgressMatrixPairs = (progressMatrix) => {
     if (item && typeof item === "object") {
       const primary = item.primary ?? "";
       const secondary = item.secondary ?? "";
-      const stamp = normalizeStamp(item.stamp);
+      const primaryStamp = normalizeStamp(item.primaryStamp ?? null);
+      const secondaryStamp = normalizeStamp(item.secondaryStamp ?? item.stamp ?? null);
       pairs.push({
         primary: String(primary).trim(),
         secondary: String(secondary).trim(),
-        stamp,
+        primaryStamp,
+        secondaryStamp,
       });
       continue;
     }
@@ -819,13 +822,15 @@ const normalizeProgressMatrixPairs = (progressMatrix) => {
         pairs.push({
           primary: match[1].trim(),
           secondary: match[2].trim(),
-          stamp: null,
+          primaryStamp: null,
+          secondaryStamp: null,
         });
       } else {
         pairs.push({
           primary: item.trim(),
           secondary: "",
-          stamp: null,
+          primaryStamp: null,
+          secondaryStamp: null,
         });
       }
     }
@@ -835,7 +840,8 @@ const normalizeProgressMatrixPairs = (progressMatrix) => {
     (pair) =>
       pair.primary ||
       pair.secondary ||
-      pair.stamp
+      pair.primaryStamp ||
+      pair.secondaryStamp
   );
 };
 
@@ -1104,6 +1110,15 @@ const createProgressMatrixElement = (progressMatrix) => {
       "cs-progress-matrix-item-primary"
     );
 
+    const primaryGroupEl = document.createElement("div");
+    primaryGroupEl.className = "cs-progress-matrix-primary-block";
+    primaryGroupEl.append(primaryEl);
+
+    if (pair.primaryStamp) {
+      const primaryStampEl = createStampElement(pair.primaryStamp, "cs-stamp cs-progress-matrix-item-stamp");
+      if (primaryStampEl) primaryGroupEl.append(primaryStampEl);
+    }
+
     const chevronEl = document.createElement("span");
     chevronEl.className = "cs-progress-matrix-chevron";
     chevronEl.setAttribute("aria-hidden", "true");
@@ -1115,15 +1130,15 @@ const createProgressMatrixElement = (progressMatrix) => {
     );
 
     const secondaryGroupEl = document.createElement("div");
-    secondaryGroupEl.className = "cs-progress-matrix-secondary-items-group";
+    secondaryGroupEl.className = "cs-progress-matrix-secondary-block";
     secondaryGroupEl.append(secondaryEl);
 
-    if (pair.stamp) {
-      const stampEl = createStampElement(pair.stamp, "cs-stamp cs-progress-matrix-item-stamp");
+    if (pair.secondaryStamp) {
+      const stampEl = createStampElement(pair.secondaryStamp, "cs-stamp cs-progress-matrix-item-stamp");
       if (stampEl) secondaryGroupEl.append(stampEl);
     }
 
-    itemEl.append(primaryEl, chevronEl, secondaryGroupEl);
+    itemEl.append(primaryGroupEl, chevronEl, secondaryGroupEl);
 
     itemsGroupEl.append(itemEl);
   }

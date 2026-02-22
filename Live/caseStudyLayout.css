@@ -507,9 +507,6 @@
     width: 90vw;
     margin-left: calc(50% - 45vw);
     margin-right: calc(50% - 45vw);
-    width: min(max-content, 90vw);
-    margin-left: calc(50% - (min(max-content, 90vw) / 2));
-    margin-right: calc(50% - (min(max-content, 90vw) / 2));
   }
 }
 
@@ -524,7 +521,7 @@
   justify-self: center;
   align-items: center;
   gap: var(--space-block-500);
-  padding: var(--space-700);
+  padding: var(--space-block-500);
   border: 1px solid transparent;
   border-radius: var(--radius-base);
   background:
@@ -538,7 +535,7 @@
 
 @media (min-width: 1024px) {
   .cs-progress-matrix-item {
-    grid-template-columns: minmax(0, 320px) auto auto;
+    grid-template-columns: fit-content(50%) auto fit-content(50%);
     width: fit-content;
     gap: var(--space-block-500);
     background:
@@ -556,9 +553,6 @@
   width: 100%;
   min-width: 0;
   font: var(--type-body-m);
-}
-
-.cs-progress-matrix-item-primary {
   color: var(--color-text-secondary);
 }
 
@@ -575,12 +569,9 @@
   line-height: 1;
 }
 
-.cs-progress-matrix-item-secondary {
-  color: var(--color-text-primary);
-}
-
-.cs-progress-matrix-secondary-items-group {
-  width: fit-content;
+.cs-progress-matrix-primary-block,
+.cs-progress-matrix-secondary-block {
+  width: 100%;
   display: grid;
   gap: var(--space-block-500);
 }
@@ -595,17 +586,21 @@
 }
 
 @media (min-width: 1024px) {
-  .cs-progress-matrix-item-primary {
+  .cs-progress-matrix-primary-block,
+  .cs-progress-matrix-secondary-block {
     width: 100%;
-    max-width: 320px;
+    display: grid;
+    grid-template-columns: minmax(0, 320px) auto;
+    column-gap: 0;
+    align-items: center;
   }
 
-  .cs-progress-matrix-item-secondary {
-    width: 320px;
+  .cs-progress-matrix-primary-block {
+    grid-column: 1;
   }
 
-  .cs-progress-matrix-item-primary {
-    justify-self: end;
+  .cs-progress-matrix-secondary-block {
+    grid-column: 3;
   }
 
   .cs-progress-matrix-chevron,
@@ -615,21 +610,10 @@
     transform: rotate(-90deg);
   }
 
-  .cs-progress-matrix-item-secondary {
-    justify-self: start;
-  }
-
-  .cs-progress-matrix-secondary-items-group {
-    grid-column: 3;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-self: start;
-  }
-
   .cs-progress-matrix-item-stamp {
     grid-column: auto;
     justify-self: start;
+    margin-left: var(--space-block-500);
   }
 }
 

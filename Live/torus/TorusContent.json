@@ -237,7 +237,7 @@
             {
               "primary": "All participants tried to hover over the tools, expecting tooltips to appear.",
               "secondary": "Add Tooltips - Add tooltips for offsetRP and offsetEQRP and increase the appearance speed.",
-              "stamp": {
+              "secondaryStamp": {
                 "type": "image",
                 "src": "../../Assets/Torus/Case Study/section10/Tooltips.png",
                 "caption": "Tooltips UI in Torus"
@@ -246,7 +246,7 @@
             {
               "primary": "All participants first attempted to input numbers inside the distance indicator rather than the expected parameter name.",
               "secondary": "Refactor Distance Indicator - Create two input triggers that allow users to manipulate distance or set a parameter.",
-              "stamp": {
+              "secondaryStamp": {
                 "type": "image",
                 "src": "../../Assets/Torus/Case Study/section10/RefactorDistanceBox.png",
                 "caption": "Refactored distance input UI in Torus"
@@ -255,7 +255,7 @@
             {
               "primary": "3 participants pointed out that the parameter panel was not particularly clear.",
               "secondary": "Update Parameter Panel - Wrap name and value sets in a single container with an explicit \"=\".",
-              "stamp": {
+              "secondaryStamp": {
                 "type": "image",
                 "src": "../../Assets/Torus/Case Study/section10/ParameterPanel.png",
                 "caption": "Updated parameter panel design in Torus"
