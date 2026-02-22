@@ -12,25 +12,46 @@ function el(tag, className, text) {
   return node;
 }
 
-export const Option = {
-  name: "Option",
+export const OptionGroup = {
+  name: "OptionGroup",
   defaults: {
-    optionText: "Alternate Kitchen Island",
-    state: "Unselected",
+    type: "independent",
+    option: {
+      optionText: "Alternate Kitchen Island",
+      state: "unselected",
+      iconSrc: ASSETS.optionDefault,
+    },
   },
   icons: ASSETS,
+};
+
+export const Option = {
+  name: "Option",
+  states: ["selected", "unselected", "disabled"],
   create({
-    optionText = Option.defaults.optionText,
-    state = Option.defaults.state,
+    optionText,
+    state = "unselected",
+    type = "independent",
+    isLastChild = false,
+    lockedDisabled = false,
     iconSrc = ASSETS.optionDefault,
     onToggle = null,
   } = {}) {
-    let currentOptionState =
-      state === "Selected" || state === "Disabled" ? state : "Unselected";
+    const normalizedState = Option.states.includes(String(state).toLowerCase())
+      ? String(state).toLowerCase()
+      : "unselected";
+    const normalizedType = String(type).toLowerCase() === "parent"
+      ? "parent"
+      : String(type).toLowerCase() === "child"
+        ? "child"
+        : "independent";
+    let currentOptionState = normalizedState;
+    let isLockedDisabled = Boolean(lockedDisabled);
     const root = el("div", "option");
 
     const row = el("div", "option__row");
     const left = el("div", "option__left");
+    const iconContainer = el("div", "option__icon-container");
     const symbol = el("div", "option__symbol");
     const icon = el("img", "option__icon");
     const label = el("p", "option__label", optionText);
@@ -40,15 +61,29 @@ export const Option = {
     icon.src = iconSrc || ASSETS.optionDefault;
 
     symbol.appendChild(icon);
-    left.append(symbol, label);
+    iconContainer.appendChild(symbol);
+
+    if (normalizedType === "parent") {
+      iconContainer.appendChild(el("div", "option__parent-line"));
+    }
+    if (normalizedType === "child") {
+      iconContainer.appendChild(el("div", "option__child-line-1"));
+      if (!isLastChild) {
+        iconContainer.appendChild(el("div", "option__child-line-2"));
+      }
+    }
+
+    left.append(iconContainer, label);
     
     function renderState() {
-      const isSelected = currentOptionState === "Selected";
-      const isDisabled = currentOptionState === "Disabled";
-      root.className = `option ${isDisabled ? "option--disabled" : isSelected ? "option--selected" : "option--unselected"}`;
+      const isSelected = currentOptionState === "selected";
+      const isDisabled = currentOptionState === "disabled" || isLockedDisabled;
+      const effectiveState = isDisabled ? "disabled" : currentOptionState;
+      root.className = `option option--${normalizedType}${isLastChild ? " option--last-child" : ""} ${isDisabled ? "option--disabled" : isSelected ? "option--selected" : "option--unselected"}`;
       root.setAttribute("aria-pressed", String(isSelected));
       root.setAttribute("aria-disabled", String(isDisabled));
-      root.dataset.state = currentOptionState;
+      root.dataset.state = effectiveState;
+      root.dataset.type = normalizedType;
       ctaWrap.innerHTML = "";
       if (isSelected) {
         ctaWrap.appendChild(el("p", "option__remove", "Remove"));
@@ -64,8 +99,8 @@ export const Option = {
     }
 
     function toggle() {
-      if (currentOptionState === "Disabled") return;
-      currentOptionState = currentOptionState === "Selected" ? "Unselected" : "Selected";
+      if (currentOptionState === "disabled" || isLockedDisabled) return;
+      currentOptionState = currentOptionState === "selected" ? "unselected" : "selected";
       renderState();
       if (typeof onToggle === "function") onToggle(currentOptionState);
     }
@@ -81,14 +116,77 @@ export const Option = {
 
     row.append(left, ctaWrap);
     root.appendChild(row);
+    root.optionApi = {
+      getState() {
+        return currentOptionState;
+      },
+      setLockedDisabled(locked) {
+        isLockedDisabled = Boolean(locked);
+        renderState();
+      },
+    };
     return root;
   },
 };
 
+OptionGroup.create = function createOptionGroup({
+  type = "independent",
+  option,
+  children = [],
+  onToggle = null,
+} = {}) {
+  const rawType = String(type).toLowerCase();
+  const normalizedType = rawType === "parentchild" ? "parentChild" : "independent";
+  const normalizedParent = option || OptionGroup.defaults.option;
+  const root = el("div", "option-group");
+  root.className = `option-group ${normalizedType === "parentChild" ? "option-group--parent-child" : "option-group--independent"}`;
+  root.dataset.type = normalizedType;
+  const childNodes = [];
+  const handleParentToggle = (parentState) => {
+    const shouldLockChildren = parentState !== "selected";
+    childNodes.forEach((childNode) => childNode.optionApi?.setLockedDisabled(shouldLockChildren));
+    if (typeof onToggle === "function") onToggle(parentState);
+  };
+  const parentNode = Option.create({
+    ...normalizedParent,
+    type: normalizedType === "parentChild" ? "parent" : "independent",
+    onToggle: normalizedType === "parentChild" ? handleParentToggle : onToggle,
+  });
+  root.appendChild(parentNode);
+
+  if (normalizedType === "parentChild") {
+    const childrenContainer = el("div", "option-group__children");
+    const rawChildren = Array.isArray(children) ? children : [];
+    const parentStartsSelected = String(normalizedParent.state || "unselected").toLowerCase() === "selected";
+    rawChildren.forEach((childOption, index) => {
+      const childBaseState = String(childOption?.state || "unselected").toLowerCase();
+      const normalizedChildState =
+        childBaseState === "selected" || childBaseState === "disabled"
+          ? childBaseState
+          : "unselected";
+      const childNode = Option.create({
+        ...childOption,
+        state: normalizedChildState,
+        type: "child",
+        isLastChild: index === rawChildren.length - 1,
+        lockedDisabled: normalizedChildState !== "disabled" && !parentStartsSelected,
+        onToggle,
+      });
+      childNodes.push(childNode);
+      childrenContainer.appendChild(childNode);
+    });
+    handleParentToggle(parentNode.optionApi?.getState() || "unselected");
+    root.appendChild(childrenContainer);
+  }
+  return root;
+};
+
 export const ModuleDYOH = {
   name: "module-dyoh",
-  create({ state = "default", option = Option.defaults, options = null } = {}) {
-    const normalizedOptions = Array.isArray(options) && options.length > 0 ? options : [option];
+  create({ state = "default", optionGroup = [OptionGroup.defaults] } = {}) {
+    const normalizedOptionGroup = Array.isArray(optionGroup) && optionGroup.length > 0
+      ? optionGroup
+      : [OptionGroup.defaults];
     const root = el("div", "module-dyoh");
     let currentState = state === "panel" ? "panel" : "default";
 
@@ -121,25 +219,39 @@ export const ModuleDYOH = {
     const optionWrap = el("div", "module-dyoh__option-wrap");
     const optionsContainer = el("div", "options-container");
     function updateMeta() {
-      const total = normalizedOptions.length;
-      const selectedCount = optionsContainer.querySelectorAll('.option[data-state="Selected"]').length;
+      const total = optionsContainer.querySelectorAll(".option").length;
+      const selectedCount = optionsContainer.querySelectorAll('.option[data-state="selected"]').length;
       const suffix = total > 1 ? "s" : "";
       metaCount.textContent = `${total} upgrade option${suffix} available`;
       metaAdded.textContent = `${selectedCount} added`;
     }
 
-    normalizedOptions.forEach((optionConfig) => {
-      const normalizedState =
-        optionConfig.state === "Selected" || optionConfig.state === "Disabled" || optionConfig.state === "Unselected"
-          ? optionConfig.state
-          : optionConfig.selected
-            ? "Selected"
-            : "Unselected";
-      optionsContainer.appendChild(Option.create({
-        ...optionConfig,
-        state: normalizedState,
-        onToggle: updateMeta,
-      }));
+    normalizedOptionGroup.forEach((groupConfig) => {
+      const normalizedType =
+        String(groupConfig.type || OptionGroup.defaults.type).toLowerCase() === "parentchild"
+          ? "parentChild"
+          : "independent";
+      const optionConfig = groupConfig.option || OptionGroup.defaults.option;
+      const normalizedState = optionConfig.state
+        ? String(optionConfig.state).toLowerCase()
+        : "unselected";
+      const normalizedChildren = Array.isArray(groupConfig.children)
+        ? groupConfig.children.map((childOption) => ({
+            ...childOption,
+            state: childOption?.state ? String(childOption.state).toLowerCase() : "unselected",
+          }))
+        : [];
+      optionsContainer.appendChild(
+        OptionGroup.create({
+          type: normalizedType,
+          option: {
+            ...optionConfig,
+            state: normalizedState,
+          },
+          children: normalizedChildren,
+          onToggle: updateMeta,
+        }),
+      );
     });
     updateMeta();
     optionWrap.appendChild(optionsContainer);

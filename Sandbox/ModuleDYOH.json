@@ -1,19 +1,27 @@
 {
-  "options": [
+  "optionGroup": [
     {
-      "optionText": "Alternate Kitchen Island",
-      "state": "Unselected",
-      "iconSrc": "/Assets/DYOH-Icons/KitchenIsland.svg"
+      "type": "independent",
+      "option": {
+        "optionText": "Alternate Kitchen Island",
+        "state": "unselected",
+        "iconSrc": "/Assets/DYOH-Icons/KitchenIsland.svg"
+      }
     },
     {
-      "optionText": "Multi Slide Stacked Door 15X8-Great Room",
-      "state": "Unselected",
-      "iconSrc": "/Assets/DYOH-Icons/StackedDoor.svg"
-    },
-    {
-      "optionText": "Dedicated Home Office",
-      "state": "Unselected",
-      "iconSrc": "/Assets/DYOH-Icons/Office.svg"
+      "type": "parentChild",
+      "option": {
+        "optionText": "Office Replaces Flex Room",
+        "state": "unselected",
+        "iconSrc": "/Assets/DYOH-Icons/Office.svg"
+      },
+      "children": [
+        {
+          "optionText": "Interior Glass Wall (Office)",
+          "state": "unselected",
+          "iconSrc": "/Assets/DYOH-Icons/GlassWall.svg"
+        }
+      ]
     }
   ]
 }

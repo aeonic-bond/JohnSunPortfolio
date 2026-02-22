@@ -1,12 +1,21 @@
 .module-mount {
-  align-items: flex-start;
+  align-items: center;
   background: var(--bg-raise, #091d1c);
-  border: 1px solid var(--accent-fade, rgba(236, 188, 42, 0.2));
+  border: 1px solid var(--color-accent);
   border-radius: 8px;
+  box-sizing: border-box;
   display: flex;
+  flex-direction: column;
+  gap: var(--space-500, 16px);
   height: fit-content;
   justify-content: center;
   max-width: 375px;
   padding: 16px;
   width: 100%;
+}
+
+.module-mount__prompt {
+  color: var(--color-accent, #ecbc2a);
+  font: var(--type-action, normal 600 14px/14px "Inter", sans-serif);
+  margin: 0;
 }
