@@ -96,9 +96,26 @@
   overflow-wrap: anywhere;
 }
 
-/* Module Showcase Block */
-.cs-module-showcase {
+/* Module Mount Block */
+.cs-module-mount {
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: clip;
+  height: fit-content;
+}
+
+.cs-module-mount__node {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: clip;
+  height: fit-content;
+}
+
+.cs-module-mount__error {
+  font: var(--type-body-m);
+  color: var(--color-text-secondary);
 }
 
  /* Bullet Row */

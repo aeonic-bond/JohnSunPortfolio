@@ -61,10 +61,76 @@ const createParagraphSubsectionElement = (block = {}) => {
   return subsectionEl;
 };
 
-const createModuleShowcaseElement = () => {
-  const moduleShowcaseEl = document.createElement("div");
-  moduleShowcaseEl.className = "cs-module-showcase";
-  return moduleShowcaseEl;
+const MODULE_MOUNT_STYLE_HREFS = [
+  "/Sandbox/TBTokens.css",
+  "/Sandbox/TBtypography.css",
+  "/Sandbox/ModuleMount.css",
+  "/Sandbox/ModuleDYOH.css",
+];
+let moduleMountAssetsPromise = null;
+
+const ensureStylesheetLoaded = (href) =>
+  new Promise((resolve) => {
+    if (!href) {
+      resolve();
+      return;
+    }
+
+    const existing = document.querySelector(`link[data-module-mount-style="${href}"]`);
+    if (existing instanceof HTMLLinkElement) {
+      resolve();
+      return;
+    }
+
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = href;
+    link.dataset.moduleMountStyle = href;
+    link.addEventListener("load", () => resolve(), { once: true });
+    link.addEventListener("error", () => resolve(), { once: true });
+    document.head.append(link);
+  });
+
+const ensureModuleMountAssets = async () => {
+  if (!moduleMountAssetsPromise) {
+    moduleMountAssetsPromise = Promise.all(
+      MODULE_MOUNT_STYLE_HREFS.map((href) => ensureStylesheetLoaded(href))
+    );
+  }
+
+  await moduleMountAssetsPromise;
+  return import("/Sandbox/ModuleDYOH.js");
+};
+
+const createModuleMountElement = (block = {}) => {
+  const moduleMountEl = document.createElement("div");
+  moduleMountEl.className = "cs-module-mount";
+
+  const mountNode = document.createElement("div");
+  mountNode.className = "cs-module-mount__node";
+  moduleMountEl.append(mountNode);
+
+  const configSrc = String(block.src || block.configSrc || "/Sandbox/ModuleDYOH.json").trim();
+  if (!configSrc) return moduleMountEl;
+
+  void (async () => {
+    try {
+      const [{ createModuleDYOH }, response] = await Promise.all([
+        ensureModuleMountAssets(),
+        fetch(configSrc),
+      ]);
+      if (!response.ok) throw new Error(`Failed to load ${configSrc}`);
+      const config = await response.json();
+      createModuleDYOH(mountNode, config);
+    } catch (error) {
+      const message = document.createElement("p");
+      message.className = "cs-module-mount__error";
+      message.textContent = error instanceof Error ? error.message : "Unable to load interactive module.";
+      mountNode.replaceChildren(message);
+    }
+  })();
+
+  return moduleMountEl;
 };
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
@@ -950,8 +1016,9 @@ const renderCaseStudy = (content = {}, root) => {
         continue;
       }
 
-      if (block.type === "moduleShowcase" || block.type === "module-showcase") {
-        section.append(createModuleShowcaseElement());
+      if (block.type === "moduleMount" || block.type === "module-mount") {
+        section.append(createModuleMountElement(block));
+        continue;
       }
     }
 

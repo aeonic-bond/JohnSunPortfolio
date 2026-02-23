@@ -4,6 +4,7 @@
   border-radius: 8px;
   display: flex;
   flex-direction: column;
+  max-width: 375px;
   min-height: 0;
   overflow: clip;
   width: 100%;
@@ -224,7 +225,12 @@
 }
 
 .option--selected .option__row {
-  background: var(--sb-functional-light-gray, #e9edf0);
+  background: linear-gradient(
+    90deg,
+    var(--sb-functional-white, #ffffff) 0%,
+    var(--sb-functional-white, #ffffff) 25%,
+    var(--sb-functional-light-gray, #e9edf0) 100%
+  );
 }
 
 .option--can-swap .option__row {

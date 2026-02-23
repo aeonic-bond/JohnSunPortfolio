@@ -78,7 +78,13 @@
           ]
         },
         {
-          "type": "moduleShowcase"
+          "type": "paragraph-subsection",
+          "subtitle": "Design",
+          "text": "In order to redesign the experience around mobile-first principles, I picked the popular bottom sheet pattern that can dynamically alter size based on current focus. I then redesigned the list and demonstrated to stakeholders the framework for categorizing and visualizing dependencies. My manager and an Architecture Product Manager approved of the framework and the overall redesign."
+        },
+        {
+          "type": "moduleMount",
+          "src": "/Sandbox/ModuleDYOH.json"
         }
       ]
     }

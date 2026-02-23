@@ -1,6 +1,6 @@
 .module-mount {
   align-items: center;
-  background: var(--bg-raise, #091d1c);
+  background: var(--color-bg-sink, #020f0a);
   border: 1px solid var(--color-accent);
   border-radius: 8px;
   box-sizing: border-box;
@@ -9,7 +9,9 @@
   gap: var(--space-500, 16px);
   height: fit-content;
   justify-content: center;
-  max-width: 375px;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: clip;
   padding: 16px;
   width: 100%;
 }
@@ -18,4 +20,7 @@
   color: var(--color-accent, #ecbc2a);
   font: var(--type-action, normal 600 14px/14px "Inter", sans-serif);
   margin: 0;
+  max-width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }

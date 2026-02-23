@@ -422,8 +422,15 @@ OptionGroup.create = function createOptionGroup({
 
   const childNodes = [];
   const handleParentToggle = (parentState) => {
-    const shouldLockChildren = parentState !== "selected";
-    childNodes.forEach((childNode) => childNode.optionApi?.setLockedDisabled(shouldLockChildren));
+    const isParentSelected = parentState === "selected";
+    childNodes.forEach((childNode) => {
+      const currentChildState = String(childNode.optionApi?.getState?.() || "unselected").toLowerCase();
+      const isHardDisabled = currentChildState === "disabled";
+      if (!isParentSelected && !isHardDisabled) {
+        childNode.optionApi?.setState("unselected");
+      }
+      childNode.optionApi?.setLockedDisabled(!isParentSelected && !isHardDisabled);
+    });
     if (typeof onToggle === "function") onToggle(parentState);
   };
   let parentNode = null;
