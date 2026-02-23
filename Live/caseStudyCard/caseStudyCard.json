@@ -28,7 +28,7 @@
         "WCAG 2.2",
         "Tokenization",
         "Components",
-        "Figma-MCP",
+        "Figma MCP",
         "AI-Assisted Development",
         "Storybook",
         "Agentic Prototyping"
@@ -42,12 +42,12 @@
     {
       "kind": "hcustomizer",
       "title": "Home Customizer",
-      "description": "I designed multiple home customization for both user and internal product teams.",
+      "description": "I designed multiple home customization experiences for both user and internal product teams.",
       "tags": [
         "Domain Research",
         "Wireframes & Prototypes"
       ],
-      "ctaLabel": "Soon!",
+      "ctaLabel": "Read",
       "href": "/casestudy/?id=hcustomizer",
       "media": {
         "splineUrl": "https://prod.spline.design/MsyaeAwlSa6c0Zpz/scene.splinecode"

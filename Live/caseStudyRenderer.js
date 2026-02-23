@@ -1089,6 +1089,13 @@ const loadCaseStudyInto = (root, contentPath) => {
       return response.json();
     })
     .then(async (content) => {
+      const heroSpline = normalizeHeroSpline(content?.hero || {});
+      if (heroSpline) {
+        const urlsToWarm = [...new Set([heroSpline.srcDefault, heroSpline.srcDesktop].filter(Boolean))];
+        for (const url of urlsToWarm) {
+          fetch(url, { mode: "no-cors", cache: "force-cache" }).catch(() => {});
+        }
+      }
       setWindowActiveIDFromContent(content);
       const navItems = await loadHeaderNavItems();
       const navItem = findHeaderNavItem(content, navItems);

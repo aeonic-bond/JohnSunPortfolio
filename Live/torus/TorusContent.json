@@ -41,7 +41,7 @@
         {
           "type": "bulletRow",
           "items": [
-            "Revit has awkward workflows are outdated, designed to mirror paper and pencil drafting.",
+            "Revit has awkward workflows that are outdated, designed to mirror paper and pencil drafting.",
             "Revit’s lack of prescriptive UX conflicts with modern practices that value strict logical processes.",
             "The UI simply feels unintuitive. Key tools are hidden amongst many other tools with no logical order."
           ]
@@ -171,7 +171,7 @@
             "type": "video",
             "src": "../../Assets/Torus/Case Study/SettingParameter.mp4",
             "poster": "../../Assets/Torus/Case Study/video previews/SettingParameterPreview.png",
-            "caption": "Setting a LENGTH parameter after creating a childRP.",
+            "caption": "Setting a LENGTH parameter after creating a child RP.",
             "credit": "",
             "controls": true,
             "autoplay": false,
@@ -213,7 +213,7 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "Once these 3 features were designed, I took on the role of developer, testing coordinator, and UX interview conductor. I first built a working demo for the Torus MVP, mainly by generating prompts with Codex in VSC. While building the demo, I made the following UI changes:"
+          "text": "Once these 3 features were designed, I took on the role of developer, testing coordinator, and UX interview conductor. I first built a working demo for the Torus MVP, mainly by generating prompts with Codex in VSCode. While building the demo, I made the following UI changes:"
         },
         {
           "type": "bulletRow",
@@ -231,7 +231,7 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "Once the demo reached a testable stage, I reached out and found 6 participants who were architects or students. Their experiences with Revit ranged from a class to 10+ years. I ran 10-minute usability tests to see if users could add reference planes and set parameters. Before each session, I emphasized that this was an early-stage demo with limited capabilities.\n\n4 participants completed both tasks. 2 participants completed both with minimal guidance. This was a major accomplishment and speaks to the design's relative intuitiveness. A few participants remarked that this would have been much more difficult in Revit.\n\nI observed the following usability issues and made the following changes:"
+          "text": "Once the demo reached a testable stage, I reached out and found 6 participants who were architects or students. Their experiences with Revit ranged from a class to 10+ years. I ran 10-minute usability tests to see if users could add reference planes and set parameters. Before each session, I emphasized that this was an early-stage demo with limited capabilities.\n\nFour participants completed both tasks. Two participants completed both with minimal guidance. This was a major accomplishment and speaks to the design's relative intuitiveness. A few participants remarked that this would have been much more difficult in Revit.\n\nI observed the following usability issues and made the following changes:"
         },
         {
           "type": "progressMatrix",

@@ -14,7 +14,7 @@
     "media": {
       "type": "image",
       "src": "../../Assets/Blueprint/Blueprint Hero.png",
-      "caption": "Blueprint Hero image showing the Toll Brothers logo, 6 concept blocks, and the Figma and Storybook logo",
+      "caption": "Blueprint Hero image showing the Toll Brothers logo, 6 concept blocks, and the Figma and Storybook logos",
       "variant": "hero",
       "showCaption": false
     }
@@ -36,7 +36,7 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "Toll Brothers is a homebuilder with a portfolio of new home communities across 24 states that maintains a national brand. In the past, all of our branding work has been crafted in silos, disseminated through PDFs, and prioritized print media. Design ideas that influenced the site were never properly spelled out and only informally understood. This resulted in disjointed user experiences and one-off designs. I led a company-wide migration from Sketch to Figma and developed our first digital design system called Blueprint."
+          "text": "Toll Brothers is a homebuilder with a portfolio of new home communities across 24 states that maintains a national brand. In the past, all of our branding work was crafted in silos, disseminated through PDFs, and prioritized print media. Design ideas that influenced the site were never properly spelled out and only informally understood. This resulted in disjointed user experiences and one-off designs. I led a company-wide migration from Sketch to Figma and developed our first digital design system called Blueprint."
         }
       ]
     },
@@ -173,7 +173,7 @@
         {
           "type": "bulletRow",
           "items": [
-            "Guidelines 1.1 and 1.2 - Add alt text for all images, floorplans, site plans. Add captions to videos without dialogue.",
+            "Guidelines 1.1 and 1.2 - Add alt text for all images, floor plans, site plans. Add captions to videos without dialogue.",
             "Guideline 1.4 - Maintain color contrast minimums. Ensure 200% text resizing makes sense and can be navigated without two axis scrolling. Ensure obscuring overlays are easily dismissable.",
             "Guideline 2.1 and 2.4 - Ensure the site is navigable by keyboard. Provide shortcuts and descriptive cues to aid keyboard navigation.",
             "Guideline 3.3 - Ensure form fields are properly labeled with ARIA. Provide suggestive inputs when we can reasonably assume input. Provide suggestions for correcting incorrect inputs."
@@ -191,14 +191,14 @@
         },
         {
           "type": "paragraph",
-          "text": "In considering what would work best for Toll Brothers strict brand guidelines, I adapted this setup by collapsing Layer 0, 1, and 2 into a single tight set of semantic tokens for color and typography in Figma, and eventually, I coded the tokens in Storybook. I believe this is the best practice for a tightly-controlled brand to adopt tokenization.\n\nI want to quickly address the 2 exceptions to the general layering rule. Apple's Human Interface Guidelines skips recommending tokens entirely because prioritizes function over branding. Salesforce Lightning Design System-2 is moving away from tokens (present in SLDS-1) in favor of styling hooks. Styling hooks use conditional logic to derive a token value vs the token having a pre-selected value. Luckily for us, this level of strategy is overkill for Blueprint, but it might be more appropriate in the future when theming becomes a priority."
+          "text": "In considering what would work best for Toll Brothers strict brand guidelines, I adapted this setup by collapsing Layer 0, 1, and 2 into a single tight set of semantic tokens for color and typography in Figma, and eventually, I coded the tokens in Storybook. I believe this is the best practice for a tightly-controlled brand to adopt tokenization.\n\nI want to quickly address the 2 exceptions to the general layering rule. Apple's Human Interface Guidelines skips recommending tokens entirely because it prioritizes function over branding. Salesforce Lightning Design System 2 is moving away from tokens (present in SLDS-1) in favor of styling hooks. Styling hooks use conditional logic to derive a token value versus the token having a pre-selected value. Luckily for us, this level of strategy is overkill for Blueprint, but it might be more appropriate in the future when theming becomes a priority."
         },
         {
           "type": "progressRow",
           "items": [
             "(Layer 0) Raw Values - Represent all possible tokens that could ever be in the system (#0070CD)",
             "(Layer 1) Reference Tokens - Denote a limited set of tokens that will be used in a project and named with a scaling system (blue.400)",
-            "(Layer 2) Semantic Tokens - Explain the reasoning of a single decision node. These should be the most widely token format in Figma (background.blue)",
+            "(Layer 2) Semantic Tokens - Explain the reasoning of a single decision node. These should be the most widely used token format in Figma (background.blue)",
             "(Layer 3) Component Tokens - Controls the UI of a reusable component in development (button.background)"
           ]
         }
@@ -236,7 +236,7 @@
               }
             },
             {
-              "text": "Storybook - Fully functional code component library and css tokens",
+              "text": "Storybook - Fully functional code component library and CSS tokens",
               "stamp": {
                 "type": "image",
                 "src": "../../Assets/Blueprint/Storybook.svg",
@@ -263,7 +263,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Full implementation of using Storybook as context for an agentic workflow are still being tested, but early tests of the automated prototyping feature have been promising. Naturally, the next steps will be to audit each component to see how much effort it will take to get them to production-ready status."
+          "text": "Full implementation of using Storybook as context for an agentic workflow is still being tested, but early tests of the automated prototyping feature have been promising. Naturally, the next steps will be to audit each component to see how much effort it will take to get them to production-ready status."
         },
         {
           "type": "figure",
@@ -283,7 +283,7 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "Blueprint did not emerge from a linear path, but rather through ongoing feedback cycles, adaptation to new technology, and the guiding principle of meeting people where they are at. Prior to the Storybook implementation, Blueprint had already successfully facilitated a company-wide Figma migration and saved hundreds of hours in design time. Now that it is being built in code as part of an agentic workflow, Blueprint has evolved from static documentation into a living translator between design intent and functional implementation."
+          "text": "Blueprint did not emerge from a linear path, but rather through ongoing feedback cycles, adaptation to new technology, and the guiding principle of meeting people where they are. Prior to the Storybook implementation, Blueprint had already successfully facilitated a company-wide Figma migration and saved hundreds of hours in design time. Now that it is being built in code as part of an agentic workflow, Blueprint has evolved from static documentation into a living translator between design intent and functional implementation."
         }
       ]
     }
