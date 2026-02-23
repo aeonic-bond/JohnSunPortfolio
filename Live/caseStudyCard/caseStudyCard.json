@@ -1,5 +1,5 @@
 {
-  "splineVersion": "1",
+  "splineVersion": "3",
   "items": [
     {
       "kind": "torus",
@@ -42,7 +42,7 @@
     {
       "kind": "hcustomizer",
       "title": "Home Customizer",
-      "description": "Coming Soon: I designed multiple home customization modules.",
+      "description": "I designed multiple home customization for both user and internal product teams.",
       "tags": [
         "Domain Research",
         "Wireframes & Prototypes"
@@ -50,7 +50,7 @@
       "ctaLabel": "Soon!",
       "href": "/casestudy/?id=hcustomizer",
       "media": {
-        "splineUrl": "https://prod.spline.design/qlMDUHRdu8EDsFoQ/scene.splinecode"
+        "splineUrl": "https://prod.spline.design/MsyaeAwlSa6c0Zpz/scene.splinecode"
       }
     },
     {

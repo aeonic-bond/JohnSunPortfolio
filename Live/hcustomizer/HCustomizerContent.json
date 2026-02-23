@@ -5,7 +5,12 @@
   "publishedDate": "",
   "hero": {
     "title": "Home Customization Experiences on Two Fronts: User Personalization and Designer Curation",
-    "subtitle": "I showcase several designs that cover all aspects of home customization on the user side and the internal product side.",
+    "subtitle": "I showcase 3 designs that cover all aspects of home customization on the user side and the internal product side.",
+    "spline": {
+      "srcDefault": "https://prod.spline.design/NpdONpCxWeLw2ul3/scene.splinecode",
+      "srcDesktop": "https://prod.spline.design/8ibXAtWwjn30QF-e/scene.splinecode",
+      "title": "Home Customizer hero scene"
+    },
     "media": {
       "type": "image",
       "src": "",
