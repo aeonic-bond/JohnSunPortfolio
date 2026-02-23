@@ -1,7 +1,7 @@
 import { ModuleMount } from "/Sandbox/ModuleMount.js";
 
 const ASSETS = {
-  floorplan: "http://localhost:3845/assets/6ef9e2770ed69614d5df78e88cf61d08ea88e98f.png",
+  floorplan: "/Assets/HCustomizer/Section1/Floorplan.png",
   optionDefault: "/Assets/DYOH-Icons/StackedDoor.svg",
 };
 
