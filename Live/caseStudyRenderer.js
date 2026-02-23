@@ -249,6 +249,7 @@ const createMediaElement = (media, className, captionId = "") => {
     video.autoplay = Boolean(media.autoplay);
     video.loop = Boolean(media.loop);
     video.muted = Boolean(media.muted);
+    if (video.muted) video.setAttribute("muted", "");
     video.playsInline = true;
     if (captionId) {
       video.setAttribute("aria-labelledby", captionId);
@@ -698,6 +699,7 @@ const createStampElement = (stamp, className = "cs-stamp") => {
     video.controls = true;
     video.playsInline = true;
     video.muted = true;
+    video.setAttribute("muted", "");
     video.loop = false;
     if (normalized.alt) video.setAttribute("aria-label", normalized.alt);
     stampEl.append(video);
