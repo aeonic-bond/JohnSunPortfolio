@@ -137,7 +137,7 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "I revisited the Design Your Own Home module to add a mobile-optimized furniture planner function. The old design has a furniture planner only available on desktop. To elegantly add a furniture planner to mobile, I decided to reduce prominence and streamline it as an add-on rather than a complete feature."
+          "text": "I revisited the Design Your Own Home module to add a mobile-optimized furniture planner function. The old design has a furniture planner only available on desktop. To elegantly add a furniture planner to mobile, I decided to reduce prominence, add variant-select state, and streamline out the resizing feature that do not apply to furniture with pre-set sizes."
         },
         {
           "type": "figMatrix",
@@ -145,19 +145,19 @@
           "figures": [
             {
               "src": "../../Assets/HCustomizer/Section3/FP1.png",
-              "caption": ""
+              "caption": "The furniture planner button is placed at the bottom right corner"
             },
             {
               "src": "../../Assets/HCustomizer/Section3/FP2.png",
-              "caption": ""
+              "caption": "User can select from a horizontal carousel of furniture category."
             },
             {
               "src": "../../Assets/HCustomizer/Section3/FP3.png",
-              "caption": ""
+              "caption": "User can place a default piece and then move, rotate, delete, or change variant."
             },
             {
               "src": "../../Assets/HCustomizer/Section3/FP4.png",
-              "caption": ""
+              "caption": "User can swap variants of the furniture in a dedicated variant-swap state."
             }
           ]
         }

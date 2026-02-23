@@ -684,8 +684,8 @@
 }
 
 .cs-fig-matrix--mobile-screens .cs-fig.cs-fig--matrix-item {
-  justify-self: center;
-  max-width: 375px;
+  justify-self: stretch;
+  max-width: none;
 }
 
 @media (min-width: 1024px) {
@@ -694,6 +694,10 @@
     margin-left: var(--cs-breakout-margin);
     margin-right: var(--cs-breakout-margin);
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cs-fig-matrix.cs-fig-matrix--mobile-screens {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 

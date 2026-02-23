@@ -12,8 +12,8 @@
   --font-display: "Crimson Pro", "Crimson Text", serif;
 
   /* Typography tokens */
-  --type-h1: normal 700 56px/56px var(--font-display);
-  --type-h2: normal 700 40px/40px var(--font-display);
+  --type-h1: normal 700 clamp(36px, 8vw, 56px) / clamp(40px, 8.4vw, 56px) var(--font-display);
+  --type-h2: normal 700 clamp(30px, 6vw, 40px) / clamp(34px, 6.4vw, 40px) var(--font-display);
   --type-navH: normal 500 24px/24px var(--font-display);
   --type-subtitle-l: normal 600 24px/30px var(--font-flourish);
   --type-subtitle-m: normal 600 20px/30px var(--font-flourish);
