@@ -75,6 +75,9 @@
             "Child - Options that can be toggled on if another independent option is toggled on.",
             "Conflict Group - 2+ groups of options where only one option can be selected. Sometimes, there are option bundles of 2+ options that are independent of options in the bundle."
           ]
+        },
+        {
+          "type": "moduleShowcase"
         }
       ]
     }

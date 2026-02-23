@@ -76,11 +76,17 @@
 .cs-paragraph-subsection {
   display: grid;
   row-gap: var(--space-500);
+  padding-top: var(--space-300);
 }
 
 .cs-paragraph-subtitle {
   font: var(--type-subtitle-l);
   color: var(--color-text-secondary);
+}
+
+/* Module Showcase Block */
+.cs-module-showcase {
+  width: 100%;
 }
 
  /* Bullet Row */

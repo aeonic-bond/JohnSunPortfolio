@@ -61,6 +61,12 @@ const createParagraphSubsectionElement = (block = {}) => {
   return subsectionEl;
 };
 
+const createModuleShowcaseElement = () => {
+  const moduleShowcaseEl = document.createElement("div");
+  moduleShowcaseEl.className = "cs-module-showcase";
+  return moduleShowcaseEl;
+};
+
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 let flowTrackerRafId = 0;
 let flowTrackerEventsBound = false;
@@ -941,6 +947,11 @@ const renderCaseStudy = (content = {}, root) => {
 
       if (block.type === "progressRow") {
         section.append(createProgressRowElement(block));
+        continue;
+      }
+
+      if (block.type === "moduleShowcase" || block.type === "module-showcase") {
+        section.append(createModuleShowcaseElement());
       }
     }
 
