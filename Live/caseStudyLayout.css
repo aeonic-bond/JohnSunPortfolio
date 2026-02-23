@@ -657,6 +657,46 @@
   color: var(--color-accent);
 }
 
+.cs-fig-matrix {
+  display: grid;
+  gap: var(--space-block-500);
+  min-width: 0;
+  overflow-x: clip;
+  width: 100%;
+}
+
+.cs-fig.cs-fig--matrix-item {
+  display: grid;
+  gap: var(--space-500);
+  margin: 0;
+  min-width: 0;
+  overflow-x: clip;
+  width: 100%;
+}
+
+.cs-fig.cs-fig--matrix-item .cs-fig-image {
+  max-width: 100%;
+}
+
+.cs-fig.cs-fig--matrix-item .cs-fig-caption {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.cs-fig-matrix--mobile-screens .cs-fig.cs-fig--matrix-item {
+  justify-self: center;
+  max-width: 375px;
+}
+
+@media (min-width: 1024px) {
+  .cs-fig-matrix {
+    width: var(--cs-breakout-width);
+    margin-left: var(--cs-breakout-margin);
+    margin-right: var(--cs-breakout-margin);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
  /* Stamp */
 .cs-stamp {
   width: 100%;

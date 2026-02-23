@@ -22,5 +22,5 @@
   --type-body-m: normal 300 18px/27px var(--font-body);
   --type-list-m: normal 300 15px/21px var(--font-flourish);
   --type-action: normal 600 14px/14px var(--font-flourish);
-  --type-caption-m: normal 300 15px/15px var(--font-flourish);
+  --type-caption-m: normal 400 15px/20px var(--font-flourish);
 }

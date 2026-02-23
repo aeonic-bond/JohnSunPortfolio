@@ -90,11 +90,76 @@
     },
     {
       "id": "section-02",
-      "header": "Section 02",
+      "header": "Collection Builder",
       "blocks": [
         {
           "type": "paragraph",
-          "text": ""
+          "text": "On the internal product side, the product team would curate features for designer-appointed collections using PDFs. As the company pivoted to more pre-selected builds and quick move-in homes, the product team needed an internal tool to construct collections of products at scale. I partnered with a senior developer, and designed the MVP wireframes from scratch. For a desktop-only tool, these were the basic requirements:"
+        },
+        {
+          "type": "bulletRow",
+          "items": [
+            "Create new collections.",
+            "Add features to a collection.",
+            "Add new features to the system."
+          ]
+        },
+        {
+          "type": "figMatrix",
+          "figures": [
+            {
+              "src": "../../Assets/HCustomizer/Section2/CB1.png",
+              "caption": "Collection Builder main page showing collection cards with mosaic feature thumbnail. Cards are categorized by publish states."
+            },
+            {
+              "src": "../../Assets/HCustomizer/Section2/CB2.png",
+              "caption": "A single collection showing added features categorized by location. A general select feature button is on top right and each location has a smaller location specific select feature button."
+            },
+            {
+              "src": "../../Assets/HCustomizer/Section2/CB3.png",
+              "caption": "Select Features modal shows selected and recommended features. The gray indicator on the top right corner visually indicates selection state and enables location change."
+            },
+            {
+              "src": "../../Assets/HCustomizer/Section2/CB4.png",
+              "caption": "Upload Feature screen lives as a tab on the Select Features modal. It has a suggestive guardrail against duplicate feature uploads."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "During the build process, my developer partner and I fleshed out some additional key requirements that were management-focused such as multi-upload, duplicate prevention, and publish states. The demo of this project received internal approval and was added to the backlog."
+        }
+      ]
+    },
+    {
+      "id": "section-03",
+      "header": "Furniture Planner",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "I revisited the Design Your Own Home module to add a mobile-optimized furniture planner function. The old design has a furniture planner only available on desktop. To elegantly add a furniture planner to mobile, I decided to reduce prominence and streamline it as an add-on rather than a complete feature."
+        },
+        {
+          "type": "figMatrix",
+          "variant": "mobileScreens",
+          "figures": [
+            {
+              "src": "../../Assets/HCustomizer/Section3/FP1.png",
+              "caption": ""
+            },
+            {
+              "src": "../../Assets/HCustomizer/Section3/FP2.png",
+              "caption": ""
+            },
+            {
+              "src": "../../Assets/HCustomizer/Section3/FP3.png",
+              "caption": ""
+            },
+            {
+              "src": "../../Assets/HCustomizer/Section3/FP4.png",
+              "caption": ""
+            }
+          ]
         }
       ]
     }

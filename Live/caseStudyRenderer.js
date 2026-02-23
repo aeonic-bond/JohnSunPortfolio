@@ -398,6 +398,46 @@ const createFigureElement = (figure = {}) => {
   });
 };
 
+const createFigMatrixElement = (block = {}) => {
+  const wrapper = document.createElement("div");
+  const variantKey = String(block.variant || "")
+    .trim()
+    .toLowerCase();
+  const normalizedVariant =
+    variantKey === "mobilescreens" || variantKey === "mobile-screens"
+      ? "mobile-screens"
+      : "";
+  wrapper.className = `cs-fig-matrix${normalizedVariant ? ` cs-fig-matrix--${normalizedVariant}` : ""}`;
+  wrapper.dataset.blockType = "figMatrix";
+  if (typeof block.id === "string" && block.id.trim()) {
+    wrapper.id = block.id.trim();
+  }
+
+  const rawFigures = Array.isArray(block.figures)
+    ? block.figures
+    : Array.isArray(block.items)
+      ? block.items
+      : [];
+  const figures = rawFigures
+    .filter((figure) => figure && typeof figure === "object")
+    .slice(0, 4);
+
+  for (const figure of figures) {
+    const media = normalizeFigureMedia(figure);
+    if (!media?.src) continue;
+    const figureEl = createMediaBlockElement({
+      id: figure.id || "",
+      media,
+      blockClassName: "cs-fig cs-fig--matrix-item",
+      mediaClassName: "cs-fig-image",
+      includeCaption: true,
+    });
+    wrapper.append(figureEl);
+  }
+
+  return wrapper;
+};
+
 const createHeroMediaElement = (hero = {}) =>
   createMediaBlockElement({
     media: normalizeHeroMedia(hero),
@@ -1018,6 +1058,11 @@ const renderCaseStudy = (content = {}, root) => {
 
       if (block.type === "moduleMount" || block.type === "module-mount") {
         section.append(createModuleMountElement(block));
+        continue;
+      }
+
+      if (block.type === "figMatrix" || block.type === "fig-matrix") {
+        section.append(createFigMatrixElement(block));
         continue;
       }
     }

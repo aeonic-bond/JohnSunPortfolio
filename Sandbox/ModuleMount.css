@@ -30,10 +30,16 @@
   background: var(--color-bg-gray, #272e2e);
   border: 1px solid var(--color-accent-soft, rgba(236, 188, 42, 0.2));
   border-radius: 100px;
-  display: flex;
+  display: none;
   gap: 0;
   padding: 2px;
   position: relative;
+}
+
+@media (min-width: 1024px) {
+  .module-mount__view-toggle {
+    display: flex;
+  }
 }
 
 .module-mount__view-selector {
