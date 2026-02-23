@@ -76,7 +76,7 @@
 .cs-paragraph-subsection {
   display: grid;
   row-gap: var(--space-500);
-  padding-top: var(--space-300);
+  padding-top: var(--space-block-500);
 }
 
 .cs-paragraph-subtitle {
@@ -154,6 +154,10 @@
   align-items: stretch;
 }
 
+.cs-bullet-item.cs-bullet-item--with-image .cs-stamp {
+  align-self: center;
+}
+
 #section-11 .cs-bullet-row .cs-bullet-item.cs-bullet-item--with-image {
   gap: var(--space-500);
 }
@@ -211,6 +215,10 @@
   font: var(--type-subtitle-l);
   color: var(--color-text-primary);
   padding-bottom: calc(var(--space-500) + var(--space-300));
+}
+
+.cs-bullet-item-stamp {
+  padding-bottom: var(--space-700);
 }
 
 .cs-bullet-item-title + .cs-bullet-item-text-block {

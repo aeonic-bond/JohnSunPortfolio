@@ -31,37 +31,38 @@
       "blocks": [
         {
           "type": "paragraph-subsection",
-          "subtitle": "Problem & Goals",
+          "subtitle": "Problems & Goal",
           "text": "For Toll Brothers, “choice” is a core to its luxury identity. User can customize structural options (i.e. fireplaces, room layouts, etc…) However, the old home customization module has major flaws."
         },
         {
-          "type": "progressMatrix",
+          "type": "bulletRow",
           "items": [
             {
-              "primary": "Many options have complex dependencies (e.g., selecting Option A disables Option B), but the UI fails to communicate it.",
-              "secondary": "Scope out all the possible logic dependencies and create a framework.",
-              "primaryStamp": {
+              "text": "Many options have complex dependencies (e.g., selecting Option A disables Option B), but the UI fails to communicate it.",
+              "stamp": {
                 "src": "../../Assets/HCustomizer/Section1/Problem1.png",
                 "alt": "Dependency logic problem diagram"
               }
             },
             {
-              "primary": "Users have to rely on trial-and-error and dense tooltips, resulting in a frustrating experience.",
-              "secondary": "Create a systematic visualization for each dependency.",
-              "primaryStamp": {
+              "text": "Users have to rely on trial-and-error and dense tooltips, resulting in a frustrating experience.",
+              "stamp": {
                 "src": "../../Assets/HCustomizer/Section1/Problem2.png",
                 "alt": "Trial-and-error and tooltip-heavy experience"
               }
             },
             {
-              "primary": "It’s not built on mobile first principles.",
-              "secondary": "Consider the best mobile pattern for a module to house both the main floorplan visual and the list of options.",
-              "primaryStamp": {
+              "text": "It’s built on desktop-first principles, lacks features, and has wonky controls.",
+              "stamp": {
                 "src": "../../Assets/HCustomizer/Section1/Problem3.png",
-                "alt": "Mobile-first module pattern requirement"
+                "alt": "Poor mobile experience"
               }
             }
           ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The main goal for a redesign will be to scope out all the possible logic dependencies and create a framework that can be systematically visualized."
         },
         {
           "type": "paragraph-subsection",
