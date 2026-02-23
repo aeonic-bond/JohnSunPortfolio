@@ -455,15 +455,21 @@ const createHeroSplineEmbedElement = (spline = {}, hero = {}) => {
   const initialUrl = getUrl();
   if (!initialUrl) return null;
 
-  const viewer = document.createElement("spline-viewer");
-  viewer.className = "cs-hero-spline-embed";
-  viewer.setAttribute("url", initialUrl);
-  viewer.setAttribute("aria-label", spline.title || hero?.title || "Interactive 3D scene");
+  const ariaLabel = spline.title || hero?.title || "Interactive 3D scene";
+  const makeViewer = (url) => {
+    const v = document.createElement("spline-viewer");
+    v.className = "cs-hero-spline-embed";
+    v.setAttribute("url", url);
+    v.setAttribute("aria-label", ariaLabel);
+    return v;
+  };
+  let viewer = makeViewer(initialUrl);
   const updateUrl = () => {
     const nextUrl = getUrl();
-    if (nextUrl && nextUrl !== viewer.getAttribute("url")) {
-      viewer.setAttribute("url", nextUrl);
-    }
+    if (!nextUrl || nextUrl === viewer.getAttribute("url")) return;
+    const next = makeViewer(nextUrl);
+    viewer.replaceWith(next);
+    viewer = next;
   };
   if (typeof desktopQuery.addEventListener === "function") {
     desktopQuery.addEventListener("change", updateUrl);
