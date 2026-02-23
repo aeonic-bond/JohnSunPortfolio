@@ -60,7 +60,7 @@
           "type": "bulletRow",
           "items": [
             "Revit families are difficult to create. - \n\n“Families are commonly used and not static...they can be tedious to set up.” - Danny\n\n“It’s something I prefer not to do and takes too much of my time [because] it’s forcing us to build it like engineers.” - Dincer",
-            "Entire company roles are needed to help keep practices consistent. - \n\n“There are schools of thoughts, but people generally don’t follow them. Someone might say it works well when testing them in narrow cases, but I can tell they are not correctly build.” - Mark",
+            "Entire company roles are needed to help keep practices consistent. - \n\n“There are schools of thought, but people generally don’t follow them. Someone might say it works well when testing them in narrow cases, but I can tell they are not correctly built.” - Mark",
             "Stock families often can't be customized for unique projects. - \n\n“Everything is made new because every project is different.” - Ihnil"
           ]
         },
@@ -108,7 +108,7 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "To determine which tools and features to prioritize, I consulted with Matthew and Nicky and learned to model several basic families in Revit to understand the parametric workflow. The core workflow involves 3 separate tools each with their own separate processes: placing reference planes (RPs act as variables in 3D space to prevent \"hard-coded\" values), drawing a magic line with the Aligned Dimensions tool, then using the label tool to parametricize the magic line. As a team, we decided that Torus’ UX differentiator will be to streamline this workflow with these three requirements."
+          "text": "To determine which tools and features to prioritize, I consulted with Matthew and Nicky and learned to model several basic families in Revit to understand the parametric workflow. The core workflow involves 3 separate tools each with their own separate processes: placing reference planes (RPs act as variables in 3D space to prevent \"hard-coded\" values), drawing a magic line with the Aligned Dimensions tool, then using the label tool to parameterize the magic line. As a team, we decided that Torus’ UX differentiator will be to streamline this workflow with these three requirements."
         },
         {
           "type": "bulletRow",
@@ -122,7 +122,7 @@
     },
     {
       "id": "section-06",
-      "header": "The UX of Adding Reference Planes",
+      "header": "Streamlining Adding Reference Planes and Setting Parameters",
       "blocks": [
         {
           "type": "paragraph",
@@ -140,31 +140,12 @@
           "type": "paragraph",
           "text": "There was a design fork at Step 3. I could prompt the user to enter a distance and/or a parameter, and the child plane is generated automatically. I ultimately decided against this and opted for the user manually placing it with the cursor. I didn't want to completely strip away the pen-and-paper drafting mimicry that Revit relied on, as I was told verbatim, \"most architects are still artists at heart, and not developers.\""
         },
-        {
-          "type": "figure",
-          "figure": {
-            "type": "video",
-            "src": "../../Assets/Torus/Case Study/OffsetRPTool.mp4",
-            "poster": "../../Assets/Torus/Case Study/video previews/OffsetRPToolPreview.png",
-            "caption": "Offset RP tool creates a child RP.",
-            "credit": "",
-            "controls": true,
-            "autoplay": false,
-            "loop": false,
-            "muted": false,
-            "preload": "metadata"
-          }
-        }
-      ]
-    },
-    {
-      "id": "section-07",
-      "header": "The UX of Setting Parameters",
-      "blocks": [
+
         {
           "type": "paragraph",
           "text": "Next, I worked on streamlining the parameter-setting UX. In Revit, setting a single parameter is a minimum 2-step process with 2 different tools.\n\nFor Torus, I wanted to reduce it to 1 step and 1 feature by seamlessly integrating parameter setting with RP creation. I designed the offsetRP tool to have an automatic distance indicator. This distance indicator consisted of a dotted line connecting the RP to its parent and a value box. I designed the value box to turn into an input field where the user can type a parameter name and press Enter to confirm."
         },
+
         {
           "type": "figure",
           "figure": {
@@ -173,17 +154,14 @@
             "poster": "../../Assets/Torus/Case Study/video previews/SettingParameterPreview.png",
             "caption": "Setting a LENGTH parameter after creating a child RP.",
             "credit": "",
-            "controls": true,
-            "autoplay": false,
-            "loop": false,
-            "muted": false,
             "preload": "metadata"
           }
         }
       ]
     },
+
     {
-      "id": "section-08",
+      "id": "section-07",
       "header": "The OffsetEQRP Tool",
       "blocks": [
         {
@@ -198,17 +176,13 @@
             "poster": "../../Assets/Torus/Case Study/video previews/OffsetEQRPToolPreview.png",
             "caption": "Offset EQ RP tool creates a symmetrical RP pair.",
             "credit": "",
-            "controls": true,
-            "autoplay": false,
-            "loop": false,
-            "muted": false,
             "preload": "metadata"
           }
         }
       ]
     },
     {
-      "id": "section-09",
+      "id": "section-08",
       "header": "Demo Building",
       "blocks": [
         {
@@ -226,7 +200,7 @@
       ]
     },
     {
-      "id": "section-10",
+      "id": "section-9",
       "header": "Demo Testing & Iteration",
       "blocks": [
         {
@@ -272,7 +246,7 @@
       ]
     },
     {
-      "id": "section-11",
+      "id": "section-10",
       "header": "Next Steps",
       "blocks": [
         {
@@ -304,7 +278,7 @@
       ]
     },
     {
-      "id": "section-12",
+      "id": "section-11",
       "header": "Conclusion",
       "blocks": [
         {

@@ -266,8 +266,18 @@ const createMediaElement = (media, className, captionId = "") => {
   return img;
 };
 
-const normalizeFigureMedia = (figure = {}) =>
-  normalizeMedia(figure, { variant: "figure", showCaption: true });
+const normalizeFigureMedia = (figure = {}) => {
+  const media = normalizeMedia(figure, { variant: "figure", showCaption: true });
+  if (!media || media.type !== "video") return media;
+  const hasOwn = (key) => Object.prototype.hasOwnProperty.call(figure, key);
+  return {
+    ...media,
+    controls: hasOwn("controls") ? media.controls : false,
+    autoplay: hasOwn("autoplay") ? media.autoplay : true,
+    loop: hasOwn("loop") ? media.loop : true,
+    muted: hasOwn("muted") ? media.muted : true,
+  };
+};
 
 const normalizeHeroMedia = (hero = {}) =>
   normalizeMedia(

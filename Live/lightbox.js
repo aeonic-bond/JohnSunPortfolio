@@ -267,7 +267,7 @@ const initLightbox = () => {
     if (!(target instanceof Element)) return;
 
     const figure = target.closest(".cs-fig");
-    if (figure && !figure.querySelector("video")) {
+    if (figure) {
       openOverlay(figure);
     }
   });
