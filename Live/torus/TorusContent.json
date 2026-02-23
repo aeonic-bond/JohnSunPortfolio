@@ -152,7 +152,7 @@
             "type": "video",
             "src": "../../Assets/Torus/Case Study/SettingParameter.mp4",
             "poster": "../../Assets/Torus/Case Study/video previews/SettingParameterPreview.png",
-            "caption": "Creating a child RP and then directly setting a LENGTH parameter",
+            "caption": "User creates a child RP with the OffsetRP tool and then setting a LENGTH parameter",
             "credit": "",
             "preload": "metadata"
           }
@@ -174,7 +174,7 @@
             "type": "video",
             "src": "../../Assets/Torus/Case Study/OffsetEQRPTool.mp4",
             "poster": "../../Assets/Torus/Case Study/video previews/OffsetEQRPToolPreview.png",
-            "caption": "Offset EQ RP tool creates a symmetrical RP pair.",
+            "caption": "User creates a symmetrical RP pair with the OffsetEQRP tool",
             "credit": "",
             "preload": "metadata"
           }
