@@ -87,6 +87,16 @@
           "src": "/Sandbox/ModuleDYOH.json"
         }
       ]
+    },
+    {
+      "id": "section-02",
+      "header": "Section 02",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": ""
+        }
+      ]
     }
   ]
 }

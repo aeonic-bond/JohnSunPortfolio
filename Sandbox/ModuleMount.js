@@ -5,7 +5,7 @@ export const ModuleMount = {
     root.className = "module-mount";
     const prompt = document.createElement("p");
     prompt.className = "module-mount__prompt";
-    prompt.textContent = "interactive module - please try";
+    prompt.textContent = "interactive module";
     root.appendChild(prompt);
     if (contentNode) root.appendChild(contentNode);
     return root;

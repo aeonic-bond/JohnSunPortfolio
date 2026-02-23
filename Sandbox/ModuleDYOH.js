@@ -520,16 +520,19 @@ OptionGroup.create = function createOptionGroup({
 
 export const ModuleDYOH = {
   name: "module-dyoh",
-  create({ state = "default", F1List, F2List } = {}) {
+  create({ state = "default", variant = "mobile", F1List, F2List } = {}) {
     const normalizedF1List = Array.isArray(F1List) ? F1List : [OptionGroup.defaults];
     const normalizedF2List = Array.isArray(F2List) ? F2List : [];
     const root = el("div", "module-dyoh");
     let currentState = state === "panel" ? "panel" : "default";
+    const currentVariant = String(variant || "mobile").toLowerCase() === "desktop" ? "desktop" : "mobile";
     let currentFloor = "first";
 
     function applyState(nextState) {
       currentState = nextState === "panel" ? "panel" : "default";
-      root.className = `module-dyoh ${currentState === "panel" ? "module-dyoh--panel" : "module-dyoh--default"}`;
+      root.className = `module-dyoh module-dyoh--${currentVariant} ${
+        currentState === "panel" ? "module-dyoh--panel" : "module-dyoh--default"
+      }`;
     }
 
     const floorplanContainer = el("div", "module-dyoh__floorplan-container");
