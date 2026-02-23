@@ -4,7 +4,7 @@
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  max-width: 360px;
+  max-width: 340px;
   min-height: 0;
   overflow: clip;
   width: 100%;
@@ -26,7 +26,7 @@
 .module-dyoh--desktop {
   aspect-ratio: 16 / 9;
   flex-direction: row;
-  max-width: 960px;
+  max-width: 100%;
 }
 
 .module-dyoh--desktop .module-dyoh__floorplan-container {
