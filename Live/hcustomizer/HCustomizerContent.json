@@ -5,7 +5,7 @@
   "publishedDate": "",
   "hero": {
     "title": "Home Customization Experiences on Two Fronts: User Personalization and Designer Curation",
-    "subtitle": "I showcase 3 designs that cover all aspects of home customization on the user side and the internal product side.",
+    "subtitle": "I showcase three designs that cover all aspects of home customization on both the user and internal product sides.",
     "spline": {
       "srcDefault": "https://prod.spline.design/NpdONpCxWeLw2ul3/scene.splinecode",
       "srcDesktop": "https://prod.spline.design/8ibXAtWwjn30QF-e/scene.splinecode",
@@ -26,7 +26,7 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "I led design for major Toll Brothers home customization modules, both internal and external. The three projects I selected showcase elegant UI built on problem solving."
+          "text": "I led design for major Toll Brothers home customization modules, both internal and external. The three projects I selected showcase elegant UI built on problem-solving."
         }
       ]
     },
@@ -122,17 +122,17 @@
             },
             {
               "src": "../../Assets/HCustomizer/Section2/CB3.png",
-              "caption": "Select Features modal shows selected and recommended features. The gray indicator on the top right corner visually indicates selection state and enables location change."
+              "caption": "The Select Features modal shows selected and recommended features. The gray indicator in the top-right corner communicates selection state and enables location changes."
             },
             {
               "src": "../../Assets/HCustomizer/Section2/CB4.png",
-              "caption": "Upload Feature screen lives as a tab on the Select Features modal. It has a suggestive guardrail against duplicate feature uploads."
+              "caption": "The Upload Feature screen appears as a tab on the Select Features modal. It includes a guardrail against duplicate feature uploads."
             }
           ]
         },
         {
           "type": "paragraph",
-          "text": "During the build process, my developer partner and I fleshed out some additional key requirements that were management-focused such as multi-upload, duplicate prevention, and publish states. The demo of this project received internal approval and was added to the backlog."
+          "text": "During the build process, my developer partner and I fleshed out additional management-focused requirements, such as multi-upload, duplicate prevention, and publish states. The demo for this project received internal approval and was added to the backlog."
         }
       ]
     },
@@ -142,7 +142,7 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "I revisited the Design Your Own Home module to add a mobile-optimized furniture planner function. The old design has a furniture planner available only on desktop. To elegantly add a furniture planner to mobile, I reduced its prominence, added a variant-selection state, and streamlined out resizing features that do not apply to furniture with preset sizes."
+          "text": "I revisited the Design Your Own Home module to add a mobile-optimized furniture planner function. The old design includes a furniture planner available only on desktop. To elegantly add a furniture planner to mobile, I reduced its prominence, added a variant-selection state, and removed resizing features that do not apply to furniture with preset sizes."
         },
         {
           "type": "figMatrix",
@@ -150,7 +150,7 @@
           "figures": [
             {
               "src": "../../Assets/HCustomizer/Section3/FP1.png",
-              "caption": "The furniture planner button is placed at the bottom right corner"
+              "caption": "The furniture planner button is placed in the bottom-right corner."
             },
             {
               "src": "../../Assets/HCustomizer/Section3/FP2.png",
@@ -158,11 +158,11 @@
             },
             {
               "src": "../../Assets/HCustomizer/Section3/FP3.png",
-              "caption": "User can place a default piece and then move, rotate, delete, or change variant."
+              "caption": "Users can place a default piece and then move, rotate, delete, or change variants."
             },
             {
               "src": "../../Assets/HCustomizer/Section3/FP4.png",
-              "caption": "User can swap variants of the furniture in a dedicated variant-swap state."
+              "caption": "Users can swap furniture variants in a dedicated variant-swap state."
             }
           ]
         }
