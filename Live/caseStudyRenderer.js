@@ -247,6 +247,7 @@ const createMediaElement = (media, className, captionId = "") => {
     video.preload = media.preload || "metadata";
     video.controls = media.controls !== false;
     video.autoplay = Boolean(media.autoplay);
+    if (video.autoplay) video.setAttribute("autoplay", "");
     video.loop = Boolean(media.loop);
     video.muted = Boolean(media.muted);
     if (video.muted) video.setAttribute("muted", "");
@@ -267,18 +268,8 @@ const createMediaElement = (media, className, captionId = "") => {
   return img;
 };
 
-const normalizeFigureMedia = (figure = {}) => {
-  const media = normalizeMedia(figure, { variant: "figure", showCaption: true });
-  if (!media || media.type !== "video") return media;
-  const hasOwn = (key) => Object.prototype.hasOwnProperty.call(figure, key);
-  return {
-    ...media,
-    controls: hasOwn("controls") ? media.controls : false,
-    autoplay: hasOwn("autoplay") ? media.autoplay : true,
-    loop: hasOwn("loop") ? media.loop : true,
-    muted: hasOwn("muted") ? media.muted : true,
-  };
-};
+const normalizeFigureMedia = (figure = {}) =>
+  normalizeMedia(figure, { variant: "figure", showCaption: true });
 
 const normalizeHeroMedia = (hero = {}) =>
   normalizeMedia(
