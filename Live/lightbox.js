@@ -3,6 +3,7 @@ const ZOOM_KEYS = new Set(["+", "=", "-", "_", "0"]);
 const MEDIA_MIN_ZOOM = 1;
 const MEDIA_MAX_ZOOM = 4;
 const MEDIA_ZOOM_STEP = 0.15;
+let lightboxTriggerElement = null;
 
 const isOverlayOpen = () => {
   const overlay = document.getElementById(OVERLAY_ID);
@@ -174,6 +175,10 @@ const ensureOverlay = () => {
   overlay.setAttribute("aria-hidden", "true");
   const panel = document.createElement("div");
   panel.className = "cs-lightbox-panel";
+  panel.setAttribute("role", "dialog");
+  panel.setAttribute("aria-modal", "true");
+  panel.setAttribute("aria-label", "Media lightbox");
+  panel.tabIndex = -1;
   const panelHeader = document.createElement("div");
   panelHeader.className = "cs-lightbox-panelHeader";
   const closeButton = document.createElement("button");
@@ -201,10 +206,32 @@ const ensureOverlay = () => {
     }
   });
 
+  overlay.addEventListener("keydown", (event) => {
+    if (!isOverlayOpen() || event.key !== "Tab") return;
+    const focusable = Array.from(
+      panel.querySelectorAll('button:not([disabled]), [tabindex]:not([tabindex="-1"]), video[controls]')
+    );
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey) {
+      if (document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+  });
+
   return overlay;
 };
 
 const openOverlay = (figureElement) => {
+  lightboxTriggerElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
   if (!setMediaFromFigure(figureElement)) return;
   const overlay = ensureOverlay();
   overlay.setAttribute("aria-hidden", "false");
@@ -212,6 +239,8 @@ const openOverlay = (figureElement) => {
 
   window.requestAnimationFrame(() => {
     applyContainedMediaSize(getMediaMount());
+    const closeButton = overlay.querySelector(".cs-lightbox-closeButton");
+    if (closeButton instanceof HTMLElement) closeButton.focus();
   });
 };
 
@@ -223,6 +252,10 @@ const closeOverlay = () => {
   mediaMount?.replaceChildren();
   overlay.setAttribute("aria-hidden", "true");
   document.body.classList.remove("cs-lightbox-active");
+  if (lightboxTriggerElement instanceof HTMLElement) {
+    lightboxTriggerElement.focus();
+    lightboxTriggerElement = null;
+  }
 };
 
 const initLightbox = () => {

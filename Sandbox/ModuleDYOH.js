@@ -81,8 +81,6 @@ export const Option = {
             ? "option--can-swap"
             : "option--unselected";
       root.className = `option${optionVariantClass}${isLastChild ? " option--last-child" : ""} ${optionStateClass}`;
-      root.setAttribute("aria-pressed", String(isSelected));
-      root.setAttribute("aria-disabled", String(isDisabled));
       root.dataset.state = effectiveState;
       if (normalizedType) {
         root.dataset.type = normalizedType;
@@ -102,7 +100,9 @@ export const Option = {
       }
 
       row.tabIndex = isDisabled ? -1 : 0;
-      row.setAttribute("role", isDisabled ? "group" : "button");
+      row.setAttribute("role", "button");
+      row.setAttribute("aria-pressed", String(isSelected));
+      row.setAttribute("aria-disabled", String(isDisabled));
     }
 
     function toggle() {

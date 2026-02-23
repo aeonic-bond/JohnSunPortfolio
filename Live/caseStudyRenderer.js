@@ -863,6 +863,7 @@ const createFlowRowElement = (flowRow) => {
   flowRowEl.className = "cs-flow-row";
   const flowTrackerEl = document.createElement("div");
   flowTrackerEl.className = "cs-flow-row-tracker";
+  flowTrackerEl.setAttribute("aria-hidden", "true");
   const flowItemsGroupEl = document.createElement("div");
   flowItemsGroupEl.className = "cs-flow-row-items-group";
 

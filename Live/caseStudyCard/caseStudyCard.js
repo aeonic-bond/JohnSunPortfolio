@@ -25,6 +25,7 @@ const createCaseStudyCard = ({
   card.dataset.status = normalizedStatus;
   if (manualDisabled) card.dataset.manualDisabled = "true";
   if (kind) card.dataset.cardKind = kind;
+  if (kind) card.setAttribute("aria-labelledby", `card-title-${String(kind).trim().toLowerCase()}`);
 
   const mediaEl = document.createElement("div");
   mediaEl.className = "card-media-div";
@@ -50,6 +51,8 @@ const createCaseStudyCard = ({
   const titleEl = document.createElement("h2");
   titleEl.className = "card-title";
   titleEl.textContent = title;
+  const titleId = kind ? `card-title-${String(kind).trim().toLowerCase()}` : "";
+  if (titleId) titleEl.id = titleId;
   titleWrap.append(titleEl);
 
   const textWrap = document.createElement("div");
@@ -97,6 +100,10 @@ const createCaseStudyCard = ({
         navigate();
       }
     });
+    // Card is the interactive link; hide the CTA button from screen readers to avoid
+    // a duplicate nested interactive element.
+    ctaButton.setAttribute("aria-hidden", "true");
+    ctaButton.tabIndex = -1;
     ctaButton.addEventListener("click", (event) => {
       event.stopPropagation();
       navigate();

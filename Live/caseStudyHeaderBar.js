@@ -251,7 +251,7 @@ const ensureHeaderBar = () => {
   const menu = document.createElement("button");
   menu.type = "button";
   menu.className = HEADER_MENU_CLASS;
-  menu.setAttribute("aria-label", "Open case study menu");
+  menu.setAttribute("aria-label", "Case study menu");
   menu.setAttribute("aria-haspopup", "menu");
   menu.setAttribute("aria-expanded", "false");
 
