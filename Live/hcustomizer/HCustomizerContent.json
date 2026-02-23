@@ -31,13 +31,50 @@
       "blocks": [
         {
           "type": "paragraph-subsection",
-          "subtitle": "Module",
-          "text": "In order to redesign the experience around mobile-first principles, I needed a core pattern to house both the visual floorplan and the list data. I picked the popular bottom sheet pattern that can dynamically alter size based on current focus."
+          "subtitle": "Problem & Goals",
+          "text": "For Toll Brothers, “choice” is a core to its luxury identity. User can customize structural options (i.e. fireplaces, room layouts, etc…) However, the old home customization module has major flaws."
+        },
+        {
+          "type": "progressMatrix",
+          "items": [
+            {
+              "primary": "Many options have complex dependencies (e.g., selecting Option A disables Option B), but the UI fails to communicate it.",
+              "secondary": "Scope out all the possible logic dependencies and create a framework.",
+              "primaryStamp": {
+                "src": "../../Assets/HCustomizer/Section1/Problem1.png",
+                "alt": "Dependency logic problem diagram"
+              }
+            },
+            {
+              "primary": "Users have to rely on trial-and-error and dense tooltips, resulting in a frustrating experience.",
+              "secondary": "Create a systematic visualization for each dependency.",
+              "primaryStamp": {
+                "src": "../../Assets/HCustomizer/Section1/Problem2.png",
+                "alt": "Trial-and-error and tooltip-heavy experience"
+              }
+            },
+            {
+              "primary": "It’s not built on mobile first principles.",
+              "secondary": "Consider the best mobile pattern for a module to house both the main floorplan visual and the list of options.",
+              "primaryStamp": {
+                "src": "../../Assets/HCustomizer/Section1/Problem3.png",
+                "alt": "Mobile-first module pattern requirement"
+              }
+            }
+          ]
         },
         {
           "type": "paragraph-subsection",
-          "subtitle": "List",
-          "text": "In order to redesign the experience around mobile-first principles, I needed a core pattern to house both the visual floorplan and the list data. I picked the popular bottom sheet pattern that can dynamically alter size based on current focus."
+          "subtitle": "Research",
+          "text": "I researched 80 home designs that offer DYOH and indexed the relationship logic between options. I analyzed the underlying logic and established a proper framework. I reached out to the Architecture team to confirm this framework."
+        },
+        {
+          "type": "bulletRow",
+          "items": [
+            "Independent - Options that can be toggled independently of any other options.",
+            "Child - Options that can be toggled on if another independent option is toggled on.",
+            "Conflict Group - 2+ groups of options where only one option can be selected. Sometimes, there are option bundles of 2+ options that are independent of options in the bundle."
+          ]
         }
       ]
     }
