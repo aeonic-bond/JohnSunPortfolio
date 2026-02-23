@@ -525,7 +525,7 @@ export const ModuleDYOH = {
     const normalizedF2List = Array.isArray(F2List) ? F2List : [];
     const root = el("div", "module-dyoh");
     let currentState = state === "panel" ? "panel" : "default";
-    const currentVariant = String(variant || "mobile").toLowerCase() === "desktop" ? "desktop" : "mobile";
+    let currentVariant = String(variant || "mobile").toLowerCase() === "desktop" ? "desktop" : "mobile";
     let currentFloor = "first";
 
     function applyState(nextState) {
@@ -533,6 +533,12 @@ export const ModuleDYOH = {
       root.className = `module-dyoh module-dyoh--${currentVariant} ${
         currentState === "panel" ? "module-dyoh--panel" : "module-dyoh--default"
       }`;
+    }
+
+    function redrawGroups() {
+      root.querySelectorAll(".option-group").forEach((groupNode) => {
+        groupNode.optionGroupApi?.redraw?.();
+      });
     }
 
     const floorplanContainer = el("div", "module-dyoh__floorplan-container");
@@ -585,10 +591,7 @@ export const ModuleDYOH = {
       f2OptionsContainer.hidden = isFirstFloor;
       updateMeta();
       requestAnimationFrame(() => {
-        const activeOptionsContainer = getActiveOptionsContainer();
-        activeOptionsContainer.querySelectorAll(".option-group").forEach((groupNode) => {
-          groupNode.optionGroupApi?.redraw?.();
-        });
+        redrawGroups();
       });
     }
 
@@ -670,6 +673,18 @@ export const ModuleDYOH = {
     panel.append(panelIndicator, tabs, meta, optionWrap);
     root.append(floorplanContainer, panel);
     applyState(currentState);
+    root.moduleDyohApi = {
+      getVariant() {
+        return currentVariant;
+      },
+      setVariant(nextVariant) {
+        currentVariant = String(nextVariant || "mobile").toLowerCase() === "desktop" ? "desktop" : "mobile";
+        applyState(currentState);
+        requestAnimationFrame(() => {
+          redrawGroups();
+        });
+      },
+    };
     return root;
   },
 };

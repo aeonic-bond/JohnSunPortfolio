@@ -16,7 +16,6 @@
   height: 50%;
   justify-content: center;
   padding: 16px;
-  transition: height 220ms ease;
   width: 100%;
 }
 
@@ -34,11 +33,6 @@
   border-right: 1px solid var(--sb-functional-med-gray, #d8d8d8);
   height: 100%;
   width: 52%;
-}
-
-.module-dyoh--desktop.module-dyoh--panel .module-dyoh__floorplan-container {
-  height: 100%;
-  width: 42%;
 }
 
 .module-dyoh--desktop .module-dyoh__panel {
