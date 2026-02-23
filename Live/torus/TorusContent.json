@@ -152,7 +152,7 @@
             "type": "video",
             "src": "../../Assets/Torus/Case Study/SettingParameter.mp4",
             "poster": "../../Assets/Torus/Case Study/video previews/SettingParameterPreview.png",
-            "caption": "Setting a LENGTH parameter after creating a child RP.",
+            "caption": "Creating a child RP and then directly setting a LENGTH parameter",
             "credit": "",
             "preload": "metadata"
           }
