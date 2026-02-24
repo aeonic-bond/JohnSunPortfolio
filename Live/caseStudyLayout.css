@@ -248,9 +248,6 @@
   padding-bottom: calc(var(--space-500) + var(--space-300));
 }
 
-.cs-bullet-item-stamp {
-  padding-bottom: var(--space-700);
-}
 
 .cs-bullet-item-title + .cs-bullet-item-text-block {
   margin-top: 0;
