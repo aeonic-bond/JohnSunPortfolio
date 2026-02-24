@@ -232,7 +232,7 @@
               }
             },
             {
-              "text": "Storybook - Fully functional code component library and CSS tokens",
+              "text": "Storybook - Fully coded component library and CSS tokens",
               "stamp": {
                 "type": "image",
                 "src": "../../Assets/Blueprint/Storybook.svg",
@@ -241,7 +241,7 @@
               }
             },
             {
-              "text": "Codex or Claude Code - Use Figma's MCP and Storybook as agentic context to auto-generate working prototypes.",
+              "text": "Codex or Claude Code - Figma's MCP and Storybook as agentic context to auto-generate working prototypes",
               "stamp": {
                 "type": "image",
                 "src": "../../Assets/Blueprint/OpenAI Logo.svg",
