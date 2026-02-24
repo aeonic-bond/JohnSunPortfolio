@@ -141,7 +141,7 @@ const setMediaFromFigure = (figureElement) => {
   const mediaMount = getMediaMount();
   if (!(mediaMount instanceof HTMLElement)) return false;
 
-  const sourceMedia = figureElement.querySelector(".cs-fig-image");
+  const sourceMedia = figureElement.querySelector(".cs-fig-mount");
   const lightboxMedia = createLightboxMediaElement(sourceMedia);
   if (!lightboxMedia) return false;
 

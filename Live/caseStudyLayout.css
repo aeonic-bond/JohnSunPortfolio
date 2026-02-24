@@ -249,6 +249,10 @@
 }
 
 
+.cs-bullet-item-stamp {
+  margin-bottom: var(--space-700);
+}
+
 .cs-bullet-item-title + .cs-bullet-item-text-block {
   margin-top: 0;
 }
@@ -589,6 +593,14 @@
   width: 100%;
 }
 
+.cs-fig:not(.cs-fig--hero) {
+  justify-items: center;
+  padding: var(--space-500);
+  border: 1px solid var(--color-accent-soft);
+  border-radius: var(--radius-base);
+  background-color: var(--color-bg-sink);
+}
+
 @media (min-width: 1024px) {
   .cs-fig.cs-fig--large {
     width: var(--cs-breakout-width);
@@ -636,12 +648,14 @@
 }
 
 .cs-hero-image,
-.cs-fig-image {
+.cs-fig-mount {
   display: block;
   width: 100%;
   height: auto;
+}
+
+.cs-fig-mount {
   border-radius: var(--radius-base);
-  border: 1px solid var(--color-accent-soft);
 }
 
 .cs-hero-image {
@@ -652,6 +666,7 @@
 .cs-fig-caption {
   font: var(--type-caption-m);
   color: var(--color-accent);
+  text-align: center;
 }
 
 .cs-fig-matrix {
@@ -671,7 +686,7 @@
   width: 100%;
 }
 
-.cs-fig.cs-fig--matrix-item .cs-fig-image {
+.cs-fig.cs-fig--matrix-item .cs-fig-mount {
   max-width: 100%;
 }
 

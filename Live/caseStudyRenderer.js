@@ -356,7 +356,7 @@ const createMediaBlockElement = ({
   id = "",
   media = null,
   blockClassName = "cs-fig",
-  mediaClassName = "cs-fig-image",
+  mediaClassName = "cs-fig-mount",
   includeCaption = true,
 } = {}) => {
   const block = document.createElement("figure");
@@ -395,7 +395,7 @@ const createFigureElement = (figure = {}) => {
     id: figure.id || "",
     media: normalizeFigureMedia(figure),
     blockClassName: `cs-fig cs-fig--${sizeVariant}`,
-    mediaClassName: "cs-fig-image",
+    mediaClassName: "cs-fig-mount",
     includeCaption: true,
   });
 };
@@ -431,7 +431,7 @@ const createFigMatrixElement = (block = {}) => {
       id: figure.id || "",
       media,
       blockClassName: "cs-fig cs-fig--matrix-item",
-      mediaClassName: "cs-fig-image",
+      mediaClassName: "cs-fig-mount",
       includeCaption: true,
     });
     wrapper.append(figureEl);
@@ -444,7 +444,7 @@ const createHeroMediaElement = (hero = {}) =>
   createMediaBlockElement({
     media: normalizeHeroMedia(hero),
     blockClassName: "cs-fig cs-fig--hero",
-    mediaClassName: "cs-fig-image cs-hero-image",
+    mediaClassName: "cs-fig-mount cs-hero-image",
     includeCaption: true,
   });
 

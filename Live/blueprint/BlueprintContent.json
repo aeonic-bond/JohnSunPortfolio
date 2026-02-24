@@ -269,6 +269,7 @@
           "type": "figure",
           "figure": {
             "type": "image",
+            "variant": "small",
             "src": "../../Assets/Blueprint/Storybook.png",
             "caption": "Blueprint built in Storybook contains an interactive catalog of UI components with documented props and variants.",
             "credit": "",

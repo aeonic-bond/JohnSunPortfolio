@@ -67,6 +67,7 @@
         {
           "type": "figure",
           "figure": {
+            "variant": "small",
             "src": "../../Assets/Torus/Case Study/RevitScreenshot.png",
             "caption": "Screenshot of Autodesk Revit shows outdated and overwhelming UI.",
             "credit": ""
@@ -95,6 +96,7 @@
         {
           "type": "figure",
           "figure": {
+            "variant": "small",
             "src": "../../Assets/Torus/Case Study/TorusMVP.png",
             "caption": "UI of Torus MVP in the default 3D perspective view.",
             "credit": ""
@@ -150,6 +152,7 @@
           "type": "figure",
           "figure": {
             "type": "video",
+            "variant": "small",
             "src": "../../Assets/Torus/Case Study/SettingParameter.mp4",
             "poster": "../../Assets/Torus/Case Study/video previews/SettingParameterPreview.png",
             "caption": "Video of user creating a child RP with the OffsetRP tool and then setting a LENGTH parameter",
@@ -172,6 +175,7 @@
           "type": "figure",
           "figure": {
             "type": "video",
+            "variant": "small",
             "src": "../../Assets/Torus/Case Study/OffsetEQRPTool.mp4",
             "poster": "../../Assets/Torus/Case Study/video previews/OffsetEQRPToolPreview.png",
             "caption": "Video of user creating a symmetrical RP pair with the OffsetEQRP tool",
