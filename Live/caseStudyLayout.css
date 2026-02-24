@@ -671,7 +671,8 @@
 .cs-fig-caption {
   font: var(--type-caption-m);
   color: var(--color-accent);
-  text-align: center;
+  text-align: left;
+  align-self: start;
 }
 
 .cs-fig-matrix {
@@ -685,6 +686,7 @@
 .cs-fig.cs-fig--matrix-item {
   display: grid;
   gap: var(--space-500);
+  align-content: start;
   margin: 0;
   min-width: 0;
   overflow-x: clip;
