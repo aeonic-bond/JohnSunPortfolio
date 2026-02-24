@@ -126,7 +126,7 @@
             },
             {
               "src": "../../Assets/HCustomizer/Section2/CB4.png",
-              "caption": "The Upload Feature screen appears as a tab on the Select Features modal. It includes a guardrail against duplicate feature uploads."
+              "caption": "The Upload Feature screen appears as a tab on the Select Features modal. It includes a guardrail against duplicate feature uploads. There is also a tab view for Multi-Upload."
             }
           ]
         },
