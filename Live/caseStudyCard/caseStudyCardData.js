@@ -85,6 +85,36 @@ const prewarmCaseStudySplineMedia = (items = []) => {
   }
 };
 
+// Cascading prewarm: when card N enters the viewport, start prewarming card N+1's
+// scene so it has a head start before the user scrolls to it. Card 0 (Torus) is
+// already prewarmed by an inline script in home.html on page load.
+const setupSplinePrewarmCascade = (items = []) => {
+  if (typeof IntersectionObserver !== "function") {
+    prewarmCaseStudySplineMedia(items);
+    return;
+  }
+  for (let i = 0; i < items.length - 1; i++) {
+    const triggerItem = items[i];
+    const nextItem = items[i + 1];
+    const nextUrls = collectSplineUrls(nextItem?.media);
+    if (!nextUrls.length) continue;
+    const kind = String(triggerItem.kind || "").trim().toLowerCase();
+    if (!kind) continue;
+    const cardEl = document.getElementById(`case-study-${kind}`);
+    if (!cardEl) continue;
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          for (const url of nextUrls) prewarmSplineUrl(url);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0 }
+    );
+    observer.observe(cardEl);
+  }
+};
+
 const renderSplineMedia = (mediaRoot, media = {}) => {
   const desktopQuery = window.matchMedia("(min-width: 1024px)");
   const initialUrl = getSplineUrlForViewport(media, desktopQuery);
@@ -161,7 +191,6 @@ const loadCaseStudies = async () => {
     );
 
     window.LiveCaseStudyData.items = resolvedItems;
-    prewarmCaseStudySplineMedia(resolvedItems);
   } catch (error) {
     console.error(error);
     window.LiveCaseStudyData.items = [];
@@ -174,3 +203,4 @@ window.LiveCaseStudyData = window.LiveCaseStudyData || {};
 window.LiveCaseStudyData.items = window.LiveCaseStudyData.items || [];
 window.LiveCaseStudyData.renderCardMedia = renderCardMedia;
 window.LiveCaseStudyData.loadCaseStudies = loadCaseStudies;
+window.LiveCaseStudyData.setupSplinePrewarmCascade = setupSplinePrewarmCascade;

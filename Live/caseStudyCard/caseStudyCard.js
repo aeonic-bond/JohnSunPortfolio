@@ -318,7 +318,10 @@ if (root) {
 
   const load = window.LiveCaseStudyData?.loadCaseStudies;
   if (typeof load === "function") {
-    load().then(renderCards);
+    load().then((items) => {
+      renderCards(items);
+      window.LiveCaseStudyData?.setupSplinePrewarmCascade?.(items);
+    });
   } else {
     renderCards(window.LiveCaseStudyData?.items || []);
   }

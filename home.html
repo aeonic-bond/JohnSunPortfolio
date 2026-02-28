@@ -15,6 +15,15 @@
       type="module"
       src="https://unpkg.com/@splinetool/viewer@1.12.58/build/spline-viewer.js"
     ></script>
+    <script>
+      // Prewarm the first card's Spline scene immediately on page load, before any
+      // deferred scripts or JSON fetches run. Update this URL and version (?v=N)
+      // when caseStudyCard.json's "splineVersion" or the first item's splineUrl changes.
+      fetch("https://prod.spline.design/AvFrf9aDLLmls19K/scene.splinecode?v=3", {
+        mode: "no-cors",
+        cache: "force-cache",
+      }).catch(() => {});
+    </script>
   </head>
   <body>
     <main class="live-main">
