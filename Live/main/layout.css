@@ -79,7 +79,7 @@ body.is-nav-sticky {
 .intro-subtitle {
   margin: 0;
   width: 100%;
-  font: var(--type-subtitle-l);
+  font: var(--type-subtitle-intro);
   color: var(--color-text-primary);
 }
 
