@@ -79,8 +79,8 @@ body.is-nav-sticky {
 .intro-subtitle {
   margin: 0;
   width: 100%;
-  font: var(--type-subtitle-intro);
-  color: var(--color-text-primary);
+  font: var(--type-subtitle-l);
+  color: var(--color-text-secondary);
 }
 
 .intro-scroll-indicator {
