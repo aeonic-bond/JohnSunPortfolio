@@ -20,7 +20,7 @@ export const ModuleMount = {
 
     const prompt = document.createElement("p");
     prompt.className = "module-mount__prompt";
-    prompt.textContent = "Interactive Module";
+    prompt.textContent = "Interactive Demo";
     root.appendChild(prompt);
 
     const toggle = document.createElement("div");
