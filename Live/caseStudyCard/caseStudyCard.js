@@ -320,7 +320,6 @@ if (root) {
   if (typeof load === "function") {
     load().then((items) => {
       renderCards(items);
-      window.LiveCaseStudyData?.setupSplinePrewarmCascade?.(items);
     });
   } else {
     renderCards(window.LiveCaseStudyData?.items || []);

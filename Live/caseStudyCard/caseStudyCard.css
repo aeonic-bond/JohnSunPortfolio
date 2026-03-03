@@ -79,14 +79,10 @@
   aspect-ratio: 3 / 4;
   overflow: visible;
   border-radius: var(--radius-base);
-  isolation: isolate;
   clip-path: none;
   mask: none;
 }
 
-.card-media-mount > spline-viewer,
-.card-media-mount > canvas,
-.card-media-mount > iframe,
 .card-media-mount > .card-media-layer {
   position: absolute;
   inset: 0;
@@ -106,11 +102,6 @@
   object-fit: contain;
 }
 
-.card-media-mount > spline-viewer {
-  z-index: 3;
-  pointer-events: auto;
-  touch-action: auto;
-}
 
 .card-texts-group {
   display: flex;
@@ -220,12 +211,6 @@
   .card-media-mount {
     width: clamp(360px, 36vw, 640px);
     aspect-ratio: 4 / 3;
-  }
-
-  .card-media-mount > spline-viewer {
-    transform: scale(1.3);
-    transform-origin: center;
-    z-index: 3;
   }
 
   .card-texts-group {

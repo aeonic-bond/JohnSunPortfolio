@@ -1,5 +1,4 @@
 {
-  "splineVersion": "4",
   "items": [
     {
       "kind": "torus",
@@ -15,14 +14,13 @@
       "ctaLabel": "Read",
       "href": "/casestudy/?id=torus",
       "media": {
-        "splineUrlDesktop": "https://prod.spline.design/KDoX-PcOTwA9xsyG/scene.splinecode",
-        "splineUrlMobile": "https://prod.spline.design/KDoX-PcOTwA9xsyG/scene.splinecode"
+        "glbUrl": ""
       }
     },
     {
       "kind": "blueprint",
       "title": "Blueprint",
-      "description": "I developed Toll Brothers’ first digital design system from a static style guide to a design-to-code workflow.",
+      "description": "I developed Toll Brothers' first digital design system from a static style guide to a design-to-code workflow.",
       "tags": [
         "Systems Research",
         "WCAG 2.2",
@@ -36,7 +34,7 @@
       "ctaLabel": "Read",
       "href": "/casestudy/?id=blueprint",
       "media": {
-        "splineUrl": "https://prod.spline.design/TfAWC07q1JgAQDBS/scene.splinecode"
+        "glbUrl": ""
       }
     },
     {
@@ -50,7 +48,7 @@
       "ctaLabel": "Read",
       "href": "/casestudy/?id=hcustomizer",
       "media": {
-        "splineUrl": "https://prod.spline.design/MsyaeAwlSa6c0Zpz/scene.splinecode"
+        "glbUrl": ""
       }
     },
     {
@@ -63,8 +61,8 @@
         "Module Library"
       ],
       "ctaLabel": "Soon!",
-       "media": {
-        "splineUrl": "https://prod.spline.design/qlMDUHRdu8EDsFoQ/scene.splinecode"
+      "media": {
+        "glbUrl": ""
       }
     },
     {
@@ -80,8 +78,8 @@
         "Caroline Polachek"
       ],
       "ctaLabel": "Soon!",
-       "media": {
-        "splineUrl": "https://prod.spline.design/qlMDUHRdu8EDsFoQ/scene.splinecode"
+      "media": {
+        "glbUrl": ""
       }
     }
   ]
