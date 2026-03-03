@@ -1,5 +1,5 @@
 {
-  "splineVersion": "3",
+  "splineVersion": "4",
   "items": [
     {
       "kind": "torus",
@@ -15,8 +15,8 @@
       "ctaLabel": "Read",
       "href": "/casestudy/?id=torus",
       "media": {
-        "splineUrlDesktop": "https://prod.spline.design/AvFrf9aDLLmls19K/scene.splinecode",
-        "splineUrlMobile": "https://prod.spline.design/AvFrf9aDLLmls19K/scene.splinecode"
+        "splineUrlDesktop": "https://prod.spline.design/KDoX-PcOTwA9xsyG/scene.splinecode",
+        "splineUrlMobile": "https://prod.spline.design/KDoX-PcOTwA9xsyG/scene.splinecode"
       }
     },
     {
