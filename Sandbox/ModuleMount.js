@@ -13,7 +13,7 @@ const VIEW_OPTIONS = [
 
 export const ModuleMount = {
   name: "module-mount",
-  create(contentNode = null) {
+  create(contentNode = null, { initialView = "mobile" } = {}) {
     const root = document.createElement("div");
     root.className = "module-mount";
     root.dataset.view = "mobile";
@@ -72,7 +72,7 @@ export const ModuleMount = {
       toggle.appendChild(button);
     });
 
-    setView("mobile");
+    setView(initialView);
     root.appendChild(toggle);
 
     if (contentNode) root.appendChild(contentNode);

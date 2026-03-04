@@ -1,7 +1,7 @@
 import { ModuleMount } from "/Sandbox/ModuleMount.js";
 
 const ASSETS = {
-  floorplan: "/Sandbox/Assets/F1.png",
+  floorplan: "/Sandbox/Assets/F1/F1.png",
   optionDefault: "/Assets/DYOH-Icons/StackedDoor.svg",
 };
 
@@ -36,6 +36,7 @@ export const Option = {
     lockedDisabled = false,
     allowDeselect = true,
     iconSrc = ASSETS.optionDefault,
+    floorplanOverlay = null,
     onToggle = null,
   } = {}) {
     const normalizeState = (rawState) => (Option.states.includes(String(rawState).toLowerCase())
@@ -50,6 +51,7 @@ export const Option = {
     let currentOptionState = normalizedState;
     let isLockedDisabled = Boolean(lockedDisabled);
     const root = el("div", "option");
+    if (floorplanOverlay) root._floorplanOverlay = floorplanOverlay;
 
     const row = el("div", "option__row");
     const left = el("div", "option__left");
@@ -544,10 +546,13 @@ export const ModuleDYOH = {
     }
 
     const floorplanContainer = el("div", "module-dyoh__floorplan-container");
+    const floorplanWrap = el("div", "module-dyoh__floorplan-wrap");
     const floorplan = el("img", "module-dyoh__floorplan");
     floorplan.alt = "";
     floorplan.src = f1FloorplanSrc;
-    floorplanContainer.appendChild(floorplan);
+    const overlayLayer = el("div", "module-dyoh__overlay-layer");
+    floorplanWrap.append(floorplan, overlayLayer);
+    floorplanContainer.appendChild(floorplanWrap);
     floorplanContainer.addEventListener("click", () => {
       if (currentState !== "default") applyState("default");
     });
@@ -592,11 +597,14 @@ export const ModuleDYOH = {
       f1OptionsContainer.hidden = !isFirstFloor;
       f2OptionsContainer.hidden = isFirstFloor;
       floorplan.src = isFirstFloor ? f1FloorplanSrc : f2FloorplanSrc;
+      syncOverlays();
       updateMeta();
       requestAnimationFrame(() => {
         redrawGroups();
       });
     }
+
+    let syncOverlays = () => {};
 
     function buildGroupPayload(groupConfig) {
       const rawType = String(groupConfig.type || "").toLowerCase();
@@ -632,7 +640,7 @@ export const ModuleDYOH = {
           type: normalizedType,
           bundle: true,
           entries: normalizedEntries,
-          onToggle: updateMeta,
+          onToggle: () => { updateMeta(); syncOverlays(); },
         };
       }
       return normalizedType === "closeConflict"
@@ -643,7 +651,7 @@ export const ModuleDYOH = {
               state: normalizedState,
             },
             options: normalizedOptions,
-            onToggle: updateMeta,
+            onToggle: () => { updateMeta(); syncOverlays(); },
           }
         : {
             type: normalizedType,
@@ -653,7 +661,7 @@ export const ModuleDYOH = {
             },
             children: normalizedChildren,
             options: normalizedOptions,
-            onToggle: updateMeta,
+            onToggle: () => { updateMeta(); syncOverlays(); },
           };
     }
 
@@ -663,6 +671,29 @@ export const ModuleDYOH = {
     normalizedF2List.forEach((groupConfig) => {
       f2OptionsContainer.appendChild(OptionGroup.create(buildGroupPayload(groupConfig)));
     });
+
+    const overlayNodeMap = new Map();
+    const buildOverlaysForContainer = (container, floor) => {
+      container.querySelectorAll(".option").forEach((optionEl) => {
+        const overlayData = optionEl._floorplanOverlay;
+        if (!overlayData) return;
+        if (!overlayData.src) return;
+        const overlayEl = el("img", "module-dyoh__floorplan-overlay");
+        overlayEl.src = overlayData.src;
+        overlayEl.alt = "";
+        overlayEl.hidden = true;
+        overlayLayer.appendChild(overlayEl);
+        overlayNodeMap.set(optionEl, { el: overlayEl, floor });
+      });
+    };
+    buildOverlaysForContainer(f1OptionsContainer, "first");
+    buildOverlaysForContainer(f2OptionsContainer, "second");
+
+    syncOverlays = () => {
+      for (const [optionEl, { el: overlayEl, floor }] of overlayNodeMap) {
+        overlayEl.hidden = !(floor === currentFloor && optionEl.dataset.state === "selected");
+      }
+    };
 
     optionWrap.append(f1OptionsContainer, f2OptionsContainer);
     tabOne.addEventListener("click", () => applyFloor("first"));
@@ -695,5 +726,6 @@ export const ModuleDYOH = {
 export function createModuleDYOH(container, config = {}) {
   if (!container) return;
   container.innerHTML = "";
-  container.appendChild(ModuleMount.create(ModuleDYOH.create(config)));
+  const initialView = window.matchMedia("(min-width: 1024px)").matches ? "desktop" : "mobile";
+  container.appendChild(ModuleMount.create(ModuleDYOH.create({ variant: initialView, ...config }), { initialView }));
 }

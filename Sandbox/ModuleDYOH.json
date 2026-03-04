@@ -1,13 +1,14 @@
 {
-  "F1Floorplan": "/Sandbox/Assets/F1.png",
-  "F2Floorplan": "/Sandbox/Assets/F2.png",
+  "F1Floorplan": "/Sandbox/Assets/F1/F1.png",
+  "F2Floorplan": "/Sandbox/Assets/F2/F2.png",
   "F1List": [
     {
       "type": "independent",
       "option": {
         "optionText": "Alternate Kitchen Island",
         "state": "unselected",
-        "iconSrc": "/Assets/DYOH-Icons/KitchenIsland.svg"
+        "iconSrc": "/Assets/DYOH-Icons/KitchenIsland.svg",
+        "floorplanOverlay": { "src": "/Sandbox/Assets/F1/AlternateKitchenIsland.png" }
       }
     },
     {
@@ -15,13 +16,15 @@
       "option": {
         "optionText": "Office Replaces Flex Room",
         "state": "unselected",
-        "iconSrc": "/Assets/DYOH-Icons/Office.svg"
+        "iconSrc": "/Assets/DYOH-Icons/Office.svg",
+        "floorplanOverlay": { "src": "/Sandbox/Assets/F1/Office.png" }
       },
       "children": [
         {
           "optionText": "Interior Glass Wall (Office)",
           "state": "unselected",
-          "iconSrc": "/Assets/DYOH-Icons/GlassWall.svg"
+          "iconSrc": "/Assets/DYOH-Icons/GlassWall.svg",
+          "floorplanOverlay": { "src": "/Sandbox/Assets/F1/InteriorWall.png" }
         }
       ]
     },
@@ -31,17 +34,20 @@
         {
           "optionText": "Traditional Fireplace",
           "state": "unselected",
-          "iconSrc": "/Assets/DYOH-Icons/Fireplace.svg"
+          "iconSrc": "/Assets/DYOH-Icons/Fireplace.svg",
+          "floorplanOverlay": { "src": "/Sandbox/Assets/F1/Fireplace1.png" }
         },
         {
           "optionText": "Linear Fireplace - 48\"",
           "state": "unselected",
-          "iconSrc": "/Assets/DYOH-Icons/Fireplace.svg"
+          "iconSrc": "/Assets/DYOH-Icons/Fireplace.svg",
+          "floorplanOverlay": { "src": "/Sandbox/Assets/F1/Fireplace2.png" }
         },
         {
           "optionText": "Linear Fireplace - 60\"",
           "state": "unselected",
-          "iconSrc": "/Assets/DYOH-Icons/Fireplace.svg"
+          "iconSrc": "/Assets/DYOH-Icons/Fireplace.svg",
+          "floorplanOverlay": { "src": "/Sandbox/Assets/F1/Fireplace3.png" }
         }
       ]
     }
@@ -53,7 +59,8 @@
         {
           "optionText": "Primary Bath Luxury Package",
           "state": "unselected",
-          "iconSrc": "/Assets/DYOH-Icons/Bath.svg"
+          "iconSrc": "/Assets/DYOH-Icons/Bath.svg",
+          "floorplanOverlay": { "src": "/Sandbox/Assets/F2/Bath1.png" }
         },
         {
           "bundle": true,
@@ -61,12 +68,14 @@
             {
               "optionText": "Grand Primary Bedroom Suite",
               "state": "unselected",
-              "iconSrc": "/Assets/DYOH-Icons/Suite.svg"
+              "iconSrc": "/Assets/DYOH-Icons/Suite.svg",
+              "floorplanOverlay": { "src": "/Sandbox/Assets/F2/Bath2.png" }
             },
             {
               "optionText": "Ultra Shower",
               "state": "unselected",
-              "iconSrc": "/Assets/DYOH-Icons/Bath.svg"
+              "iconSrc": "/Assets/DYOH-Icons/Bath.svg",
+              "floorplanOverlay": { "src": "/Sandbox/Assets/F2/Bath3.png" }
             }
           ]
         }

@@ -45,10 +45,30 @@
   display: none;
 }
 
-.module-dyoh__floorplan {
+.module-dyoh__floorplan-wrap {
   aspect-ratio: 270 / 280;
   height: 100%;
+  position: relative;
+}
+
+.module-dyoh__floorplan {
+  height: 100%;
   object-fit: contain;
+  width: 100%;
+}
+
+.module-dyoh__overlay-layer {
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.module-dyoh__floorplan-overlay {
+  height: 100%;
+  inset: 0;
+  object-fit: contain;
+  position: absolute;
+  width: 100%;
 }
 
 .module-dyoh__panel {
