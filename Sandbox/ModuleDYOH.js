@@ -1,7 +1,7 @@
 import { ModuleMount } from "/Sandbox/ModuleMount.js";
 
 const ASSETS = {
-  floorplan: "/Assets/HCustomizer/Section1/Floorplan.png",
+  floorplan: "/Sandbox/Assets/F1.png",
   optionDefault: "/Assets/DYOH-Icons/StackedDoor.svg",
 };
 
@@ -520,9 +520,11 @@ OptionGroup.create = function createOptionGroup({
 
 export const ModuleDYOH = {
   name: "module-dyoh",
-  create({ state = "default", variant = "mobile", F1List, F2List } = {}) {
+  create({ state = "default", variant = "mobile", F1List, F2List, F1Floorplan, F2Floorplan } = {}) {
     const normalizedF1List = Array.isArray(F1List) ? F1List : [OptionGroup.defaults];
     const normalizedF2List = Array.isArray(F2List) ? F2List : [];
+    const f1FloorplanSrc = F1Floorplan || ASSETS.floorplan;
+    const f2FloorplanSrc = F2Floorplan || ASSETS.floorplan;
     const root = el("div", "module-dyoh");
     let currentState = state === "panel" ? "panel" : "default";
     let currentVariant = String(variant || "mobile").toLowerCase() === "desktop" ? "desktop" : "mobile";
@@ -544,7 +546,7 @@ export const ModuleDYOH = {
     const floorplanContainer = el("div", "module-dyoh__floorplan-container");
     const floorplan = el("img", "module-dyoh__floorplan");
     floorplan.alt = "";
-    floorplan.src = ASSETS.floorplan;
+    floorplan.src = f1FloorplanSrc;
     floorplanContainer.appendChild(floorplan);
     floorplanContainer.addEventListener("click", () => {
       if (currentState !== "default") applyState("default");
@@ -589,6 +591,7 @@ export const ModuleDYOH = {
       tabSelector.style.transform = `translateX(${isFirstFloor ? 0 : 100}%)`;
       f1OptionsContainer.hidden = !isFirstFloor;
       f2OptionsContainer.hidden = isFirstFloor;
+      floorplan.src = isFirstFloor ? f1FloorplanSrc : f2FloorplanSrc;
       updateMeta();
       requestAnimationFrame(() => {
         redrawGroups();
