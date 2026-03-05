@@ -103,7 +103,7 @@ body.cs-lightbox-active {
   flex: 0 0 auto;
   width: 56px;
   height: 56px;
-  padding: 0;
+  padding: 1px;
   border: 2px solid transparent;
   border-radius: 4px;
   background: transparent;
@@ -112,7 +112,7 @@ body.cs-lightbox-active {
 }
 
 .cs-lightbox-galleryThumb--active {
-  border-color: var(--color-brand-primary, #0070cd);
+  border-color: var(--color-accent);
 }
 
 .cs-lightbox-galleryThumb-img {

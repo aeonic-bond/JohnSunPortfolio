@@ -176,9 +176,11 @@ const goTo = (index) => {
   setMediaFromFigure(galleryFigures[galleryIndex]);
   const bar = getGalleryBar();
   if (!bar) return;
-  bar.querySelectorAll(".cs-lightbox-galleryThumb").forEach((thumb, i) => {
+  const thumbs = bar.querySelectorAll(".cs-lightbox-galleryThumb");
+  thumbs.forEach((thumb, i) => {
     thumb.classList.toggle("cs-lightbox-galleryThumb--active", i === galleryIndex);
   });
+  if (thumbs[galleryIndex] instanceof HTMLElement) thumbs[galleryIndex].focus();
 };
 
 const buildGalleryThumbs = (figures, activeIndex) => {
@@ -387,6 +389,16 @@ const initLightbox = () => {
     if (isOverlayOpen() && (event.ctrlKey || event.metaKey) && ZOOM_KEYS.has(event.key)) {
       event.preventDefault();
       event.stopPropagation();
+      return;
+    }
+
+    if (event.key === "ArrowLeft" && galleryFigures.length > 1) {
+      goTo(galleryIndex - 1);
+      return;
+    }
+
+    if (event.key === "ArrowRight" && galleryFigures.length > 1) {
+      goTo(galleryIndex + 1);
       return;
     }
 
