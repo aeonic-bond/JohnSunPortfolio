@@ -4,6 +4,8 @@ const MEDIA_MIN_ZOOM = 1;
 const MEDIA_MAX_ZOOM = 4;
 const MEDIA_ZOOM_STEP = 0.15;
 let lightboxTriggerElement = null;
+let galleryFigures = [];
+let galleryIndex = 0;
 
 const isOverlayOpen = () => {
   const overlay = document.getElementById(OVERLAY_ID);
@@ -16,6 +18,9 @@ const getMediaMount = () => {
   const overlay = ensureOverlay();
   return overlay.querySelector(".cs-lightbox-mediaMount");
 };
+
+const getGalleryBar = () =>
+  document.getElementById(OVERLAY_ID)?.querySelector(".cs-lightbox-galleryBar") ?? null;
 
 const getMediaZoom = (mount) => Number(mount?.dataset.zoom ?? "1");
 
@@ -165,6 +170,40 @@ const setMediaFromFigure = (figureElement) => {
   return true;
 };
 
+const goTo = (index) => {
+  if (!galleryFigures.length) return;
+  galleryIndex = Math.max(0, Math.min(index, galleryFigures.length - 1));
+  setMediaFromFigure(galleryFigures[galleryIndex]);
+  const bar = getGalleryBar();
+  if (!bar) return;
+  bar.querySelectorAll(".cs-lightbox-galleryThumb").forEach((thumb, i) => {
+    thumb.classList.toggle("cs-lightbox-galleryThumb--active", i === galleryIndex);
+  });
+};
+
+const buildGalleryThumbs = (figures, activeIndex) => {
+  const bar = getGalleryBar();
+  if (!bar) return;
+  bar.replaceChildren();
+  figures.forEach((fig, i) => {
+    const sourceMedia = fig.querySelector(".cs-fig-mount");
+    if (!(sourceMedia instanceof HTMLImageElement)) return;
+    const thumb = document.createElement("button");
+    thumb.type = "button";
+    thumb.className = "cs-lightbox-galleryThumb";
+    thumb.setAttribute("aria-label", `View image ${i + 1} of ${figures.length}`);
+    if (i === activeIndex) thumb.classList.add("cs-lightbox-galleryThumb--active");
+    const img = document.createElement("img");
+    img.className = "cs-lightbox-galleryThumb-img";
+    img.src = sourceMedia.currentSrc || sourceMedia.src;
+    img.alt = "";
+    img.setAttribute("aria-hidden", "true");
+    thumb.append(img);
+    thumb.addEventListener("click", () => goTo(i));
+    bar.append(thumb);
+  });
+};
+
 const ensureOverlay = () => {
   let overlay = document.getElementById(OVERLAY_ID);
   if (overlay) return overlay;
@@ -195,8 +234,11 @@ const ensureOverlay = () => {
   panelHeader.append(closeButton);
   const mediaMount = document.createElement("div");
   mediaMount.className = "cs-lightbox-mediaMount";
+  const galleryBar = document.createElement("div");
+  galleryBar.className = "cs-lightbox-galleryBar";
   panel.append(panelHeader);
   panel.append(mediaMount);
+  panel.append(galleryBar);
   overlay.append(panel);
   document.body.append(overlay);
 
@@ -232,8 +274,30 @@ const ensureOverlay = () => {
 
 const openOverlay = (figureElement) => {
   lightboxTriggerElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
+  const matrix = figureElement.closest(".cs-fig-matrix");
+  if (matrix) {
+    galleryFigures = Array.from(matrix.querySelectorAll(".cs-fig"));
+    galleryIndex = galleryFigures.indexOf(figureElement);
+    if (galleryIndex < 0) galleryIndex = 0;
+  } else {
+    galleryFigures = [];
+    galleryIndex = 0;
+  }
+
   if (!setMediaFromFigure(figureElement)) return;
+
   const overlay = ensureOverlay();
+  const panel = overlay.querySelector(".cs-lightbox-panel");
+
+  if (galleryFigures.length > 1) {
+    panel.classList.add("cs-lightbox-panel--gallery");
+    buildGalleryThumbs(galleryFigures, galleryIndex);
+  } else {
+    panel.classList.remove("cs-lightbox-panel--gallery");
+    getGalleryBar()?.replaceChildren();
+  }
+
   overlay.setAttribute("aria-hidden", "false");
   document.body.classList.add("cs-lightbox-active");
 
@@ -246,10 +310,15 @@ const openOverlay = (figureElement) => {
 
 const closeOverlay = () => {
   const overlay = ensureOverlay();
+  const panel = overlay.querySelector(".cs-lightbox-panel");
   const mediaMount = getMediaMount();
   const mountedVideo = mediaMount?.querySelector("video");
   if (mountedVideo instanceof HTMLVideoElement) mountedVideo.pause();
   mediaMount?.replaceChildren();
+  panel?.classList.remove("cs-lightbox-panel--gallery");
+  getGalleryBar()?.replaceChildren();
+  galleryFigures = [];
+  galleryIndex = 0;
   overlay.setAttribute("aria-hidden", "true");
   document.body.classList.remove("cs-lightbox-active");
   if (lightboxTriggerElement instanceof HTMLElement) {
