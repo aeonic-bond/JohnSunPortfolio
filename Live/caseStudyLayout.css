@@ -2,7 +2,7 @@
 .cs-main {
   width: 100%;
   max-width: 800px;
-  padding: var(--space-block-500) var(--margin-mobile-500) var(--margin-bottom-500);
+  padding: var(--spacer-section-500) var(--margin-mobile-500) var(--margin-bottom-500);
 }
 
 @media (min-width: 1024px) {
@@ -19,7 +19,7 @@
 
 #case-study-root {
   display: grid;
-  row-gap: var(--space-block-900);
+  row-gap: var(--spacer-section-900);
 }
 
 .cs-load-error {
@@ -30,12 +30,12 @@
  /* Intro */
 .cs-div-intro {
   display: grid;
-  row-gap: var(--space-block-700);
+  row-gap: var(--spacer-section-700);
 }
 
 .cs-div-intro-text {
   display: grid;
-  row-gap: var(--space-700);
+  row-gap: var(--spacer-700);
   min-width: 0;
 }
 
@@ -57,12 +57,12 @@
  /* Sections */
 .cs-sections-group {
   display: grid;
-  row-gap: var(--space-block-800);
+  row-gap: var(--spacer-section-800);
 }
 
 .cs-div-section {
   display: grid;
-  row-gap: var(--space-block-500);
+  row-gap: var(--spacer-section-500);
   min-width: 0;
 }
 
@@ -83,14 +83,14 @@
 }
 
 .cs-paragraph p + p {
-  margin-top: var(--space-500);
+  margin-top: var(--spacer-500);
 }
 
 /* Paragraph Subsection Block */
 .cs-paragraph-subsection {
   display: grid;
-  row-gap: var(--space-500);
-  padding-top: var(--space-block-500);
+  row-gap: var(--spacer-500);
+  padding-top: var(--spacer-section-500);
 }
 
 .cs-paragraph-subtitle {
@@ -129,10 +129,10 @@
   margin-right: calc(50% - 50vw);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: var(--space-500);
+  gap: var(--spacer-500);
   align-items: stretch;
   height: fit-content;
-  padding: var(--space-500);
+  padding: var(--spacer-500);
   border-radius: var(--radius-large);
 }
 
@@ -174,11 +174,11 @@
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: var(--space-block-500) var(--space-block-500);
+  padding: var(--spacer-section-500) var(--spacer-section-500);
   border: 1px solid var(--color-accent-soft);
   border-radius: var(--radius-base);
   background-color: var(--color-surface);
-  gap: var(--space-300);
+  gap: var(--spacer-300);
 }
 
 .cs-bullet-item.cs-bullet-item--with-image {
@@ -192,7 +192,7 @@
 }
 
 #section-11 .cs-bullet-row .cs-bullet-item.cs-bullet-item--with-image {
-  gap: var(--space-500);
+  gap: var(--spacer-500);
 }
 
 #section-11 .cs-bullet-row .cs-bullet-item.cs-bullet-item--with-image .cs-bullet-item-text {
@@ -228,14 +228,14 @@
 }
 
 .cs-bullet-item-text > * + * {
-  margin-top: var(--space-300);
+  margin-top: var(--spacer-300);
 }
 
 .cs-item-overline {
   display: inline-flex;
   width: fit-content;
-  padding: var(--space-200);
-  margin-bottom: var(--space-300);
+  padding: var(--spacer-200);
+  margin-bottom: var(--spacer-300);
   border: 1px solid var(--color-bg-shade);
   font: var(--type-caption-m);
   color: var(--color-text-secondary);
@@ -249,12 +249,12 @@
   margin: 0;
   font: var(--type-subtitle-l);
   color: var(--color-text-primary);
-  padding-bottom: calc(var(--space-500) + var(--space-300));
+  padding-bottom: calc(var(--spacer-500) + var(--spacer-300));
 }
 
 
 .cs-bullet-item-stamp {
-  margin-bottom: var(--space-700);
+  margin-bottom: var(--spacer-700);
 }
 
 .cs-bullet-item-title + .cs-bullet-item-text-block {
@@ -262,8 +262,8 @@
 }
 
 .cs-bullet-item-quote {
-  margin: var(--space-700) 0 0;
-  padding: 0 var(--space-500) 0;
+  margin: var(--spacer-700) 0 0;
+  padding: 0 var(--spacer-500) 0;
   border-left: 1px solid var(--color-accent-soft);
   font-style: italic;
 }
@@ -307,10 +307,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: var(--space-500) var(--space-300) var(--space-500);
+  padding: var(--spacer-500) var(--spacer-300) var(--spacer-500);
   border: 0;
   background-color: var(--color-surface);
-  gap: var(--space-500);
+  gap: var(--spacer-500);
   text-align: center;
 }
 
@@ -334,11 +334,11 @@
   margin: 0;
   font: var(--type-subtitle-s);
   color: var(--color-text-primary);
-  padding-bottom: var(--space-500);
+  padding-bottom: var(--spacer-500);
 }
 
 .cs-icon-grid-item-text > * + * {
-  margin-top: var(--space-300);
+  margin-top: var(--spacer-300);
 }
 
  /* Flow Row */
@@ -368,8 +368,8 @@
   display: grid;
   grid-template-columns: 1fr;
   height: fit-content;
-  gap: var(--space-block-500);
-  padding: var(--space-block-500);
+  gap: var(--spacer-section-500);
+  padding: var(--spacer-section-500);
 }
 
 .cs-flow-row-item {
@@ -388,7 +388,7 @@
 }
 
 .cs-flow-row-item-text > * + * {
-  margin-top: var(--space-300);
+  margin-top: var(--spacer-300);
 }
 
  /* Progress Matrix */
@@ -406,7 +406,7 @@
 
 .cs-progress-matrix-items-group {
   display: grid;
-  gap: var(--space-block-500);
+  gap: var(--spacer-section-500);
 }
 
 .cs-progress-matrix-item {
@@ -414,8 +414,8 @@
   grid-template-columns: minmax(0, 1fr);
   justify-self: center;
   align-items: center;
-  gap: var(--space-block-500);
-  padding: var(--space-block-500);
+  gap: var(--spacer-section-500);
+  padding: var(--spacer-section-500);
   border: 1px solid transparent;
   border-radius: var(--radius-base);
   background:
@@ -431,7 +431,7 @@
   .cs-progress-matrix-item {
     grid-template-columns: fit-content(50%) auto fit-content(50%);
     width: fit-content;
-    gap: var(--space-block-500);
+    gap: var(--spacer-section-500);
     background:
       linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
       linear-gradient(
@@ -467,12 +467,12 @@
 .cs-progress-matrix-secondary-block {
   width: 100%;
   display: grid;
-  gap: var(--space-block-500);
+  gap: var(--spacer-section-500);
 }
 
 .cs-progress-matrix-item-primary > * + *,
 .cs-progress-matrix-item-secondary > * + * {
-  margin-top: var(--space-300);
+  margin-top: var(--spacer-300);
 }
 
 .cs-progress-matrix-item-stamp {
@@ -507,7 +507,7 @@
   .cs-progress-matrix-item-stamp {
     grid-column: auto;
     justify-self: start;
-    margin-left: var(--space-block-500);
+    margin-left: var(--spacer-section-500);
   }
 }
 
@@ -515,8 +515,8 @@
 .cs-progress-row {
   width: 100%;
   display: grid;
-  gap: var(--space-block-500);
-  padding: var(--space-700);
+  gap: var(--spacer-section-500);
+  padding: var(--spacer-700);
   border: 1px solid transparent;
   border-radius: var(--radius-base);
   background:
@@ -532,7 +532,7 @@
   display: flex;
   align-items: center;
   justify-self: center;
-  gap: var(--space-700);
+  gap: var(--spacer-700);
 }
 
 .cs-progress-row-item-text {
@@ -545,7 +545,7 @@
 .cs-progress-row-item-stamps-group {
   width: fit-content;
   display: grid;
-  gap: var(--space-block-500);
+  gap: var(--spacer-section-500);
 }
 
 .cs-progress-row-item-stamp {
@@ -593,14 +593,14 @@
  /* Fig */
 .cs-fig {
   display: grid;
-  row-gap: var(--space-500);
+  row-gap: var(--spacer-500);
   width: 100%;
 }
 
 .cs-fig:not(.cs-fig--hero) {
   justify-items: center;
   margin-left: auto;
-  padding: var(--space-500);
+  padding: var(--spacer-500);
   border: 1px solid var(--color-accent-soft);
   border-radius: var(--radius-base);
   background-color: var(--color-bg-sink);
@@ -623,7 +623,7 @@
 
 
 .cs-fig--hero {
-  row-gap: var(--space-500);
+  row-gap: var(--spacer-500);
 }
 
 .cs-hero-media-mount {
@@ -677,7 +677,7 @@
 
 .cs-fig-matrix {
   display: grid;
-  gap: var(--space-block-500);
+  gap: var(--spacer-section-500);
   min-width: 0;
   overflow-x: clip;
   width: 100%;
@@ -685,7 +685,7 @@
 
 .cs-fig.cs-fig--matrix-item {
   display: grid;
-  gap: var(--space-500);
+  gap: var(--spacer-500);
   align-content: start;
   margin: 0;
   min-width: 0;

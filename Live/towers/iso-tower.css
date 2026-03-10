@@ -9,14 +9,20 @@
   z-index: 2;
 }
 
-/* ── Tag ── */
-.tag {
+/* ── Label group ── */
+.label-group {
   position: absolute;
-  bottom: calc(100% + var(--space-500));
+  bottom: calc(100% + var(--spacer-500));
   left: 50%;
   transform: translateX(-50%);
-  background: #362F2F;
-  border: 1px solid #0D0B0B;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacer-300);
+}
+
+/* ── Tag ── */
+.tag {
   padding: 4px;
   font: var(--type-body-m);
   color: var(--color-text-secondary);
@@ -40,7 +46,7 @@
 /* ── Tile ── */
 .iso-tile {
   position: absolute;
-  top: calc(98px - 2 * var(--space-500));
+  top: calc(98px - 2 * var(--spacer-500));
   transform: translate(-50%, -50%);
   width: 78px;
   height: 112px;
@@ -57,10 +63,6 @@
 
 /* ── Bullets ── */
 .bullets {
-  position: absolute;
-  top: calc(100% + var(--space-500));
-  left: 50%;
-  transform: translateX(-50%);
   list-style: none;
   margin: 0;
   width: 100%;
@@ -69,8 +71,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--space-300);
-  padding: var(--space-300);
+  gap: var(--spacer-300);
+  padding: var(--spacer-300);
 }
 
 .bullet {
@@ -101,8 +103,7 @@
   opacity: 0.5;
 }
 
-:host([state="ghost1"]) .tag,
-:host([state="ghost1"]) .bullets {
+:host([state="ghost1"]) .label-group {
   display: none;
 }
 
@@ -110,7 +111,6 @@
   opacity: 0.25;
 }
 
-:host([state="ghost2"]) .tag,
-:host([state="ghost2"]) .bullets {
+:host([state="ghost2"]) .label-group {
   display: none;
 }

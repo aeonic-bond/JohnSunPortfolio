@@ -6,7 +6,7 @@
   justify-content: center;
   align-items: stretch;
   background: rgb(0 0 0 / 0.85);
-  padding: var(--space-500);
+  padding: var(--spacer-500);
   pointer-events: auto;
   touch-action: none;
 }
@@ -21,7 +21,7 @@
   width: 100%;
   height: 100%;
   max-width: 1400px;
-  padding-bottom: var(--space-500);
+  padding-bottom: var(--spacer-500);
   border-radius: var(--radius-large);
   background: var(--color-bg-main);
   overflow: hidden;
@@ -91,7 +91,7 @@ body.cs-lightbox-active {
   overflow-y: hidden;
   width: 100%;
   background: var(--color-bg-sink);
-  margin-top: var(--space-500);
+  margin-top: var(--spacer-500);
 }
 
 .cs-lightbox-panel--gallery .cs-lightbox-galleryBar {

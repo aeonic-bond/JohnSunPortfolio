@@ -32,24 +32,24 @@
   --radius-large: 12px;
 
   /* Spacing tokens */
-  --space-100: 2px;
-  --space-200: 4px;
-  --space-300: 8px;
-  --space-400: 12px;
-  --space-500: 16px;
-  --space-600: 20px;
-  --space-700: 24px;
-  --space-800: 32px;
-  --space-900: 36px;
-  --space-block-100: 20px;
-  --space-block-200: 24px;
-  --space-block-300: 28px;
-  --space-block-400: 32px;
-  --space-block-500: 40px;
-  --space-block-600: 48px;
-  --space-block-700: 64px;
-  --space-block-800: 80px;
-  --space-block-900: 120px;
+  --spacer-100: 2px;
+  --spacer-200: 4px;
+  --spacer-300: 8px;
+  --spacer-400: 12px;
+  --spacer-500: 16px;
+  --spacer-600: 20px;
+  --spacer-700: 24px;
+  --spacer-800: 32px;
+  --spacer-900: 36px;
+  --spacer-section-100: 20px;
+  --spacer-section-200: 24px;
+  --spacer-section-300: 28px;
+  --spacer-section-400: 32px;
+  --spacer-section-500: 40px;
+  --spacer-section-600: 48px;
+  --spacer-section-700: 64px;
+  --spacer-section-800: 80px;
+  --spacer-section-900: 120px;
 
   /* Margin tokens */
   --margin-header-mobile: 16px;

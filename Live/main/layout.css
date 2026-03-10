@@ -31,20 +31,20 @@ body.is-nav-sticky {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-block: var(--space-block-700);
+  padding-block: var(--spacer-section-700);
   background: var(--color-bg-main);
 }
 
 .intro-content {
   width: 100%;
   max-width: 760px;
-  padding-inline: var(--space-block-500);
+  padding-inline: var(--spacer-section-500);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-block-500);
-  transform: translateY(calc(-1 * var(--space-block-500)));
+  gap: var(--spacer-section-500);
+  transform: translateY(calc(-1 * var(--spacer-section-500)));
 }
 
 .intro-media-mount {
@@ -66,7 +66,7 @@ body.is-nav-sticky {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: var(--space-500);
+  gap: var(--spacer-500);
 }
 
 .intro-title {
@@ -102,6 +102,7 @@ body.is-nav-sticky {
 .towers-section iso-towers {
   width: 100%;
   height: 100%;
+  margin-top: var(--spacer-section-700);
 }
 
 .case-study-showcase {
@@ -116,8 +117,8 @@ body.is-nav-sticky {
   display: grid;
   justify-items: center;
   width: 100%;
-  padding-block: var(--space-block-500);
-  padding-inline: var(--space-500);
+  padding-block: var(--spacer-section-500);
+  padding-inline: var(--spacer-500);
 }
 
 .case-study-nav-div {
@@ -130,7 +131,7 @@ body.is-nav-sticky {
   background-color: var(--color-bg-sink);
   width: 100%;
   height: fit-content;
-  padding: var(--space-300);
+  padding: var(--spacer-300);
   overflow: hidden;
   opacity: 0;
   pointer-events: none;
@@ -172,7 +173,7 @@ body.is-nav-sticky {
   position: relative;
   display: flex;
   align-items: center;
-  gap: var(--space-900);
+  gap: var(--spacer-900);
   min-height: 100%;
   overflow-x: auto;
   overflow-y: hidden;
@@ -201,8 +202,8 @@ body.is-nav-sticky {
   align-items: center;
   justify-content: center;
   flex: 0 0 auto;
-  gap: var(--space-300);
-  padding: var(--space-200) var(--space-300);
+  gap: var(--spacer-300);
+  padding: var(--spacer-200) var(--spacer-300);
   border: 0;
   border-radius: var(--radius-base);
   background: transparent;
@@ -224,7 +225,7 @@ body.is-nav-sticky {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: var(--space-300);
+  gap: var(--spacer-300);
   width: 100%;
 }
 
@@ -261,8 +262,8 @@ body.is-nav-sticky {
 .case-study-nav-list--dropdown .case-study-nav-item {
   flex-direction: row;
   justify-content: flex-start;
-  gap: var(--space-500);
-  padding: var(--space-500);
+  gap: var(--spacer-500);
+  padding: var(--spacer-500);
   width: 100%;
 }
 
@@ -294,7 +295,7 @@ body.is-nav-sticky {
     width: 25vw;
     border-right: 1px solid var(--color-bg-raise);
     border-bottom: 0;
-    padding: var(--space-500);
+    padding: var(--spacer-500);
     overflow: hidden;
     clip-path: inset(0 0 100% 0);
     transform: translateX(-10px);
@@ -305,7 +306,7 @@ body.is-nav-sticky {
     height: 100%;
     flex-direction: column;
     align-items: stretch;
-    gap: var(--space-300);
+    gap: var(--spacer-300);
     overflow-x: hidden;
     overflow-y: auto;
     scroll-snap-type: y mandatory;
@@ -323,8 +324,8 @@ body.is-nav-sticky {
   .case-study-nav-item {
     flex-direction: row;
     justify-content: flex-start;
-    gap: var(--space-500);
-    padding: var(--space-500);
+    gap: var(--spacer-500);
+    padding: var(--spacer-500);
     width: 100%;
   }
 
@@ -343,7 +344,7 @@ body.is-nav-sticky {
   .case-study-all {
     flex: 1 1 auto;
     min-width: 0;
-    padding-inline: var(--space-block-500);
+    padding-inline: var(--spacer-section-500);
   }
 }
 

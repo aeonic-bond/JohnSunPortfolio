@@ -1,6 +1,6 @@
 .case-study-card-container {
   width: 100%;
-  padding: var(--space-block-700) 0;
+  padding: var(--spacer-section-700) 0;
   justify-items: center;
   overflow: visible;
   clip-path: none;
@@ -65,7 +65,7 @@
   justify-content: center;
   width: 100%;
   aspect-ratio: 3 / 4;
-  padding: var(--space-300);
+  padding: var(--spacer-300);
   background: transparent;
   overflow: visible;
   clip-path: none;
@@ -115,9 +115,9 @@
 .card-texts-group {
   display: flex;
   flex-direction: column;
-  gap: var(--space-500);
+  gap: var(--spacer-500);
   width: 100%;
-  padding: var(--space-700);
+  padding: var(--spacer-700);
 }
 
 .card-title-wrap {
@@ -135,7 +135,7 @@
 .card-body {
   display: flex;
   flex-direction: column;
-  gap: var(--space-500);
+  gap: var(--spacer-500);
   width: 100%;
 }
 
@@ -154,12 +154,12 @@
 .card-tags-group {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-100);
+  gap: var(--spacer-100);
   width: 100%;
 }
 
 .card-tag {
-  padding: var(--space-200);
+  padding: var(--spacer-200);
   border: 1px solid var(--color-bg-shade);
   font: var(--type-caption-m);
   color: var(--color-text-secondary);
@@ -207,7 +207,7 @@
     align-items: center;
     width: 100%;
     max-width: none;
-    gap: var(--space-block-500);
+    gap: var(--spacer-section-500);
   }
 
   .card-media-div {

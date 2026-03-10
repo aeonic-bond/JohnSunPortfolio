@@ -32,7 +32,7 @@ class IsoTowers extends HTMLElement {
         tower.removeAttribute('state');
         tower.style.transform = 'translate(0, 0)';
       } else {
-        tower.setAttribute('state', Math.abs(n) === 1 ? 'ghost1' : 'ghost2');
+        tower.setAttribute('state', n > 0 && n === 1 ? 'ghost1' : 'ghost2');
         tower.style.transform = `translate(${n * STEP_X}px, ${n * STEP_Y}px)`;
       }
     });

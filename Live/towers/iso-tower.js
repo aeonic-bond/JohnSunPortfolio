@@ -23,21 +23,22 @@ class IsoTower extends HTMLElement {
     shadow.innerHTML = `
       <link rel="stylesheet" href="/Live/towers/iso-tower.css">
 
-      <div class="tag">${label}</div>
+      <div class="label-group">
+        <div class="tag">${label}</div>
+        <ul class="bullets">
+          ${bullets.map(b => `
+            <li class="bullet">
+              <span class="bullet-dot"></span>
+              <span class="bullet-text">${b}</span>
+            </li>
+          `).join('')}
+        </ul>
+      </div>
 
       <div class="iso-structure">
         <img class="iso-table" src="/Assets/IsoTower/IsoTable.svg" alt="">
         ${tilesHTML}
       </div>
-
-      <ul class="bullets">
-        ${bullets.map(b => `
-          <li class="bullet">
-            <span class="bullet-dot"></span>
-            <span class="bullet-text">${b}</span>
-          </li>
-        `).join('')}
-      </ul>
     `;
   }
 }

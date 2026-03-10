@@ -6,7 +6,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: var(--space-500, 16px);
+  gap: var(--spacer-500, 16px);
   height: fit-content;
   justify-content: center;
   max-width: 100%;
