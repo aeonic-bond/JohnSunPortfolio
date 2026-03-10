@@ -1,0 +1,116 @@
+:host {
+  display: block;
+  position: relative;
+  width: 400px;
+}
+
+:host(:not([state])) {
+  margin-inline: auto;
+  z-index: 2;
+}
+
+/* ── Tag ── */
+.tag {
+  position: absolute;
+  bottom: calc(100% + var(--space-500));
+  left: 50%;
+  transform: translateX(-50%);
+  background: #362F2F;
+  border: 1px solid #0D0B0B;
+  padding: 4px;
+  font: var(--type-body-m);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+/* ── Iso structure ── */
+.iso-structure {
+  position: relative;
+  width: 340px;
+  height: 240px;
+  margin: 0 auto;
+}
+
+.iso-table {
+  display: block;
+  width: 340px;
+  height: 240px;
+}
+
+/* ── Tile ── */
+.iso-tile {
+  position: absolute;
+  top: calc(98px - 2 * var(--space-500));
+  transform: translate(-50%, -50%);
+  width: 78px;
+  height: 112px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iso-tile-img {
+  display: block;
+  width: 78px;
+  height: 112px;
+}
+
+/* ── Bullets ── */
+.bullets {
+  position: absolute;
+  top: calc(100% + var(--space-500));
+  left: 50%;
+  transform: translateX(-50%);
+  list-style: none;
+  margin: 0;
+  width: 100%;
+  max-width: 240px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-300);
+  padding: var(--space-300);
+}
+
+.bullet {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.bullet-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-text-secondary);
+  flex-shrink: 0;
+  margin-top: 10px;
+}
+
+.bullet-text {
+  font: var(--type-body-m);
+  color: var(--color-text-secondary);
+  text-align: left;
+  flex: 1;
+}
+
+/* ── Ghost states ── */
+:host([state="ghost1"]) {
+  opacity: 0.5;
+}
+
+:host([state="ghost1"]) .tag,
+:host([state="ghost1"]) .bullets {
+  display: none;
+}
+
+:host([state="ghost2"]) {
+  opacity: 0.25;
+}
+
+:host([state="ghost2"]) .tag,
+:host([state="ghost2"]) .bullets {
+  display: none;
+}
