@@ -28,7 +28,6 @@ class IsoTower extends HTMLElement {
         <ul class="bullets">
           ${bullets.map(b => `
             <li class="bullet">
-              <span class="bullet-dot"></span>
               <span class="bullet-text">${b}</span>
             </li>
           `).join('')}

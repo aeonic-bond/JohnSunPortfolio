@@ -31,14 +31,15 @@ body.is-nav-sticky {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-block: var(--spacer-section-700);
+  padding-top: var(--spacer-section-900);
+  padding-bottom: 0;
   background: var(--color-bg-main);
 }
 
 .intro-content {
   width: 100%;
   max-width: 760px;
-  padding-inline: var(--spacer-section-500);
+  padding-inline: var(--spacer-500);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,9 +49,9 @@ body.is-nav-sticky {
 }
 
 .intro-media-mount {
-  width: 120px;
-  height: 120px;
-  flex: 0 0 120px;
+  width: 88px;
+  height: 88px;
+  flex: 0 0 88px;
 }
 
 .intro-media-image {
@@ -66,18 +67,27 @@ body.is-nav-sticky {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: var(--spacer-500);
+  gap: var(--spacer-400);
 }
 
 .intro-title {
   margin: 0;
   width: 100%;
   font: var(--type-h1);
+  letter-spacing: 0.02em;
   color: var(--color-accent);
+  text-box-trim: none;
+}
+
+.intro-role {
+  margin: 0;
+  font: var(--type-role-intro);
+  color: var(--color-accent-medium);
 }
 
 .intro-subtitle {
   margin: 0;
+  padding-top: var(--spacer-section-500);
   width: 100%;
   font: var(--type-subtitle-intro);
   color: var(--color-text-secondary);
@@ -94,6 +104,7 @@ body.is-nav-sticky {
   height: 100vh;
   width: 100%;
   overflow: hidden;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -233,7 +244,7 @@ body.is-nav-sticky {
   margin: 0;
   font: var(--type-navH);
   line-height: 1;
-  color: var(--color-text-primary);
+  color: var(--color-text-secondary);
   width: 100%;
   text-align: center;
   white-space: nowrap;
