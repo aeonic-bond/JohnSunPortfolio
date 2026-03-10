@@ -7,13 +7,14 @@ class IsoTower extends HTMLElement {
     const tilesAttr = this.getAttribute('tiles') ?? '1';
     const tileNames = isNaN(tilesAttr) ? tilesAttr.split(' ') : null;
     const tileCount = tileNames ? tileNames.length : parseInt(tilesAttr, 10);
-    const positions = tilePositions[tileCount] ?? tilePositions[1];
+    const REF_WIDTH = 340;
+    const positions = (tilePositions[tileCount] ?? tilePositions[1]).map(x => (x / REF_WIDTH * 100).toFixed(2) + '%');
     const tilesHTML = positions.map((x, i) => {
       const src = tileNames
         ? `/Assets/IsoTower/IsoTile${tileNames[i]}.svg`
         : '/Assets/IsoTower/IsoTileResearch.svg';
       return `
-      <div class="iso-tile" style="left: ${x}px">
+      <div class="iso-tile" style="left: ${x}">
         <img class="iso-tile-img" src="${src}" alt="">
       </div>`;
     }).join('');
