@@ -527,6 +527,14 @@ const initCaseStudyNav = async () => {
       updateSelectorPosition(selected, selector);
     }
   });
+
+  const updateNavStuckState = () => {
+    if (!desktopQuery.matches) return;
+    navRoot.classList.toggle("is-stuck", showcaseRoot.getBoundingClientRect().top <= 0);
+  };
+  window.addEventListener("scroll", updateNavStuckState, { passive: true });
+  desktopQuery.addEventListener("change", updateNavStuckState);
+  updateNavStuckState();
 };
 
 const initIntroScrollIndicator = () => {

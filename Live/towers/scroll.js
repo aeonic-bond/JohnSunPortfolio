@@ -1,5 +1,6 @@
 const section = document.querySelector('.towers-scroll');
 const el = document.querySelector('iso-towers');
+const towersSection = document.querySelector('.towers-section');
 if (section && el) {
   const count = el.querySelectorAll(':scope > iso-tower').length;
   const vhPerTower = 50;
@@ -12,6 +13,9 @@ if (section && el) {
     const totalTravel = section.offsetHeight - center;
     const index = Math.min(count - 1, Math.floor(scrolled / (totalTravel / count)));
     el.setAttribute('active', index);
+    if (towersSection) {
+      towersSection.classList.toggle('is-stuck', rect.top <= 0);
+    }
   }
 
   window.addEventListener('scroll', update, { passive: true });
