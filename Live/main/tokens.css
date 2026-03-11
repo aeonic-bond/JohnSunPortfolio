@@ -5,12 +5,12 @@
   --r-forest-sink: #0D0B0B;
   --r-forest-shine: #FBE3BD;
   --r-forest-shade: #737371;
-  --r-stellar: #FFF8E6;
+  --r-stellar: #FFFBF0;
   --r-stellar-fade-partial: #61606A;
   --r-stellar-fade: rgba(217, 216, 216, 0.2);
   --r-black: #000;
   --r-white: #D7D6DB;
-  --r-white-off: #97959D;
+  --r-white-off: #AEACB6;
 
   /* Semantic color tokens */
   --color-bg-main: var(--r-forest);
