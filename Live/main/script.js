@@ -1,20 +1,15 @@
-const DESKTOP_ICON_SRC = "http://localhost:3845/assets/2370a2c22219829ffcd883885dd9e935e0ea2c7a.svg";
-const MOBILE_ICON_SRC = "http://localhost:3845/assets/0253910616877c7d6156a2ffec07d136fe9deba6.svg";
 const TORUS_ICON_SRC = "/Assets/TorusIcon.svg";
 const BLUEPRINT_ICON_SRC = "/Assets/BlueprintIcon.svg";
 const CUSTOMIZER_ICON_SRC = "/Assets/CustomizerIcon.svg";
 const TOLLEY_ICON_SRC = "/Assets/TolleyIcon.svg";
 const NAV_REVEAL_MOBILE_ENTER_PX = 8;
 const NAV_REVEAL_MOBILE_EXIT_PX = 26;
-const NAV_REVEAL_DESKTOP_ENTER_RATIO = 0.8;
-const NAV_REVEAL_DESKTOP_EXIT_RATIO = 0.9;
 const NAV_REVEAL_TRANSITION_LOCK_MS = 1000;
 const MAIN_BODY_NAV_STICKY_CLASS = "is-nav-sticky";
 
 let navRevealTransitionLock = false;
 let navRevealTransitionLockTimeoutId = 0;
 let navRevealRootRef = null;
-let navRevealShowcaseRootRef = null;
 const navSnapRestoreTimeoutByElement = new WeakMap();
 
 const syncMainBodyNavStickyState = (isSticky) => {
@@ -66,29 +61,21 @@ const createNavItem = ({ title, text, icon: iconOverride = "", targetId = "", hr
   const isCustomizerItem =
     String(title || "").trim().toLowerCase() === "customizer" || targetId === "case-study-hcustomizer";
   const isTolleyItem = String(title || "").trim().toLowerCase() === "tolley" || targetId === "case-study-tolley";
-  let desktopIconSrc = DESKTOP_ICON_SRC;
-  let mobileIconSrc = MOBILE_ICON_SRC;
+  let iconSrc = "";
   if (iconOverride) {
-    desktopIconSrc = iconOverride;
-    mobileIconSrc = iconOverride;
+    iconSrc = iconOverride;
   } else if (isTorusItem) {
-    desktopIconSrc = TORUS_ICON_SRC;
-    mobileIconSrc = TORUS_ICON_SRC;
+    iconSrc = TORUS_ICON_SRC;
   } else if (isBlueprintItem) {
-    desktopIconSrc = BLUEPRINT_ICON_SRC;
-    mobileIconSrc = BLUEPRINT_ICON_SRC;
+    iconSrc = BLUEPRINT_ICON_SRC;
   } else if (isCustomizerItem) {
-    desktopIconSrc = CUSTOMIZER_ICON_SRC;
-    mobileIconSrc = CUSTOMIZER_ICON_SRC;
+    iconSrc = CUSTOMIZER_ICON_SRC;
   } else if (isTolleyItem) {
-    desktopIconSrc = TOLLEY_ICON_SRC;
-    mobileIconSrc = TOLLEY_ICON_SRC;
+    iconSrc = TOLLEY_ICON_SRC;
   }
-  icon.src = desktopIconSrc;
+  icon.src = iconSrc;
   icon.alt = "";
   icon.setAttribute("aria-hidden", "true");
-  icon.dataset.desktopSrc = desktopIconSrc;
-  icon.dataset.mobileSrc = mobileIconSrc;
 
   const textWrap = document.createElement("span");
   textWrap.className = "case-study-nav-texts-group";
@@ -113,35 +100,22 @@ const createNavEdgeSpacer = (side = "start") => {
   return spacer;
 };
 
-const updateNavEdgeSpacerWidths = (navList, { desktop = false } = {}) => {
+const updateNavEdgeSpacerWidths = (navList) => {
   if (!(navList instanceof HTMLElement)) return;
   const leadingSpacer = navList.querySelector(".case-study-nav-edge-spacer--start");
   const trailingSpacer = navList.querySelector(".case-study-nav-edge-spacer--end");
   const navItems = navList.querySelectorAll(".case-study-nav-item");
   const lastNavItem = navItems.length > 0 ? navItems[navItems.length - 1] : null;
 
-  if (desktop) {
-    if (leadingSpacer instanceof HTMLElement) {
-      leadingSpacer.style.flexBasis = "";
-      leadingSpacer.style.width = "";
-    }
-    if (trailingSpacer instanceof HTMLElement) trailingSpacer.style.display = "";
-    if (lastNavItem instanceof HTMLElement) lastNavItem.style.marginInlineEnd = "";
-    return;
-  }
-
   const basis = Math.max(0, Math.round(navList.clientWidth * 0.5));
 
-  // Leading spacer: width approach works on all browsers.
   if (leadingSpacer instanceof HTMLElement) {
     leadingSpacer.style.flexBasis = `${basis}px`;
     leadingSpacer.style.width = `${basis}px`;
   }
 
   // Trailing: Safari ignores trailing flex items for scrollable overflow,
-  // so the spacer element is hidden (which also removes the flex gap before it)
-  // and margin-inline-end on the last nav item is used instead —
-  // Safari reliably scrolls into item margins.
+  // so the spacer element is hidden and margin-inline-end on the last nav item is used instead.
   if (trailingSpacer instanceof HTMLElement) trailingSpacer.style.display = "none";
   if (lastNavItem instanceof HTMLElement) lastNavItem.style.marginInlineEnd = `${basis}px`;
 };
@@ -192,33 +166,13 @@ const withTemporarilyDisabledHorizontalSnap = (navRoot, action) => {
   navSnapRestoreTimeoutByElement.set(navRoot, timeoutId);
 };
 
-const centerNavActiveID = (
-  navRoot,
-  activeItem,
-  { desktop = false, behavior = "auto", viewportElement = null } = {},
-) => {
+const centerNavActiveID = (navRoot, activeItem, { behavior = "auto", viewportElement = null } = {}) => {
   if (!(navRoot instanceof HTMLElement) || !(activeItem instanceof HTMLElement)) return;
   if (viewportElement instanceof HTMLElement && !isElementVisibleInViewport(viewportElement)) return;
 
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const resolvedBehavior = prefersReducedMotion ? "auto" : behavior;
-  const itemRect = activeItem.getBoundingClientRect();
 
-  if (desktop) {
-    const targetMidpointY = window.innerHeight * 0.5;
-    const itemMidpointY = itemRect.top + itemRect.height * 0.5;
-    const deltaY = itemMidpointY - targetMidpointY;
-    const maxScrollTop = Math.max(0, navRoot.scrollHeight - navRoot.clientHeight);
-    const nextScrollTop = clamp(navRoot.scrollTop + deltaY, 0, maxScrollTop);
-
-    navRoot.scrollTo({
-      top: nextScrollTop,
-      behavior: resolvedBehavior,
-    });
-    return;
-  }
-
-  // Cancel any pending center operation
   if (navRoot._centerRafId) {
     window.cancelAnimationFrame(navRoot._centerRafId);
     navRoot._centerRafId = null;
@@ -229,7 +183,7 @@ const centerNavActiveID = (
   }
 
   const performCenter = () => {
-    updateNavEdgeSpacerWidths(navRoot, { desktop: false });
+    updateNavEdgeSpacerWidths(navRoot);
 
     const itemOffsetLeft = getOffsetLeftRelativeTo(activeItem, navRoot);
     const itemWidth = activeItem.offsetWidth;
@@ -251,11 +205,7 @@ const centerNavActiveID = (
   });
 };
 
-const setActiveNavItem = (
-  root,
-  activeID,
-  { desktop = false, behavior = "auto", viewportElement = null, selectorEl = null } = {},
-) => {
+const setActiveNavItem = (root, activeID, { behavior = "auto", viewportElement = null, selectorEl = null } = {}) => {
   const items = root.querySelectorAll(".case-study-nav-item");
   let activeItem = null;
   for (const item of items) {
@@ -267,7 +217,7 @@ const setActiveNavItem = (
   }
 
   if (activeItem) {
-    centerNavActiveID(root, activeItem, { desktop, behavior, viewportElement });
+    centerNavActiveID(root, activeItem, { behavior, viewportElement });
   }
   updateSelectorPosition(activeItem, selectorEl);
 };
@@ -283,14 +233,6 @@ const updateSelectorPosition = (activeItem, selectorEl) => {
   const itemRect = activeItem.getBoundingClientRect();
   selectorEl.style.left = `${itemRect.left - navDivRect.left + itemRect.width * 0.5}px`;
   selectorEl.style.width = `${Math.round(itemRect.width)}px`;
-};
-
-const updateNavIconsForViewport = (root, mediaQuery) => {
-  const icons = root.querySelectorAll(".case-study-nav-icon");
-  for (const icon of icons) {
-    if (!(icon instanceof HTMLImageElement)) continue;
-    icon.src = mediaQuery.matches ? icon.dataset.desktopSrc || DESKTOP_ICON_SRC : icon.dataset.mobileSrc || MOBILE_ICON_SRC;
-  }
 };
 
 const clickNavUpdateActiveID = (navItem) => {
@@ -375,24 +317,16 @@ const loadNavItems = async () => {
   return window.LiveCaseStudyData?.items || [];
 };
 
-const navDivReveal = (navRoot, showcaseRoot) => {
-  if (!(navRoot instanceof HTMLElement) || !(showcaseRoot instanceof HTMLElement)) return;
+const navDivReveal = (navRoot) => {
+  if (!(navRoot instanceof HTMLElement)) return;
   navRevealRootRef = navRoot;
-  navRevealShowcaseRootRef = showcaseRoot;
   const currentlyVisible = navRoot.classList.contains("is-visible");
   syncMainBodyNavStickyState(currentlyVisible);
-  const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
-  let shouldShow = false;
 
-  if (isDesktop) {
-    const showcaseTop = showcaseRoot.getBoundingClientRect().top;
-    const enterThreshold = window.innerHeight * NAV_REVEAL_DESKTOP_ENTER_RATIO;
-    const exitThreshold = window.innerHeight * NAV_REVEAL_DESKTOP_EXIT_RATIO;
-    shouldShow = currentlyVisible ? showcaseTop <= exitThreshold : showcaseTop <= enterThreshold;
-  } else {
-    const navTop = navRoot.getBoundingClientRect().top;
-    shouldShow = currentlyVisible ? navTop <= NAV_REVEAL_MOBILE_EXIT_PX : navTop <= NAV_REVEAL_MOBILE_ENTER_PX;
-  }
+  const navTop = navRoot.getBoundingClientRect().top;
+  const shouldShow = currentlyVisible
+    ? navTop <= NAV_REVEAL_MOBILE_EXIT_PX
+    : navTop <= NAV_REVEAL_MOBILE_ENTER_PX;
 
   if (shouldShow === currentlyVisible) return;
   if (navRevealTransitionLock) return;
@@ -406,13 +340,8 @@ const navDivReveal = (navRoot, showcaseRoot) => {
   navRevealTransitionLockTimeoutId = window.setTimeout(() => {
     navRevealTransitionLock = false;
     navRevealTransitionLockTimeoutId = 0;
-    if (
-      navRevealRootRef instanceof HTMLElement &&
-      navRevealShowcaseRootRef instanceof HTMLElement
-    ) {
-      window.requestAnimationFrame(() =>
-        navDivReveal(navRevealRootRef, navRevealShowcaseRootRef)
-      );
+    if (navRevealRootRef instanceof HTMLElement) {
+      window.requestAnimationFrame(() => navDivReveal(navRevealRootRef));
     }
   }, NAV_REVEAL_TRANSITION_LOCK_MS);
 };
@@ -420,10 +349,7 @@ const navDivReveal = (navRoot, showcaseRoot) => {
 const initCaseStudyNav = async () => {
   const navRoot = document.querySelector(".case-study-nav-div");
   if (!(navRoot instanceof HTMLElement)) return;
-  const showcaseRoot = document.querySelector(".case-study-showcase");
-  if (!(showcaseRoot instanceof HTMLElement)) return;
 
-  const desktopQuery = window.matchMedia("(min-width: 1024px)");
   const items = await loadNavItems();
 
   const navList = document.createElement("div");
@@ -455,9 +381,8 @@ const initCaseStudyNav = async () => {
   navList.append(trailingSpacer);
 
   navRoot.replaceChildren(selector, navList);
-  updateNavEdgeSpacerWidths(navList, { desktop: desktopQuery.matches });
-  updateNavIconsForViewport(navList, desktopQuery);
-  navDivReveal(navRoot, showcaseRoot);
+  updateNavEdgeSpacerWidths(navList);
+  navDivReveal(navRoot);
 
   navList.addEventListener("scroll", () => {
     const selected = navList.querySelector(".case-study-nav-item.is-selected");
@@ -465,15 +390,23 @@ const initCaseStudyNav = async () => {
   }, { passive: true });
 
   const scheduleNavDivReveal = () => {
-    window.requestAnimationFrame(() => navDivReveal(navRoot, showcaseRoot));
+    window.requestAnimationFrame(() => navDivReveal(navRoot));
   };
   window.addEventListener("scroll", scheduleNavDivReveal, { passive: true });
-  window.addEventListener("resize", scheduleNavDivReveal);
+
+  window.addEventListener("resize", () => {
+    navDivReveal(navRoot);
+    updateNavEdgeSpacerWidths(navList);
+    const selected = navList.querySelector(".case-study-nav-item.is-selected");
+    if (selected instanceof HTMLElement) {
+      centerNavActiveID(navList, selected, { behavior: "auto", viewportElement: navRoot });
+      updateSelectorPosition(selected, selector);
+    }
+  });
 
   window.syncCaseStudyNavActiveID = (nextId, behavior = "smooth") => {
     if (typeof nextId !== "string" || !nextId) return;
     setActiveNavItem(navList, nextId, {
-      desktop: desktopQuery.matches,
       behavior,
       viewportElement: navRoot,
       selectorEl: selector,
@@ -484,57 +417,6 @@ const initCaseStudyNav = async () => {
   if (initialActive) {
     window.syncCaseStudyNavActiveID(initialActive, "auto");
   }
-
-  if (typeof desktopQuery.addEventListener === "function") {
-    desktopQuery.addEventListener("change", () => {
-      updateNavEdgeSpacerWidths(navList, { desktop: desktopQuery.matches });
-      updateNavIconsForViewport(navList, desktopQuery);
-      const selected = navList.querySelector(".case-study-nav-item.is-selected");
-      if (selected instanceof HTMLElement) {
-        centerNavActiveID(navList, selected, {
-          desktop: desktopQuery.matches,
-          behavior: "auto",
-          viewportElement: navRoot,
-        });
-        updateSelectorPosition(selected, selector);
-      }
-    });
-  } else if (typeof desktopQuery.addListener === "function") {
-    desktopQuery.addListener(() => {
-      updateNavEdgeSpacerWidths(navList, { desktop: desktopQuery.matches });
-      updateNavIconsForViewport(navList, desktopQuery);
-      const selected = navList.querySelector(".case-study-nav-item.is-selected");
-      if (selected instanceof HTMLElement) {
-        centerNavActiveID(navList, selected, {
-          desktop: desktopQuery.matches,
-          behavior: "auto",
-          viewportElement: navRoot,
-        });
-        updateSelectorPosition(selected, selector);
-      }
-    });
-  }
-
-  window.addEventListener("resize", () => {
-    updateNavEdgeSpacerWidths(navList, { desktop: desktopQuery.matches });
-    const selected = navList.querySelector(".case-study-nav-item.is-selected");
-    if (selected instanceof HTMLElement) {
-      centerNavActiveID(navList, selected, {
-        desktop: desktopQuery.matches,
-        behavior: "auto",
-        viewportElement: navRoot,
-      });
-      updateSelectorPosition(selected, selector);
-    }
-  });
-
-  const updateNavStuckState = () => {
-    if (!desktopQuery.matches) return;
-    navRoot.classList.toggle("is-stuck", showcaseRoot.getBoundingClientRect().top <= 0);
-  };
-  window.addEventListener("scroll", updateNavStuckState, { passive: true });
-  desktopQuery.addEventListener("change", updateNavStuckState);
-  updateNavStuckState();
 };
 
 const initIntroScrollIndicator = () => {
