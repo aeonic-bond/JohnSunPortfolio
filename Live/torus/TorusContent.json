@@ -26,7 +26,7 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "Creating reference planes and setting parameters is a fundamental task in Revit and a critical bottleneck in architecture. I worked with 2 senior architects to develop Torus, a browser-based CAD tool for creating parametric architectural objects to streamline that workflow. I conducted user research, designed wireframes, built a working MVP demo with AI assistance, and conducted user tests. With one iteration on UI, the final testing round showed a 100% completion rate. These results demonstrate that parametric processes can be intuited in under 5 minutes when built on modern, intuitive design principles."
+          "text": "Creating reference planes and setting parameters are fundamental Revit workflows that present a critical bottleneck due to outdated UX. I worked with 2 senior architects to develop Torus, a browser-based CAD tool for creating parametric architectural objects to streamline that workflow. I conducted user research, designed wireframes, built a working MVP demo with AI assistance, and conducted user tests. With one iteration on UI, the final testing round showed a 100% completion rate. These results demonstrate that parametric processes can be intuited in under 5 minutes when built on modern, intuitive design principles."
         }
       ]
     },
