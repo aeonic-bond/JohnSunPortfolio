@@ -167,6 +167,38 @@
           ]
         }
       ]
+    },
+    {
+      "id": "section-04",
+      "header": "Digital Catalog",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The digital catalog is an ongoing team effort to replace PDF catalogs with a digital app experience. Users take a style survey, receive a recommended curated set of finishes, and adjust the selection. I designed several key screens with feature scalability in mind, creating a reusable selection pattern for cabinets that can be repurposed, such as for flooring as shown."
+        },
+        {
+          "type": "figMatrix",
+          "variant": "mobileScreens",
+          "figures": [
+            {
+              "src": "../../Assets/HCustomizer/Section4/DC1.png",
+              "caption": "Style Survey prefills the majority of hardware and finishes. The flow is optimized for refinement over selection."
+            },
+            {
+              "src": "../../Assets/HCustomizer/Section4/DC2.png",
+              "caption": "The Cabinet tab in the Kitchen selection flow balances several required elements: navigation, visualizer, stacked cabinet toggle, zoning, filters, selection, return option, and confirmation bar."
+            },
+            {
+              "src": "../../Assets/HCustomizer/Section4/DC3.png",
+              "caption": "Flooring exists as its own section, allowing users to compare kitchen and bath flooring and accommodate grout selection."
+            },
+            {
+              "src": "../../Assets/HCustomizer/Section4/DC4.png",
+              "caption": "Grout selection expands the bottom confirmation bar into a full bottom sheet."
+            }
+          ]
+        }
+      ]
     }
   ]
 }
