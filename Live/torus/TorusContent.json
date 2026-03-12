@@ -41,9 +41,9 @@
         {
           "type": "bulletRow",
           "items": [
-            "Revit has awkward workflows that are outdated, designed to mirror paper and pencil drafting.",
-            "Revit’s lack of prescriptive UX conflicts with modern practices that value strict logical processes.",
-            "The UI simply feels unintuitive. Key tools are hidden amongst many other tools with no logical order."
+            "The basic worflow of setting up the framework for parametric families requires 3 separate tools: Add Reference Plane, Aligned Dimensions, Set Parameters",
+            "Revit’s lacks prescriptive UX that conflicts with modern practices of following strict logical processes.",
+            "The UI feels unintuitive. The 3 key tools are hidden amongst many other tools with no logical order."
           ]
         }
       ]
