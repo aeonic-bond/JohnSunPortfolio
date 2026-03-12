@@ -288,6 +288,16 @@
         {
           "type": "paragraph",
           "text": "Torus was one of the most rewarding and challenging projects I've worked on, requiring hands-on involvement across every stage of product development, from research and wireframing to agile development and usability testing. This project demonstrated that even deeply technical, legacy workflows can support intuitive, modern UX when designed with clear structure and intention. Ultimately, the successful feedback results of the initial MVP showed that a modern parametric CAD tool can be intuitively understood and used in under 5 minutes. I'm grateful to Matthew and Nicky for sharing their domain expertise and for their close collaboration throughout the project."
+        },
+        {
+          "type": "figure",
+          "figure": {
+            "variant": "large",
+            "type": "image",
+            "src": "../../Assets/Torus/Case Study/Footer.png",
+            "caption": "Landing page for Torus",
+            "showCaption": false
+          }
         }
       ]
     }

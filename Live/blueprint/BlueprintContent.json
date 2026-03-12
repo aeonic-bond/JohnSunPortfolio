@@ -281,6 +281,16 @@
         {
           "type": "paragraph",
           "text": "Blueprint did not emerge from a linear path, but rather through ongoing feedback cycles, adaptation to new technology, and the guiding principle of meeting people where they are. Prior to the Storybook implementation, Blueprint had already successfully facilitated a company-wide Figma migration and saved hundreds of hours in design time. Now that it is being built in code as part of an agentic workflow, Blueprint has evolved from static documentation into a living translator between design intent and functional implementation."
+        },
+        {
+          "type": "figure",
+          "figure": {
+            "variant": "large",
+            "type": "image",
+            "src": "../../Assets/Blueprint/Footer.png",
+            "caption": "Toll Brothers advantage section made with Blueprint",
+            "showCaption": false
+          }
         }
       ]
     }
