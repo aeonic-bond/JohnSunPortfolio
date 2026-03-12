@@ -40,28 +40,20 @@
           "text": "For Toll Brothers, “choice” is core to its luxury identity. Users can customize structural options (i.e., fireplaces, room layouts, etc.). However, the old home customization module has major flaws."
         },
         {
-          "type": "bulletRow",
-          "items": [
+          "type": "figMatrix",
+          "variant": "mobileScreens",
+          "figures": [
             {
-              "text": "Many options have complex dependencies (e.g., selecting Option A disables Option B), but the UI fails to communicate it.",
-              "stamp": {
-                "src": "../../Assets/HCustomizer/Section1/Problem1.png",
-                "alt": "Dependency logic problem diagram"
-              }
+              "src": "../../Assets/HCustomizer/Section1/Problem1.png",
+              "caption": "Many options have complex dependencies (e.g., selecting Option A disables Option B), but the UI fails to communicate it."
             },
             {
-              "text": "Users have to rely on trial-and-error and dense tooltips, resulting in a frustrating experience.",
-              "stamp": {
-                "src": "../../Assets/HCustomizer/Section1/Problem2.png",
-                "alt": "Trial-and-error and tooltip-heavy experience"
-              }
+              "src": "../../Assets/HCustomizer/Section1/Problem2.png",
+              "caption": "Users have to rely on trial-and-error and dense tooltips, resulting in a frustrating experience."
             },
             {
-              "text": "It’s built on desktop-first principles, lacks features, and has wonky controls.",
-              "stamp": {
-                "src": "../../Assets/HCustomizer/Section1/Problem3.png",
-                "alt": "Poor mobile experience"
-              }
+              "src": "../../Assets/HCustomizer/Section1/Problem3.png",
+              "caption": "It’s built on desktop-first principles. On mobile, it lacks features and has wonky controls."
             }
           ]
         },

@@ -719,6 +719,11 @@
   .cs-fig-matrix.cs-fig-matrix--mobile-screens {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
+
+  .cs-fig-matrix--mobile-screens:has(> .cs-fig:nth-child(3):last-child) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    justify-content: center;
+  }
 }
 
  /* Stamp */
