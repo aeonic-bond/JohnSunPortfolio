@@ -42,7 +42,7 @@
           "type": "bulletRow",
           "items": [
             "The basic worflow of setting up the framework for parametric families requires 3 separate tools: Add Reference Plane, Aligned Dimensions, Set Parameters",
-            "Revit lacks prescriptive UX that conflicts with modern practices of following strict logical processes.",
+            "Revit lacks prescriptive UX. This conflicts with modern architectural practices of following strict logical processes.",
             "The UI feels unintuitive. The 3 key tools are hidden amongst many other tools with no logical order."
           ]
         }
