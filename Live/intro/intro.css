@@ -5,9 +5,9 @@
 .intro-div {
   position: relative;
   width: 100%;
-  height: fit-content;
+  height: 1000px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   padding-top: var(--spacer-section-900);
   padding-bottom: var(--spacer-500);
