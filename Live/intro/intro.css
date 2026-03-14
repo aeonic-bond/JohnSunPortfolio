@@ -1,0 +1,74 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.intro-div {
+  position: relative;
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: var(--spacer-section-900);
+  padding-bottom: var(--spacer-500);
+  background: var(--color-bg-main);
+  overflow: hidden;
+}
+
+.intro-group {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  padding-inline: var(--spacer-500);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--spacer-500);
+  transform: translateY(calc(-1 * var(--spacer-section-500)));
+}
+
+.intro-media-mount {
+  width: 88px;
+  height: 88px;
+  flex: 0 0 88px;
+}
+
+.intro-media-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.intro-texts {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: var(--spacer-200);
+}
+
+.intro-title {
+  margin: 0;
+  width: 100%;
+  font: var(--type-h1-intro);
+  letter-spacing: -0.02em;
+  color: var(--color-accent);
+  text-box-trim: none;
+}
+
+.intro-role {
+  margin: 0;
+  font: var(--type-role-intro);
+  color: var(--color-text-secondary);
+}
+
+.intro-subtitle {
+  margin: 0;
+  padding-top: var(--spacer-section-500);
+  width: 100%;
+  font: var(--type-subtitle-intro);
+  color: var(--color-text-secondary);
+}

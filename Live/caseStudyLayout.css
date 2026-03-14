@@ -40,7 +40,7 @@
 }
 
 .cs-title {
-  font: var(--type-h1-cs);
+  font: var(--type-h1);
   letter-spacing: 0.02em;
   color: var(--color-accent);
   min-width: 0;
