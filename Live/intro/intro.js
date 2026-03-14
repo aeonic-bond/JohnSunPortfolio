@@ -1,10 +1,26 @@
 const canvas = document.getElementById('smoke');
 const ctx = canvas.getContext('2d');
 
+// Fixed-position canvas for the sticky blade line
+const bladeCanvas = document.createElement('canvas');
+bladeCanvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:100;';
+document.body.appendChild(bladeCanvas);
+const bCtx = bladeCanvas.getContext('2d');
+
 const dpr = window.devicePixelRatio || 1;
 let W = 0, H = 0;
+let VW = 0, VH = 0;
 
 const introSection = document.querySelector('.intro-section');
+const introGroup = document.querySelector('.intro-group');
+
+let bladeTargetX = 0;
+
+function updateBladeTarget() {
+  const groupRect = introGroup.getBoundingClientRect();
+  const sectionRect = introSection.getBoundingClientRect();
+  bladeTargetX = groupRect.left - sectionRect.left + 16;
+}
 
 function resizeCanvas() {
   W = introSection.offsetWidth;
@@ -13,6 +29,15 @@ function resizeCanvas() {
   canvas.height = H * dpr;
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.scale(dpr, dpr);
+
+  VW = window.innerWidth;
+  VH = window.innerHeight;
+  bladeCanvas.width = VW * dpr;
+  bladeCanvas.height = VH * dpr;
+  bCtx.setTransform(1, 0, 0, 1, 0, 0);
+  bCtx.scale(dpr, dpr);
+
+  updateBladeTarget();
   if (typeof smoke !== 'undefined') {
     smoke.cx = W / 2;
     smoke.cy = H * 0.15;
@@ -139,14 +164,14 @@ function render(timestamp) {
   const scaleY = 1 + (targetScaleY - 1) * p;
 
   const blurP = Math.max(0, (p - 0.6) / 0.4);
-  const blur = 40 * (1 - blurP * blurP * blurP);
+  const blur = 20 + 20 * (1 - blurP * blurP * blurP);
 
   const lineBlend = Math.min(1, (p - 0.85) / 0.15);
 
   const blobStartY = H * 0.15;
-  const bladeCenter = H * 0.125;
-  const cyOffset = (bladeCenter - blobStartY) * p;
-  const cxOffset = (16 - smoke.cx) * p;
+  const targetY = H * 0.35;
+  const cyOffset = (targetY - blobStartY) * p;
+  const cxOffset = (bladeTargetX - smoke.cx) * p;
 
   const currentCx = smoke.cx + cxOffset;
   const currentCy = smoke.cy + cyOffset;
@@ -271,45 +296,52 @@ function render(timestamp) {
     }
   }
 
-  // LAYER 5: Blade line (grows from center)
+  ctx.restore(); // end blur filter
+
+  // LAYER 5: Blade line — drawn on fixed-position canvas (sticky)
+  bCtx.clearRect(0, 0, VW, VH);
   if (lineBlend > 0) {
     const bladeFullTop = 0;
-    const bladeFullBottom = H * 0.4;
+    const bladeFullBottom = VH * 0.4;
     const bladeMid = (bladeFullTop + bladeFullBottom) / 2;
     const bladeTop = bladeMid - (bladeMid - bladeFullTop) * lineBlend;
     const bladeBottom = bladeMid + (bladeFullBottom - bladeMid) * lineBlend;
     const bladeHue = (t * 22) % 360;
 
-    ctx.save();
-    ctx.globalAlpha = lineBlend * 0.4;
-    const lineGrad = ctx.createLinearGradient(currentCx, bladeTop, currentCx, bladeBottom);
+    // blade X is bladeTargetX offset from section left edge, converted to viewport X
+    const sectionLeft = introSection.getBoundingClientRect().left;
+    const bladeCx = sectionLeft + bladeTargetX;
+
+    bCtx.save();
+    bCtx.globalAlpha = lineBlend * 0.4;
+    bCtx.filter = `blur(${10 * (1 - lineBlend)}px)`;
+    const lineGrad = bCtx.createLinearGradient(bladeCx, bladeTop, bladeCx, bladeBottom);
     lineGrad.addColorStop(0, 'rgba(4, 4, 4, 0)');
-    lineGrad.addColorStop(0.1, hsla(bladeHue, 40, 12, 0.8));
-    lineGrad.addColorStop(0.3, hsla(bladeHue + 60, 55, 30, 1));
-    lineGrad.addColorStop(0.55, hsla(bladeHue + 140, 60, 35, 1));
-    lineGrad.addColorStop(0.8, hsla(bladeHue + 220, 50, 28, 1));
-    lineGrad.addColorStop(1, hsla(bladeHue + 280, 45, 32, 0.9));
-    ctx.strokeStyle = lineGrad;
-    ctx.lineWidth = 1.5;
-    ctx.lineCap = 'round';
-    ctx.beginPath();
-    ctx.moveTo(currentCx, bladeTop);
-    ctx.lineTo(currentCx, bladeBottom);
-    ctx.stroke();
+    lineGrad.addColorStop(0.1, hsla(bladeHue, 65, 35, 0.9));
+    lineGrad.addColorStop(0.3, hsla(bladeHue + 60, 75, 50, 1));
+    lineGrad.addColorStop(0.55, hsla(bladeHue + 140, 72, 52, 1));
+    lineGrad.addColorStop(0.8, hsla(bladeHue + 220, 68, 45, 1));
+    lineGrad.addColorStop(1, hsla(bladeHue + 280, 65, 48, 0.9));
+    bCtx.strokeStyle = lineGrad;
+    bCtx.lineWidth = 1.5;
+    bCtx.lineCap = 'round';
+    bCtx.beginPath();
+    bCtx.moveTo(bladeCx, bladeTop);
+    bCtx.lineTo(bladeCx, bladeBottom);
+    bCtx.stroke();
 
-    ctx.globalAlpha = lineBlend * 0.12;
-    const glowGrad = ctx.createLinearGradient(currentCx, bladeTop, currentCx, bladeBottom);
+    bCtx.globalAlpha = lineBlend * 0.12;
+    bCtx.filter = 'blur(6px)';
+    const glowGrad = bCtx.createLinearGradient(bladeCx, bladeTop, bladeCx, bladeBottom);
     glowGrad.addColorStop(0, 'rgba(4, 4, 4, 0)');
-    glowGrad.addColorStop(0.3, hsla(bladeHue + 60, 45, 20, 0.6));
-    glowGrad.addColorStop(0.6, hsla(bladeHue + 140, 50, 25, 0.5));
-    glowGrad.addColorStop(1, hsla(bladeHue + 220, 40, 18, 0.4));
-    ctx.strokeStyle = glowGrad;
-    ctx.lineWidth = 8;
-    ctx.stroke();
-    ctx.restore();
+    glowGrad.addColorStop(0.3, hsla(bladeHue + 60, 70, 40, 0.6));
+    glowGrad.addColorStop(0.6, hsla(bladeHue + 140, 68, 42, 0.5));
+    glowGrad.addColorStop(1, hsla(bladeHue + 220, 62, 38, 0.4));
+    bCtx.strokeStyle = glowGrad;
+    bCtx.lineWidth = 8;
+    bCtx.stroke();
+    bCtx.restore();
   }
-
-  ctx.restore();
 
   requestAnimationFrame(render);
 }
@@ -317,6 +349,7 @@ function render(timestamp) {
 // ── Init after first paint to ensure layout is complete ──
 requestAnimationFrame(() => {
   resizeCanvas();
+  updateBladeTarget();
   smoke = new SmokeBlade(W / 2, H * 0.15, 250, 8);
   requestAnimationFrame(render);
 });
