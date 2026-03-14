@@ -2,10 +2,19 @@
   box-sizing: border-box;
 }
 
+#smoke {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
 .intro-section {
   position: relative;
   width: 100%;
-  height: fit-content;
+  height: 1500px;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -17,6 +26,7 @@
 
 .intro-group {
   position: relative;
+  z-index: 1;
   width: 100%;
   max-width: 560px;
   padding-inline: var(--spacer-500);
