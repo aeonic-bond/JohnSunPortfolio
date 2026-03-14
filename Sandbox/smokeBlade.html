@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>John Sun — Product Designer</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0a;
+    color: #f5f0e8;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .page {
+    position: relative;
+    width: 390px;
+    margin: 0 auto;
+    min-height: 450vh;
+  }
+
+  .canvas-wrap {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 390px;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .content {
+    position: relative;
+    z-index: 2;
+    padding: 36px 32px;
+    min-height: 100vh;
+  }
+
+  .logo {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 48px;
+  }
+  .logo svg { width: 100%; height: 100%; }
+
+  h1 {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+
+  .subtitle {
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 1.25;
+    opacity: 0.85;
+    margin-top: 6px;
+  }
+
+  .bio {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.55;
+    opacity: 0.6;
+    margin-top: 28px;
+    max-width: 300px;
+  }
+
+  .scroll-sections {
+    position: relative;
+    z-index: 2;
+    padding: 0 32px;
+  }
+
+  .section {
+    padding: 80px 0;
+    border-top: 1px solid rgba(245, 240, 232, 0.08);
+    position: relative;
+    opacity: 0.75;
+    transition: opacity 0.5s ease;
+  }
+
+  .section.active {
+    opacity: 1;
+  }
+
+  .section h2 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    opacity: 0.7;
+  }
+
+  .section p {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.6;
+    opacity: 0.45;
+    max-width: 320px;
+  }
+
+  /* ── Indicator circles ── */
+  .indicator {
+    position: absolute;
+    left: -20px;
+    top: 80px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid rgba(245, 240, 232, 0.2);
+    background: transparent;
+    transition: border-color 0.3s ease;
+    z-index: 3;
+  }
+
+  .indicator .glow {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+
+  .indicator.lit {
+    border-color: transparent;
+  }
+
+  .indicator.lit .glow {
+    opacity: 1;
+  }
+</style>
+</head>
+<body>
+
+<div class="canvas-wrap">
+  <canvas id="smokeBlade"></canvas>
+</div>
+
+<div class="page">
+  <div class="content">
+    <div class="logo">
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="16" height="32" rx="8" fill="#f5f0e8"/>
+        <rect x="24" y="2" width="16" height="20" rx="8" fill="#f5f0e8"/>
+        <circle cx="32" cy="32" r="6" fill="#f5f0e8"/>
+      </svg>
+    </div>
+    <h1>John Sun</h1>
+    <div class="subtitle">product designer in San<br>Francisco</div>
+    <p class="bio">I take ideas from research to design to code prototypes. I use Figma-MCP to produce design-side code to close the consistency gap.</p>
+  </div>
+
+  <div class="scroll-sections">
+    <div class="section">
+      <div class="indicator" data-index="0"><div class="glow"></div></div>
+      <h2>Design Systems</h2>
+      <p>Building consistent, scalable component libraries that bridge the gap between design intent and production code.</p>
+    </div>
+    <div class="section">
+      <div class="indicator" data-index="1"><div class="glow"></div></div>
+      <h2>Prototyping</h2>
+      <p>High-fidelity interactive prototypes that communicate interaction patterns better than any spec document.</p>
+    </div>
+    <div class="section">
+      <div class="indicator" data-index="2"><div class="glow"></div></div>
+      <h2>Research</h2>
+      <p>Mixed-methods user research to validate design decisions early and iterate with confidence.</p>
+    </div>
+    <div class="section">
+      <div class="indicator" data-index="3"><div class="glow"></div></div>
+      <h2>Figma-MCP</h2>
+      <p>Using model-context protocol to generate design-faithful code directly from Figma, closing the consistency gap between design and engineering.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('smokeBlade');
+const ctx = canvas.getContext('2d');
+
+const dpr = window.devicePixelRatio || 1;
+let W, H;
+
+function resizeCanvas() {
+  const wrap = canvas.parentElement;
+  W = wrap.clientWidth;
+  H = wrap.clientHeight;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.scale(dpr, dpr);
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+// ── Scroll progress (blob fully morphed into blade before first section) ──
+let scrollProgress = 0;
+const firstSection = document.querySelector('.scroll-sections .section');
+
+window.addEventListener('scroll', () => {
+  const sectionTop = firstSection.getBoundingClientRect().top + window.scrollY;
+  const morphEnd = sectionTop - 80;
+  scrollProgress = morphEnd > 0 ? Math.min(1, window.scrollY / morphEnd) : 0;
+}, { passive: true });
+
+// ── Aurora color palette ──
+const auroraColors = [
+  { h: 220, s: 70, l: 30 },  // deep blue
+  { h: 270, s: 60, l: 25 },  // violet
+  { h: 175, s: 65, l: 28 },  // teal
+  { h: 310, s: 55, l: 22 },  // magenta
+  { h: 145, s: 50, l: 24 },  // emerald
+];
+
+function getAuroraColor(index, t, intensity) {
+  const base = auroraColors[index % auroraColors.length];
+  const hueDrift = Math.sin(t * 0.15 + index * 1.8) * 25
+                 + Math.sin(t * 0.08 + index * 0.7) * 15;
+  const satDrift = Math.sin(t * 0.2 + index * 2.1) * 12;
+  const lumDrift = Math.sin(t * 0.12 + index * 1.3) * 8;
+
+  const h = base.h + hueDrift;
+  const s = Math.max(20, Math.min(90, base.s + satDrift)) * intensity;
+  const l = Math.max(8, Math.min(45, base.l + lumDrift)) * intensity;
+
+  return { h, s, l };
+}
+
+function hsla(h, s, l, a) {
+  return `hsla(${h.toFixed(1)}, ${s.toFixed(1)}%, ${l.toFixed(1)}%, ${a})`;
+}
+
+// ── Blob class ──
+class SilkBlob {
+  constructor(cx, cy, baseRadius, numPoints) {
+    this.cx = cx;
+    this.cy = cy;
+    this.baseRadius = baseRadius;
+    this.numPoints = numPoints;
+
+    this.points = [];
+    for (let i = 0; i < numPoints; i++) {
+      const angle = (i / numPoints) * Math.PI * 2;
+      this.points.push({
+        angle,
+        baseR: baseRadius * (0.75 + Math.random() * 0.5),
+        phaseR: Math.random() * Math.PI * 2,
+        phaseA: Math.random() * Math.PI * 2,
+        speedR: 0.12 + Math.random() * 0.15,
+        speedA: 0.06 + Math.random() * 0.1,
+        ampR: baseRadius * (0.06 + Math.random() * 0.1),
+        ampA: 0.03 + Math.random() * 0.05,
+      });
+    }
+
+    this.gradDriftPhaseX = Math.random() * Math.PI * 2;
+    this.gradDriftPhaseY = Math.random() * Math.PI * 2;
+    this.gradDriftSpeedX = 0.12;
+    this.gradDriftSpeedY = 0.15;
+    this.gradDriftAmp = baseRadius * 0.5;
+  }
+
+  getPoints(t, scaleX, scaleY) {
+    const pts = [];
+    for (const p of this.points) {
+      const r = p.baseR
+        + Math.sin(t * p.speedR + p.phaseR) * p.ampR
+        + Math.sin(t * p.speedR * 0.6 + p.phaseR * 1.4) * p.ampR * 0.4;
+      const a = p.angle + Math.sin(t * p.speedA + p.phaseA) * p.ampA;
+      pts.push({
+        x: this.cx + Math.cos(a) * r * scaleX,
+        y: this.cy + Math.sin(a) * r * scaleY,
+      });
+    }
+    return pts;
+  }
+
+  buildPath(ctx, pts) {
+    const n = pts.length;
+    ctx.beginPath();
+    for (let i = 0; i < n; i++) {
+      const p0 = pts[(i - 1 + n) % n];
+      const p1 = pts[i];
+      const p2 = pts[(i + 1) % n];
+      const p3 = pts[(i + 2) % n];
+      const tension = 0.3;
+      const cp1x = p1.x + (p2.x - p0.x) * tension;
+      const cp1y = p1.y + (p2.y - p0.y) * tension;
+      const cp2x = p2.x - (p3.x - p1.x) * tension;
+      const cp2y = p2.y - (p3.y - p1.y) * tension;
+      if (i === 0) ctx.moveTo(p1.x, p1.y);
+      ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
+    }
+    ctx.closePath();
+  }
+}
+
+function easeInOutCubic(t) {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
+const baseBlob = new SilkBlob(110, 280, 250, 8);
+let startTime = null;
+
+function render(timestamp) {
+  if (!startTime) startTime = timestamp;
+  const t = (timestamp - startTime) / 1000;
+
+  const introAlpha = Math.min(1, 0.1 + (t / 1.5) * 0.9);
+
+  ctx.fillStyle = '#0a0a0a';
+  ctx.fillRect(0, 0, W, H);
+
+  const p = easeInOutCubic(scrollProgress);
+
+  const scaleX = 1 - p * 0.996;
+  const targetScaleY = (H * 0.125) / baseBlob.baseRadius;
+  const scaleY = 1 + (targetScaleY - 1) * p;
+
+  const blurP = Math.max(0, (p - 0.6) / 0.4);
+  const blur = 40 * (1 - blurP * blurP * blurP);
+
+  const lineBlend = Math.min(1, (p - 0.85) / 0.15);
+
+  const gradScale = 1 - p * 0.5;
+
+  const blobStartY = 400;
+  const bladeCenter = H * 0.125;
+  const cyOffset = (bladeCenter - blobStartY) * p;
+
+  const bladeX = 16;
+  const cxOffset = (bladeX - baseBlob.cx) * p;
+
+  const basePts = baseBlob.getPoints(t, scaleX, scaleY);
+  const offsetPts = basePts.map(pt => ({ x: pt.x + cxOffset, y: pt.y + cyOffset }));
+
+  const currentCx = baseBlob.cx + cxOffset;
+  const currentCy = baseBlob.cy + cyOffset;
+
+  const gcx = currentCx
+    + Math.sin(t * baseBlob.gradDriftSpeedX + baseBlob.gradDriftPhaseX) * baseBlob.gradDriftAmp * (1 - p * 0.7)
+    + Math.cos(t * 0.07 + 1.3) * baseBlob.gradDriftAmp * 0.4 * (1 - p * 0.7);
+  const gcy = currentCy
+    + Math.sin(t * baseBlob.gradDriftSpeedY + baseBlob.gradDriftPhaseY) * baseBlob.gradDriftAmp * (1 - p * 0.9)
+    + Math.sin(t * 0.09 + 0.7) * baseBlob.gradDriftAmp * 0.3 * (1 - p * 0.9);
+
+  const gradR = 320 * gradScale;
+
+  const auroraBase = 0.6 + Math.sin(t * 0.3) * 0.15 + Math.sin(t * 0.17) * 0.1;
+  const auroraScrollBoost = 1 + p * 0.6;
+
+  ctx.save();
+  ctx.globalAlpha = introAlpha;
+  ctx.filter = `blur(${blur}px)`;
+
+  // LAYER 1: Base dark fill
+  if (p < 1) {
+    ctx.save();
+    ctx.globalAlpha = 1;
+    baseBlob.buildPath(ctx, offsetPts);
+
+    const rimBrightness = Math.floor(35 + p * 40);
+    const outerBrightness = Math.floor(25 + p * 50);
+
+    const radGrad = ctx.createRadialGradient(gcx, gcy, 0, gcx, gcy, gradR);
+    radGrad.addColorStop(0, 'rgba(7, 7, 7, 1)');
+    radGrad.addColorStop(0.5, 'rgba(10, 10, 10, 1)');
+    radGrad.addColorStop(0.78, 'rgba(14, 14, 13, 1)');
+    radGrad.addColorStop(0.90, 'rgba(4, 4, 4, 1)');
+    radGrad.addColorStop(0.96, `rgba(${rimBrightness}, ${rimBrightness - 2}, ${rimBrightness - 7}, 1)`);
+    radGrad.addColorStop(1, `rgba(${outerBrightness}, ${outerBrightness - 2}, ${outerBrightness - 5}, 1)`);
+    ctx.fillStyle = radGrad;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // LAYER 2: Aurora iridescent color bands
+  ctx.save();
+  ctx.globalCompositeOperation = 'lighter';
+
+  for (let i = 0; i < 5; i++) {
+    const bandAngle = t * (0.08 + i * 0.02) + i * (Math.PI * 2 / 5);
+    const bandDist = baseBlob.baseRadius * (0.25 + 0.15 * Math.sin(t * 0.1 + i * 1.5));
+    const bx = gcx + Math.cos(bandAngle) * bandDist * (1 - p * 0.6);
+    const by = gcy + Math.sin(bandAngle) * bandDist * (1 - p * 0.5);
+
+    const col = getAuroraColor(i, t, auroraBase * auroraScrollBoost);
+    const bandRadius = gradR * (0.5 + 0.3 * Math.sin(t * 0.13 + i * 2));
+    const bandAlpha = (0.12 + 0.06 * Math.sin(t * 0.25 + i * 1.2)) * (1 - lineBlend);
+
+    baseBlob.buildPath(ctx, offsetPts);
+    ctx.save();
+    ctx.globalAlpha = bandAlpha;
+
+    const aGrad = ctx.createRadialGradient(bx, by, 0, bx, by, bandRadius);
+    aGrad.addColorStop(0, hsla(col.h, col.s * 1.2, col.l * 1.4, 1));
+    aGrad.addColorStop(0.3, hsla(col.h + 10, col.s, col.l * 1.1, 0.7));
+    aGrad.addColorStop(0.6, hsla(col.h + 20, col.s * 0.8, col.l * 0.7, 0.3));
+    aGrad.addColorStop(1, 'hsla(0, 0%, 0%, 0)');
+
+    ctx.fillStyle = aGrad;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  ctx.restore();
+
+  // LAYER 3: Iridescent rim glow
+  if (p < 0.9) {
+    ctx.save();
+    const rimAlpha = (0.3 + 0.15 * Math.sin(t * 0.4)) * (1 - p * 0.8);
+    const rimHue = (t * 18 + scrollProgress * 120) % 360;
+
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.globalAlpha = rimAlpha;
+
+    baseBlob.buildPath(ctx, offsetPts);
+    ctx.strokeStyle = hsla(rimHue, 55, 35, 1);
+    ctx.lineWidth = 3 + Math.sin(t * 0.6) * 1.5;
+    ctx.stroke();
+
+    ctx.globalAlpha = rimAlpha * 0.5;
+    baseBlob.buildPath(ctx, offsetPts);
+    ctx.strokeStyle = hsla(rimHue + 60, 65, 45, 1);
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  // LAYER 4: Linear gradient blade state
+  if (p > 0) {
+    let minY = Infinity, maxY = -Infinity;
+    for (const pt of offsetPts) {
+      if (pt.y < minY) minY = pt.y;
+      if (pt.y > maxY) maxY = pt.y;
+    }
+
+    const rimBrightness = Math.floor(35 + p * 40);
+    const outerBrightness = Math.floor(25 + p * 50);
+
+    ctx.save();
+    ctx.globalAlpha = p * (1 - lineBlend);
+    baseBlob.buildPath(ctx, offsetPts);
+    const linGrad = ctx.createLinearGradient(currentCx, minY - 20, currentCx, maxY + 20);
+    linGrad.addColorStop(0, 'rgba(4, 4, 4, 1)');
+    linGrad.addColorStop(0.3, 'rgba(10, 10, 10, 1)');
+    linGrad.addColorStop(0.7, `rgba(${rimBrightness}, ${rimBrightness - 2}, ${rimBrightness - 7}, 1)`);
+    linGrad.addColorStop(1, `rgba(${outerBrightness + 15}, ${outerBrightness + 12}, ${outerBrightness + 5}, 1)`);
+    ctx.fillStyle = linGrad;
+    ctx.fill();
+    ctx.restore();
+
+    if (p > 0.3) {
+      const bladeAuroraAlpha = (p - 0.3) * 0.25 * (1 - lineBlend);
+      const bladeHue = (t * 20) % 360;
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.globalAlpha = bladeAuroraAlpha;
+      baseBlob.buildPath(ctx, offsetPts);
+      const auroraLinGrad = ctx.createLinearGradient(currentCx, minY, currentCx, maxY);
+      auroraLinGrad.addColorStop(0, hsla(bladeHue, 50, 15, 0));
+      auroraLinGrad.addColorStop(0.3, hsla(bladeHue + 40, 60, 25, 0.8));
+      auroraLinGrad.addColorStop(0.6, hsla(bladeHue + 120, 55, 20, 0.6));
+      auroraLinGrad.addColorStop(1, hsla(bladeHue + 200, 50, 25, 0.9));
+      ctx.fillStyle = auroraLinGrad;
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  // LAYER 5: 1px blade line with aurora shift
+  if (lineBlend > 0) {
+    const bladeFullTop = 0;
+    const bladeFullBottom = H * 0.4;
+    const bladeMid = (bladeFullTop + bladeFullBottom) / 2;
+    const bladeTop = bladeMid - (bladeMid - bladeFullTop) * lineBlend;
+    const bladeBottom = bladeMid + (bladeFullBottom - bladeMid) * lineBlend;
+
+    ctx.save();
+    ctx.globalAlpha = lineBlend * 0.4;
+
+    const bladeHue = (t * 22) % 360;
+
+    const lineGrad = ctx.createLinearGradient(currentCx, bladeTop, currentCx, bladeBottom);
+    lineGrad.addColorStop(0, 'rgba(4, 4, 4, 0)');
+    lineGrad.addColorStop(0.1, hsla(bladeHue, 40, 12, 0.8));
+    lineGrad.addColorStop(0.3, hsla(bladeHue + 60, 55, 30, 1));
+    lineGrad.addColorStop(0.55, hsla(bladeHue + 140, 60, 35, 1));
+    lineGrad.addColorStop(0.8, hsla(bladeHue + 220, 50, 28, 1));
+    lineGrad.addColorStop(1, hsla(bladeHue + 280, 45, 32, 0.9));
+
+    ctx.strokeStyle = lineGrad;
+    ctx.lineWidth = 1.5;
+    ctx.lineCap = 'round';
+
+    ctx.beginPath();
+    ctx.moveTo(currentCx, bladeTop);
+    ctx.lineTo(currentCx, bladeBottom);
+    ctx.stroke();
+
+    ctx.globalAlpha = lineBlend * 0.12;
+    const glowGrad = ctx.createLinearGradient(currentCx, bladeTop, currentCx, bladeBottom);
+    glowGrad.addColorStop(0, 'rgba(4, 4, 4, 0)');
+    glowGrad.addColorStop(0.3, hsla(bladeHue + 60, 45, 20, 0.6));
+    glowGrad.addColorStop(0.6, hsla(bladeHue + 140, 50, 25, 0.5));
+    glowGrad.addColorStop(1, hsla(bladeHue + 220, 40, 18, 0.4));
+    ctx.strokeStyle = glowGrad;
+    ctx.lineWidth = 8;
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  ctx.restore();
+
+  requestAnimationFrame(render);
+}
+
+requestAnimationFrame(render);
+
+// ── Indicator circles — blade intersection logic ──
+const indicators = document.querySelectorAll('.indicator');
+const indicatorState = Array.from(indicators).map(() => ({
+  lit: false,
+  hue: 0,
+}));
+
+function updateIndicators(ts) {
+  const t = startTime !== null ? (ts - startTime) / 1000 : 0;
+  const p = easeInOutCubic(scrollProgress);
+  const bladeActive = p > 0.7;
+
+  const bladeTop = 0;
+  const bladeBottom = H * 0.4;
+
+  const canvasWrap = document.querySelector('.canvas-wrap');
+  const wrapRect = canvasWrap.getBoundingClientRect();
+  const bladeScreenX = wrapRect.left + 16;
+
+  indicators.forEach((el, i) => {
+    const rect = el.getBoundingClientRect();
+    const circleScreenY = rect.top + rect.height / 2;
+    const circleScreenX = rect.left + rect.width / 2;
+
+    const yHit = circleScreenY >= bladeTop && circleScreenY <= bladeBottom;
+    const xClose = Math.abs(circleScreenX - bladeScreenX) < 24;
+
+    if (bladeActive && yHit && xClose && !indicatorState[i].lit) {
+      indicatorState[i].lit = true;
+      indicatorState[i].hue = (t * 22) % 360;
+      el.classList.add('lit');
+      el.closest('.section').classList.add('active');
+
+      const hue = indicatorState[i].hue;
+      const glow = el.querySelector('.glow');
+      const h1 = hue;
+      const h2 = (hue + 60) % 360;
+      const h3 = (hue + 140) % 360;
+
+      el.style.background = `#f5f0e8`;
+      el.style.boxShadow = `
+        0 0 4px rgba(245, 240, 232, 0.6),
+        0 0 10px hsla(${h1}, 60%, 50%, 0.4),
+        0 0 20px hsla(${h2}, 50%, 40%, 0.2)`;
+      el.style.borderColor = `rgba(245, 240, 232, 0.8)`;
+
+      glow.style.background = `radial-gradient(circle,
+        hsla(${h2}, 65%, 50%, 0.4) 0%,
+        hsla(${h3}, 55%, 40%, 0.15) 50%,
+        transparent 100%)`;
+      glow.style.opacity = '1';
+      glow.animate([
+        { transform: 'scale(1)', opacity: 0.8 },
+        { transform: 'scale(2.5)', opacity: 0 },
+      ], {
+        duration: 800,
+        easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+        fill: 'forwards',
+      });
+    }
+
+    if (indicatorState[i].lit && (!bladeActive || !yHit)) {
+      indicatorState[i].lit = false;
+      el.classList.remove('lit');
+      el.closest('.section').classList.remove('active');
+      el.style.background = 'transparent';
+      el.style.boxShadow = 'none';
+      el.style.borderColor = 'rgba(245, 240, 232, 0.2)';
+      el.querySelector('.glow').style.opacity = '0';
+    }
+  });
+
+  requestAnimationFrame(updateIndicators);
+}
+
+requestAnimationFrame(updateIndicators);
+</script>
+
+</body>
+</html>
