@@ -13,13 +13,14 @@ let VW = 0, VH = 0;
 
 const introSection = document.querySelector('.intro-section');
 const introGroup = document.querySelector('.intro-group');
+const introAction = document.querySelector('.intro-action');
 
 let bladeTargetX = 0;
 
 function updateBladeTarget() {
   const groupRect = introGroup.getBoundingClientRect();
   const sectionRect = introSection.getBoundingClientRect();
-  bladeTargetX = groupRect.left - sectionRect.left + 16;
+  bladeTargetX = groupRect.left - sectionRect.left + introGroup.offsetWidth / 2;
 }
 
 function resizeCanvas() {
@@ -147,6 +148,10 @@ function easeInOutCubic(t) {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 
+function easeInCubic(t) {
+  return t * t * t;
+}
+
 let smoke;
 let startTime = null;
 
@@ -166,12 +171,15 @@ function render(timestamp) {
   const blurP = Math.max(0, (p - 0.6) / 0.4);
   const blur = 20 + 20 * (1 - blurP * blurP * blurP);
 
-  const lineBlend = Math.min(1, (p - 0.85) / 0.15);
+  const lineBlendRaw = Math.min(1, (p - 0.85) / 0.15);
+  const lineBlend = easeInCubic(Math.min(1, Math.max(0, (p - 0.85) / 0.15)));
+
+  const pRamp = easeInCubic(p);
 
   const blobStartY = H * 0.15;
   const targetY = H * 0.35;
-  const cyOffset = (targetY - blobStartY) * p;
-  const cxOffset = (bladeTargetX - smoke.cx) * p;
+  const cyOffset = (targetY - blobStartY) * pRamp;
+  const cxOffset = (bladeTargetX - smoke.cx) * pRamp;
 
   const currentCx = smoke.cx + cxOffset;
   const currentCy = smoke.cy + cyOffset;
@@ -223,7 +231,7 @@ function render(timestamp) {
     const by = gcy + Math.sin(bandAngle) * bandDist * (1 - p * 0.5);
     const col = getAuroraColor(i, t, auroraBase * auroraScrollBoost);
     const bandRadius = gradR * (0.5 + 0.3 * Math.sin(t * 0.13 + i * 2));
-    const bandAlpha = (0.12 + 0.06 * Math.sin(t * 0.25 + i * 1.2)) * (1 - lineBlend);
+    const bandAlpha = (0.12 + 0.06 * Math.sin(t * 0.25 + i * 1.2)) * (1 - lineBlendRaw);
 
     smoke.buildPath(ctx, offsetPts);
     ctx.save();
@@ -268,7 +276,7 @@ function render(timestamp) {
     const rimBrightness = Math.floor(35 + p * 40);
     const outerBrightness = Math.floor(25 + p * 50);
     ctx.save();
-    ctx.globalAlpha = p * (1 - lineBlend);
+    ctx.globalAlpha = p * (1 - lineBlendRaw);
     smoke.buildPath(ctx, offsetPts);
     const linGrad = ctx.createLinearGradient(currentCx, minY - 20, currentCx, maxY + 20);
     linGrad.addColorStop(0, 'rgba(4, 4, 4, 1)');
@@ -283,7 +291,7 @@ function render(timestamp) {
       const bladeHue = (t * 20) % 360;
       ctx.save();
       ctx.globalCompositeOperation = 'lighter';
-      ctx.globalAlpha = (p - 0.3) * 0.25 * (1 - lineBlend);
+      ctx.globalAlpha = (p - 0.3) * 0.25 * (1 - lineBlendRaw);
       smoke.buildPath(ctx, offsetPts);
       const auroraLinGrad = ctx.createLinearGradient(currentCx, minY, currentCx, maxY);
       auroraLinGrad.addColorStop(0, hsla(bladeHue, 50, 15, 0));
@@ -314,7 +322,7 @@ function render(timestamp) {
 
     bCtx.save();
     bCtx.globalAlpha = lineBlend * 0.4;
-    bCtx.filter = `blur(${10 * (1 - lineBlend)}px)`;
+    bCtx.filter = `blur(${20 * (1 - lineBlend)}px)`;
     const lineGrad = bCtx.createLinearGradient(bladeCx, bladeTop, bladeCx, bladeBottom);
     lineGrad.addColorStop(0, 'rgba(4, 4, 4, 0)');
     lineGrad.addColorStop(0.1, hsla(bladeHue, 65, 35, 0.9));
@@ -343,7 +351,7 @@ function render(timestamp) {
     bCtx.restore();
   }
 
-  requestAnimationFrame(render);
+requestAnimationFrame(render);
 }
 
 // ── Init after first paint to ensure layout is complete ──
