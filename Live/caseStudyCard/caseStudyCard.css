@@ -128,7 +128,7 @@
 
 .card-title {
   margin: 0;
-  font: var(--type-h2);
+  font: var(--type-H2);
   color: var(--color-accent);
 }
 

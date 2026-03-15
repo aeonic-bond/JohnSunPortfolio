@@ -40,7 +40,7 @@
 }
 
 .cs-title {
-  font: var(--type-h1);
+  font: var(--type-H1);
   letter-spacing: 0.02em;
   color: var(--color-accent);
   min-width: 0;
@@ -68,7 +68,7 @@
 }
 
 .cs-section-header {
-  font: var(--type-h2);
+  font: var(--type-H2);
   color: var(--color-text-primary);
   min-width: 0;
   overflow-wrap: anywhere;

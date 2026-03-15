@@ -179,7 +179,7 @@ body.is-nav-sticky {
 
 .case-study-nav-title {
   margin: 0;
-  font: var(--type-navH);
+  font: var(--type-H3-nav);
   line-height: 1;
   color: var(--color-text-secondary);
   width: 100%;

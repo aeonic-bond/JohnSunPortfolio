@@ -63,7 +63,7 @@
 .intro-title {
   margin: 0;
   width: 100%;
-  font: var(--type-h1-intro);
+  font: var(--type-H1-intro);
   letter-spacing: -0.02em;
   color: var(--color-accent);
   text-box-trim: none;
@@ -91,7 +91,6 @@
   height: 48px;
   padding-inline: var(--spacer-500);
   background: var(--color-bg-raise);
-  border: 1px solid var(--color-accent);
   border-radius: var(--radius-small);
   font: var(--type-action);
   color: var(--color-accent);
