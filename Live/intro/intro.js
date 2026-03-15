@@ -200,7 +200,7 @@ function render(timestamp) {
   const gradR = 320 * (1 - p * 0.85);
   const auroraR = 320 * (1 + p * 1.5);
   const auroraBase = 0.6 + Math.sin(t * 0.3) * 0.15 + Math.sin(t * 0.17) * 0.1;
-  const auroraScrollBoost = 1 + p * 1.2;
+  const auroraScrollBoost = 1 - p * 0.5;
 
   ctx.save();
   ctx.filter = `blur(${blur}px)`;

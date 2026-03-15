@@ -22,9 +22,9 @@
 
   --type-subtitle-l: normal 500 24px/30px var(--font-flourish);
   --type-subtitle-m: normal 500 20px/30px var(--font-flourish);
-  --type-subtitle-s: normal 300 15px/21px var(--font-flourish);
+  --type-subtitle-s: normal 500 15px/21px var(--font-flourish);
   --type-body-l: normal 300 20px/30px var(--font-body);
-  --type-body-m: normal 300 18px/27px var(--font-body);
+  --type-body-m: normal 300 16px/27px var(--font-body);
   --type-action: normal 600 14px/14px var(--font-flourish);
   --type-caption-m: normal 400 15px/20px var(--font-flourish);
 
