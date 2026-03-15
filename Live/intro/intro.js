@@ -41,7 +41,7 @@ function resizeCanvas() {
   updateBladeTarget();
   if (typeof smoke !== 'undefined') {
     smoke.cx = W / 2;
-    smoke.cy = H * 0.15;
+    smoke.cy = window.innerHeight * 0.66;
   }
 }
 window.addEventListener('resize', resizeCanvas);
@@ -162,22 +162,23 @@ function render(timestamp) {
   ctx.fillStyle = '#0a0a0a';
   ctx.fillRect(0, 0, W, H);
 
-  const p = easeInOutCubic(scrollProgress);
+  const p = easeInOutCubic(Math.min(1, scrollProgress / 0.8));
+  const pRamp = easeInCubic(p);
 
-  const scaleX = 1 - p * 0.996;
-  const targetScaleY = (H * 0.125) / smoke.baseRadius;
-  const scaleY = 1 + (targetScaleY - 1) * p;
+  const scale = 1 - pRamp;
+  const irregX = 1 + (Math.sin(t * 2.1 + 0.5) * 0.6 + Math.sin(t * 3.7 + 1.1) * 0.3) * pRamp;
+  const irregY = 1 + (Math.cos(t * 1.8 + 1.2) * 0.7 + Math.cos(t * 4.3 + 0.8) * 0.25) * pRamp;
+  const scaleX = scale * irregX;
+  const scaleY = scale * irregY;
 
   const blurP = Math.max(0, (p - 0.6) / 0.4);
-  const blur = 20 + 20 * (1 - blurP * blurP * blurP);
+  const blur = 5 + 35 * (1 - blurP * blurP * blurP);
 
   const lineBlendRaw = Math.min(1, (p - 0.85) / 0.15);
   const lineBlend = easeInCubic(Math.min(1, Math.max(0, (p - 0.85) / 0.15)));
 
-  const pRamp = easeInCubic(p);
-
-  const blobStartY = H * 0.15;
-  const targetY = H * 0.35;
+  const blobStartY = window.innerHeight * 0.66;
+  const targetY = window.innerHeight * 0.75;
   const cyOffset = (targetY - blobStartY) * pRamp;
   const cxOffset = (bladeTargetX - smoke.cx) * pRamp;
 
@@ -196,9 +197,10 @@ function render(timestamp) {
     + Math.sin(t * smoke.gradDriftSpeedY + smoke.gradDriftPhaseY) * smoke.gradDriftAmp * (1 - p * 0.9)
     + Math.sin(t * 0.09 + 0.7) * smoke.gradDriftAmp * 0.3 * (1 - p * 0.9);
 
-  const gradR = 320 * (1 - p * 0.5);
+  const gradR = 320 * (1 - p * 0.85);
+  const auroraR = 320 * (1 + p * 1.5);
   const auroraBase = 0.6 + Math.sin(t * 0.3) * 0.15 + Math.sin(t * 0.17) * 0.1;
-  const auroraScrollBoost = 1 + p * 0.6;
+  const auroraScrollBoost = 1 + p * 1.2;
 
   ctx.save();
   ctx.filter = `blur(${blur}px)`;
@@ -207,15 +209,15 @@ function render(timestamp) {
   if (p < 1) {
     ctx.save();
     smoke.buildPath(ctx, offsetPts);
-    const rimBrightness = Math.floor(35 + p * 40);
-    const outerBrightness = Math.floor(25 + p * 50);
+    const rimBrightness = Math.floor(35 * (1 - p));
+    const outerBrightness = Math.floor(25 * (1 - p));
     const radGrad = ctx.createRadialGradient(gcx, gcy, 0, gcx, gcy, gradR);
     radGrad.addColorStop(0, 'rgba(7, 7, 7, 1)');
     radGrad.addColorStop(0.5, 'rgba(10, 10, 10, 1)');
     radGrad.addColorStop(0.78, 'rgba(14, 14, 13, 1)');
     radGrad.addColorStop(0.90, 'rgba(4, 4, 4, 1)');
-    radGrad.addColorStop(0.96, `rgba(${rimBrightness}, ${rimBrightness - 2}, ${rimBrightness - 7}, 1)`);
-    radGrad.addColorStop(1, `rgba(${outerBrightness}, ${outerBrightness - 2}, ${outerBrightness - 5}, 1)`);
+    radGrad.addColorStop(0.96, `rgba(${rimBrightness}, ${rimBrightness}, ${rimBrightness}, 1)`);
+    radGrad.addColorStop(1, `rgba(${outerBrightness}, ${outerBrightness}, ${outerBrightness}, 1)`);
     ctx.fillStyle = radGrad;
     ctx.fill();
     ctx.restore();
@@ -223,14 +225,14 @@ function render(timestamp) {
 
   // LAYER 2: Aurora bands
   ctx.save();
-  ctx.globalCompositeOperation = 'lighter';
+  ctx.globalCompositeOperation = 'screen';
   for (let i = 0; i < 5; i++) {
     const bandAngle = t * (0.08 + i * 0.02) + i * (Math.PI * 2 / 5);
-    const bandDist = smoke.baseRadius * (0.25 + 0.15 * Math.sin(t * 0.1 + i * 1.5));
-    const bx = gcx + Math.cos(bandAngle) * bandDist * (1 - p * 0.6);
-    const by = gcy + Math.sin(bandAngle) * bandDist * (1 - p * 0.5);
+    const bandDist = smoke.baseRadius * (0.25 + 0.15 * Math.sin(t * 0.1 + i * 1.5)) * (1 - p * 0.95);
+    const bx = gcx + Math.cos(bandAngle) * bandDist;
+    const by = gcy + Math.sin(bandAngle) * bandDist;
     const col = getAuroraColor(i, t, auroraBase * auroraScrollBoost);
-    const bandRadius = gradR * (0.5 + 0.3 * Math.sin(t * 0.13 + i * 2));
+    const bandRadius = auroraR * (0.5 + 0.3 * Math.sin(t * 0.13 + i * 2));
     const bandAlpha = (0.12 + 0.06 * Math.sin(t * 0.25 + i * 1.2)) * (1 - lineBlendRaw);
 
     smoke.buildPath(ctx, offsetPts);
@@ -252,7 +254,7 @@ function render(timestamp) {
     ctx.save();
     const rimAlpha = (0.3 + 0.15 * Math.sin(t * 0.4)) * (1 - p * 0.8);
     const rimHue = (t * 18 + scrollProgress * 120) % 360;
-    ctx.globalCompositeOperation = 'lighter';
+    ctx.globalCompositeOperation = 'screen';
     ctx.globalAlpha = rimAlpha;
     smoke.buildPath(ctx, offsetPts);
     ctx.strokeStyle = hsla(rimHue, 55, 35, 1);
@@ -266,43 +268,6 @@ function render(timestamp) {
     ctx.restore();
   }
 
-  // LAYER 4: Linear blade fill
-  if (p > 0) {
-    let minY = Infinity, maxY = -Infinity;
-    for (const pt of offsetPts) {
-      if (pt.y < minY) minY = pt.y;
-      if (pt.y > maxY) maxY = pt.y;
-    }
-    const rimBrightness = Math.floor(35 + p * 40);
-    const outerBrightness = Math.floor(25 + p * 50);
-    ctx.save();
-    ctx.globalAlpha = p * (1 - lineBlendRaw);
-    smoke.buildPath(ctx, offsetPts);
-    const linGrad = ctx.createLinearGradient(currentCx, minY - 20, currentCx, maxY + 20);
-    linGrad.addColorStop(0, 'rgba(4, 4, 4, 1)');
-    linGrad.addColorStop(0.3, 'rgba(10, 10, 10, 1)');
-    linGrad.addColorStop(0.7, `rgba(${rimBrightness}, ${rimBrightness - 2}, ${rimBrightness - 7}, 1)`);
-    linGrad.addColorStop(1, `rgba(${outerBrightness + 15}, ${outerBrightness + 12}, ${outerBrightness + 5}, 1)`);
-    ctx.fillStyle = linGrad;
-    ctx.fill();
-    ctx.restore();
-
-    if (p > 0.3) {
-      const bladeHue = (t * 20) % 360;
-      ctx.save();
-      ctx.globalCompositeOperation = 'lighter';
-      ctx.globalAlpha = (p - 0.3) * 0.25 * (1 - lineBlendRaw);
-      smoke.buildPath(ctx, offsetPts);
-      const auroraLinGrad = ctx.createLinearGradient(currentCx, minY, currentCx, maxY);
-      auroraLinGrad.addColorStop(0, hsla(bladeHue, 50, 15, 0));
-      auroraLinGrad.addColorStop(0.3, hsla(bladeHue + 40, 60, 25, 0.8));
-      auroraLinGrad.addColorStop(0.6, hsla(bladeHue + 120, 55, 20, 0.6));
-      auroraLinGrad.addColorStop(1, hsla(bladeHue + 200, 50, 25, 0.9));
-      ctx.fillStyle = auroraLinGrad;
-      ctx.fill();
-      ctx.restore();
-    }
-  }
 
   ctx.restore(); // end blur filter
 
@@ -358,6 +323,6 @@ requestAnimationFrame(render);
 requestAnimationFrame(() => {
   resizeCanvas();
   updateBladeTarget();
-  smoke = new SmokeBlade(W / 2, H * 0.15, 250, 8);
+  smoke = new SmokeBlade(W / 2, window.innerHeight * 0.66, 250, 8);
   requestAnimationFrame(render);
 });
