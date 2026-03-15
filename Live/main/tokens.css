@@ -1,10 +1,10 @@
 :root {
   /* Raw color tokens */
-  --r-forest: #0a0a0a;
-  --r-forest-raise: #202022;
-  --r-forest-sink: #0D0B0B;
-  --r-forest-shine: #FBE3BD;
-  --r-forest-shade: #737371;
+  --r-night: #0a0a0a;
+  --r-night-raise: #202022;
+  --r-night-sink: #0D0B0B;
+  --r-night-shine: #FBE3BD;
+  --r-night-shade: #737371;
   --r-stellar: #FFFBF0;
   --r-stellar-fade-partial: #61606A;
   --r-stellar-fade: rgba(217, 216, 216, 0.2);
@@ -13,11 +13,11 @@
   --r-white-off: #AEACB6;
 
   /* Semantic color tokens */
-  --color-bg-main: var(--r-forest);
-  --color-bg-raise: var(--r-forest-raise);
-  --color-bg-sink: var(--r-forest-sink);
-  --color-bg-shine: var(--r-forest-shine);
-  --color-bg-shade: var(--r-forest-shade);
+  --color-bg-main: var(--r-night);
+  --color-bg-raise: var(--r-night-raise);
+  --color-bg-sink: var(--r-night-sink);
+  --color-bg-shine: var(--r-night-shine);
+  --color-bg-shade: var(--r-night-shade);
   --color-surface: var(--r-black);
   --color-accent: var(--r-stellar);
   --color-accent-soft: var(--r-stellar-fade);

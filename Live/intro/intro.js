@@ -13,7 +13,7 @@ let VW = 0, VH = 0;
 
 const introSection = document.querySelector('.intro-section');
 const introGroup = document.querySelector('.intro-group');
-const introAction = document.querySelector('.intro-action');
+const introAction = document.querySelector('.intro-button');
 
 let bladeTargetX = 0;
 
