@@ -41,10 +41,26 @@ const loadStatusForKind = async (kind = "") => {
 
 const COMING_SOON_IMG_SRC = "/Assets/ComingSoon.png";
 
+const GALLERY_SRCS = {
+  torus: ["/Assets/Torus/Card/Gallery/Gallery1.png"],
+};
+
 const renderCardMedia = ({ kind = "", mediaRoot, media, isDisabled = false } = {}) => {
-  void kind;
   void media;
   if (!mediaRoot) return;
+
+  const gallery = GALLERY_SRCS[String(kind || "").trim().toLowerCase()];
+  if (gallery?.length) {
+    const img = document.createElement("img");
+    img.className = "card-media-layer";
+    img.src = gallery[0];
+    img.alt = "";
+    img.setAttribute("aria-hidden", "true");
+    img.style.objectFit = "cover";
+    mediaRoot.append(img);
+    return;
+  }
+
   const img = document.createElement("img");
   img.className = "card-media-draft-placeholder";
   img.src = COMING_SOON_IMG_SRC;

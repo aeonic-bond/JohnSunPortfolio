@@ -43,25 +43,17 @@ const createCaseStudyCard = ({
   mediaEl.append(mediaMount);
 
   const content = document.createElement("div");
-  content.className = "card-texts-group";
-
-  const titleWrap = document.createElement("div");
-  titleWrap.className = "card-title-wrap";
+  content.className = "card-texts";
 
   const titleEl = document.createElement("h2");
   titleEl.className = "card-title";
   titleEl.textContent = title;
   const titleId = kind ? `card-title-${String(kind).trim().toLowerCase()}` : "";
   if (titleId) titleEl.id = titleId;
-  titleWrap.append(titleEl);
-
-  const textWrap = document.createElement("div");
-  textWrap.className = "card-text-wrap";
 
   const descriptionEl = document.createElement("p");
   descriptionEl.className = "card-text";
   descriptionEl.textContent = description;
-  textWrap.append(descriptionEl);
 
   const tagsWrap = document.createElement("div");
   tagsWrap.className = "card-tags-group";
@@ -74,16 +66,12 @@ const createCaseStudyCard = ({
     tagsWrap.append(tag);
   }
 
-  const body = document.createElement("div");
-  body.className = "card-body";
-  body.append(textWrap, tagsWrap);
-
   const { container: ctaContainer, button: ctaButton } = window.LivePrimitives.createCtaButton({
     label: ctaLabel,
     disabled: isDisabled,
   });
 
-  content.append(titleWrap, body, ctaContainer);
+  content.append(titleEl, descriptionEl, tagsWrap, ctaContainer);
   card.append(mediaEl, content);
 
   if (isNavigable) {

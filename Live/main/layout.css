@@ -49,7 +49,7 @@ body {
 
 @media (min-width: 1024px) {
   .intro-content {
-    max-width: 760px;
+    max-width: var(--max-width-intro);
   }
 
   .case-study-showcase {

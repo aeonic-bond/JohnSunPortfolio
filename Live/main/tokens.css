@@ -55,6 +55,11 @@
   --margin-mobile-500: 24px;
   --margin-bottom-500: 400px;
 
+  /* Max widths */
+  --max-width-intro: 720px;
+  --max-width-card-content: 480px;
+  --gallery-width: 800px;
+
   /* Breakpoints */
   --breakpoint-desktop: 1024px;
 
