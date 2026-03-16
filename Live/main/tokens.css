@@ -1,7 +1,7 @@
 :root {
   /* Raw color tokens */
   --r-night: #0a0a0a;
-  --r-night-raise: #202022;
+  --r-night-raise: #1C1C1E;
   --r-night-sink: #0D0B0B;
   --r-night-shine: #FBE3BD;
   --r-night-shade: #737371;
@@ -10,7 +10,7 @@
   --r-stellar-fade: rgba(217, 216, 216, 0.2);
   --r-black: #000;
   --r-white: #D7D6DB;
-  --r-white-off: #AEACB6;
+  --r-white-off: #A7A6B0;
 
   /* Semantic color tokens */
   --color-bg-main: var(--r-night);

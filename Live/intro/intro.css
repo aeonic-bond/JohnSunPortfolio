@@ -26,7 +26,6 @@
   align-items: flex-start;
   justify-content: center;
   gap: var(--spacer-500);
-  transform: translateY(calc(-1 * var(--spacer-section-500)));
 }
 
 .intro-media-mount {
