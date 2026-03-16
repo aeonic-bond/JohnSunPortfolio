@@ -20,6 +20,7 @@
   --type-body-l: normal 300 20px/30px var(--font-body);
   --type-body-m: normal 300 16px/22px var(--font-body);
   --type-action: normal 600 16px / normal var(--font-flourish);
+  --type-action-s: normal 500 13px / normal var(--font-flourish);
   --type-caption-m: normal 400 15px/20px var(--font-flourish);
 
    /* unused tokens */

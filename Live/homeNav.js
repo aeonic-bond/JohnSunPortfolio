@@ -281,15 +281,32 @@ const initHomeNav = () => {
   mobileMenuAnchor.append(mobileMenu, mobileDropdown);
   mobileNav.append(mobileMenuAnchor);
 
-  // --- Desktop nav: Contact Me + Resume links + full case studies dropdown ---
+  // --- Desktop nav: Contact dropdown + Resume link + Work dropdown ---
   const desktopNav = document.createElement("nav");
   desktopNav.className = "cs-header-home-nav cs-header-home-nav--desktop";
   desktopNav.setAttribute("aria-label", "Site navigation");
 
-  const contactLink = document.createElement("a");
-  contactLink.className = "cs-header-home-nav-link";
-  contactLink.href = "#contact";
-  contactLink.textContent = "Contact";
+  const contactMenuAnchor = document.createElement("div");
+  contactMenuAnchor.className = HEADER_MENU_ANCHOR_CLASS;
+
+  const contactMenu = document.createElement("button");
+  contactMenu.type = "button";
+  contactMenu.className = `${HEADER_MENU_CLASS} cs-header-home-nav-link`;
+  contactMenu.setAttribute("aria-label", "Contact");
+  contactMenu.setAttribute("aria-haspopup", "menu");
+  contactMenu.setAttribute("aria-expanded", "false");
+
+  const contactMenuLabel = document.createElement("span");
+  contactMenuLabel.textContent = "Contact";
+
+  const contactChevron = document.createElement("span");
+  contactChevron.className = HEADER_CHEVRON_CLASS;
+  contactChevron.setAttribute("aria-hidden", "true");
+
+  const contactDropdown = createNavDropdown(NAV_DROPDOWN_VARIANT_CONTACT);
+
+  contactMenu.append(contactMenuLabel, contactChevron);
+  contactMenuAnchor.append(contactMenu, contactDropdown);
 
   const resumeLink = document.createElement("a");
   resumeLink.className = "cs-header-home-nav-link";
@@ -319,7 +336,7 @@ const initHomeNav = () => {
 
   desktopMenu.append(desktopMenuLabel, desktopChevron);
   desktopMenuAnchor.append(desktopMenu, desktopDropdown);
-  desktopNav.append(contactLink, resumeLink, desktopMenuAnchor);
+  desktopNav.append(resumeLink, contactMenuAnchor, desktopMenuAnchor);
 
   headerBar.append(backLink, mobileNav, desktopNav);
 
@@ -336,6 +353,12 @@ const initHomeNav = () => {
     toggleNavDropdown(mobileMenuAnchor);
   });
 
+  contactMenu.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    toggleNavDropdown(contactMenuAnchor);
+  });
+
   desktopMenu.addEventListener("click", (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -346,14 +369,18 @@ const initHomeNav = () => {
     if (!(event.target instanceof Node)) return;
     if (headerBar.contains(event.target)) return;
     closeNavDropdown(mobileMenuAnchor);
+    closeNavDropdown(contactMenuAnchor);
     closeNavDropdown(desktopMenuAnchor);
   });
 
   window.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
     closeNavDropdown(mobileMenuAnchor);
+    closeNavDropdown(contactMenuAnchor);
     closeNavDropdown(desktopMenuAnchor);
   });
+
+  void renderNavDropdown(contactMenuAnchor, [], "");
 
   loadNavItems().then((navItems) => {
     void renderNavDropdown(mobileMenuAnchor, navItems, "");
