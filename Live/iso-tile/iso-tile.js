@@ -1,3 +1,13 @@
+const _strokeMap = {
+  UserResearch: null,
+  Figma:        [{ offset: '0%', color: '#F24E1E' }, { offset: '17%', color: '#FF7262' }, { offset: '31%', color: '#A259FF' }, { offset: '41%', color: '#1ABCFE' }, { offset: '100%', color: '#0ACF83' }],
+  Web:          null,
+  MCP:          null,
+  Claude:       [{ offset: '0%', color: '#CC785C' }, { offset: '100%', color: '#E8B4A0' }],
+  Storybook:    [{ offset: '0%', color: '#FF4785' }, { offset: '100%', color: '#FF8AC1' }],
+  VSC:          [{ offset: '0%', color: '#0078D4' }, { offset: '100%', color: '#50B8F8' }],
+};
+
 let _tileCount = 0;
 
 class IsoTile extends HTMLElement {
@@ -28,6 +38,9 @@ class IsoTile extends HTMLElement {
       try { stops = JSON.parse(stopsAttr); } catch {}
     } else if (from !== null && to !== null) {
       stops = [{ offset: '0%', color: from }, { offset: '100%', color: to }];
+    } else if (icon) {
+      const name = icon.split('/').pop().replace('.svg', '');
+      stops = _strokeMap[name] ?? null;
     }
 
     const useGradient = stops !== null && stops.length >= 2;
