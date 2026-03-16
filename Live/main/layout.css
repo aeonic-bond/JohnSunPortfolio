@@ -13,10 +13,6 @@ body {
   transition: background 220ms ease;
 }
 
-body.is-nav-sticky {
-  background: var(--color-bg-sink);
-}
-
 #smoke {
   position: fixed;
   inset: 0;
@@ -50,81 +46,6 @@ body.is-nav-sticky {
   padding-inline: var(--spacer-500);
 }
 
-.case-study-nav-div {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-self: flex-start;
-  background-color: var(--color-bg-sink);
-  width: 100%;
-  height: fit-content;
-  padding: var(--spacer-300);
-  overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-  clip-path: inset(0 50% 0 50%);
-  transform: translateY(-10px);
-  will-change: clip-path, opacity, transform;
-  transition:
-    clip-path 720ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 460ms ease,
-    transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.selector {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  transform: translateX(-50%);
-  width: 0;
-  height: 4px;
-  background: linear-gradient(
-    90deg,
-    var(--color-bg-main) 0%,
-    var(--color-bg-shine) 50%,
-    var(--color-bg-main) 100%
-  );
-  border-radius: 999px;
-  pointer-events: none;
-  transition: width 220ms ease;
-}
-
-.case-study-nav-div.is-visible {
-  opacity: 1;
-  pointer-events: auto;
-  clip-path: inset(0 0 0 0);
-  transform: translateY(0);
-}
-
-.case-study-nav-list {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: var(--spacer-900);
-  min-height: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.case-study-nav-list::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-  display: none;
-}
-
-.case-study-nav-edge-spacer {
-  flex: 0 0 0;
-  width: 0;
-  min-width: 0;
-  pointer-events: none;
-}
-
 .case-study-nav-item {
   display: flex;
   flex-direction: column;
@@ -136,7 +57,7 @@ body.is-nav-sticky {
   border: 0;
   border-radius: var(--radius-base);
   background: transparent;
-  color: inherit;
+  color: var(--color-text-secondary);
   text-align: left;
   cursor: pointer;
   scroll-snap-align: center;
@@ -144,9 +65,17 @@ body.is-nav-sticky {
 }
 
 .case-study-nav-icon {
-  width: 32px;
-  height: 32px;
-  flex: 0 0 32px;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  display: block;
+  background-color: currentColor;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
 }
 
 .case-study-nav-texts-group {
@@ -178,13 +107,29 @@ body.is-nav-sticky {
   width: 100%;
 }
 
-.case-study-nav-item.is-selected .case-study-nav-title {
+.case-study-nav-subtitle:empty,
+.case-study-nav-list--dropdown .case-study-nav-subtitle:empty {
+  display: none;
+}
+
+.case-study-nav-item.is-selected {
+  color: var(--color-accent);
+}
+
+.case-study-nav-item.is-selected .case-study-nav-title,
+.case-study-nav-item.is-selected .case-study-nav-subtitle {
   color: var(--color-accent);
 }
 
 @media (hover: hover) {
   .case-study-nav-item:hover {
     background: var(--color-bg-raise);
+    color: var(--color-accent);
+  }
+
+  .case-study-nav-item:hover .case-study-nav-title,
+  .case-study-nav-item:hover .case-study-nav-subtitle {
+    color: var(--color-accent);
   }
 }
 
@@ -219,75 +164,9 @@ body.is-nav-sticky {
     height: fit-content;
   }
 
-  .case-study-nav-div {
-    height: 100vh;
-    width: 25vw;
-    border-bottom: 0;
-    padding: var(--spacer-500);
-    overflow: hidden;
-    clip-path: inset(0 0 100% 0);
-    transform: translateX(-10px);
-    transition:
-      clip-path 720ms cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 460ms ease,
-      transform 720ms cubic-bezier(0.22, 1, 0.36, 1),
-      background-color 300ms ease;
-  }
-
-  .case-study-nav-div.is-stuck {
-    background-color: var(--color-bg-main);
-  }
-
-  .case-study-nav-list {
-    width: 100%;
-    height: 100%;
-    flex-direction: column;
-    align-items: stretch;
-    gap: var(--spacer-300);
-    overflow-x: hidden;
-    overflow-y: auto;
-    scroll-snap-type: y mandatory;
-  }
-
-  .case-study-nav-edge-spacer {
-    display: none;
-  }
-
-  .selector {
-    display: none;
-  }
-
-
-  .case-study-nav-item {
-    flex-direction: row;
-    justify-content: flex-start;
-    gap: var(--spacer-500);
-    padding: var(--spacer-500);
-    width: 100%;
-  }
-
-  .case-study-nav-subtitle {
-    display: block;
-  }
-
-  .case-study-nav-title {
-    text-align: left;
-  }
-
-  .case-study-nav-item.is-selected {
-    background: var(--color-bg-raise);
-  }
-
   .case-study-all {
     flex: 1 1 auto;
     min-width: 0;
     padding-inline: var(--spacer-section-500);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .case-study-nav-div {
-    transition: none;
-    transform: none;
   }
 }

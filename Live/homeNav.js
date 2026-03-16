@@ -8,18 +8,8 @@ const HEADER_CURRENT_SIGN_CLASS = "cs-header-current-sign";
 const HEADER_TITLE_CLASS = "cs-header-title";
 const HEADER_SIGN_ICON_CLASS = "cs-header-sign-icon";
 const HEADER_CHEVRON_CLASS = "cs-header-chevron";
-const HEADER_DROPDOWN_CLASS = "cs-header-dropdown";
-const HEADER_DROPDOWN_LIST_CLASS = "cs-header-dropdown-list";
-const HEADER_DROPDOWN_OPEN_CLASS = "is-dropdown-open";
 const HEADER_STICKY_ENTER_THRESHOLD_PX = 44;
 const HEADER_STICKY_EXIT_THRESHOLD_PX = 36;
-const HEADER_NAV_DATA_PATH = "/Live/main/nav.json";
-const HEADER_CASE_STUDY_STATUS_PATHS = {
-  torus: "/Live/torus/TorusContent.json",
-  blueprint: "/Live/blueprint/BlueprintContent.json",
-  hcustomizer: "/Live/hcustomizer/HCustomizerContent.json",
-  tolley: "/Live/tolley/TolleyContent.json",
-};
 const HEADER_BACK_HREF = "/home.html";
 const BACK_BUTTON_ICON_SRC = "/Assets/JSLogo.svg";
 const HEADER_STICKY_TRANSITION_LOCK_MS = 1000;
@@ -27,38 +17,10 @@ const MAIN_SCROLL_RESTORE_FLAG_KEY = "live.main.restore_scroll";
 
 let headerBarRafId = 0;
 let headerBarEventsBound = false;
-let headerNavItemsPromise = null;
-const headerStatusByKindPromise = new Map();
 let headerStickyTransitionLock = false;
 let headerStickyTransitionLockTimeoutId = 0;
 let headerLastScrollY = 0;
 let headerUpwardScrollAccumulator = 0;
-
-const normalizeHeaderItemStatus = (value) => {
-  const status = String(value || "").trim().toLowerCase();
-  if (status === "ready") return "ready";
-  if (status === "draft") return "draft";
-  return "";
-};
-
-const loadHeaderNavItems = async () => {
-  if (!headerNavItemsPromise) {
-    headerNavItemsPromise = fetch(HEADER_NAV_DATA_PATH, { cache: "no-store" })
-      .then((response) => {
-        if (!response.ok) throw new Error(`Failed to load ${HEADER_NAV_DATA_PATH}: ${response.status}`);
-        return response.json();
-      })
-      .then((payload) => {
-        const items = Array.isArray(payload) ? payload : payload?.items;
-        return Array.isArray(items) ? items : [];
-      })
-      .catch((error) => {
-        console.warn("[case-study-header] Failed to load nav items.", error);
-        return [];
-      });
-  }
-  return headerNavItemsPromise;
-};
 
 const findHeaderNavItem = (content = {}, navItems = []) => {
   const contentId = String(content?.id || "").trim().toLowerCase();
@@ -66,159 +28,6 @@ const findHeaderNavItem = (content = {}, navItems = []) => {
   return (
     navItems.find((item) => String(item?.id || "").trim().toLowerCase() === contentId) || null
   );
-};
-
-const loadHeaderStatusForKind = async (kind = "") => {
-  const normalizedKind = String(kind || "").trim().toLowerCase();
-  if (!normalizedKind) return "";
-  if (headerStatusByKindPromise.has(normalizedKind)) {
-    return headerStatusByKindPromise.get(normalizedKind);
-  }
-
-  const path = HEADER_CASE_STUDY_STATUS_PATHS[normalizedKind];
-  if (!path) {
-    headerStatusByKindPromise.set(normalizedKind, Promise.resolve(""));
-    return "";
-  }
-
-  const promise = fetch(path, { cache: "no-store" })
-    .then((response) => {
-      if (!response.ok) throw new Error(`Failed to load ${path}`);
-      return response.json();
-    })
-    .then((content) => normalizeHeaderItemStatus(content?.status))
-    .catch((error) => {
-      console.warn(`[case-study-header] Failed to load status for ${normalizedKind}.`, error);
-      return "";
-    });
-
-  headerStatusByKindPromise.set(normalizedKind, promise);
-  return promise;
-};
-
-const resolveHeaderDropdownItems = async (navItems = []) => {
-  const results = await Promise.all(
-    navItems.map(async (item) => {
-      const href = String(item?.href || "").trim();
-      if (!href) return null;
-
-      const id = String(item?.id || "").trim().toLowerCase();
-      const status = await loadHeaderStatusForKind(id);
-      if (status === "draft") return null;
-      return item;
-    })
-  );
-  return results.filter(Boolean);
-};
-
-const closeCaseStudyDropdown = (headerBar) => {
-  if (!(headerBar instanceof HTMLElement)) return;
-  headerBar.classList.remove(HEADER_DROPDOWN_OPEN_CLASS);
-  const menu = headerBar.querySelector(`.${HEADER_MENU_CLASS}`);
-  const dropdown = headerBar.querySelector(`.${HEADER_DROPDOWN_CLASS}`);
-  if (menu instanceof HTMLButtonElement) {
-    menu.setAttribute("aria-expanded", "false");
-  }
-  if (dropdown instanceof HTMLElement) {
-    dropdown.setAttribute("aria-hidden", "true");
-  }
-};
-
-const toggleCaseStudyDropdown = (headerBar) => {
-  if (!(headerBar instanceof HTMLElement)) return;
-  const shouldOpen = !headerBar.classList.contains(HEADER_DROPDOWN_OPEN_CLASS);
-  headerBar.classList.toggle(HEADER_DROPDOWN_OPEN_CLASS, shouldOpen);
-  const menu = headerBar.querySelector(`.${HEADER_MENU_CLASS}`);
-  const dropdown = headerBar.querySelector(`.${HEADER_DROPDOWN_CLASS}`);
-  if (menu instanceof HTMLButtonElement) {
-    menu.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
-  }
-  if (dropdown instanceof HTMLElement) {
-    dropdown.setAttribute("aria-hidden", shouldOpen ? "false" : "true");
-  }
-};
-
-const createCaseStudyDropdown = () => {
-  const dropdown = document.createElement("div");
-  dropdown.className = HEADER_DROPDOWN_CLASS;
-  dropdown.setAttribute("aria-hidden", "true");
-
-  const navList = document.createElement("div");
-  navList.className = `case-study-nav-list case-study-nav-list--dropdown ${HEADER_DROPDOWN_LIST_CLASS}`;
-  navList.setAttribute("role", "menu");
-  navList.setAttribute("aria-label", "Case studies");
-
-  dropdown.append(navList);
-  return dropdown;
-};
-
-const createCaseStudyDropdownNavItem = (item, activeId = "") => {
-  const navItem = document.createElement("button");
-  navItem.type = "button";
-  navItem.className = "case-study-nav-item";
-  navItem.setAttribute("role", "menuitem");
-
-  const itemId = String(item?.id || "").trim().toLowerCase();
-  if (itemId && itemId === activeId) navItem.classList.add("is-selected");
-
-  const href = String(item?.href || "").trim();
-  if (href) navItem.dataset.href = href;
-
-  const title = String(item?.title || "").trim();
-  const subtitle = String(item?.subtitle || "").trim();
-  const iconSrc = String(item?.icon || "").trim();
-
-  const icon = document.createElement("img");
-  icon.className = "case-study-nav-icon";
-  icon.alt = "";
-  icon.setAttribute("aria-hidden", "true");
-  if (iconSrc) {
-    icon.src = iconSrc;
-  } else {
-    icon.hidden = true;
-  }
-
-  const textGroup = document.createElement("span");
-  textGroup.className = "case-study-nav-texts-group";
-
-  const titleEl = document.createElement("span");
-  titleEl.className = "case-study-nav-title";
-  titleEl.textContent = title;
-
-  const subtitleEl = document.createElement("span");
-  subtitleEl.className = "case-study-nav-subtitle";
-  subtitleEl.textContent = subtitle;
-
-  textGroup.append(titleEl, subtitleEl);
-  navItem.append(icon, textGroup);
-
-  navItem.addEventListener("click", () => {
-    const nextHref = navItem.dataset.href || "";
-    if (nextHref) {
-      window.location.href = nextHref;
-      return;
-    }
-    const headerBar = document.querySelector(`.${HEADER_BAR_CLASS}`);
-    closeCaseStudyDropdown(headerBar);
-  });
-
-  return navItem;
-};
-
-const renderCaseStudyDropdown = async (headerBar, navItems = [], content = {}) => {
-  if (!(headerBar instanceof HTMLElement)) return;
-  const navList = headerBar.querySelector(`.${HEADER_DROPDOWN_LIST_CLASS}`);
-  if (!(navList instanceof HTMLElement)) return;
-
-  const filteredItems = await resolveHeaderDropdownItems(navItems);
-  const activeId = String(content?.id || "").trim().toLowerCase();
-  const elements = [];
-  for (const item of filteredItems) {
-    const title = String(item?.title || "").trim();
-    if (!title) continue;
-    elements.push(createCaseStudyDropdownNavItem(item, activeId));
-  }
-  navList.replaceChildren(...elements);
 };
 
 const setWindowActiveIDFromContent = (content = {}) => {
@@ -270,7 +79,7 @@ const ensureHeaderBar = () => {
   chevron.className = HEADER_CHEVRON_CLASS;
   chevron.setAttribute("aria-hidden", "true");
 
-  const dropdown = createCaseStudyDropdown();
+  const dropdown = createNavDropdown();
 
   currentSign.append(signIcon, title);
   menu.append(currentSign, chevron);
@@ -317,18 +126,18 @@ const ensureHeaderBar = () => {
   menu.addEventListener("click", (event) => {
     event.preventDefault();
     event.stopPropagation();
-    toggleCaseStudyDropdown(headerBar);
+    toggleNavDropdown(menuAnchor);
   });
 
   document.addEventListener("click", (event) => {
     if (!(event.target instanceof Node)) return;
     if (headerBar.contains(event.target)) return;
-    closeCaseStudyDropdown(headerBar);
+    closeNavDropdown(menuAnchor);
   });
 
   window.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
-    closeCaseStudyDropdown(headerBar);
+    closeNavDropdown(menuAnchor);
   });
 
   return headerBar;
@@ -356,7 +165,9 @@ const applyHeaderBarContent = (content = {}, navItems = []) => {
     signIcon.hidden = true;
   }
 
-  void renderCaseStudyDropdown(headerBar, navItems, content);
+  const menuAnchor = headerBar.querySelector(`.${HEADER_MENU_ANCHOR_CLASS}`);
+  const activeId = String(content?.id || "").trim().toLowerCase();
+  void renderNavDropdown(menuAnchor, navItems, activeId);
 };
 
 const lockHeaderStickyTransition = () => {
@@ -423,6 +234,8 @@ const bindHeaderBarEvents = () => {
   window.addEventListener("resize", scheduleHeaderBarStickyStateUpdate);
 };
 
+const MENU_ICON_SRC = "/Assets/Menu.svg";
+
 const initHomeNav = () => {
   if (!(document.body instanceof HTMLBodyElement)) return;
 
@@ -440,7 +253,75 @@ const initHomeNav = () => {
   backIcon.setAttribute("aria-hidden", "true");
 
   backLink.append(backIcon);
-  headerBar.append(backLink);
+
+  // --- Mobile nav: single Menu.svg icon button → default dropdown ---
+  const mobileNav = document.createElement("nav");
+  mobileNav.className = "cs-header-home-nav cs-header-home-nav--mobile";
+  mobileNav.setAttribute("aria-label", "Site navigation");
+
+  const mobileMenuAnchor = document.createElement("div");
+  mobileMenuAnchor.className = HEADER_MENU_ANCHOR_CLASS;
+
+  const mobileMenu = document.createElement("button");
+  mobileMenu.type = "button";
+  mobileMenu.className = HEADER_MENU_CLASS;
+  mobileMenu.setAttribute("aria-label", "Navigation menu");
+  mobileMenu.setAttribute("aria-haspopup", "menu");
+  mobileMenu.setAttribute("aria-expanded", "false");
+
+  const mobileMenuIcon = document.createElement("span");
+  mobileMenuIcon.className = "cs-header-menu-icon";
+  mobileMenuIcon.setAttribute("aria-hidden", "true");
+  mobileMenuIcon.style.setProperty("mask-image", `url("${MENU_ICON_SRC}")`);
+  mobileMenuIcon.style.setProperty("-webkit-mask-image", `url("${MENU_ICON_SRC}")`);
+
+  const mobileDropdown = createNavDropdown(NAV_DROPDOWN_VARIANT_DEFAULT);
+
+  mobileMenu.append(mobileMenuIcon);
+  mobileMenuAnchor.append(mobileMenu, mobileDropdown);
+  mobileNav.append(mobileMenuAnchor);
+
+  // --- Desktop nav: Contact Me + Resume links + full case studies dropdown ---
+  const desktopNav = document.createElement("nav");
+  desktopNav.className = "cs-header-home-nav cs-header-home-nav--desktop";
+  desktopNav.setAttribute("aria-label", "Site navigation");
+
+  const contactLink = document.createElement("a");
+  contactLink.className = "cs-header-home-nav-link";
+  contactLink.href = "#contact";
+  contactLink.textContent = "Contact";
+
+  const resumeLink = document.createElement("a");
+  resumeLink.className = "cs-header-home-nav-link";
+  resumeLink.href = "/Assets/John Sun Resume - 2026.pdf";
+  resumeLink.target = "_blank";
+  resumeLink.rel = "noopener noreferrer";
+  resumeLink.textContent = "Resume";
+
+  const desktopMenuAnchor = document.createElement("div");
+  desktopMenuAnchor.className = HEADER_MENU_ANCHOR_CLASS;
+
+  const desktopMenu = document.createElement("button");
+  desktopMenu.type = "button";
+  desktopMenu.className = `${HEADER_MENU_CLASS} cs-header-home-nav-link`;
+  desktopMenu.setAttribute("aria-label", "Full case studies");
+  desktopMenu.setAttribute("aria-haspopup", "menu");
+  desktopMenu.setAttribute("aria-expanded", "false");
+
+  const desktopMenuLabel = document.createElement("span");
+  desktopMenuLabel.textContent = "Work";
+
+  const desktopChevron = document.createElement("span");
+  desktopChevron.className = HEADER_CHEVRON_CLASS;
+  desktopChevron.setAttribute("aria-hidden", "true");
+
+  const desktopDropdown = createNavDropdown(NAV_DROPDOWN_VARIANT_CASE_STUDY_ONLY);
+
+  desktopMenu.append(desktopMenuLabel, desktopChevron);
+  desktopMenuAnchor.append(desktopMenu, desktopDropdown);
+  desktopNav.append(contactLink, resumeLink, desktopMenuAnchor);
+
+  headerBar.append(backLink, mobileNav, desktopNav);
 
   const main = document.querySelector(".live-main");
   if (main?.parentNode) {
@@ -448,6 +329,36 @@ const initHomeNav = () => {
   } else {
     document.body.prepend(headerBar);
   }
+
+  mobileMenu.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    toggleNavDropdown(mobileMenuAnchor);
+  });
+
+  desktopMenu.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    toggleNavDropdown(desktopMenuAnchor);
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!(event.target instanceof Node)) return;
+    if (headerBar.contains(event.target)) return;
+    closeNavDropdown(mobileMenuAnchor);
+    closeNavDropdown(desktopMenuAnchor);
+  });
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    closeNavDropdown(mobileMenuAnchor);
+    closeNavDropdown(desktopMenuAnchor);
+  });
+
+  loadNavItems().then((navItems) => {
+    void renderNavDropdown(mobileMenuAnchor, navItems, "");
+    void renderNavDropdown(desktopMenuAnchor, navItems, "");
+  });
 
   bindHeaderBarEvents();
 };

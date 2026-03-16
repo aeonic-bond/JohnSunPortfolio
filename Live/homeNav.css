@@ -66,7 +66,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacer-400);
+  gap: var(--spacer-300);
 }
 
 .cs-header-menu-anchor {
@@ -124,8 +124,8 @@
   content: "";
   width: 6px;
   height: 6px;
-  border-right: 1.5px solid var(--color-text-primary);
-  border-bottom: 1.5px solid var(--color-text-primary);
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
   transform: rotate(45deg) translate(-1px, -1px);
   transform-origin: center;
   transition: transform 0.3s ease;
@@ -135,56 +135,59 @@
   transform: rotate(225deg) translate(-1px, -1px);
 }
 
-.cs-header-dropdown {
-  position: absolute;
-  top: calc(100% + var(--spacer-300));
-  right: 0;
-  width: min(270px, 100vw);
-  max-width: 100vw;
-  padding: var(--spacer-300);
-  border: 1px solid var(--color-bg-shine);
-  border-radius: var(--radius-base);
-  background: var(--color-bg-sink);
-  clip-path: inset(0 0 100% 0);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition:
-    clip-path 0.3s ease,
-    opacity 0.3s ease,
-    visibility 0s linear 0.3s;
-  z-index: 30;
+
+.cs-header-home-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--spacer-section-500);
 }
 
-.cs-header-bar.is-dropdown-open .cs-header-dropdown {
-  clip-path: inset(0 0 0 0);
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transition:
-    clip-path 0.3s ease,
-    opacity 0.3s ease,
-    visibility 0s linear 0s;
+.cs-header-home-nav--desktop {
+  display: none;
 }
 
-.cs-header-dropdown .case-study-nav-list {
-  flex-direction: column;
-  align-items: stretch;
-  overflow-x: hidden;
-  overflow-y: auto;
-  gap: var(--spacer-300);
-  min-height: 0;
-  scroll-snap-type: none;
+.cs-header-menu-icon {
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-color: var(--color-text-secondary);
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
 }
 
-.cs-header-dropdown .case-study-nav-list::before,
-.cs-header-dropdown .case-study-nav-list::after {
-  content: none;
+.cs-header-home-nav-link {
+  font: var(--type-subtitle-s);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+@media (min-width: 1024px) {
+  .cs-header-home-nav-link {
+    font: var(--type-H3-nav);
+  }
+}
+
+.cs-header-home-nav-link:hover {
+  color: var(--color-text-primary);
 }
 
 @media (min-width: 1024px) {
   .cs-header-bar,
   .cs-header-bar.is-sticky {
     padding-inline: var(--margin-header-desktop);
+  }
+
+  .cs-header-home-nav--mobile {
+    display: none;
+  }
+
+  .cs-header-home-nav--desktop {
+    display: flex;
   }
 }

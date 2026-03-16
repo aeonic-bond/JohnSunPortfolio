@@ -3,7 +3,6 @@
   --r-night: #171717;
   --r-night-raise: #1A1A1B;
   --r-night-sink: #110F0F;
-  --r-night-shine: #FBE3BD;
   --r-night-shade: #737371;
   --r-stellar: #FFFBF0;
   --r-stellar-fade-partial: #61606A;
@@ -16,7 +15,6 @@
   --color-bg-main: var(--r-night);
   --color-bg-raise: var(--r-night-raise);
   --color-bg-sink: var(--r-night-sink);
-  --color-bg-shine: var(--r-night-shine);
   --color-bg-shade: var(--r-night-shade);
   --color-surface: var(--r-black);
   --color-accent: var(--r-stellar);

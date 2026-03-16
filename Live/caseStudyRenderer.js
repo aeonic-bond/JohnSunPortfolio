@@ -938,7 +938,7 @@ const loadCaseStudyInto = (root, contentPath) => {
     })
     .then(async (content) => {
       setWindowActiveIDFromContent(content);
-      const navItems = await loadHeaderNavItems();
+      const navItems = await loadNavItems();
       const navItem = findHeaderNavItem(content, navItems);
       if (navItem?.title) {
         document.title = `${navItem.title} Case Study`;
