@@ -48,7 +48,7 @@
 }
 
 .cs-subtitle {
-  font: var(--type-subtitle-l);
+  font: var(--type-subtitle-caseStudy);
   color: var(--color-text-secondary);
   min-width: 0;
   overflow-wrap: anywhere;
@@ -95,7 +95,7 @@
 }
 
 .cs-paragraph-subtitle {
-  font: var(--type-subtitle-l);
+  font: var(--type-subtitle-caseStudy);
   color: var(--color-text-secondary);
   min-width: 0;
   overflow-wrap: anywhere;

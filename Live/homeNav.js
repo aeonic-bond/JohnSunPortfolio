@@ -422,3 +422,36 @@ const bindHeaderBarEvents = () => {
   window.addEventListener("scroll", scheduleHeaderBarStickyStateUpdate, { passive: true });
   window.addEventListener("resize", scheduleHeaderBarStickyStateUpdate);
 };
+
+const initHomeNav = () => {
+  if (!(document.body instanceof HTMLBodyElement)) return;
+
+  const headerBar = document.createElement("header");
+  headerBar.className = HEADER_BAR_CLASS;
+
+  const backLink = document.createElement("a");
+  backLink.className = HEADER_BACK_CLASS;
+  backLink.href = HEADER_BACK_HREF;
+  backLink.setAttribute("aria-label", "Home");
+
+  const backIcon = document.createElement("span");
+  backIcon.className = HEADER_BACK_ICON_CLASS;
+  backIcon.style.setProperty("--back-icon-src", `url("${BACK_BUTTON_ICON_SRC}")`);
+  backIcon.setAttribute("aria-hidden", "true");
+
+  backLink.append(backIcon);
+  headerBar.append(backLink);
+
+  const main = document.querySelector(".live-main");
+  if (main?.parentNode) {
+    main.parentNode.insertBefore(headerBar, main);
+  } else {
+    document.body.prepend(headerBar);
+  }
+
+  bindHeaderBarEvents();
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (document.body.dataset.homenav !== undefined) initHomeNav();
+});

@@ -54,7 +54,7 @@ function render(timestamp) {
   if (!startTime) startTime = timestamp;
   const t = (timestamp - startTime) / 1000;
 
-  ctx.fillStyle = '#0a0a0a';
+  ctx.fillStyle = '#110F0F';
   ctx.fillRect(0, 0, W, H);
 
   const p = easeInOutCubic(Math.min(1, scrollProgress));

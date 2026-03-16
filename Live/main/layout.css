@@ -171,7 +171,7 @@ body.is-nav-sticky {
 .case-study-nav-subtitle {
   display: none;
   margin: 0;
-  font: var(--type-subtitle-s);
+  font: var(--type-subtitle-nav);
   line-height: 1;
   color: var(--color-text-secondary);
   white-space: nowrap;
