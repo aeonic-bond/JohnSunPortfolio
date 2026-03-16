@@ -379,7 +379,6 @@ const updateHeaderBarStickyState = () => {
   const delta = currentScrollY - headerLastScrollY;
   headerLastScrollY = currentScrollY;
 
-  // Accumulate upward scroll distance; reset whenever the user scrolls down.
   if (delta < 0) {
     headerUpwardScrollAccumulator += Math.abs(delta);
   } else if (delta > 0) {
@@ -388,7 +387,6 @@ const updateHeaderBarStickyState = () => {
 
   const isCompact = headerBar.classList.contains(HEADER_BAR_STICKY_CLASS);
 
-  // Always revert to default near the top, regardless of lock or accumulator.
   if (currentScrollY <= HEADER_STICKY_EXIT_THRESHOLD_PX) {
     if (isCompact) headerBar.classList.remove(HEADER_BAR_STICKY_CLASS);
     headerUpwardScrollAccumulator = 0;
@@ -397,14 +395,12 @@ const updateHeaderBarStickyState = () => {
 
   if (headerStickyTransitionLock) return;
 
-  // Compact when scrolling down past the enter threshold.
   if (!isCompact && delta > 0 && currentScrollY >= HEADER_STICKY_ENTER_THRESHOLD_PX) {
     headerBar.classList.add(HEADER_BAR_STICKY_CLASS);
     lockHeaderStickyTransition();
     return;
   }
 
-  // Revert to default visual only after scrolling up at least 100vh.
   if (isCompact && headerUpwardScrollAccumulator >= window.innerHeight * 2) {
     headerBar.classList.remove(HEADER_BAR_STICKY_CLASS);
     headerUpwardScrollAccumulator = 0;

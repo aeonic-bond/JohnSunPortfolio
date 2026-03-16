@@ -33,6 +33,13 @@
 .stroke {
   inset: 2.27% 0.64% 2.76% 0.64%;
   overflow: visible;
+  opacity: 0;
+  transition: opacity 0.6s ease 0s;
+}
+
+:host(.stroke-visible) .stroke {
+  opacity: 1;
+  transition: opacity 0.6s ease var(--stroke-stagger-delay, 0s);
 }
 
 .stroke path {

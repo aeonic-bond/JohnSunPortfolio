@@ -18,10 +18,35 @@ class IsoTile extends HTMLElement {
   connectedCallback() {
     this._uid = ++_tileCount;
     this._render();
+    this._observeStroke();
+  }
+
+  disconnectedCallback() {
+    this._strokeObserver?.disconnect();
   }
 
   attributeChangedCallback() {
     if (this.shadowRoot) this._render();
+  }
+
+  _observeStroke() {
+    const index = Array.from(document.querySelectorAll('iso-tile')).indexOf(this);
+    this.style.setProperty('--stroke-stagger-delay', `${index * 0.1}s`);
+
+    if (this._strokeObserver) this._strokeObserver.disconnect();
+    this._strokeObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            this.classList.add('stroke-visible');
+          } else if (entry.boundingClientRect.top > 0) {
+            this.classList.remove('stroke-visible');
+          }
+        }
+      },
+      { rootMargin: '0px 0px -40% 0px' }
+    );
+    this._strokeObserver.observe(this);
   }
 
   _render() {

@@ -9,24 +9,9 @@
     <link rel="stylesheet" href="/Live/main/typography.css" />
     <link rel="stylesheet" href="/Live/main/layout.css" />
     <link rel="stylesheet" href="/Live/intro/intro.css" />
-    <link rel="stylesheet" href="/Live/intro/smokeBlade.css" />
     <link rel="stylesheet" href="/Live/workflow-cards/workflow-cards.css" />
     <link rel="stylesheet" href="/Live/caseStudyCard/caseStudyCard.css" />
-    <link rel="preconnect" href="https://unpkg.com" crossorigin />
-    <link rel="preconnect" href="https://prod.spline.design" crossorigin />
-    <script
-      type="module"
-      src="https://unpkg.com/@splinetool/viewer@1.12.58/build/spline-viewer.js"
-    ></script>
-    <script>
-      // Prewarm the first card's Spline scene immediately on page load, before any
-      // deferred scripts or JSON fetches run. Update this URL and version (?v=N)
-      // when caseStudyCard.json's "splineVersion" or the first item's splineUrl changes.
-      fetch("https://prod.spline.design/KDoX-PcOTwA9xsyG/scene.splinecode?v=4", {
-        mode: "no-cors",
-        cache: "force-cache",
-      }).catch(() => {});
-    </script>
+    <link rel="stylesheet" href="/Live/homeNav.css" />
   </head>
   <body>
     <main class="live-main">
@@ -67,6 +52,7 @@
       </div>
     </main>
 
+    <script src="/Live/homeNav.js" defer></script>
     <script src="/Live/iso-tile/iso-tile.js" defer></script>
     <script src="/Live/workflow-card/workflow-card.js" defer></script>
     <script src="/Live/primitives.js" defer></script>

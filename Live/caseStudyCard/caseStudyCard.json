@@ -1,5 +1,4 @@
 {
-  "splineVersion": "4",
   "items": [
     {
       "kind": "torus",
@@ -13,16 +12,12 @@
         "Usability Testing"
       ],
       "ctaLabel": "Read",
-      "href": "/casestudy/?id=torus",
-      "media": {
-        "splineUrlDesktop": "https://prod.spline.design/KDoX-PcOTwA9xsyG/scene.splinecode",
-        "splineUrlMobile": "https://prod.spline.design/KDoX-PcOTwA9xsyG/scene.splinecode"
-      }
+      "href": "/casestudy/?id=torus"
     },
     {
       "kind": "blueprint",
       "title": "Blueprint",
-      "description": "I developed Toll Brothers’ first digital design system from a static style guide to a design-to-code workflow.",
+      "description": "I developed Toll Brothers' first digital design system from a static style guide to a design-to-code workflow.",
       "tags": [
         "Systems Research",
         "WCAG 2.2",
@@ -34,10 +29,7 @@
         "Agentic Prototyping"
       ],
       "ctaLabel": "Read",
-      "href": "/casestudy/?id=blueprint",
-      "media": {
-        "splineUrl": "https://prod.spline.design/TfAWC07q1JgAQDBS/scene.splinecode"
-      }
+      "href": "/casestudy/?id=blueprint"
     },
     {
       "kind": "hcustomizer",
@@ -48,10 +40,7 @@
         "Wireframes & Prototypes"
       ],
       "ctaLabel": "Read",
-      "href": "/casestudy/?id=hcustomizer",
-      "media": {
-        "splineUrl": "https://prod.spline.design/MsyaeAwlSa6c0Zpz/scene.splinecode"
-      }
+      "href": "/casestudy/?id=hcustomizer"
     },
     {
       "kind": "tolley",
@@ -62,10 +51,7 @@
         "Wireframes and Prototypes",
         "Module Library"
       ],
-      "ctaLabel": "Soon!",
-       "media": {
-        "splineUrl": "https://prod.spline.design/qlMDUHRdu8EDsFoQ/scene.splinecode"
-      }
+      "ctaLabel": "Soon!"
     },
     {
       "kind": "aboutMe",
@@ -79,10 +65,7 @@
         "Arca",
         "Caroline Polachek"
       ],
-      "ctaLabel": "Soon!",
-       "media": {
-        "splineUrl": "https://prod.spline.design/qlMDUHRdu8EDsFoQ/scene.splinecode"
-      }
+      "ctaLabel": "Soon!"
     }
   ]
 }

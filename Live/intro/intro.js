@@ -5,15 +5,7 @@ const dpr = window.devicePixelRatio || 1;
 let W = 0, H = 0;
 
 const introSection = document.querySelector('.intro-section');
-const introGroup = document.querySelector('.intro-group');
 const introAction = document.querySelector('.intro-button');
-
-let bladeTargetX = 0;
-
-function updateBladeTarget() {
-  const groupRect = introGroup.getBoundingClientRect();
-  bladeTargetX = groupRect.left + introGroup.offsetWidth / 2;
-}
 
 function resizeCanvas() {
   W = window.innerWidth;
@@ -23,8 +15,6 @@ function resizeCanvas() {
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.scale(dpr, dpr);
 
-  resizeBladeCanvas();
-  updateBladeTarget();
   if (typeof smoke !== 'undefined') {
     smoke.cx = W / 2;
     smoke.cy = H * 0.66;
@@ -62,23 +52,18 @@ function render(timestamp) {
   const blurP = Math.max(0, (p - 0.6) / 0.4);
   const blur = 5 + 35 * (1 - blurP * blurP * blurP);
 
-  const lineBlendRaw = Math.min(1, (p - 0.85) / 0.15);
-  const lineBlend = easeInCubic(Math.min(1, Math.max(0, (p - 0.85) / 0.15)));
-
   const blobStartY = window.innerHeight * 0.66;
   const targetY = window.innerHeight * 0.75;
   const cyOffset = (targetY - blobStartY) * pRamp;
-  const cxOffset = (bladeTargetX - smoke.cx) * pRamp;
 
-  const currentCx = smoke.cx + cxOffset;
   const currentCy = smoke.cy + cyOffset;
 
   const offsetPts = smoke.getPoints(t, scaleX, scaleY).map(pt => ({
-    x: pt.x + cxOffset,
+    x: pt.x,
     y: pt.y + cyOffset,
   }));
 
-  const gcx = currentCx
+  const gcx = smoke.cx
     + Math.sin(t * smoke.gradDriftSpeedX + smoke.gradDriftPhaseX) * smoke.gradDriftAmp * (1 - p * 0.7)
     + Math.cos(t * 0.07 + 1.3) * smoke.gradDriftAmp * 0.4 * (1 - p * 0.7);
   const gcy = currentCy
@@ -121,7 +106,7 @@ function render(timestamp) {
     const by = gcy + Math.sin(bandAngle) * bandDist;
     const col = getAuroraColor(i, t, auroraBase * auroraScrollBoost);
     const bandRadius = auroraR * (0.5 + 0.3 * Math.sin(t * 0.13 + i * 2));
-    const bandAlpha = (0.12 + 0.06 * Math.sin(t * 0.25 + i * 1.2)) * (1 - lineBlendRaw);
+    const bandAlpha = 0.12 + 0.06 * Math.sin(t * 0.25 + i * 1.2);
 
     smoke.buildPath(ctx, offsetPts);
     ctx.save();
@@ -158,17 +143,12 @@ function render(timestamp) {
 
   ctx.restore(); // end blur filter
 
-  // LAYER 5: Blade line
-  renderBlade(bladeTargetX, lineBlend, t);
-
   requestAnimationFrame(render);
 }
 
 // ── Init after first paint to ensure layout is complete ──
 requestAnimationFrame(() => {
-  initBladeCanvas();
   resizeCanvas();
-  updateBladeTarget();
   smoke = new SmokeBlade(W / 2, window.innerHeight * 0.66, 250, 8);
   requestAnimationFrame(render);
 });

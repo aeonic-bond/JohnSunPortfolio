@@ -84,7 +84,6 @@
   mask: none;
 }
 
-.card-media-mount > spline-viewer,
 .card-media-mount > canvas,
 .card-media-mount > iframe,
 .card-media-mount > .card-media-layer {
@@ -104,12 +103,6 @@
   width: 50%;
   height: 50%;
   object-fit: contain;
-}
-
-.card-media-mount > spline-viewer {
-  z-index: 3;
-  pointer-events: auto;
-  touch-action: auto;
 }
 
 .card-texts-group {
@@ -220,12 +213,6 @@
   .card-media-mount {
     width: clamp(360px, 36vw, 640px);
     aspect-ratio: 4 / 3;
-  }
-
-  .card-media-mount > spline-viewer {
-    transform: scale(1.3);
-    transform-origin: center;
-    z-index: 3;
   }
 
   .card-texts-group {

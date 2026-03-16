@@ -157,39 +157,6 @@ const scheduleFlowRowTrackerUpdate = () => {
   });
 };
 
-const SPLINE_VIEWER_SCRIPT_SRC = "https://unpkg.com/@splinetool/viewer@1.12.58/build/spline-viewer.js";
-let splineViewerScriptPromise = null;
-let splineNetworkHintsApplied = false;
-
-const applySplineNetworkHints = () => {
-  if (splineNetworkHintsApplied) return;
-  splineNetworkHintsApplied = true;
-  try {
-    const { origin } = new URL(SPLINE_VIEWER_SCRIPT_SRC);
-    const hintKey = origin.replace(/[^a-z0-9]+/gi, "-").toLowerCase();
-
-    const existingPreconnect = document.querySelector(`link[data-spline-hint="preconnect-${hintKey}"]`);
-    if (!existingPreconnect) {
-      const preconnect = document.createElement("link");
-      preconnect.rel = "preconnect";
-      preconnect.href = origin;
-      preconnect.crossOrigin = "anonymous";
-      preconnect.dataset.splineHint = `preconnect-${hintKey}`;
-      document.head.append(preconnect);
-    }
-
-    const existingDnsPrefetch = document.querySelector(`link[data-spline-hint="dns-${hintKey}"]`);
-    if (!existingDnsPrefetch) {
-      const dnsPrefetch = document.createElement("link");
-      dnsPrefetch.rel = "dns-prefetch";
-      dnsPrefetch.href = origin;
-      dnsPrefetch.dataset.splineHint = `dns-${hintKey}`;
-      document.head.append(dnsPrefetch);
-    }
-  } catch (error) {
-    void error;
-  }
-};
 
 const bindFlowRowTrackerEvents = () => {
   if (flowTrackerEventsBound) return;
@@ -290,67 +257,6 @@ const normalizeHeroMedia = (hero = {}) =>
     { variant: "hero", showCaption: true }
   );
 
-const normalizeHeroSpline = (hero = {}) => {
-  const spline = hero?.spline;
-  if (typeof spline === "string") {
-    const srcDefault = spline.trim();
-    if (!srcDefault) return null;
-    return { srcDefault, srcDesktop: "", title: "", aspectRatio: "" };
-  }
-
-  if (spline && typeof spline === "object") {
-    const srcDefault = String(
-      spline.srcDefault || spline.srcMobile || spline.src || spline.url || ""
-    ).trim();
-    const srcDesktop = String(
-      spline.srcDesktop || spline.src || spline.url || srcDefault
-    ).trim();
-    if (!srcDefault && !srcDesktop) return null;
-    return {
-      srcDefault,
-      srcDesktop,
-      title: String(spline.title || "").trim(),
-      aspectRatio: String(spline.aspectRatio || "").trim(),
-    };
-  }
-  return null;
-};
-
-const ensureSplineViewerScript = () => {
-  if (customElements.get("spline-viewer")) return Promise.resolve();
-  if (splineViewerScriptPromise) return splineViewerScriptPromise;
-  applySplineNetworkHints();
-
-  splineViewerScriptPromise = new Promise((resolve, reject) => {
-    const existing = document.querySelector(`script[src="${SPLINE_VIEWER_SCRIPT_SRC}"]`);
-    if (existing instanceof HTMLScriptElement) {
-      if (customElements.get("spline-viewer")) {
-        resolve();
-        return;
-      }
-      existing.addEventListener("load", () => resolve(), { once: true });
-      existing.addEventListener("error", () => reject(new Error("Failed to load spline-viewer script.")), {
-        once: true,
-      });
-      return;
-    }
-
-    const script = document.createElement("script");
-    script.type = "module";
-    script.src = SPLINE_VIEWER_SCRIPT_SRC;
-    script.crossOrigin = "anonymous";
-    script.fetchPriority = "high";
-    script.addEventListener("load", () => resolve(), { once: true });
-    script.addEventListener("error", () => reject(new Error("Failed to load spline-viewer script.")), {
-      once: true,
-    });
-    document.head.append(script);
-  }).catch((error) => {
-    console.warn("[case-study-hero] Unable to load spline-viewer.", error);
-  });
-
-  return splineViewerScriptPromise;
-};
 
 const createMediaBlockElement = ({
   id = "",
@@ -448,66 +354,7 @@ const createHeroMediaElement = (hero = {}) =>
     includeCaption: true,
   });
 
-const createHeroSplineEmbedElement = (spline = {}, hero = {}) => {
-  const desktopQuery = window.matchMedia("(min-width: 1024px)");
-  const getUrl = () =>
-    desktopQuery.matches
-      ? (spline.srcDesktop || spline.srcDefault || "")
-      : (spline.srcDefault || spline.srcDesktop || "");
-  const initialUrl = getUrl();
-  if (!initialUrl) return null;
-
-  const ariaLabel = spline.title || hero?.title || "Interactive 3D scene";
-  const makeViewer = (url) => {
-    const v = document.createElement("spline-viewer");
-    v.className = "cs-hero-spline-embed";
-    v.setAttribute("url", url);
-    v.setAttribute("aria-label", ariaLabel);
-    return v;
-  };
-  let viewer = makeViewer(initialUrl);
-  const updateUrl = () => {
-    const nextUrl = getUrl();
-    if (!nextUrl || nextUrl === viewer.getAttribute("url")) return;
-    const next = makeViewer(nextUrl);
-    viewer.replaceWith(next);
-    viewer = next;
-  };
-  if (typeof desktopQuery.addEventListener === "function") {
-    desktopQuery.addEventListener("change", updateUrl);
-  } else if (typeof desktopQuery.addListener === "function") {
-    desktopQuery.addListener(updateUrl);
-  }
-  const ready = ensureSplineViewerScript().then(() => {
-    updateUrl();
-  });
-  return { element: viewer, ready };
-};
-
-const createHeroVisualElement = (hero = {}) => {
-  const spline = normalizeHeroSpline(hero);
-  if (!spline) return createHeroMediaElement(hero);
-
-  const block = document.createElement("figure");
-  block.className = "cs-fig cs-fig--hero";
-
-  const frame = document.createElement("div");
-  frame.className = "cs-hero-media-mount";
-  if (spline.aspectRatio) {
-    frame.style.setProperty("--cs-hero-spline-aspect", spline.aspectRatio);
-  }
-
-  const embed = createHeroSplineEmbedElement(spline, hero);
-  if (!embed) return createHeroMediaElement(hero);
-  const { element: embedEl, ready } = embed;
-  frame.append(embedEl);
-  Promise.resolve(ready).then(() => {
-    frame.classList.add("is-ready");
-  });
-  block.append(frame);
-
-  return block;
-};
+const createHeroVisualElement = (hero = {}) => createHeroMediaElement(hero);
 
 const normalizeRowItems = (row) => {
   if (Array.isArray(row)) return row;
@@ -978,9 +825,6 @@ const createProgressRowElement = (progressRow) => {
 
 const renderCaseStudy = (content = {}, root) => {
   if (!root) return;
-  if (normalizeHeroSpline(content.hero || {})) {
-    void ensureSplineViewerScript();
-  }
   bindHeaderBarEvents();
   updateHeaderBarStickyState();
   bindFlowRowTrackerEvents();
@@ -1093,13 +937,6 @@ const loadCaseStudyInto = (root, contentPath) => {
       return response.json();
     })
     .then(async (content) => {
-      const heroSpline = normalizeHeroSpline(content?.hero || {});
-      if (heroSpline) {
-        const urlsToWarm = [...new Set([heroSpline.srcDefault, heroSpline.srcDesktop].filter(Boolean))];
-        for (const url of urlsToWarm) {
-          fetch(url, { mode: "no-cors", cache: "force-cache" }).catch(() => {});
-        }
-      }
       setWindowActiveIDFromContent(content);
       const navItems = await loadHeaderNavItems();
       const navItem = findHeaderNavItem(content, navItems);
