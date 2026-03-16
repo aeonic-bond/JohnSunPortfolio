@@ -17,7 +17,7 @@ function resizeCanvas() {
 
   if (typeof smoke !== 'undefined') {
     smoke.cx = W / 2;
-    smoke.cy = H * 0.66;
+    smoke.cy = H * 0.55;
   }
 }
 window.addEventListener('resize', resizeCanvas);
@@ -52,7 +52,7 @@ function render(timestamp) {
   const blurP = Math.max(0, (p - 0.6) / 0.4);
   const blur = 5 + 35 * (1 - blurP * blurP * blurP);
 
-  const blobStartY = window.innerHeight * 0.66;
+  const blobStartY = window.innerHeight * 0.55;
   const targetY = window.innerHeight * 0.75;
   const cyOffset = (targetY - blobStartY) * pRamp;
 
@@ -72,7 +72,7 @@ function render(timestamp) {
 
   const gradR = 320 * (1 - p * 0.85);
   const auroraR = 320 * (1 + p * 1.5);
-  const auroraBase = 0.6 + Math.sin(t * 0.3) * 0.15 + Math.sin(t * 0.17) * 0.1;
+  const auroraBase = 0.85 + Math.sin(t * 0.3) * 0.15 + Math.sin(t * 0.17) * 0.1;
   const auroraScrollBoost = 1 - p * 0.5;
 
   ctx.save();
@@ -106,7 +106,7 @@ function render(timestamp) {
     const by = gcy + Math.sin(bandAngle) * bandDist;
     const col = getAuroraColor(i, t, auroraBase * auroraScrollBoost);
     const bandRadius = auroraR * (0.5 + 0.3 * Math.sin(t * 0.13 + i * 2));
-    const bandAlpha = 0.12 + 0.06 * Math.sin(t * 0.25 + i * 1.2);
+    const bandAlpha = 0.22 + 0.08 * Math.sin(t * 0.25 + i * 1.2);
 
     smoke.buildPath(ctx, offsetPts);
     ctx.save();
@@ -149,6 +149,6 @@ function render(timestamp) {
 // ── Init after first paint to ensure layout is complete ──
 requestAnimationFrame(() => {
   resizeCanvas();
-  smoke = new SmokeBlade(W / 2, window.innerHeight * 0.66, 250, 8);
+  smoke = new SmokeBlade(W / 2, window.innerHeight * 0.55, 250, 8);
   requestAnimationFrame(render);
 });

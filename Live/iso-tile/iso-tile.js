@@ -44,7 +44,7 @@ class IsoTile extends HTMLElement {
           }
         }
       },
-      { rootMargin: '0px 0px -40% 0px' }
+      { rootMargin: '0px 0px -30% 0px' }
     );
     this._strokeObserver.observe(this);
   }

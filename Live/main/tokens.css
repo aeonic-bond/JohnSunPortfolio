@@ -1,8 +1,8 @@
 :root {
   /* Raw color tokens */
-  --r-night: #0a0a0a;
+  --r-night: #171717;
   --r-night-raise: #1A1A1B;
-  --r-night-sink: #0D0B0B;
+  --r-night-sink: #110F0F;
   --r-night-shine: #FBE3BD;
   --r-night-shade: #737371;
   --r-stellar: #FFFBF0;

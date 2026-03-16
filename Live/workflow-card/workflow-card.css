@@ -5,8 +5,9 @@
 
 .card {
   height: 100%;
-  background: var(--color-bg-raise);
+  background: transparent;
   border-radius: var(--radius-large);
+  transition: background 0.1s ease var(--card-raise-delay, 0s);
   padding: var(--spacer-600);
   display: flex;
   flex-direction: column;
@@ -14,6 +15,10 @@
   align-items: flex-start;
   justify-content: flex-start;
   box-sizing: border-box;
+}
+
+:host(.card-raised) .card {
+  background: color-mix(in srgb, var(--color-bg-raise) 75%, transparent);
 }
 
 .tile {
