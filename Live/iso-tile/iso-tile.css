@@ -1,0 +1,71 @@
+:host {
+  display: block;
+  width: 40px;
+  aspect-ratio: 78 / 112;
+}
+
+.tile {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Shared layers ── */
+.extrusion,
+.stroke,
+.mount,
+.icon {
+  position: absolute;
+}
+
+/* Extrusion — full tile body */
+.extrusion {
+  inset: 2.27% 0.64% 2.76% 0.64%;
+}
+
+.extrusion img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Stroke — inline SVG, color controlled via --_stroke-color or inline style for gradients */
+.stroke {
+  inset: 2.27% 0.64% 2.76% 0.64%;
+  overflow: visible;
+}
+
+.stroke path {
+  stroke: var(--_stroke-color, var(--color-accent));
+  stroke-width: 0.5;
+}
+
+/* Mount — top surface of the tile */
+.mount {
+  top: 14.76%;
+  right: 5.5%;
+  bottom: 5.59%;
+  left: 28.84%;
+}
+
+.mount img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Icon — sits on top of the mount surface */
+.icon {
+  position: absolute;
+  left: 61%;
+  top: 54%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  aspect-ratio: 1;
+}
+
+.icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

@@ -17,40 +17,22 @@ body.is-nav-sticky {
   background: var(--color-bg-sink);
 }
 
+#smoke {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
 .live-main {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
-}
-
-
-.towers-scroll {
-  width: 100%;
-}
-
-.towers-section {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  width: 100%;
   overflow: hidden;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-bg-main);
-  transition: background-color 300ms ease;
-}
-
-.towers-section.is-stuck {
-  background: var(--color-bg-sink);
-}
-
-.towers-section iso-towers {
-  width: 100%;
-  height: 100%;
-  margin-top: var(--spacer-section-700);
 }
 
 .case-study-showcase {

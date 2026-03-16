@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="/Live/main/typography.css" />
     <link rel="stylesheet" href="/Live/main/layout.css" />
     <link rel="stylesheet" href="/Live/intro/intro.css" />
+    <link rel="stylesheet" href="/Live/intro/smokeBlade.css" />
+    <link rel="stylesheet" href="/Live/workflow-cards/workflow-cards.css" />
     <link rel="stylesheet" href="/Live/caseStudyCard/caseStudyCard.css" />
     <link rel="preconnect" href="https://unpkg.com" crossorigin />
     <link rel="preconnect" href="https://prod.spline.design" crossorigin />
@@ -31,7 +33,7 @@
       <header class="intro-section" aria-labelledby="intro-title">
         <canvas id="smoke"></canvas>
         <div class="intro-group">
-<div class="intro-texts">
+          <div class="intro-texts">
             <h1 class="intro-title" id="intro-title">John Sun</h1>
             <p class="intro-role">product designer in San Francisco</p>
             <p class="intro-subtitle">
@@ -42,16 +44,34 @@
         </div>
       </header>
 
+      <div class="workflow-cards">
+        <workflow-card title="Research" body="User interviews, discuss with sales, market analysis">
+          <iso-tile icon="/Assets/IsoTile/UserResearch.svg"></iso-tile>
+        </workflow-card>
+        <workflow-card title="Design" body="Wireframes, prototypes, and design system components">
+          <iso-tile icon="/Assets/IsoTile/UserResearch.svg"></iso-tile>
+        </workflow-card>
+        <workflow-card title="Extract" body="Code prototypes, interactions, and feasibility tests">
+          <iso-tile icon="/Assets/IsoTile/UserResearch.svg"></iso-tile>
+        </workflow-card>
+        <workflow-card title="Prototype" body="Handoff, implementation support, and quality review">
+          <iso-tile icon="/Assets/IsoTile/UserResearch.svg"></iso-tile>
+        </workflow-card>
+      </div>
+
       <div class="case-study-showcase">
         <div class="case-study-nav-div" aria-label="Case Study Navigation"></div>
         <section class="case-study-all" id="case-studies-root" aria-label="Case Studies"></section>
       </div>
     </main>
 
+    <script src="/Live/iso-tile/iso-tile.js" defer></script>
+    <script src="/Live/workflow-card/workflow-card.js" defer></script>
     <script src="/Live/primitives.js" defer></script>
     <script src="/Live/caseStudyCard/caseStudyCardData.js" defer></script>
     <script src="/Live/main/script.js" defer></script>
     <script src="/Live/caseStudyCard/caseStudyCard.js" defer></script>
+    <script src="/Live/intro/smokeBlade.js" defer></script>
     <script src="/Live/intro/intro.js" defer></script>
   </body>
 </html>
