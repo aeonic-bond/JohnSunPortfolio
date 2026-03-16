@@ -6,6 +6,14 @@ let W = 0, H = 0;
 
 const introSection = document.querySelector('.intro-section');
 const introAction = document.querySelector('.intro-button');
+const workflowCardsSection = document.querySelector('.workflow-cards');
+
+let scrollStart = 0, scrollEnd = 1;
+
+function updateScrollAnchors() {
+  scrollStart = introSection.getBoundingClientRect().top + window.scrollY;
+  scrollEnd = workflowCardsSection.getBoundingClientRect().bottom + window.scrollY - window.innerHeight * 0.75;
+}
 
 function resizeCanvas() {
   W = window.innerWidth;
@@ -15,6 +23,7 @@ function resizeCanvas() {
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.scale(dpr, dpr);
 
+  updateScrollAnchors();
   if (typeof smoke !== 'undefined') {
     smoke.cx = W / 2;
     smoke.cy = H * 0.55;
@@ -22,12 +31,20 @@ function resizeCanvas() {
 }
 window.addEventListener('resize', resizeCanvas);
 
-// ── Scroll progress: 0 when intro is in view, 1 when fully scrolled past ──
+// ── Scroll progress: 0 when intro top hits viewport top, 1 when workflow-cards bottom hits 50vh ──
 let scrollProgress = 0;
 
 window.addEventListener('scroll', () => {
-  const rect = introSection.getBoundingClientRect();
-  scrollProgress = Math.min(1, Math.max(0, -rect.top / (introSection.offsetHeight || 1)));
+  const range = scrollEnd - scrollStart;
+  scrollProgress = Math.min(1, Math.max(0, (window.scrollY - scrollStart) / (range || 1)));
+  scrollMouseX = mouseX;
+}, { passive: true });
+
+let mouseX = null;
+let scrollMouseX = null;
+
+window.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
 }, { passive: true });
 
 let smoke;
@@ -40,17 +57,24 @@ function render(timestamp) {
   ctx.fillStyle = '#0a0a0a';
   ctx.fillRect(0, 0, W, H);
 
-  const p = easeInOutCubic(Math.min(1, scrollProgress / 0.8));
+  const p = easeInOutCubic(Math.min(1, scrollProgress));
   const pRamp = easeInCubic(p);
 
-  const scale = 1 - pRamp;
-  const irregX = 1 + (Math.sin(t * 2.1 + 0.5) * 0.6 + Math.sin(t * 3.7 + 1.1) * 0.3) * pRamp;
-  const irregY = 1 + (Math.cos(t * 1.8 + 1.2) * 0.7 + Math.cos(t * 4.3 + 0.8) * 0.25) * pRamp;
+  // Pull smoke cx toward cursor x (snapshotted at scroll time), proportional to scroll progress
+  if (scrollMouseX !== null && smoke) {
+    const targetX = W / 2 + (scrollMouseX - W / 2) * p;
+    smoke.cx += (targetX - smoke.cx) * 0.04;
+  }
+
+  const scale = 1 + pRamp * 2;
+  const chaosFactor = Math.pow(1 - p, 4) * Math.min(1, p * 10);
+  const irregX = 1 + (Math.sin(t * 2.1 + 0.5) * 0.6 + Math.sin(t * 3.7 + 1.1) * 0.3) * chaosFactor;
+  const irregY = 1 + (Math.cos(t * 1.8 + 1.2) * 0.7 + Math.cos(t * 4.3 + 0.8) * 0.25) * chaosFactor;
   const scaleX = scale * irregX;
   const scaleY = scale * irregY;
 
   const blurP = Math.max(0, (p - 0.6) / 0.4);
-  const blur = 5 + 35 * (1 - blurP * blurP * blurP);
+  const blur = 40 * (1 - blurP);
 
   const blobStartY = window.innerHeight * 0.55;
   const targetY = window.innerHeight * 0.75;
@@ -70,6 +94,7 @@ function render(timestamp) {
     + Math.sin(t * smoke.gradDriftSpeedY + smoke.gradDriftPhaseY) * smoke.gradDriftAmp * (1 - p * 0.9)
     + Math.sin(t * 0.09 + 0.7) * smoke.gradDriftAmp * 0.3 * (1 - p * 0.9);
 
+  const smokeAlpha = 1 - Math.pow(p, 4);
   const gradR = 320 * (1 - p * 0.85);
   const auroraR = 320 * (1 + p * 1.5);
   const auroraBase = 0.85 + Math.sin(t * 0.3) * 0.15 + Math.sin(t * 0.17) * 0.1;
@@ -81,6 +106,7 @@ function render(timestamp) {
   // LAYER 1: Base dark fill
   if (p < 1) {
     ctx.save();
+    ctx.globalAlpha = smokeAlpha;
     smoke.buildPath(ctx, offsetPts);
     const rimBrightness = Math.floor(35 * (1 - p));
     const outerBrightness = Math.floor(25 * (1 - p));
@@ -106,7 +132,7 @@ function render(timestamp) {
     const by = gcy + Math.sin(bandAngle) * bandDist;
     const col = getAuroraColor(i, t, auroraBase * auroraScrollBoost);
     const bandRadius = auroraR * (0.5 + 0.3 * Math.sin(t * 0.13 + i * 2));
-    const bandAlpha = 0.22 + 0.08 * Math.sin(t * 0.25 + i * 1.2);
+    const bandAlpha = (0.22 + 0.08 * Math.sin(t * 0.25 + i * 1.2)) * smokeAlpha;
 
     smoke.buildPath(ctx, offsetPts);
     ctx.save();
@@ -125,7 +151,7 @@ function render(timestamp) {
   // LAYER 3: Rim glow
   if (p < 0.9) {
     ctx.save();
-    const rimAlpha = (0.3 + 0.15 * Math.sin(t * 0.4)) * (1 - p * 0.8);
+    const rimAlpha = (0.3 + 0.15 * Math.sin(t * 0.4)) * (1 - p * 0.8) * smokeAlpha;
     const rimHue = (t * 18 + scrollProgress * 120) % 360;
     ctx.globalCompositeOperation = 'screen';
     ctx.globalAlpha = rimAlpha;
@@ -149,6 +175,7 @@ function render(timestamp) {
 // ── Init after first paint to ensure layout is complete ──
 requestAnimationFrame(() => {
   resizeCanvas();
+  updateScrollAnchors();
   smoke = new SmokeBlade(W / 2, window.innerHeight * 0.55, 250, 8);
   requestAnimationFrame(render);
 });
