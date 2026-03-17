@@ -86,4 +86,5 @@
   font: var(--type-action);
   color: var(--color-accent);
   white-space: nowrap;
+  cursor: pointer;
 }
