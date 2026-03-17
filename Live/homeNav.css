@@ -9,7 +9,11 @@
   background: var(--color-bg-sink);
   padding-block: var(--spacer-700);
   padding-inline: var(--margin-header-mobile);
-  transition: padding 0.5s ease-out;
+  transition: padding 0.5s ease-out, background 0.3s ease;
+}
+
+.cs-header-bar.is-at-top {
+  background: transparent;
 }
 
 .cs-header-bar.is-sticky {

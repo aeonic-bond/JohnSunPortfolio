@@ -1,5 +1,6 @@
 const HEADER_BAR_CLASS = "cs-header-bar";
 const HEADER_BAR_STICKY_CLASS = "is-sticky";
+const HEADER_BAR_AT_TOP_CLASS = "is-at-top";
 const HEADER_BACK_CLASS = "cs-header-back";
 const HEADER_BACK_ICON_CLASS = "cs-header-back-icon";
 const HEADER_MENU_CLASS = "cs-header-menu";
@@ -198,6 +199,8 @@ const updateHeaderBarStickyState = () => {
 
   const isCompact = headerBar.classList.contains(HEADER_BAR_STICKY_CLASS);
 
+  headerBar.classList.toggle(HEADER_BAR_AT_TOP_CLASS, currentScrollY <= 0);
+
   if (currentScrollY <= HEADER_STICKY_EXIT_THRESHOLD_PX) {
     if (isCompact) headerBar.classList.remove(HEADER_BAR_STICKY_CLASS);
     headerUpwardScrollAccumulator = 0;
@@ -240,7 +243,7 @@ const initHomeNav = () => {
   if (!(document.body instanceof HTMLBodyElement)) return;
 
   const headerBar = document.createElement("header");
-  headerBar.className = HEADER_BAR_CLASS;
+  headerBar.className = `${HEADER_BAR_CLASS}${window.scrollY <= 0 ? ` ${HEADER_BAR_AT_TOP_CLASS}` : ""}`;
 
   const backLink = document.createElement("a");
   backLink.className = HEADER_BACK_CLASS;
