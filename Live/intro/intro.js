@@ -18,7 +18,7 @@ let scrollStart = 0, scrollEnd = 1;
 
 function updateScrollAnchors() {
   scrollStart = introSection.getBoundingClientRect().top + window.scrollY;
-  scrollEnd = workflowCardsSection.getBoundingClientRect().bottom + window.scrollY - window.innerHeight * 0.75;
+  scrollEnd = workflowCardsSection.getBoundingClientRect().bottom + window.scrollY - window.innerHeight * 0.5;
 }
 
 function resizeCanvas() {
@@ -185,3 +185,6 @@ requestAnimationFrame(() => {
   smoke = new SmokeBlade(W / 2, window.innerHeight * 0.55, 250, 8);
   requestAnimationFrame(render);
 });
+
+// Re-measure after custom elements have rendered
+window.addEventListener('load', updateScrollAnchors);
