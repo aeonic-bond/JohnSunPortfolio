@@ -36,6 +36,14 @@
   position: relative;
 }
 
+.module-mount__header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
 @media (min-width: 1024px) {
   .module-mount__view-toggle {
     display: flex;

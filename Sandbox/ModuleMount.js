@@ -18,10 +18,13 @@ export const ModuleMount = {
     root.className = "module-mount";
     root.dataset.view = "mobile";
 
+    const header = document.createElement("div");
+    header.className = "module-mount__header";
+
     const prompt = document.createElement("p");
     prompt.className = "module-mount__prompt";
     prompt.textContent = "Interactive Demo";
-    root.appendChild(prompt);
+    header.appendChild(prompt);
 
     const toggle = document.createElement("div");
     toggle.className = "module-mount__view-toggle";
@@ -73,7 +76,8 @@ export const ModuleMount = {
     });
 
     setView(initialView);
-    root.appendChild(toggle);
+    header.appendChild(toggle);
+    root.appendChild(header);
 
     if (contentNode) root.appendChild(contentNode);
     return root;

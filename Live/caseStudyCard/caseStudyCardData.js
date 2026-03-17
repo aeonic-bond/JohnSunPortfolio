@@ -43,20 +43,42 @@ const COMING_SOON_IMG_SRC = "/Assets/ComingSoon.png";
 
 const GALLERY_SRCS = {
   torus: ["/Assets/Torus/Card/Gallery/Gallery1.png"],
+  blueprint: ["/Assets/Blueprint/Gallery/Gallery1.png"],
 };
 
 const renderCardMedia = ({ kind = "", mediaRoot, media, isDisabled = false } = {}) => {
   void media;
   if (!mediaRoot) return;
 
-  const gallery = GALLERY_SRCS[String(kind || "").trim().toLowerCase()];
+  const normalizedKind = String(kind || "").trim().toLowerCase();
+
+  if (normalizedKind === "hcustomizer") {
+    for (const href of ["/Sandbox/ModuleMount.css", "/Sandbox/ModuleDYOH.css"]) {
+      if (!document.querySelector(`link[href="${href}"]`)) {
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = href;
+        document.head.appendChild(link);
+      }
+    }
+    Promise.all([
+      import("/Sandbox/ModuleDYOH.js"),
+      fetch("/Sandbox/ModuleDYOH.json").then((r) => r.json()),
+    ]).then(([{ createModuleDYOH }, config]) => {
+      createModuleDYOH(mediaRoot, config);
+    }).catch((err) => {
+      console.warn("[hcustomizer] Failed to load DYOH module.", err);
+    });
+    return;
+  }
+
+  const gallery = GALLERY_SRCS[normalizedKind];
   if (gallery?.length) {
     const img = document.createElement("img");
-    img.className = "card-media-layer";
+    img.className = "card-media-gallery-img";
     img.src = gallery[0];
     img.alt = "";
     img.setAttribute("aria-hidden", "true");
-    img.style.objectFit = "cover";
     mediaRoot.append(img);
     return;
   }

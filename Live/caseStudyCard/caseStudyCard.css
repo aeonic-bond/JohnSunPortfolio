@@ -61,10 +61,10 @@
   position: relative;
   z-index: 2;
   display: flex;
-  align-items: center;
+  align-items: top;
   justify-content: center;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  height: fit-content;
   padding: var(--spacer-300);
   background: transparent;
   overflow: visible;
@@ -76,13 +76,24 @@
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
   overflow: visible;
   border-radius: var(--radius-base);
   isolation: isolate;
   clip-path: none;
   mask: none;
-  background: red;
+  background: var(--color-bg-raise);
+}
+
+.card-media-mount .module-mount {
+  border: 0;
+}
+
+
+.card-media-gallery-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: inherit;
 }
 
 .card-media-mount > canvas,
@@ -111,7 +122,6 @@
   flex-direction: column;
   gap: var(--spacer-500);
   width: 100%;
-  max-width: var(--max-width-card-content);
   padding: var(--spacer-700);
 }
 
@@ -195,11 +205,11 @@
 
   .card-media-mount {
     width: var(--gallery-width);
-    aspect-ratio: 4 / 3;
   }
 
   .card-texts {
     width: 100%;
+    max-width: var(--max-width-card-content);
     flex: 0 1 auto;
   }
 
