@@ -8,6 +8,12 @@ const introSection = document.querySelector('.intro-section');
 const introAction = document.querySelector('.intro-button');
 const workflowCardsSection = document.querySelector('.workflow-cards');
 
+if (introAction && workflowCardsSection) {
+  introAction.addEventListener('click', () => {
+    workflowCardsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+}
+
 let scrollStart = 0, scrollEnd = 1;
 
 function updateScrollAnchors() {
