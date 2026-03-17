@@ -102,7 +102,7 @@ const loadCaseStudies = async () => {
 
     const payload = await response.json();
     const rawItems = Array.isArray(payload) ? payload : payload?.items;
-    const items = Array.isArray(rawItems) ? rawItems : [];
+    const items = (Array.isArray(rawItems) ? rawItems : []).filter((item) => !item?.hidden);
 
     const resolvedItems = await Promise.all(
       items.map(async (item = {}) => {

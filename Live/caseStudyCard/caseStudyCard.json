@@ -44,6 +44,7 @@
     },
     {
       "kind": "tolley",
+      "hidden": true,
       "title": "Tolley",
       "description": "Coming Soon: I designed Toll Brothers' first AI chatbot to be a contextual home search experience.",
       "tags": [
@@ -55,6 +56,7 @@
     },
     {
       "kind": "aboutMe",
+      "hidden": true,
       "title": "About Me",
       "description": "Coming Soon: Imagine a digital vinyl player!",
       "manualDisabled": true,
