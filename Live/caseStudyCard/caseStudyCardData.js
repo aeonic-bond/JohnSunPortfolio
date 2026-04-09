@@ -2,7 +2,7 @@ const CASE_STUDY_STATUS_PATHS = {
   torus: "/Live/torus/TorusContent.json",
   blueprint: "/Live/blueprint/BlueprintContent.json",
   hcustomizer: "/Live/hcustomizer/HCustomizerContent.json",
-  tolley: "/Live/tolley/TolleyContent.json",
+  chatbot: "/Live/chatbot/ChatbotContent.json",
 };
 const statusLoadByKind = new Map();
 
@@ -44,6 +44,7 @@ const COMING_SOON_IMG_SRC = "/Assets/ComingSoon.png";
 const GALLERY_SRCS = {
   torus: ["/Assets/Torus/Card/Gallery/Gallery1.png"],
   blueprint: ["/Assets/Blueprint/Gallery/Gallery1.png"],
+  chatbot: ["/Assets/Chatbot/Gallery/Gallery1.png"],
 };
 
 const renderCardMedia = ({ kind = "", mediaRoot, media, isDisabled = false } = {}) => {

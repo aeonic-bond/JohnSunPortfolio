@@ -25,11 +25,11 @@
       "selected": false
     },
     {
-      "id": "tolley",
-      "title": "Tolley",
+      "id": "chatbot",
+      "title": "AI Chatbot",
       "subtitle": "AI Chatbot",
-      "icon": "/Assets/TolleyIcon.svg",
-      "href": "",
+      "icon": "/Assets/ChatbotIcon.svg",
+      "href": "/casestudy/?id=chatbot",
       "selected": false
     },
 

@@ -43,16 +43,16 @@
       "href": "/casestudy/?id=hcustomizer"
     },
     {
-      "kind": "tolley",
-      "hidden": true,
-      "title": "Tolley",
-      "description": "Coming Soon: I designed Toll Brothers' first AI chatbot to be a contextual home search experience.",
+      "kind": "chatbot",
+      "title": "AI Chatbot",
+      "description": "I designed Toll Brothers' first AI chatbot to be a context-aware home search experience.",
+      "href": "/casestudy/?id=chatbot",
       "tags": [
         "Domain Research",
         "Wireframes and Prototypes",
-        "Module Library"
+        "Component Library"
       ],
-      "ctaLabel": "Soon!"
+      "ctaLabel": "Read"
     },
     {
       "kind": "aboutMe",
