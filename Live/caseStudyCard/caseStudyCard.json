@@ -1,37 +1,6 @@
 {
   "items": [
     {
-      "kind": "torus",
-      "title": "Torus",
-      "description": "I designed and built a demo for an architecture CAD tool to streamline parametric family creation.",
-      "tags": [
-        "User Research",
-        "Domain Research",
-        "MVP Product Design",
-        "AI-Assisted Development",
-        "Usability Testing"
-      ],
-      "ctaLabel": "Read",
-      "href": "/casestudy/?id=torus"
-    },
-    {
-      "kind": "blueprint",
-      "title": "Blueprint",
-      "description": "I developed Toll Brothers' first digital design system from a static style guide to a design-to-code workflow.",
-      "tags": [
-        "Systems Research",
-        "WCAG 2.2",
-        "Tokenization",
-        "Components",
-        "Figma MCP",
-        "AI-Assisted Development",
-        "Storybook",
-        "Agentic Prototyping"
-      ],
-      "ctaLabel": "Read",
-      "href": "/casestudy/?id=blueprint"
-    },
-    {
       "kind": "hcustomizer",
       "title": "Home Customizer",
       "description": "I designed multiple home customization experiences for both user and internal product teams.",
@@ -53,6 +22,37 @@
         "Component Library"
       ],
       "ctaLabel": "Read"
+    },
+    {
+      "kind": "blueprint",
+      "title": "Blueprint",
+      "description": "I developed Toll Brothers' first digital design system from a static style guide to a design-to-code workflow.",
+      "tags": [
+        "Systems Research",
+        "WCAG 2.2",
+        "Tokenization",
+        "Components",
+        "Figma MCP",
+        "AI-Assisted Development",
+        "Storybook",
+        "Agentic Prototyping"
+      ],
+      "ctaLabel": "Read",
+      "href": "/casestudy/?id=blueprint"
+    },
+    {
+      "kind": "torus",
+      "title": "Torus",
+      "description": "I designed and built a demo for an architecture CAD tool to streamline parametric family creation.",
+      "tags": [
+        "User Research",
+        "Domain Research",
+        "MVP Product Design",
+        "AI-Assisted Development",
+        "Usability Testing"
+      ],
+      "ctaLabel": "Read",
+      "href": "/casestudy/?id=torus"
     },
     {
       "kind": "aboutMe",

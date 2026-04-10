@@ -1,22 +1,6 @@
 {
   "items": [
     {
-      "id": "torus",
-      "title": "Torus",
-      "subtitle": "Architecture/CAD",
-      "icon": "/Assets/TorusIcon.svg",
-      "href": "/casestudy/?id=torus",
-      "selected": true
-    },
-    {
-      "id": "blueprint",
-      "title": "Blueprint",
-      "subtitle": "Design System",
-      "icon": "/Assets/BlueprintIcon.svg",
-      "href": "/casestudy/?id=blueprint",
-      "selected": false
-    },
-    {
       "id": "hcustomizer",
       "title": "Customizer",
       "subtitle": "Home Customization",
@@ -31,6 +15,22 @@
       "icon": "/Assets/ChatbotIcon.svg",
       "href": "/casestudy/?id=chatbot",
       "selected": false
+    },
+    {
+      "id": "blueprint",
+      "title": "Blueprint",
+      "subtitle": "Design System",
+      "icon": "/Assets/BlueprintIcon.svg",
+      "href": "/casestudy/?id=blueprint",
+      "selected": false
+    },
+    {
+      "id": "torus",
+      "title": "Torus",
+      "subtitle": "Architecture/CAD",
+      "icon": "/Assets/TorusIcon.svg",
+      "href": "/casestudy/?id=torus",
+      "selected": true
     },
 
     {
