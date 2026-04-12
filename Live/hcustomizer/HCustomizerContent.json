@@ -5,7 +5,7 @@
   "publishedDate": "",
   "hero": {
     "title": "Home Customization Experiences on Two Fronts: User Personalization and Designer Curation",
-    "subtitle": "I showcase four home customization designs for both user and internal product teams.",
+    "subtitle": "I showcase four home customization designs for both users and internal product teams.",
     "media": {
       "type": "image",
       "src": "",
@@ -32,7 +32,7 @@
         {
           "type": "paragraph-subsection",
           "subtitle": "Problems & Goal",
-          "text": "For Toll Brothers, “choice” is core to its luxury identity. Users can customize structural options (i.e., fireplaces, room layouts, etc.). However, the old home customization module has major flaws."
+          "text": "For Toll Brothers, “choice” is core to its luxury identity. Users can customize structural options (fireplaces, room layouts, etc.). However, the old home customization module has major flaws."
         },
         {
           "type": "figMatrix",
@@ -40,7 +40,7 @@
           "figures": [
             {
               "src": "../../Assets/HCustomizer/Section1/Problem1.png",
-              "caption": "Many options have complex dependencies (e.g., selecting Option A disables Option B), but the UI fails to communicate it."
+              "caption": "Many options have complex constraint logic (e.g., selecting Option A disables Option B), but the UI fails to communicate it."
             },
             {
               "src": "../../Assets/HCustomizer/Section1/Problem2.png",
@@ -54,25 +54,26 @@
         },
         {
           "type": "paragraph",
-          "text": "The main goal for a redesign will be to scope out all the possible logic dependencies and create a framework that can be systematically visualized."
+          "text": "For the best possible redesign, I considered several options like guided flows and eventually landed on constraint logic visualization as the most promising solution. To determine feature feasibility, I scoped out all the possible constraint logic."
         },
         {
           "type": "paragraph-subsection",
           "subtitle": "Research",
-          "text": "I researched 80 home designs that offer DYOH and indexed the relationship logic between options. I analyzed the underlying logic and established a proper framework. I reached out to the Architecture team to confirm this framework."
+          "text": "I researched 80 home designs that offer Design-Your-Own-Home (DYOH) and indexed the relationships between options to establish a proper framework. I reached out to the Architecture team to confirm this framework."
         },
         {
           "type": "bulletRow",
           "items": [
             "Independent - Options that can be toggled independently of any other options.",
             "Child - Options that can be toggled on if another independent option is toggled on.",
-            "Conflict Group - 2+ groups of options where only one option can be selected. Sometimes, there are option bundles of 2+ options that are independent of options in the bundle."
+            "Closed Conflict Group - A group of 2+ options where only one option can be selected. Sometimes, an option is a bundle of 2+ options.",
+            "Open Conflict Group - A group of 2+ options where only one option can be selected and some options have conflicts with other options outside the group."
           ]
         },
         {
           "type": "paragraph-subsection",
           "subtitle": "Design",
-          "text": "In order to redesign the experience around mobile-first principles, I picked the popular bottom sheet pattern that can dynamically alter size based on current focus. I then redesigned the list and demonstrated to stakeholders the framework for categorizing and visualizing dependencies. My manager and an Architecture Product Manager approved of the framework and the overall redesign."
+          "text": "In order to redesign the experience around mobile-first principles, I picked the popular bottom sheet pattern that can dynamically alter size based on current focus. I then redesigned the list and demonstrated to stakeholders the framework for categorizing and visualizing dependencies. My manager and an Architecture Product Manager approved the framework and the overall redesign."
         },
         {
           "type": "moduleMount",
@@ -86,7 +87,7 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "On the internal product side, the product team would curate features for designer-appointed collections using PDFs. As the company pivoted to more pre-selected builds and quick move-in homes, the product team needed an internal tool to construct collections of products at scale. I partnered with a senior developer, and designed the MVP wireframes from scratch. For a desktop-only tool, these were the basic requirements:"
+          "text": "On the internal product side, the product team would curate features for designer-appointed collections using PDFs. As the company pivoted to more pre-selected builds and quick move-in homes, the product team needed an internal tool to construct collections of products at scale. I partnered with a senior developer and designed the MVP wireframes from scratch. For a desktop-only tool, these were the basic requirements:"
         },
         {
           "type": "bulletRow",
@@ -101,11 +102,11 @@
           "figures": [
             {
               "src": "../../Assets/HCustomizer/Section2/CB1.png",
-              "caption": "Collection Builder main page showing collection cards with mosaic feature thumbnail. Cards are categorized by publish states."
+              "caption": "Collection Builder main page showing collection cards with mosaic feature thumbnails. Cards are categorized by publish states."
             },
             {
               "src": "../../Assets/HCustomizer/Section2/CB2.png",
-              "caption": "A single collection showing added features categorized by location. A general Select Feature button is in the top-right corner, and each location has a smaller location-specific Select Feature button."
+              "caption": "A single collection showing added features categorized by location. A general Select Features button is in the top-right corner, and each location has a smaller location-specific Select Features button."
             },
             {
               "src": "../../Assets/HCustomizer/Section2/CB3.png",
@@ -161,7 +162,7 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "The digital catalog is an ongoing team effort to replace PDF catalogs with a digital app experience. Users take a style survey, receive a recommended curated set of finishes, and adjust the selection. I designed several key screens with feature scalability in mind, creating a reusable selection pattern for cabinets that can be repurposed, such as for flooring as shown."
+          "text": "The digital catalog is an ongoing team effort to replace PDF catalogs with a digital app experience. Users take a style survey, receive a recommended curated set of finishes, and adjust the selection. I designed several key screens with feature scalability in mind, creating a reusable selection pattern for cabinets that can be repurposed for other features like flooring."
         },
         {
           "type": "figMatrix",
@@ -177,7 +178,7 @@
             },
             {
               "src": "../../Assets/HCustomizer/Section4/DC3.png",
-              "caption": "Flooring exists as its own section, allowing users to compare kitchen and bath flooring and accommodate grout selection."
+              "caption": "Flooring exists as its own section, allowing users to compare kitchen and bath flooring, and accommodating grout selection."
             },
             {
               "src": "../../Assets/HCustomizer/Section4/DC4.png",
