@@ -40,7 +40,6 @@ const createCaseStudyCard = ({
     media,
     isDisabled,
   });
-  mediaMount.addEventListener("click", (event) => { event.stopPropagation(); });
   mediaEl.append(mediaMount);
 
   const content = document.createElement("div");
