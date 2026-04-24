@@ -1,15 +1,15 @@
 {
   "items": [
     {
-      "kind": "hcustomizer",
-      "title": "Home Customizer",
-      "description": "At Toll Brothers, I designed multiple home customization tools for homebuyers and internal product teams.",
+      "kind": "studio",
+      "title": "Studio",
+      "description": "At Toll Brothers, I designed the MVP of the Online Studio app experience with multiple home customization tools for homebuyers. I also developed the MVP of the Collection Builder tool for internal product teams.",
       "tags": [
         "Domain Research",
         "Wireframes & Prototypes"
       ],
       "ctaLabel": "Read",
-      "href": "/casestudy/?id=hcustomizer"
+      "href": "/casestudy/?id=studio"
     },
     {
       "kind": "chatbot",

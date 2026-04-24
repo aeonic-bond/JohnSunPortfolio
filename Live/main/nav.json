@@ -1,11 +1,11 @@
 {
   "items": [
     {
-      "id": "hcustomizer",
-      "title": "Customizer",
+      "id": "studio",
+      "title": "Studio",
       "subtitle": "Home Customization",
-      "icon": "/Assets/CustomizerIcon.svg",
-      "href": "/casestudy/?id=hcustomizer",
+      "icon": "/Assets/StudioIcon.svg",
+      "href": "/casestudy/?id=studio",
       "selected": false
     },
     {

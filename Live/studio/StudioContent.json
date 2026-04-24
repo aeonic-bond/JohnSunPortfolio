@@ -1,11 +1,11 @@
 {
-  "id": "hcustomizer",
-  "slug": "home-customizer",
+  "id": "studio",
+  "slug": "studio",
   "status": "ready",
   "publishedDate": "",
   "hero": {
-    "title": "Home Customization Experiences on Two Fronts: User Personalization and Designer Curation",
-    "subtitle": "I showcase four home customization designs for both users and internal product teams.",
+    "title": "Designing the Online Studio",
+    "subtitle": "I designed the post-purchase home design app for Toll Brothers from PDFs to a digital-first experience with quietly embedded AI recommendations.",
     "media": {
       "type": "image",
       "src": "",
@@ -39,15 +39,15 @@
           "variant": "mobileScreens",
           "figures": [
             {
-              "src": "../../Assets/HCustomizer/Section1/Problem1.png",
+              "src": "../../Assets/Studio/Section1/Problem1.png",
               "caption": "Many options have complex constraint logic (e.g., selecting Option A disables Option B), but the UI fails to communicate it."
             },
             {
-              "src": "../../Assets/HCustomizer/Section1/Problem2.png",
+              "src": "../../Assets/Studio/Section1/Problem2.png",
               "caption": "Users have to rely on trial-and-error and dense tooltips, resulting in a frustrating experience."
             },
             {
-              "src": "../../Assets/HCustomizer/Section1/Problem3.png",
+              "src": "../../Assets/Studio/Section1/Problem3.png",
               "caption": "It’s built on desktop-first principles. On mobile, it lacks features and has wonky controls."
             }
           ]
@@ -101,19 +101,19 @@
           "type": "figMatrix",
           "figures": [
             {
-              "src": "../../Assets/HCustomizer/Section2/CB1.png",
+              "src": "../../Assets/Studio/Section2/CB1.png",
               "caption": "Collection Builder main page showing collection cards with mosaic feature thumbnails. Cards are categorized by publish states."
             },
             {
-              "src": "../../Assets/HCustomizer/Section2/CB2.png",
+              "src": "../../Assets/Studio/Section2/CB2.png",
               "caption": "A single collection showing added features categorized by location. A general Select Features button is in the top-right corner, and each location has a smaller location-specific Select Features button."
             },
             {
-              "src": "../../Assets/HCustomizer/Section2/CB3.png",
+              "src": "../../Assets/Studio/Section2/CB3.png",
               "caption": "The Select Features modal shows selected and recommended features. The gray indicator in the top-right corner communicates selection state and enables location changes."
             },
             {
-              "src": "../../Assets/HCustomizer/Section2/CB4.png",
+              "src": "../../Assets/Studio/Section2/CB4.png",
               "caption": "The Upload Feature screen appears as a tab on the Select Features modal. It includes a guardrail against duplicate feature uploads. There is also a tab view for Multi-Upload."
             }
           ]
@@ -137,19 +137,19 @@
           "variant": "mobileScreens",
           "figures": [
             {
-              "src": "../../Assets/HCustomizer/Section3/FP1.png",
+              "src": "../../Assets/Studio/Section3/FP1.png",
               "caption": "The furniture planner button is placed in the bottom-right corner."
             },
             {
-              "src": "../../Assets/HCustomizer/Section3/FP2.png",
+              "src": "../../Assets/Studio/Section3/FP2.png",
               "caption": "Users can select from a horizontal carousel of furniture categories."
             },
             {
-              "src": "../../Assets/HCustomizer/Section3/FP3.png",
+              "src": "../../Assets/Studio/Section3/FP3.png",
               "caption": "Users can place a default piece and then move, rotate, delete, or change variants."
             },
             {
-              "src": "../../Assets/HCustomizer/Section3/FP4.png",
+              "src": "../../Assets/Studio/Section3/FP4.png",
               "caption": "Users can swap furniture variants in a dedicated variant-swap state."
             }
           ]
@@ -169,19 +169,19 @@
           "variant": "mobileScreens",
           "figures": [
             {
-              "src": "../../Assets/HCustomizer/Section4/DC1.png",
+              "src": "../../Assets/Studio/Section4/DC1.png",
               "caption": "Style Survey prefills the majority of hardware and finishes. The flow is optimized for refinement over selection."
             },
             {
-              "src": "../../Assets/HCustomizer/Section4/DC2.png",
+              "src": "../../Assets/Studio/Section4/DC2.png",
               "caption": "The Cabinet tab in the Kitchen selection flow balances several required elements: navigation, visualizer, stacked cabinet toggle, zoning, filters, selection, return option, and confirmation bar."
             },
             {
-              "src": "../../Assets/HCustomizer/Section4/DC3.png",
+              "src": "../../Assets/Studio/Section4/DC3.png",
               "caption": "Flooring exists as its own section, allowing users to compare kitchen and bath flooring, and accommodating grout selection."
             },
             {
-              "src": "../../Assets/HCustomizer/Section4/DC4.png",
+              "src": "../../Assets/Studio/Section4/DC4.png",
               "caption": "Grout selection expands the bottom confirmation bar into a full bottom sheet."
             }
           ]

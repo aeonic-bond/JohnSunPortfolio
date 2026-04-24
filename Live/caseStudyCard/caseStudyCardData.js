@@ -1,7 +1,7 @@
 const CASE_STUDY_STATUS_PATHS = {
   torus: "/Live/torus/TorusContent.json",
   blueprint: "/Live/blueprint/BlueprintContent.json",
-  hcustomizer: "/Live/hcustomizer/HCustomizerContent.json",
+  studio: "/Live/studio/StudioContent.json",
   chatbot: "/Live/chatbot/ChatbotContent.json",
 };
 const statusLoadByKind = new Map();
@@ -53,7 +53,7 @@ const renderCardMedia = ({ kind = "", mediaRoot, media, isDisabled = false } = {
 
   const normalizedKind = String(kind || "").trim().toLowerCase();
 
-  if (normalizedKind === "hcustomizer") {
+  if (normalizedKind === "studio") {
     for (const href of ["/Sandbox/ModuleMount.css", "/Sandbox/ModuleDYOH.css"]) {
       if (!document.querySelector(`link[href="${href}"]`)) {
         const link = document.createElement("link");
@@ -68,7 +68,7 @@ const renderCardMedia = ({ kind = "", mediaRoot, media, isDisabled = false } = {
     ]).then(([{ createModuleDYOH }, config]) => {
       createModuleDYOH(mediaRoot, config);
     }).catch((err) => {
-      console.warn("[hcustomizer] Failed to load DYOH module.", err);
+      console.warn("[studio] Failed to load DYOH module.", err);
     });
     return;
   }

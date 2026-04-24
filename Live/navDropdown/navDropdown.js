@@ -2,7 +2,7 @@ const NAV_DATA_PATH = "/Live/main/nav.json";
 const NAV_STATUS_PATHS = {
   torus: "/Live/torus/TorusContent.json",
   blueprint: "/Live/blueprint/BlueprintContent.json",
-  hcustomizer: "/Live/hcustomizer/HCustomizerContent.json",
+  studio: "/Live/studio/StudioContent.json",
   chatbot: "/Live/chatbot/ChatbotContent.json",
 };
 const NAV_DROPDOWN_CLASS = "cs-header-dropdown";
