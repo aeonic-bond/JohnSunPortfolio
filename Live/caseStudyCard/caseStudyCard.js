@@ -212,8 +212,6 @@ if (root) {
 
     let inRangeCandidateId = "";
     let inRangeDistance = Number.POSITIVE_INFINITY;
-    let nearestId = "";
-    let nearestDistance = Number.POSITIVE_INFINITY;
 
     for (const cardDiv of cardDivs) {
       const rect = cardDiv.getBoundingClientRect();
@@ -224,11 +222,6 @@ if (root) {
           ? activeCardIntersectionByElement.get(cardDiv) === true
           : midpointY >= startY && midpointY <= endY;
 
-      if (currentDistance < nearestDistance) {
-        nearestDistance = currentDistance;
-        nearestId = cardDiv.id;
-      }
-
       if (inRange && currentDistance < inRangeDistance) {
         inRangeDistance = currentDistance;
         inRangeCandidateId = cardDiv.id;
@@ -237,11 +230,6 @@ if (root) {
 
     if (inRangeCandidateId) {
       setActiveID(inRangeCandidateId);
-      return;
-    }
-
-    if (!activeID && nearestId) {
-      setActiveID(nearestId);
     }
   };
 
