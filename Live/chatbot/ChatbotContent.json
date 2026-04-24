@@ -4,8 +4,8 @@
   "status": "ready",
   "publishedDate": "",
   "hero": {
-    "title": "AI Chatbot",
-    "subtitle": "Case study in progress.",
+    "title": "Designing Toll Brothers' AI Chatbot",
+    "subtitle": "I defined MVP features to add value to the main site with a context-block system, category recommendations, and home comparison features.",
     "media": {
       "type": "image",
       "src": "../../Assets/Chatbot/Gallery/Gallery1.png",
