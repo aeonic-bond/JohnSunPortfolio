@@ -21,7 +21,7 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "I led design for major Toll Brothers home customization modules, both internal and external. The four projects I selected showcase elegant UI built on problem-solving."
+          "text": "Toll Brothers traditionally offers home customization options only through PDFs and in-person design sessions with no comprehensive digital experience. I led design for four major modules that comprise the new Digital Studio App: the floorplan customizer, the furniture planner, the collection builder, and the digital catalog."
         }
       ]
     },
@@ -66,8 +66,8 @@
           "items": [
             "Independent - Options that can be toggled independently of any other options.",
             "Child - Options that can be toggled on if another independent option is toggled on.",
-            "Closed Conflict Group - A group of 2+ options where only one option can be selected. Sometimes, an option is a bundle of 2+ options.",
-            "Open Conflict Group - A group of 2+ options where only one option can be selected and some options have conflicts with other options outside the group."
+            "Mutual Exclusion - A group of 2+ options where only one option can be selected.",
+            "Partial Conflict Group - A group of 3+ options where some options have asymmetric internal conflicts."
           ]
         },
         {

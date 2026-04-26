@@ -151,14 +151,25 @@
   border-radius: var(--radius-small);
   font: normal 600 15px/15px var(--font-body);
   color: var(--color-text-inverse);
-  background: var(--color-accent);
+  background: var(--color-accent-soft);
   cursor: pointer;
+  transition: background-color 0.6s ease;
+}
+
+.card-cta.is-in-view:not(:disabled):not([aria-disabled="true"]) {
+  background: var(--color-accent);
 }
 
 .card-cta:disabled,
 .card-cta[aria-disabled="true"] {
   background: var(--color-bg-shade);
   cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-cta {
+    transition: none;
+  }
 }
 
 .case-study-card[role="link"] {
