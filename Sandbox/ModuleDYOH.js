@@ -478,6 +478,9 @@ OptionGroup.create = function createOptionGroup({
       if (optionNodes.length < 2) return;
 
       const rootRect = root.getBoundingClientRect();
+      const parentIconRect = optionNodes[0]?.querySelector(".option__icon-container")?.getBoundingClientRect();
+      const leftEdge = parentIconRect ? (parentIconRect.left - rootRect.left + 8) : 8;
+
       for (let i = 0; i < optionNodes.length - 1; i += 1) {
         const currentAnchor = i === 0
           ? optionNodes[i]?.querySelector(".option__icon-container")
@@ -488,8 +491,8 @@ OptionGroup.create = function createOptionGroup({
         const currentRect = currentAnchor.getBoundingClientRect();
         const nextRect = nextAnchor.getBoundingClientRect();
         const lineTop = currentRect.bottom - rootRect.top;
-        const lineBottom = nextRect.top - rootRect.top;
-        const lineHeight = Math.max(0, lineBottom - lineTop);
+        const lineHeight = Math.max(0, (nextRect.top + nextRect.height / 2) - currentRect.bottom);
+        const lineWidth = Math.max(0, (nextRect.left - rootRect.left) - leftEdge);
         if (lineHeight === 0) continue;
 
         const lineClass =
@@ -497,9 +500,10 @@ OptionGroup.create = function createOptionGroup({
             ? "option-group__connector-line option-group__connector-line--parent-child"
             : "option-group__connector-line option-group__connector-line--child-child";
         const line = el("div", lineClass);
-        line.style.left = `${currentRect.left - rootRect.left + currentRect.width / 2}px`;
+        line.style.left = `${leftEdge}px`;
         line.style.top = `${lineTop}px`;
         line.style.height = `${lineHeight}px`;
+        line.style.width = `${lineWidth}px`;
         connectorsLayer.appendChild(line);
       }
     };

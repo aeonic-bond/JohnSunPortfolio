@@ -224,10 +224,9 @@
 }
 
 .option-group__connector-line {
-  background: var(--sb-functional-light-gray, #e9edf0);
+  border-bottom: 2px solid var(--sb-functional-light-gray, #e9edf0);
+  border-left: 2px solid var(--sb-functional-light-gray, #e9edf0);
   position: absolute;
-  transform: translateX(-50%);
-  width: 2px;
 }
 
 .option-group__children {
@@ -314,6 +313,10 @@
 
 .option--parent .option__icon-container {
   gap: 10px;
+}
+
+.option--child .option__row {
+  padding-left: 32px;
 }
 
 .option--child .option__icon-container {
