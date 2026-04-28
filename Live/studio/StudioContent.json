@@ -110,11 +110,11 @@
             },
             {
               "src": "../../Assets/Studio/Section2/CB3.png",
-              "caption": "The Select Features modal shows selected and recommended features. The gray indicator in the top-right corner communicates selection state and enables location changes."
+              "caption": "Select Features shows selected and recommended features. The gray indicator in the top-right corner communicates selection state and enables location changes."
             },
             {
               "src": "../../Assets/Studio/Section2/CB4.png",
-              "caption": "The Upload Feature screen appears as a tab on the Select Features modal. It includes a guardrail against duplicate feature uploads. There is also a tab view for Multi-Upload."
+              "caption": "The Upload Feature appears as a tab in Select Features. Product teams can upload spreadsheets of features. There are duplication guardrails."
             }
           ]
         },
