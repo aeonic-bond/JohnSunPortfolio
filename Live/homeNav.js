@@ -71,10 +71,23 @@ const ensureHeaderBar = () => {
   const title = document.createElement("p");
   title.className = HEADER_TITLE_CLASS;
 
-  const signIcon = document.createElement("img");
-  signIcon.className = HEADER_SIGN_ICON_CLASS;
-  signIcon.alt = "";
+  const signIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  signIcon.setAttribute("viewBox", "0 0 40 40");
+  signIcon.setAttribute("fill", "none");
+  signIcon.setAttribute("width", "40");
+  signIcon.setAttribute("height", "40");
   signIcon.setAttribute("aria-hidden", "true");
+  signIcon.setAttribute("class", HEADER_SIGN_ICON_CLASS);
+  for (const [x, y] of [[4.5, 4.5], [8.5, 8.5], [12.5, 12.5]]) {
+    const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    rect.setAttribute("x", x);
+    rect.setAttribute("y", y);
+    rect.setAttribute("width", "23");
+    rect.setAttribute("height", "23");
+    rect.setAttribute("rx", "3.5");
+    rect.setAttribute("stroke", "currentColor");
+    signIcon.appendChild(rect);
+  }
 
   const chevron = document.createElement("span");
   chevron.className = HEADER_CHEVRON_CLASS;
@@ -150,7 +163,7 @@ const applyHeaderBarContent = (content = {}, navItems = []) => {
 
   const title = headerBar.querySelector(`.${HEADER_TITLE_CLASS}`);
   const signIcon = headerBar.querySelector(`.${HEADER_SIGN_ICON_CLASS}`);
-  if (!(title instanceof HTMLElement) || !(signIcon instanceof HTMLImageElement)) return;
+  if (!(title instanceof HTMLElement) || !(signIcon instanceof Element)) return;
 
   const navItem = findHeaderNavItem(content, navItems);
   const resolvedTitle = String(navItem?.title || "").trim();

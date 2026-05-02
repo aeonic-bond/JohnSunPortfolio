@@ -35,7 +35,7 @@ body {
   clip-path: inset(var(--v2-nav-height) var(--margin-header-mobile) calc(100% - 100vh + var(--margin-header-mobile)) var(--margin-header-mobile) round var(--radius-large, 12px));
   padding-inline: var(--margin-header-mobile);
 
-  transition: clip-path 0.5s ease, padding-inline 0.5s ease;
+  transition: clip-path 0.1s ease, padding-inline 0.5s ease;
 }
 
 /* Any scroll: bottom opens immediately, sides stay in card form */
@@ -76,9 +76,24 @@ body.is-expanded .v2-main {
   background-color: currentColor;
 }
 
-.cs-header-sign-icon {
-  filter: brightness(0);
-  transition: filter 0.2s ease;
+/* Home nav logo uses mask approach — background-color controls the color */
+.cs-header-back-icon {
+  background-color: var(--color-text-inverse);
+  transition: background-color 0.2s ease;
+}
+
+body.is-expanded .cs-header-back-icon {
+  background-color: var(--color-text-secondary);
+}
+
+/* Case study nav sign icon (inline SVG) */
+.cs-header-sign-icon rect {
+  stroke: var(--color-text-inverse);
+  transition: stroke 0.2s ease;
+}
+
+body.is-expanded .cs-header-sign-icon rect {
+  stroke: var(--color-text-secondary);
 }
 
 /* post-scroll: expands 0.5s after card finishes (card = 0.5s, nav starts at 0.5s) */
@@ -90,8 +105,14 @@ body.is-expanded .cs-header-bar {
   transition: left 0.5s ease, right 0.5s ease, background 0.5s ease, color 0.2s ease;
 }
 
-body.is-expanded .cs-header-sign-icon {
-  filter: none;
+
+/* ── Suppress transitions on page load / navigation ──────────── */
+
+body.v2-no-transition .v2-main,
+body.v2-no-transition .cs-header-bar,
+body.v2-no-transition .cs-header-back-icon,
+body.v2-no-transition .cs-header-sign-icon rect {
+  transition: none !important;
 }
 
 
