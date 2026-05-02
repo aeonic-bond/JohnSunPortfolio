@@ -1,0 +1,106 @@
+/* ── V2 overrides ─────────────────────────────────────────────── */
+
+/* Nav height: padding-block (spacer-700 × 2) + logo height (40px) */
+:root {
+  --v2-nav-height: calc(var(--spacer-700) * 2 + 40px);
+}
+
+/* White surround — visible around the card in its initial state */
+body {
+  background: white;
+}
+
+/* Smoke: sticky so it behaves like V1's fixed canvas (always
+   viewport-filling) but lives inside the card and gets clipped
+   with it. margin-bottom: -100vh collapses the layout space. */
+#smoke {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  margin-bottom: -100vh;
+}
+
+
+/* ── Card container ───────────────────────────────────────────── */
+
+.v2-main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background: var(--color-bg-main);
+
+  clip-path: inset(var(--v2-nav-height) var(--margin-header-mobile) calc(100% - 100vh + var(--margin-header-mobile)) var(--margin-header-mobile) round var(--radius-large, 12px));
+  padding-inline: var(--margin-header-mobile);
+
+  transition: clip-path 0.5s ease, padding-inline 0.5s ease;
+}
+
+/* Any scroll: bottom opens immediately, sides stay in card form */
+body.is-scrolled .v2-main {
+  clip-path: inset(var(--v2-nav-height) var(--margin-header-mobile) 0 var(--margin-header-mobile) round var(--radius-large) var(--radius-large) 0 0);
+  transition: clip-path 0.1s ease, padding-inline 0.5s ease;
+}
+
+/* Full expansion at threshold — sides open, top collapses */
+body.is-expanded .v2-main {
+  clip-path: inset(0px 0px 0px 0px round 0px);
+  padding-inline: 0px;
+  transition: clip-path 0.5s ease, padding-inline 0.5s ease;
+}
+
+
+/* ── Nav: pre-scroll / post-scroll states ─────────────────────── */
+
+/* pre-scroll: nav width matches card insets.
+   left/right override width: 100% on the fixed element. */
+.cs-header-bar,
+.cs-header-bar.is-at-top {
+  background: white;
+  left: var(--margin-header-mobile);
+  right: var(--margin-header-mobile);
+  width: auto;
+  color: var(--color-text-inverse);
+  transition: left 0.5s ease, right 0.5s ease, color 0.2s ease, background 0.5s ease;
+}
+
+.cs-header-bar .cs-header-home-nav-link,
+.cs-header-bar .cs-header-home-nav-link:hover,
+.cs-header-bar .cs-header-title {
+  color: inherit;
+}
+
+.cs-header-bar .cs-header-menu-icon {
+  background-color: currentColor;
+}
+
+.cs-header-sign-icon {
+  filter: brightness(0);
+  transition: filter 0.2s ease;
+}
+
+/* post-scroll: expands 0.5s after card finishes (card = 0.5s, nav starts at 0.5s) */
+body.is-expanded .cs-header-bar {
+  left: 0;
+  right: 0;
+  background: var(--color-bg-main);
+  color: var(--color-text-secondary);
+  transition: left 0.5s ease, right 0.5s ease, background 0.5s ease, color 0.2s ease;
+}
+
+body.is-expanded .cs-header-sign-icon {
+  filter: none;
+}
+
+
+/* ── Reduced motion ───────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-main,
+  .cs-header-bar,
+  .cs-header-sign-icon {
+    transition: none;
+  }
+}
