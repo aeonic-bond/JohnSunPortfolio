@@ -63,7 +63,7 @@
 
 .cs-div-section {
   display: grid;
-  row-gap: var(--spacer-section-500);
+  row-gap: var(--spacer-section-300);
   min-width: 0;
 }
 

@@ -4,11 +4,11 @@
   "status": "ready",
   "publishedDate": "",
   "hero": {
-    "title": "Designing for the Digital Studio Experience",
-    "subtitle": "As Toll Brothers transforms the post-purchase process from PDFs to a digital-first experience, I designed several modules within this ecosystem.",
+    "title": "Toll Brothers Digital Studio",
+    "subtitle": "I designed four home customization tools for the Toll Brothers Studio app that replaced 30+ PDFs.",
     "media": {
       "type": "image",
-      "src": "",
+      "src": "../../Assets/Studio/Hero.png",
       "caption": "",
       "variant": "hero",
       "showCaption": false
@@ -21,7 +21,7 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "Toll Brothers traditionally offers home customization options only through PDFs and in-person design sessions with no comprehensive digital experience. I led design for four major modules that comprise the new Digital Studio App: the floorplan customizer, the furniture planner, the collection builder, and the digital catalog."
+          "text": "Home customization is a major part of the Toll Brothers brand, and that process traditionally relied on outdated digital modules and PDFs. The Digital Studio app is a new initiative to create a comprehensive digital experience for home customization. I led end-to-end design on four major modules for the Digital Studio. For homebuyers, I designed the Floorplan Configurator, the Furniture Planner, and Digital Catalog. For our internal product teams, I designed the Collection Builder to feed curated sets into the Digital Catalog."
         }
       ]
     },

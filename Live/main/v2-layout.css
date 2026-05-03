@@ -22,6 +22,16 @@ body {
 }
 
 
+/* ── Intro section: vertically centered in the visible card area ── */
+
+.intro-section {
+  height: calc(100vh - var(--margin-header-mobile));
+  padding-top: var(--v2-nav-height);
+  padding-bottom: 0;
+  align-items: center;
+}
+
+
 /* ── Card container ───────────────────────────────────────────── */
 
 .v2-main {
