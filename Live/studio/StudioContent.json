@@ -27,12 +27,11 @@
     },
     {
       "id": "section-01",
-      "header": "Design-Your-Own-Home",
+      "header": "Floorplan Configurator",
       "blocks": [
         {
-          "type": "paragraph-subsection",
-          "subtitle": "Problems & Goal",
-          "text": "For Toll Brothers, “choice” is core to its luxury identity. Users can customize structural options (fireplaces, room layouts, etc.). However, the old home customization module has major flaws."
+          "type": "paragraph",
+          "text": "Floorplan customization relied on an old Floorplan Configurator built by a third party vendor. The old module had major design flaws."
         },
         {
           "type": "figMatrix",
@@ -54,12 +53,7 @@
         },
         {
           "type": "paragraph",
-          "text": "For the best possible redesign, I considered several options like guided flows and eventually landed on constraint logic visualization as the most promising solution. To determine feature feasibility, I scoped out all the possible constraint logic."
-        },
-        {
-          "type": "paragraph-subsection",
-          "subtitle": "Research",
-          "text": "I researched 80 home designs that offer Design-Your-Own-Home (DYOH) and indexed the relationships between options to establish a proper framework. I reached out to the Architecture team to confirm this framework."
+          "text": "To design a better solution, I researched 80 home designs that offer floorplan customization to understand the full scope of constraints. Then, I established a proper framework with three basic buckets."
         },
         {
           "type": "bulletRow",

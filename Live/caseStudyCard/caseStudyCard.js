@@ -71,19 +71,6 @@ const createCaseStudyCard = ({
     disabled: isDisabled,
   });
 
-  if (typeof IntersectionObserver === "function") {
-    const ctaInViewObserver = new IntersectionObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.isIntersecting) {
-          ctaButton.classList.add("is-in-view");
-        } else {
-          ctaButton.classList.remove("is-in-view");
-        }
-      }
-    });
-    ctaInViewObserver.observe(ctaButton);
-  }
-
   content.append(titleEl, descriptionEl, tagsWrap, ctaContainer);
   card.append(mediaEl, content);
 

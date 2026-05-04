@@ -147,17 +147,18 @@
 .card-cta {
   height: 40px;
   padding: 0 12px;
-  border: 0;
+  border: 1px solid var(--color-accent);
   border-radius: var(--radius-small);
   font: normal 600 15px/15px var(--font-body);
-  color: var(--color-text-inverse);
-  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  background: transparent;
   cursor: pointer;
-  transition: background-color 0.6s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.card-cta.is-in-view:not(:disabled):not([aria-disabled="true"]) {
+.case-study-card:hover:not(:has(.card-media-mount:hover)) .card-cta:not(:disabled):not([aria-disabled="true"]) {
   background: var(--color-accent);
+  color: var(--color-text-inverse);
 }
 
 .card-cta:disabled,

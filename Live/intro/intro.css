@@ -87,4 +87,10 @@
   color: var(--color-accent);
   white-space: nowrap;
   cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.intro-button:hover {
+  background: var(--color-accent);
+  color: var(--color-text-inverse);
 }
