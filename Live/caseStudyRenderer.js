@@ -356,6 +356,100 @@ const createHeroMediaElement = (hero = {}) =>
 
 const createHeroVisualElement = (hero = {}) => createHeroMediaElement(hero);
 
+const createHeroGalleryElement = (hero = {}) => {
+  const GAP = 16;
+
+  const items = Array.isArray(hero.gallery)
+    ? hero.gallery.filter((item) => item?.src)
+    : [];
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "cs-hero-gallery";
+
+  if (!items.length) return wrapper;
+
+  const track = document.createElement("div");
+  track.className = "cs-hero-gallery-track";
+
+  const makeFrame = (item, ariaHidden = false) => {
+    const frame = document.createElement("div");
+    frame.className = "cs-hero-gallery-frame";
+    if (ariaHidden) frame.setAttribute("aria-hidden", "true");
+    const img = document.createElement("img");
+    img.className = "cs-hero-gallery-img";
+    img.src = item.src;
+    img.alt = item.alt || "";
+    frame.append(img);
+    return frame;
+  };
+
+  // track order: [clone(N-1), frame0..frameN-1, clone(0), clone(1)]
+  const frames = items.map((item) => makeFrame(item));
+  const clonePrev = makeFrame(items[items.length - 1], true);
+  const cloneNext0 = makeFrame(items[0], true);
+  const cloneNext1 = makeFrame(items[1] || items[0], true);
+  const allFrames = [clonePrev, ...frames, cloneNext0, cloneNext1];
+
+  track.append(...allFrames);
+  wrapper.append(track);
+
+  // domIndex 1 = first real frame
+  let domIndex = 1;
+  let interval = null;
+  let transitioning = false;
+
+  const getOffset = (index) => {
+    const frameWidth = allFrames[0].offsetWidth;
+    const containerWidth = wrapper.offsetWidth;
+    return containerWidth / 2 - frameWidth / 2 - index * (frameWidth + GAP);
+  };
+
+  const applyTransform = (offset) => {
+    track.style.transform = `translateX(${offset}px) translateZ(0)`;
+  };
+
+  const snapTo = (index) => {
+    track.style.transition = "none";
+    domIndex = index;
+    applyTransform(getOffset(domIndex));
+    requestAnimationFrame(() => requestAnimationFrame(() => (track.style.transition = "")));
+  };
+
+  const updateTrack = (animated = true) => {
+    if (!animated) { snapTo(domIndex); return; }
+    applyTransform(getOffset(domIndex));
+  };
+
+  track.addEventListener("transitionend", (e) => {
+    if (e.target !== track || e.propertyName !== "transform") return;
+    transitioning = false;
+    // landed on clone(0), snap back to real frame0
+    if (domIndex === items.length + 1) snapTo(1);
+  });
+
+  const ro = new ResizeObserver(() => updateTrack(false));
+  ro.observe(wrapper);
+
+  if (items.length > 1) {
+    const advance = () => {
+      if (transitioning) return;
+      transitioning = true;
+      domIndex++;
+      updateTrack(true);
+    };
+
+    wrapper.addEventListener("mouseenter", () => {
+      interval = setInterval(advance, 1200);
+    });
+    wrapper.addEventListener("mouseleave", () => {
+      clearInterval(interval);
+      interval = null;
+    });
+  }
+
+  return wrapper;
+};
+
 const normalizeRowItems = (row) => {
   if (Array.isArray(row)) return row;
   if (typeof row === "string") return [row];
@@ -848,7 +942,10 @@ const renderCaseStudy = (content = {}, root) => {
 
   hero.append(introText);
 
-  const heroMedia = createHeroVisualElement(content.hero || {});
+  const heroData = content.hero || {};
+  const heroMedia = Array.isArray(heroData.gallery)
+    ? createHeroGalleryElement(heroData)
+    : createHeroVisualElement(heroData);
   if (heroMedia.firstChild) hero.append(heroMedia);
   for (const sectionData of content.sections || []) {
     const section = document.createElement("section");

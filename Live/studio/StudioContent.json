@@ -6,13 +6,12 @@
   "hero": {
     "title": "Toll Brothers Digital Studio",
     "subtitle": "I designed four home customization tools for the Toll Brothers Studio app that replaced 30+ PDFs.",
-    "media": {
-      "type": "image",
-      "src": "../../Assets/Studio/Hero.png",
-      "caption": "",
-      "variant": "hero",
-      "showCaption": false
-    }
+    "gallery": [
+      { "src": "../../Assets/MobilePlaceholder.png", "alt": "" },
+      { "src": "../../Assets/MobilePlaceholder.png", "alt": "" },
+      { "src": "../../Assets/MobilePlaceholder.png", "alt": "" },
+      { "src": "../../Assets/MobilePlaceholder.png", "alt": "" }
+    ]
   },
   "sections": [
     {
