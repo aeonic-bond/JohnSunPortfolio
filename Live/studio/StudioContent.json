@@ -4,8 +4,8 @@
   "status": "ready",
   "publishedDate": "",
   "hero": {
-    "title": "Toll Brothers Floor Plan Configurator",
-    "subtitle": "Showcase of three home customization tools for the Toll Brothers Studio app.",
+    "title": "Toll Brothers Digital Studio",
+    "subtitle": "Showcasing three home customization tools for the Toll Brothers Studio app",
     "gallery": [
       { "src": "../../Assets/MobilePlaceholder.png", "alt": "" },
       { "src": "../../Assets/MobilePlaceholder.png", "alt": "" },
@@ -17,7 +17,7 @@
     {
       "id": "section-00",
       "header": "Executive Summary",
-      "intro": "Toll Brothers traditionally relied on outdated digital modules and PDFs to deliver home customization options. The new **Digital Studio** app is a comprehensive digital home customization platform. I led end-to-end design on four major modules: **Floor Plan Configurator**, the **Furniture Planner**, and **Digital Catalog**, and the internal-facing **Collection Builder** to curate sets for the Digital Catalog.",
+      "intro": "Toll Brothers traditionally relied on outdated digital modules and PDFs to deliver home customization options. The new **Digital Studio** app is a comprehensive digital home customization platform. I led end-to-end design on three major modules for the app: **Floor Plan Configurator**, **Collection Builder** (internal-facing), and the **Digital Catalog**.",
       "blocks": []
     },
     {
@@ -31,7 +31,7 @@
           "frames": [
             {
               "figure": { "src": "../../Assets/Studio/Section1/oldDYOH.png" },
-              "header": "Old Floor Plan Configurator",
+              "header": "Old Floor Plan Options Configurator",
               "text": "The digital Floor Plan Configurator helps homebuyers understand and pre-select architectural customization options. Research reported that homebuyers found the old module difficult to use and needed in-person guidance to understand options.\n\n1. Failed to communicate complex option dependencies.\n2. Relied on trial-and-error with dense tooltips.\n3. Built on desktop-first principles with limited mobile support.\n\nTo understand the full scope of option relationships, I researched 80 floor plans with the most complicated setups."
             },
             {
@@ -43,103 +43,32 @@
         },
         {
           "type": "moduleMount",
+          "header": "New Floor Plan Options Configurator",
           "src": "/Sandbox/ModuleDYOH.json"
         }
       ]
     },
     {
       "id": "section-02",
-      "header": "Collection Builder",
-      "intro": "On the internal product side, the product team would curate features for designer-appointed collections using PDFs. As the company pivoted to more pre-selected builds and quick move-in homes, the product team needed an internal tool to construct collections of products at scale. I partnered with a senior developer and designed the MVP wireframes from scratch. For a desktop-only tool, these were the basic requirements:",
+      "header": "",
+      "intro": "",
       "blocks": [
         {
-          "type": "bulletRow",
-          "items": [
-            "Create new collections.",
-            "Add features to a collection.",
-            "Upload new features to the system."
-          ]
-        },
-        {
-          "type": "figMatrix",
-          "figures": [
+          "type": "figRow",
+          "variant": "stacking",
+          "frames": [
             {
-              "src": "../../Assets/Studio/Section2/CB1.png",
-              "caption": "Collection Builder main page showing collection cards with mosaic feature thumbnails. Cards are categorized by publish states."
+              "figure": { "src": "../../Assets/Studio/Section2/OldProcess.png" },
+              "header": "Old Design Options Curation Process",
+              "text": "Traditionally, the merchandising team manually curated design options in PDFs. Now that the Studio app promised digital delivery of these options, the team needed a tool to digitally curate collections of options. I conducted research into the merchandising team's workflows and defined the main MVP requirements:\n\n1. User can create and manage collections of options.\n2. User can upload and manage options, either through UI or CSV/spreadsheet uploads.\n3. System should have duplication guardrails on data entry."
             },
             {
-              "src": "../../Assets/Studio/Section2/CB2.png",
-              "caption": "A single collection showing added features categorized by location. A general Select Features button is in the top-right corner, and each location has a smaller location-specific Select Features button."
-            },
-            {
-              "src": "../../Assets/Studio/Section2/CB3.png",
-              "caption": "Select Features shows selected and recommended features. The gray indicator in the top-right corner communicates selection state and enables location changes."
-            },
-            {
-              "src": "../../Assets/Studio/Section2/CB4.png",
-              "caption": "The Upload Feature appears as a tab in Select Features. Product teams can upload spreadsheets of features. There are duplication guardrails."
-            }
-          ]
-        },
-        {
-          "type": "paragraph",
-          "text": "During the build process, my developer partner and I fleshed out additional management-focused requirements, such as multi-upload, duplicate prevention, and publish states. The demo for this project received internal approval and was added to the backlog."
-        }
-      ]
-    },
-    {
-      "id": "section-03",
-      "header": "Furniture Planner",
-      "intro": "I revisited the Design Your Own Home module to add a mobile-optimized furniture planner function. The old design includes a furniture planner available only on desktop. To elegantly add a furniture planner to mobile, I reduced its prominence, added a variant-selection state, and removed resizing features that do not apply to furniture with preset sizes.",
-      "blocks": [
-        {
-          "type": "figMatrix",
-          "variant": "mobileScreens",
-          "figures": [
-            {
-              "src": "../../Assets/Studio/Section3/FP1.png",
-              "caption": "The furniture planner button is placed in the bottom-right corner."
-            },
-            {
-              "src": "../../Assets/Studio/Section3/FP2.png",
-              "caption": "Users can select from a horizontal carousel of furniture categories."
-            },
-            {
-              "src": "../../Assets/Studio/Section3/FP3.png",
-              "caption": "Users can place a default piece and then move, rotate, delete, or change variants."
-            },
-            {
-              "src": "../../Assets/Studio/Section3/FP4.png",
-              "caption": "Users can swap furniture variants in a dedicated variant-swap state."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "section-04",
-      "header": "Digital Catalog",
-      "intro": "The digital catalog is an ongoing team effort to replace PDF catalogs with a digital app experience. Users take a style survey, receive a recommended curated set of finishes, and adjust the selection. I designed several key screens with feature scalability in mind, creating a reusable selection pattern for cabinets that can be repurposed for other features like flooring.",
-      "blocks": [
-        {
-          "type": "figMatrix",
-          "variant": "mobileScreens",
-          "figures": [
-            {
-              "src": "../../Assets/Studio/Section4/DC1.png",
-              "caption": "Style Survey prefills the majority of hardware and finishes. The flow is optimized for refinement over selection."
-            },
-            {
-              "src": "../../Assets/Studio/Section4/DC2.png",
-              "caption": "The Cabinet tab in the Kitchen selection flow balances several required elements: navigation, visualizer, stacked cabinet toggle, zoning, filters, selection, return option, and confirmation bar."
-            },
-            {
-              "src": "../../Assets/Studio/Section4/DC3.png",
-              "caption": "Flooring exists as its own section, allowing users to compare kitchen and bath flooring, and accommodating grout selection."
-            },
-            {
-              "src": "../../Assets/Studio/Section4/DC4.png",
-              "caption": "Grout selection expands the bottom confirmation bar into a full bottom sheet."
+              "figures": [
+                { "src": "../../Assets/Studio/Section2/NewWireframes.png", "label": "1" },
+                { "src": "../../Assets/Studio/Section2/NewWireframes2.png", "label": "2" }
+              ],
+              "header": "New Digital Collection Builder - Wireframes",
+              "text": "Since there was no pre-existing tool, I created wireframes that focus on the editing flow of creating a new collection.\n\n1. **Main** shows all the collections.\n2. **Collection** shows all options in a single collection, separated by rooms (kitchen, primary bath, etc…)\n3. **Selecting** allows users to select options for a single room.\n4. **Uploading** allows users to add new options into the library."
             }
           ]
         }

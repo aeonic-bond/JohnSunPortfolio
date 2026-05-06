@@ -32,6 +32,8 @@
 
 /* Module Mount Block */
 .cs-module-mount {
+  display: grid;
+  gap: var(--spacer-700);
   width: min(100%, var(--cs-content-width));
   min-width: 0;
   overflow-x: clip;
@@ -55,6 +57,20 @@
 .cs-module-mount__error {
   font: var(--type-body-m);
   color: var(--color-text-secondary);
+}
+
+.cs-module-mount .cs-section-header {
+  width: 100%;
+  text-align: center;
+}
+
+.cs-module-mount .module-dyoh__floorplan,
+.cs-module-mount .module-dyoh__floorplan-overlay {
+  height: 100%;
+}
+
+.cs-module-mount .option__icon {
+  height: 32px;
 }
 
  /* Bullet Row */
@@ -787,13 +803,42 @@
 
 .cs-fig-row-frame {
   display: flex;
+  flex-direction: column;
+  position: relative;
+  border-radius: var(--radius-base);
+  background-color: var(--color-bg-main);
+  transition: opacity 0.4s ease;
+}
+
+.cs-fig-row-frame__media {
+  flex: 1 1 auto;
+  display: flex;
   align-items: flex-start;
   justify-content: flex-end;
   overflow: hidden;
-  border-radius: var(--radius-base);
-  background-color: var(--color-bg-sink);
+  border-radius: inherit;
   padding: var(--spacer-300);
-  transition: opacity 0.4s ease;
+}
+
+.cs-fig-row-frame__pills {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  z-index: 1;
+}
+
+.cs-fig-row-frame__pills .view-toggle {
+  display: flex;
+}
+
+.cs-fig-row-frame__pills .view-toggle__button {
+  font: var(--type-action-s);
+  color: var(--color-text-secondary);
+}
+
+.cs-fig-row-frame__pills .view-toggle__button.is-selected {
+  color: var(--color-bg-sink);
 }
 
 .cs-fig-row-frame .cs-fig-row-media-img {
@@ -809,8 +854,10 @@
 }
 
 @media (min-width: 1024px) {
-  .cs-fig-row--stacking .cs-fig-row-text {
-    row-gap: 0;
+  .cs-fig-row--stacking .cs-fig-row-text,
+  .cs-fig-row--stacking .cs-fig-row-media {
+    row-gap: var(--spacer-section-500);
+    padding-block: 0;
   }
 
   .cs-fig-row--stacking .cs-fig-row-frame,
@@ -821,11 +868,10 @@
   .cs-fig-row--stacking .cs-fig-row-frame {
     position: sticky;
     top: 88px;
-    background: var(--color-bg-main);
   }
 
   .cs-fig-row--stacking .cs-fig-row-text-frame {
-    padding-block: var(--spacer-section-500);
+    padding: var(--spacer-800) var(--spacer-300) var(--spacer-300);
   }
 }
 

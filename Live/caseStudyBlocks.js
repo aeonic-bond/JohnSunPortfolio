@@ -132,6 +132,14 @@ const createModuleMountElement = (block = {}) => {
   const moduleMountEl = document.createElement("div");
   moduleMountEl.className = "cs-module-mount";
 
+  const headerText = String(block.header || "").trim();
+  if (headerText) {
+    const header = document.createElement("h2");
+    header.className = "cs-section-header";
+    header.textContent = headerText;
+    moduleMountEl.append(header);
+  }
+
   const mountNode = document.createElement("div");
   mountNode.className = "cs-module-mount__node";
   moduleMountEl.append(mountNode);
@@ -914,23 +922,77 @@ const createProgressMatrixElement = (progressMatrix) => {
   return progressMatrixEl;
 };
 
-const makeFigRowFrame = (figData = {}) => {
+const makeFigRowFrame = (frameData = {}) => {
+  const figures = Array.isArray(frameData.figures) && frameData.figures.length > 0
+    ? frameData.figures
+    : frameData.figure?.src
+      ? [frameData.figure]
+      : [];
+
   const frameEl = document.createElement("div");
   frameEl.className = "cs-fig-row-frame";
-  if (figData.src) {
+
+  const mediaEl = document.createElement("div");
+  mediaEl.className = "cs-fig-row-frame__media";
+
+  const imgEls = figures.map((fig, i) => {
     const img = document.createElement("img");
     img.className = "cs-fig-row-media-img";
-    img.src = figData.src;
-    img.alt = figData.alt || figData.caption || "";
+    img.src = fig.src || "";
+    img.alt = fig.alt || fig.caption || "";
     img.loading = "lazy";
-    frameEl.append(img);
-  }
-  if (figData.caption) {
+    if (i > 0) img.hidden = true;
+    mediaEl.append(img);
+    return img;
+  });
+
+  frameEl.append(mediaEl);
+
+  if (figures.length === 1 && figures[0].caption) {
     const caption = document.createElement("figcaption");
     caption.className = "cs-fig-caption";
-    caption.textContent = figData.caption;
+    caption.textContent = figures[0].caption;
     frameEl.append(caption);
   }
+
+  if (figures.length > 1) {
+    let activeIndex = 0;
+    const pillsEl = document.createElement("div");
+    pillsEl.className = "cs-fig-row-frame__pills";
+
+    const toggleEl = document.createElement("div");
+    toggleEl.className = "view-toggle";
+    toggleEl.setAttribute("role", "group");
+
+    const selectorEl = document.createElement("div");
+    selectorEl.className = "view-toggle__selector";
+    toggleEl.append(selectorEl);
+
+    const btnEls = figures.map((fig, i) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "view-toggle__button" + (i === 0 ? " is-selected" : "");
+      btn.textContent = fig.label || String(i + 1);
+      btn.setAttribute("aria-pressed", String(i === 0));
+      btn.addEventListener("click", () => {
+        if (i === activeIndex) return;
+        imgEls[activeIndex].hidden = true;
+        btnEls[activeIndex].classList.remove("is-selected");
+        btnEls[activeIndex].setAttribute("aria-pressed", "false");
+        activeIndex = i;
+        imgEls[i].hidden = false;
+        btnEls[i].classList.add("is-selected");
+        btnEls[i].setAttribute("aria-pressed", "true");
+        selectorEl.style.transform = `translateX(${i * 100}%)`;
+      });
+      toggleEl.append(btn);
+      return btn;
+    });
+    selectorEl.style.transform = "translateX(0%)";
+    pillsEl.append(toggleEl);
+    frameEl.append(pillsEl);
+  }
+
   return frameEl;
 };
 
@@ -945,7 +1007,7 @@ const createFigRowElement = (block = {}) => {
 
   if (isStacking) {
     for (const frame of block.frames) {
-      mediaEl.append(makeFigRowFrame(frame.figure || {}));
+      mediaEl.append(makeFigRowFrame(frame));
     }
     setTimeout(() => {
       const frameEls = Array.from(mediaEl.querySelectorAll(".cs-fig-row-frame"));
@@ -963,7 +1025,7 @@ const createFigRowElement = (block = {}) => {
       update();
     }, 0);
   } else {
-    mediaEl.append(makeFigRowFrame(block.figure || {}));
+    mediaEl.append(makeFigRowFrame(block));
   }
 
   const textEl = document.createElement("div");
