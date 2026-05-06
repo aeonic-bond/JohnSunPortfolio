@@ -151,6 +151,11 @@ const renderCaseStudy = (content = {}, root) => {
         section.append(createFigRowElement(block));
         continue;
       }
+
+      if (block.type === "prototypeFlow" || block.type === "protoFlow") {
+        section.append(createProtoFlowElement(block));
+        continue;
+      }
     }
 
     sectionsGroup.append(section);

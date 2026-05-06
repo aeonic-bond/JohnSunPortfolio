@@ -1018,7 +1018,9 @@ const createFigRowElement = (block = {}) => {
         const triggerAt = stickyTop + frameHeight * 0.85;
         for (let i = 1; i < frameEls.length; i++) {
           const top = frameEls[i].getBoundingClientRect().top;
-          frameEls[i - 1].classList.toggle("is-covered", top < triggerAt);
+          const covered = top < triggerAt;
+          frameEls[i - 1].classList.toggle("is-covered", covered);
+          if (i >= 2) frameEls[i - 2].classList.toggle("is-deeply-covered", covered);
         }
       };
       window.addEventListener("scroll", update, { passive: true });
@@ -1118,4 +1120,81 @@ const createProgressRowElement = (progressRow) => {
   }
 
   return progressRowEl;
+};
+
+const createProtoFlowElement = (block = {}) => {
+  const el = document.createElement("div");
+  el.className = "cs-proto-flow";
+
+  const titleText = String(block.title || "").trim();
+  if (titleText) {
+    const title = document.createElement("h2");
+    title.className = "cs-proto-flow-title";
+    title.textContent = titleText;
+    el.append(title);
+  }
+
+  const screens = Array.isArray(block.screens) ? block.screens : [];
+  if (screens.length > 0) {
+    const track = document.createElement("div");
+    track.className = "cs-proto-flow-track";
+
+    for (const screen of screens) {
+      const screenEl = document.createElement("div");
+      screenEl.className = "cs-proto-flow-screen";
+
+      const imgWrap = document.createElement("div");
+      imgWrap.className = "cs-proto-flow-img-wrap";
+
+      if (screen.src) {
+        const img = document.createElement("img");
+        img.className = "cs-proto-flow-img";
+        img.src = screen.src;
+        img.alt = screen.label || "";
+        img.loading = "lazy";
+        imgWrap.append(img);
+      }
+
+      screenEl.append(imgWrap);
+
+      const labelText = String(screen.label || "").trim();
+      if (labelText) {
+        const label = document.createElement("p");
+        label.className = "cs-proto-flow-label";
+        label.textContent = labelText;
+        screenEl.append(label);
+      }
+
+      track.append(screenEl);
+    }
+
+    el.append(track);
+
+    if (screens.length > 1) {
+      const COOLDOWN_MS = 1800;
+
+      let triggered  = false;
+      let cooldownId = null;
+
+      const observer = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && !triggered && !cooldownId && track.scrollLeft === 0) {
+            triggered  = true;
+            cooldownId = setTimeout(() => { cooldownId = null; }, COOLDOWN_MS);
+            const firstItem = track.firstElementChild;
+            if (firstItem) {
+              const gap = parseFloat(getComputedStyle(track).columnGap) || 12;
+              track.scrollBy({ left: firstItem.offsetWidth + gap, behavior: "smooth" });
+            }
+          } else if (!entry.isIntersecting) {
+            triggered = false;
+          }
+        }
+      }, { rootMargin: "0px 0px -65% 0px", threshold: 0 });
+
+      observer.observe(el);
+    }
+  }
+
+  return el;
 };

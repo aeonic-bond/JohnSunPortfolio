@@ -59,7 +59,7 @@
           "frames": [
             {
               "figure": { "src": "../../Assets/Studio/Section2/OldProcess.png" },
-              "header": "Old Design Options Curation Process",
+              "header": "(Internal) Old Design Options Curation Process",
               "text": "Traditionally, the merchandising team manually curated design options in PDFs. Now that the Studio app promised digital delivery of these options, the team needed a tool to digitally curate collections of options. I conducted research into the merchandising team's workflows and defined the main MVP requirements:\n\n1. User can create and manage collections of options.\n2. User can upload and manage options, either through UI or CSV/spreadsheet uploads.\n3. System should have duplication guardrails on data entry."
             },
             {
@@ -67,9 +67,27 @@
                 { "src": "../../Assets/Studio/Section2/NewWireframes.png", "label": "1" },
                 { "src": "../../Assets/Studio/Section2/NewWireframes2.png", "label": "2" }
               ],
-              "header": "New Digital Collection Builder - Wireframes",
+              "header": "New Digital Collection Builder - Basic Flow",
               "text": "Since there was no pre-existing tool, I created wireframes that focus on the editing flow of creating a new collection.\n\n1. **Main** shows all the collections.\n2. **Collection** shows all options in a single collection, separated by rooms (kitchen, primary bath, etc…)\n3. **Selecting** allows users to select options for a single room.\n4. **Uploading** allows users to add new options into the library."
+            },
+            {
+              "figures": [
+                { "src": "../../Assets/Studio/Section2/NewWireframes.png", "label": "1" },
+                { "src": "../../Assets/Studio/Section2/NewWireframes2.png", "label": "2" }
+              ],
+              "header": "Collection Builder - Batch Flow",
+              "text": "After usability testing initial prototypes, one consistent feedback I created wireframes that focus on the editing flow of creating a new collection.\n\n1. **Main** shows all the collections.\n2. **Collection** shows all options in a single collection, separated by rooms (kitchen, primary bath, etc…)\n3. **Selecting** allows users to select options for a single room.\n4. **Uploading** allows users to add new options into the library."
             }
+          ]
+        },
+        {
+          "type": "protoFlow",
+          "title": "Collection Builder - Basic Flow",
+          "screens": [
+            { "src": "../../Assets/Studio/Section2/CB1.png", "label": "Main" },
+            { "src": "../../Assets/Studio/Section2/CB2.png", "label": "Collection" },
+            { "src": "../../Assets/Studio/Section2/CB3.png", "label": "Select Options" },
+            { "src": "../../Assets/Studio/Section2/CB4.png", "label": "Upload Single Option" }
           ]
         }
       ]
