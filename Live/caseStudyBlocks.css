@@ -38,6 +38,12 @@
   height: fit-content;
 }
 
+@media (min-width: 1024px) {
+  .cs-module-mount {
+    width: min(100%, calc(var(--cs-content-width) * 1.5));
+  }
+}
+
 .cs-module-mount__node {
   width: 100%;
   min-width: 0;
@@ -809,7 +815,7 @@
 
   .cs-fig-row--stacking .cs-fig-row-frame,
   .cs-fig-row--stacking .cs-fig-row-text-frame {
-    height: 560px;
+    min-height: 560px;
   }
 
   .cs-fig-row--stacking .cs-fig-row-frame {
@@ -819,21 +825,24 @@
   }
 
   .cs-fig-row--stacking .cs-fig-row-text-frame {
-    display: grid;
-    row-gap: var(--spacer-700);
-    align-content: start;
     padding-block: var(--spacer-section-500);
-    overflow: hidden;
   }
 }
 
 .cs-fig-row-text {
   display: grid;
-  row-gap: var(--spacer-700);
+  row-gap: var(--spacer-section-500);
   align-self: start;
   padding-block: var(--spacer-500);
   min-width: 0;
   max-width: var(--cs-content-width);
+}
+
+.cs-fig-row-text-frame {
+  display: grid;
+  row-gap: var(--spacer-700);
+  align-content: start;
+  overflow: hidden;
 }
 
 .cs-fig-row-header {
@@ -844,16 +853,11 @@
 
 .cs-fig-row-intro,
 .cs-fig-row-body {
+  display: grid;
+  row-gap: var(--spacer-500);
   font: var(--type-body-l);
   color: var(--color-text-secondary);
   overflow-wrap: anywhere;
-}
-
-.cs-fig-row-intro p + p,
-.cs-fig-row-intro ol + p,
-.cs-fig-row-body p + p,
-.cs-fig-row-body ol + p {
-  margin-top: var(--spacer-500);
 }
 
 .cs-fig-row-intro strong,

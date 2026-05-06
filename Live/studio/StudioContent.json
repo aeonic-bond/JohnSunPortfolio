@@ -4,8 +4,8 @@
   "status": "ready",
   "publishedDate": "",
   "hero": {
-    "title": "Toll Brothers Digital Studio",
-    "subtitle": "Showcase of four home customization tools for the Toll Brothers Studio app.",
+    "title": "Toll Brothers Floor Plan Configurator",
+    "subtitle": "Showcase of three home customization tools for the Toll Brothers Studio app.",
     "gallery": [
       { "src": "../../Assets/MobilePlaceholder.png", "alt": "" },
       { "src": "../../Assets/MobilePlaceholder.png", "alt": "" },
@@ -32,13 +32,12 @@
             {
               "figure": { "src": "../../Assets/Studio/Section1/oldDYOH.png" },
               "header": "Old Floor Plan Configurator",
-              "intro": "The digital Floor Plan Configurator helps homebuyers understand and pre-select architectural customization options. Research reported that homebuyers found the old module difficult to use and needed in-person guidance to understand options.",
-              "text": "1. Failed to communicate complex option dependencies.\n2. Relied on trial-and-error with dense tooltips.\n3. Built on desktop-first principles with limited mobile support.\n\nTo understand the full scope of option relationships, I researched 80 floor plans with the most complicated setups."
+              "text": "The digital Floor Plan Configurator helps homebuyers understand and pre-select architectural customization options. Research reported that homebuyers found the old module difficult to use and needed in-person guidance to understand options.\n\n1. Failed to communicate complex option dependencies.\n2. Relied on trial-and-error with dense tooltips.\n3. Built on desktop-first principles with limited mobile support.\n\nTo understand the full scope of option relationships, I researched 80 floor plans with the most complicated setups."
             },
             {
               "figure": { "src": "../../Assets/Studio/Section1/NewDYOHV.png" },
               "header": "New Floor Plan Option Visualization System",
-              "text": "I designed a modular component system that grouped and visualized dependencies and constraints. Based on the floor plan research, I adapted the design to accomodate for complex edge-cases such as combination and assymetric constraint groups. Stakeholders approved the framework after I demonstrated. Then, I redesigned the module on mobile-first principles."
+              "text": "I designed a modular component system that grouped and visualized dependencies and constraints. Based on the floor plan research, I adapted the design to accomodate for complex edge-cases such as combination and assymetric constraint groups. Stakeholders approved the framework. I then redesigned the module on mobile-first principles."
             }
           ]
         },
