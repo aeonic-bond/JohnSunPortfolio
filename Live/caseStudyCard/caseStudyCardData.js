@@ -55,7 +55,7 @@ const renderCardMedia = ({ kind = "", mediaRoot, media, isDisabled = false } = {
 
   if (normalizedKind === "studio") {
     mediaRoot.addEventListener("click", (event) => { event.stopPropagation(); });
-    for (const href of ["/Sandbox/ModuleMount.css", "/Sandbox/ModuleDYOH.css"]) {
+    for (const href of ["/Live/viewToggle/viewToggle.css", "/Sandbox/ModuleMount.css", "/Sandbox/ModuleDYOH.css"]) {
       if (!document.querySelector(`link[href="${href}"]`)) {
         const link = document.createElement("link");
         link.rel = "stylesheet";

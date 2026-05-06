@@ -5,7 +5,7 @@
   "publishedDate": "",
   "hero": {
     "title": "Toll Brothers Digital Studio",
-    "subtitle": "I designed four home customization tools for the Toll Brothers Studio app that replaced 30+ PDFs.",
+    "subtitle": "Showcase of four home customization tools for the Toll Brothers Studio app.",
     "gallery": [
       { "src": "../../Assets/MobilePlaceholder.png", "alt": "" },
       { "src": "../../Assets/MobilePlaceholder.png", "alt": "" },
@@ -17,56 +17,30 @@
     {
       "id": "section-00",
       "header": "Executive Summary",
-      "blocks": [
-        {
-          "type": "paragraph",
-          "text": "Home customization is a major part of the Toll Brothers brand, and that process traditionally relied on outdated digital modules and PDFs. The Digital Studio app is a new initiative to create a comprehensive digital experience for home customization. I led end-to-end design on four major modules for the Digital Studio. For homebuyers, I designed the Floorplan Configurator, the Furniture Planner, and Digital Catalog. For our internal product teams, I designed the Collection Builder to feed curated sets into the Digital Catalog."
-        }
-      ]
+      "intro": "Toll Brothers traditionally relied on outdated digital modules and PDFs to deliver home customization options. The new **Digital Studio** app is a comprehensive digital home customization platform. I led end-to-end design on four major modules: **Floor Plan Configurator**, the **Furniture Planner**, and **Digital Catalog**, and the internal-facing **Collection Builder** to curate sets for the Digital Catalog.",
+      "blocks": []
     },
     {
       "id": "section-01",
-      "header": "Floorplan Configurator",
+      "header": "",
+      "intro": "",
       "blocks": [
         {
-          "type": "paragraph",
-          "text": "Floorplan customization relied on an old Floorplan Configurator built by a third party vendor. The old module had major design flaws."
-        },
-        {
-          "type": "figMatrix",
-          "variant": "mobileScreens",
-          "figures": [
+          "type": "figRow",
+          "variant": "stacking",
+          "frames": [
             {
-              "src": "../../Assets/Studio/Section1/Problem1.png",
-              "caption": "Many options have complex constraint logic (e.g., selecting Option A disables Option B), but the UI fails to communicate it."
+              "figure": { "src": "../../Assets/Studio/Section1/oldDYOH.png" },
+              "header": "Old Floor Plan Configurator",
+              "intro": "The digital Floor Plan Configurator helps homebuyers understand and pre-select architectural customization options. Research reported that homebuyers found the old module difficult to use and needed in-person guidance to understand options.",
+              "text": "1. Failed to communicate complex option dependencies.\n2. Relied on trial-and-error with dense tooltips.\n3. Built on desktop-first principles with limited mobile support.\n\nTo understand the full scope of option relationships, I researched 80 floor plans with the most complicated setups."
             },
             {
-              "src": "../../Assets/Studio/Section1/Problem2.png",
-              "caption": "Users have to rely on trial-and-error and dense tooltips, resulting in a frustrating experience."
-            },
-            {
-              "src": "../../Assets/Studio/Section1/Problem3.png",
-              "caption": "It’s built on desktop-first principles. On mobile, it lacks features and has wonky controls."
+              "figure": { "src": "../../Assets/Studio/Section1/NewDYOHV.png" },
+              "header": "New Floor Plan Option Visualization System",
+              "text": "I designed a modular component system that grouped and visualized dependencies and constraints. Based on the floor plan research, I adapted the design to accomodate for complex edge-cases such as combination and assymetric constraint groups. Stakeholders approved the framework after I demonstrated. Then, I redesigned the module on mobile-first principles."
             }
           ]
-        },
-        {
-          "type": "paragraph",
-          "text": "To design a better solution, I researched 80 home designs that offer floorplan customization to understand the full scope of constraints. Then, I established a proper framework with three basic buckets."
-        },
-        {
-          "type": "bulletRow",
-          "items": [
-            "Independent - Options that can be toggled independently of any other options.",
-            "Child - Options that can be toggled on if another independent option is toggled on.",
-            "Mutual Exclusion - A group of 2+ options where only one option can be selected.",
-            "Partial Conflict Group - A group of 3+ options where some options have asymmetric internal conflicts."
-          ]
-        },
-        {
-          "type": "paragraph-subsection",
-          "subtitle": "Design",
-          "text": "In order to redesign the experience around mobile-first principles, I picked the popular bottom sheet pattern that can dynamically alter size based on current focus. I then redesigned the list and demonstrated to stakeholders the framework for categorizing and visualizing dependencies. My manager and an Architecture Product Manager approved the framework and the overall redesign."
         },
         {
           "type": "moduleMount",
@@ -77,11 +51,8 @@
     {
       "id": "section-02",
       "header": "Collection Builder",
+      "intro": "On the internal product side, the product team would curate features for designer-appointed collections using PDFs. As the company pivoted to more pre-selected builds and quick move-in homes, the product team needed an internal tool to construct collections of products at scale. I partnered with a senior developer and designed the MVP wireframes from scratch. For a desktop-only tool, these were the basic requirements:",
       "blocks": [
-        {
-          "type": "paragraph",
-          "text": "On the internal product side, the product team would curate features for designer-appointed collections using PDFs. As the company pivoted to more pre-selected builds and quick move-in homes, the product team needed an internal tool to construct collections of products at scale. I partnered with a senior developer and designed the MVP wireframes from scratch. For a desktop-only tool, these were the basic requirements:"
-        },
         {
           "type": "bulletRow",
           "items": [
@@ -120,11 +91,8 @@
     {
       "id": "section-03",
       "header": "Furniture Planner",
+      "intro": "I revisited the Design Your Own Home module to add a mobile-optimized furniture planner function. The old design includes a furniture planner available only on desktop. To elegantly add a furniture planner to mobile, I reduced its prominence, added a variant-selection state, and removed resizing features that do not apply to furniture with preset sizes.",
       "blocks": [
-        {
-          "type": "paragraph",
-          "text": "I revisited the Design Your Own Home module to add a mobile-optimized furniture planner function. The old design includes a furniture planner available only on desktop. To elegantly add a furniture planner to mobile, I reduced its prominence, added a variant-selection state, and removed resizing features that do not apply to furniture with preset sizes."
-        },
         {
           "type": "figMatrix",
           "variant": "mobileScreens",
@@ -152,11 +120,8 @@
     {
       "id": "section-04",
       "header": "Digital Catalog",
+      "intro": "The digital catalog is an ongoing team effort to replace PDF catalogs with a digital app experience. Users take a style survey, receive a recommended curated set of finishes, and adjust the selection. I designed several key screens with feature scalability in mind, creating a reusable selection pattern for cabinets that can be repurposed for other features like flooring.",
       "blocks": [
-        {
-          "type": "paragraph",
-          "text": "The digital catalog is an ongoing team effort to replace PDF catalogs with a digital app experience. Users take a style survey, receive a recommended curated set of finishes, and adjust the selection. I designed several key screens with feature scalability in mind, creating a reusable selection pattern for cabinets that can be repurposed for other features like flooring."
-        },
         {
           "type": "figMatrix",
           "variant": "mobileScreens",

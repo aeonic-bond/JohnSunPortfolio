@@ -119,7 +119,7 @@
 
 .card-text {
   margin: 0;
-  font: var(--type-body-l);
+  font: var(--type-subtitle-l);
   color: var(--color-text-secondary);
 }
 

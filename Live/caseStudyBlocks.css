@@ -1,0 +1,903 @@
+/* Paragraph Block */
+.cs-paragraph {
+  font: var(--type-body-l);
+  color: var(--color-text-secondary);
+  min-width: 0;
+  overflow-wrap: anywhere;
+  width: min(100%, var(--cs-content-width));
+}
+
+.cs-paragraph p + p {
+  margin-top: var(--spacer-500);
+}
+
+.cs-paragraph strong {
+  color: var(--color-text-primary);
+}
+
+/* Paragraph Subsection Block */
+.cs-paragraph-subsection {
+  display: grid;
+  row-gap: var(--spacer-500);
+  padding-top: var(--spacer-section-500);
+  width: min(100%, var(--cs-content-width));
+}
+
+.cs-paragraph-subtitle {
+  font: var(--type-subtitle-l);
+  color: var(--color-text-secondary);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Module Mount Block */
+.cs-module-mount {
+  width: min(100%, var(--cs-content-width));
+  min-width: 0;
+  overflow-x: clip;
+  height: fit-content;
+}
+
+.cs-module-mount__node {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: clip;
+  height: fit-content;
+}
+
+.cs-module-mount__error {
+  font: var(--type-body-m);
+  color: var(--color-text-secondary);
+}
+
+ /* Bullet Row */
+.cs-bullet-row {
+  justify-self: stretch;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--spacer-500);
+  align-items: stretch;
+  height: fit-content;
+  padding: var(--spacer-500);
+  border-radius: var(--radius-large);
+}
+
+@media (min-width: 1024px) {
+  .cs-bullet-row {
+    width: 100%;
+    padding: 0;
+  }
+
+  #section-11 .cs-bullet-row {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  #section-11 .cs-bullet-row .cs-bullet-item {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  #section-11 .cs-bullet-row .cs-bullet-item.cs-bullet-item--with-image {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  #section-11 .cs-bullet-row .cs-bullet-item.cs-bullet-item--with-image .cs-stamp {
+    width: 160px;
+    max-width: 160px;
+    flex: 0 0 160px;
+  }
+}
+
+.cs-bullet-item {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 80px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--spacer-section-500) var(--spacer-section-500);
+  border: 1px solid var(--color-accent-soft);
+  border-radius: var(--radius-base);
+  background-color: var(--color-surface);
+  gap: var(--spacer-300);
+}
+
+.cs-bullet-item.cs-bullet-item--with-image {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.cs-bullet-item.cs-bullet-item--with-image .cs-stamp {
+  align-self: center;
+}
+
+#section-11 .cs-bullet-row .cs-bullet-item.cs-bullet-item--with-image {
+  gap: var(--spacer-500);
+}
+
+#section-11 .cs-bullet-row .cs-bullet-item.cs-bullet-item--with-image .cs-bullet-item-text {
+  order: 1;
+}
+
+#section-11 .cs-bullet-row .cs-bullet-item.cs-bullet-item--with-image .cs-stamp {
+  order: 2;
+}
+
+.cs-bullet-item-counter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--color-accent-soft);
+  border-radius: var(--radius-base) 0 var(--radius-base) 0;
+  font: var(--type-action);
+  color: var(--color-text-inverse);
+  background-color: var(--color-accent);
+}
+
+.cs-bullet-item-text {
+  width: 100%;
+  min-width: 0;
+  font: var(--type-body-m);
+  color: var(--color-text-secondary);
+  overflow-wrap: anywhere;
+}
+
+.cs-bullet-item-text > * + * {
+  margin-top: var(--spacer-300);
+}
+
+.cs-item-overline {
+  display: inline-flex;
+  width: fit-content;
+  padding: var(--spacer-200);
+  margin-bottom: var(--spacer-300);
+  border: 1px solid var(--color-bg-shade);
+  font: var(--type-caption-m);
+  color: var(--color-text-secondary);
+}
+
+.cs-item-overline + * {
+  margin-top: 0;
+}
+
+.cs-bullet-item-title {
+  margin: 0;
+  font: var(--type-subtitle-l);
+  color: var(--color-text-primary);
+  padding-bottom: calc(var(--spacer-500) + var(--spacer-300));
+}
+
+
+.cs-bullet-item-stamp {
+  margin-bottom: var(--spacer-700);
+}
+
+.cs-bullet-item-title + .cs-bullet-item-text-block {
+  margin-top: 0;
+}
+
+.cs-bullet-item-quote {
+  margin: var(--spacer-700) 0 0;
+  padding: 0 var(--spacer-500) 0;
+  border-left: 1px solid var(--color-accent-soft);
+  font-style: italic;
+}
+
+.cs-bullet-item-quote::before {
+  content: "\201C";
+}
+
+.cs-bullet-item-quote::after {
+  content: "\201D";
+}
+
+.cs-bullet-item-cite {
+  display: block;
+  font: var(--type-body-m);
+  color: var(--color-accent);
+  font-style: normal;
+}
+
+ /* Icon Grid */
+.cs-icon-grid {
+  width: min(100%, var(--cs-content-width));
+  display: grid;
+  grid-template-columns: repeat(var(--cs-icon-grid-cols, 2), minmax(0, 1fr));
+  gap: 1px;
+  padding: 0;
+  align-items: stretch;
+  height: fit-content;
+  border: 1px solid var(--color-accent-soft);
+  background-color: var(--color-accent-soft);
+  border-radius: var(--radius-large);
+  overflow: hidden;
+}
+
+.cs-icon-grid-item {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--spacer-500) var(--spacer-300) var(--spacer-500);
+  border: 0;
+  background-color: var(--color-surface);
+  gap: var(--spacer-500);
+  text-align: center;
+}
+
+.cs-icon-grid-item-stamp {
+  flex: 0 0 auto;
+  align-self: center;
+}
+
+.cs-icon-grid-item-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  justify-content: flex-start;
+  width: 100%;
+  font: var(--type-caption-m);
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.cs-icon-grid-item-title {
+  margin: 0;
+  font: var(--type-subtitle-s);
+  color: var(--color-text-primary);
+  padding-bottom: var(--spacer-500);
+}
+
+.cs-icon-grid-item-text > * + * {
+  margin-top: var(--spacer-300);
+}
+
+ /* Flow Row */
+.cs-flow-row {
+  display: grid;
+  grid-template-columns: 2px 1fr;
+  width: min(100%, var(--cs-content-width));
+  height: fit-content;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-base);
+  overflow: hidden;
+}
+
+.cs-flow-row-tracker {
+  position: relative;
+  width: 2px;
+  align-self: stretch;
+  background: linear-gradient(
+    to bottom,
+    var(--color-accent) 0 calc(var(--tracker-progress, 0) * 100%),
+    transparent calc(var(--tracker-progress, 0) * 100%) 100%
+  );
+  border-radius: 1000px;
+}
+
+.cs-flow-row-items-group {
+  display: grid;
+  grid-template-columns: 1fr;
+  height: fit-content;
+  gap: var(--spacer-section-500);
+  padding: var(--spacer-section-500);
+}
+
+.cs-flow-row-item {
+  position: relative;
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.cs-flow-row-item-text {
+  width: 100%;
+  font: var(--type-subtitle-m);
+  color: var(--color-text-secondary);
+}
+
+.cs-flow-row-item-text > * + * {
+  margin-top: var(--spacer-300);
+}
+
+ /* Progress Matrix */
+.cs-progress-matrix {
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .cs-progress-matrix {
+    justify-self: stretch;
+    width: 100%;
+  }
+}
+
+.cs-progress-matrix-items-group {
+  display: grid;
+  gap: var(--spacer-section-500);
+}
+
+.cs-progress-matrix-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-self: center;
+  align-items: center;
+  gap: var(--spacer-section-500);
+  padding: var(--spacer-section-500);
+  border: 1px solid transparent;
+  border-radius: var(--radius-base);
+  background:
+    linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
+    linear-gradient(
+      to bottom,
+      var(--color-surface),
+      var(--color-accent-soft)
+    ) border-box;
+}
+
+@media (min-width: 1024px) {
+  .cs-progress-matrix-item {
+    grid-template-columns: fit-content(50%) auto fit-content(50%);
+    width: fit-content;
+    gap: var(--spacer-section-500);
+    background:
+      linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
+      linear-gradient(
+        to right,
+        var(--color-surface),
+        var(--color-accent-soft)
+      ) border-box;
+  }
+}
+
+.cs-progress-matrix-item-primary,
+.cs-progress-matrix-item-secondary {
+  width: 100%;
+  min-width: 0;
+  font: var(--type-body-m);
+  color: var(--color-text-secondary);
+}
+
+.cs-progress-matrix-chevron,
+.cs-progress-row-chevron {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  width: 32px;
+  height: 32px;
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--color-accent);
+  line-height: 1;
+}
+
+.cs-progress-matrix-primary-block,
+.cs-progress-matrix-secondary-block {
+  width: 100%;
+  display: grid;
+  gap: var(--spacer-section-500);
+}
+
+.cs-progress-matrix-item-primary > * + *,
+.cs-progress-matrix-item-secondary > * + * {
+  margin-top: var(--spacer-300);
+}
+
+.cs-progress-matrix-item-stamp {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 1024px) {
+  .cs-progress-matrix-primary-block,
+  .cs-progress-matrix-secondary-block {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 320px) auto;
+    column-gap: 0;
+    align-items: center;
+  }
+
+  .cs-progress-matrix-primary-block {
+    grid-column: 1;
+  }
+
+  .cs-progress-matrix-secondary-block {
+    grid-column: 3;
+  }
+
+  .cs-progress-matrix-chevron,
+  .cs-progress-row-chevron {
+    justify-self: center;
+    align-self: center;
+    transform: rotate(-90deg);
+  }
+
+  .cs-progress-matrix-item-stamp {
+    grid-column: auto;
+    justify-self: start;
+    margin-left: var(--spacer-section-500);
+  }
+}
+
+ /* Progress Row */
+.cs-progress-row {
+  width: min(100%, var(--cs-content-width));
+  display: grid;
+  gap: var(--spacer-section-500);
+  padding: var(--spacer-700);
+  border: 1px solid transparent;
+  border-radius: var(--radius-base);
+  background:
+    linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
+    linear-gradient(
+      to bottom,
+      var(--color-surface),
+      var(--color-accent-soft)
+    ) border-box;
+}
+
+.cs-progress-row-item {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  gap: var(--spacer-700);
+}
+
+.cs-progress-row-item-text {
+  width: 100%;
+  min-width: 0;
+  font: var(--type-body-m);
+  color: var(--color-text-secondary);
+}
+
+.cs-progress-row-item-stamps-group {
+  width: fit-content;
+  display: grid;
+  gap: var(--spacer-section-500);
+}
+
+.cs-progress-row-item-stamp {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 1024px) {
+  .cs-progress-row {
+    display: flex;
+    align-items: flex-start;
+    justify-self: stretch;
+    width: 100%;
+    max-width: none;
+    background:
+      linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
+      linear-gradient(
+        to right,
+        var(--color-surface),
+        var(--color-accent-soft)
+      ) border-box;
+  }
+
+  .cs-progress-row-item {
+    width: fit-content;
+    align-items: flex-start;
+  }
+
+  .cs-progress-row-item-text {
+    width: 100%;
+    max-width: 320px;
+    justify-self: end;
+  }
+
+  .cs-progress-row-item-stamps-group {
+    justify-self: start;
+  }
+
+  .cs-progress-row-item-stamp {
+    grid-column: auto;
+    justify-self: start;
+  }
+
+}
+
+ /* Fig */
+.cs-fig {
+  display: grid;
+  row-gap: var(--spacer-500);
+  width: 100%;
+}
+
+.cs-fig:not(.cs-fig--hero) {
+  justify-items: center;
+  width: min(100%, var(--cs-content-width));
+  padding: var(--spacer-500);
+  border: 1px solid var(--color-accent-soft);
+  border-radius: var(--radius-base);
+  background-color: var(--color-bg-sink);
+}
+
+@media (min-width: 1024px) {
+  .cs-fig.cs-fig--large {
+    justify-self: stretch;
+    width: 100%;
+    max-width: none;
+  }
+
+  .cs-fig.cs-fig--small {
+    width: 100%;
+  }
+}
+
+
+.cs-fig--hero {
+  row-gap: var(--spacer-500);
+}
+
+.cs-hero-media-mount {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-base);
+}
+
+
+.cs-hero-image,
+.cs-fig-mount {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.cs-fig-mount {
+  border-radius: var(--radius-base);
+}
+
+.cs-hero-image {
+  max-width: none;
+  border: 0;
+}
+
+/* Hero Gallery */
+.cs-hero-gallery-platform {
+  position: absolute;
+  background-color: var(--color-bg-sink);
+  border-radius: var(--radius-large);
+  overflow: hidden;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.cs-hero-gallery {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding-block: var(--spacer-section-500);
+}
+
+@media (min-width: 1024px) {
+  .cs-hero-gallery {
+    align-self: stretch;
+    padding-block: var(--spacer-section-500);
+  }
+}
+
+.cs-hero-gallery-track {
+  display: flex;
+  gap: 16px;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.cs-hero-gallery-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-base);
+  flex: 0 0 calc(100% - 80px);
+  width: calc(100% - 80px);
+  max-width: 280px;
+  aspect-ratio: 3 / 5;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+.cs-hero-gallery-frame--left,
+.cs-hero-gallery-frame--right {
+  transform: scale(0.95);
+}
+
+.cs-hero-gallery-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cs-hero-gallery--snap .cs-hero-gallery-track,
+.cs-hero-gallery--snap .cs-hero-gallery-frame,
+.cs-hero-gallery--snap .cs-hero-gallery-frame::after {
+  transition: none;
+}
+
+.cs-hero-gallery-frame--left::after {
+  opacity: 1;
+  background: linear-gradient(to right, var(--color-bg-main), color-mix(in srgb, var(--color-bg-main) 80%, transparent));
+}
+
+.cs-hero-gallery-frame--right::after {
+  opacity: 1;
+  background: linear-gradient(to left, var(--color-bg-main), color-mix(in srgb, var(--color-bg-main) 80%, transparent));
+}
+
+.cs-hero-gallery-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 5;
+  object-fit: cover;
+  border-radius: var(--radius-base);
+}
+
+@media (min-width: 1024px) {
+  .cs-hero-gallery {
+    height: 100%;
+  }
+
+  .cs-hero-gallery-track {
+    height: 100%;
+  }
+
+  .cs-hero-gallery-frame {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: none;
+    height: 100%;
+    aspect-ratio: 3 / 5;
+  }
+
+  .cs-hero-gallery-img {
+    height: 100%;
+    aspect-ratio: unset;
+  }
+}
+
+.cs-fig-caption {
+  font: var(--type-caption-m);
+  color: var(--color-accent);
+  text-align: left;
+  align-self: start;
+}
+
+.cs-fig-matrix {
+  display: grid;
+  gap: var(--spacer-section-500);
+  min-width: 0;
+  overflow-x: clip;
+  width: 100%;
+}
+
+.cs-fig.cs-fig--matrix-item {
+  display: grid;
+  gap: var(--spacer-500);
+  align-content: start;
+  margin: 0;
+  min-width: 0;
+  overflow-x: clip;
+  width: 100%;
+}
+
+.cs-fig.cs-fig--matrix-item .cs-fig-mount {
+  max-width: 100%;
+}
+
+.cs-fig.cs-fig--matrix-item .cs-fig-caption {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.cs-fig-matrix--mobile-screens .cs-fig.cs-fig--matrix-item {
+  justify-self: stretch;
+  max-width: none;
+}
+
+@media (min-width: 1024px) {
+  .cs-fig-matrix {
+    justify-self: stretch;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cs-fig-matrix.cs-fig-matrix--mobile-screens {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .cs-fig-matrix--mobile-screens:has(> .cs-fig:nth-child(3):last-child) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    justify-content: center;
+  }
+}
+
+ /* Fig Row */
+.cs-fig-row {
+  justify-self: stretch;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--spacer-section-500);
+  padding-block: var(--spacer-section-500);
+  width: 100%;
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .cs-fig-row {
+    grid-template-columns: minmax(0, 40fr) minmax(0, 60fr);
+    width: 100%;
+  }
+}
+
+.cs-fig-row-media {
+  display: grid;
+  row-gap: var(--spacer-500);
+  min-width: 0;
+}
+
+.cs-fig-row-media-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-base);
+  border: 1px solid var(--color-accent-soft);
+  background-color: var(--color-bg-sink);
+}
+
+@media (min-width: 1024px) {
+  .cs-fig-row-media-img {
+    width: auto;
+    max-height: 100%;
+    margin-inline: auto;
+  }
+
+  .cs-fig-row-frame .cs-fig-row-media-img {
+    margin-inline: 0;
+  }
+}
+
+.cs-fig-row-frame {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  overflow: hidden;
+  border-radius: var(--radius-base);
+  background-color: var(--color-bg-sink);
+  padding: var(--spacer-300);
+  transition: opacity 0.4s ease;
+}
+
+.cs-fig-row-frame .cs-fig-row-media-img {
+  transition: transform 0.4s ease;
+}
+
+.cs-fig-row-frame.is-covered {
+  opacity: 0.5;
+}
+
+.cs-fig-row-frame.is-covered .cs-fig-row-media-img {
+  transform: scale(0.9);
+}
+
+@media (min-width: 1024px) {
+  .cs-fig-row--stacking .cs-fig-row-text {
+    row-gap: 0;
+  }
+
+  .cs-fig-row--stacking .cs-fig-row-frame,
+  .cs-fig-row--stacking .cs-fig-row-text-frame {
+    height: 560px;
+  }
+
+  .cs-fig-row--stacking .cs-fig-row-frame {
+    position: sticky;
+    top: 88px;
+    background: var(--color-bg-main);
+  }
+
+  .cs-fig-row--stacking .cs-fig-row-text-frame {
+    display: grid;
+    row-gap: var(--spacer-700);
+    align-content: start;
+    padding-block: var(--spacer-section-500);
+    overflow: hidden;
+  }
+}
+
+.cs-fig-row-text {
+  display: grid;
+  row-gap: var(--spacer-700);
+  align-self: start;
+  padding-block: var(--spacer-500);
+  min-width: 0;
+  max-width: var(--cs-content-width);
+}
+
+.cs-fig-row-header {
+  font: var(--type-H2);
+  color: var(--color-text-primary);
+  overflow-wrap: anywhere;
+}
+
+.cs-fig-row-intro,
+.cs-fig-row-body {
+  font: var(--type-body-l);
+  color: var(--color-text-secondary);
+  overflow-wrap: anywhere;
+}
+
+.cs-fig-row-intro p + p,
+.cs-fig-row-intro ol + p,
+.cs-fig-row-body p + p,
+.cs-fig-row-body ol + p {
+  margin-top: var(--spacer-500);
+}
+
+.cs-fig-row-intro strong,
+.cs-fig-row-body strong {
+  color: var(--color-text-primary);
+}
+
+ /* Stamp */
+.cs-stamp {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-base);
+  overflow: hidden;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-accent-soft);
+}
+
+.cs-stamp-content {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cs-stamp.cs-stamp--small {
+  width: 40px;
+  max-width: 40px;
+  border: none;
+}
+
+.cs-stamp.cs-stamp--small .cs-stamp-content {
+  object-fit: contain;
+}
+
+@media (min-width: 1024px) {
+  .cs-hero-media-mount {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    aspect-ratio: 4 / 3;
+  }
+
+  .cs-stamp {
+    width: 200px;
+    max-width: 200px;
+  }
+}

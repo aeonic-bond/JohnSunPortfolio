@@ -9,7 +9,7 @@
   --r-stellar-fade: rgba(217, 216, 216, 0.2);
   --r-black: #000;
   --r-white: #D7D6DB;
-  --r-white-off: #A4A3AD;
+  --r-white-off: #B8B7C2;
 
   /* Semantic color tokens */
   --color-bg-main: var(--r-night);
@@ -54,6 +54,7 @@
   --margin-header-desktop: 60px;
   --margin-mobile-500: 24px;
   --margin-bottom-500: 400px;
+  --margin-desktop: 60px;
 
   /* Max widths */
   --max-width-intro: 720px;

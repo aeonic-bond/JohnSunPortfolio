@@ -1,29 +1,24 @@
 :root {
-  --font-display: "Onest", sans-serif;
-  --font-flourish: "Roboto", sans-serif;
-  --font-body: "Roboto", sans-serif;
+  --font-display: "Roboto", sans-serif;
+  --font-flourish: "Source Sans 3", sans-serif;
+  --font-body: "Source Sans 3", sans-serif;
 
   /* Typography tokens */
   --type-H1-intro: normal 900 40px / normal var(--font-display);
-  --type-role-intro: normal 300 32px / normal var(--font-flourish);
-  --type-subtitle-intro: normal 300 20px/24px var(--font-flourish);
+  --type-subtitle-xl: normal 300 32px/40px var(--font-flourish);
 
-  --type-H1: normal 600 clamp(32px, 5vw, 42px) / 1.2 var(--font-display);
-  --type-H2: normal 600 clamp(24px, 5vw, 34px) / 1.2 var(--font-display);
+  --type-H1: normal 600 45px / normal var(--font-display);
+  --type-H2: normal 600 28px / normal var(--font-display);
   --type-H3-nav: normal 500 17px / 1.2 var(--font-display);
+  --type-H4: normal 500 15px / 1.2 var(--font-display);
   --type-subtitle-nav: normal 200 14px/19px var(--font-flourish);
-  --type-subtitle-caseStudy: normal 300 24px var(--font-flourish);
 
-  --type-subtitle-l: normal 500 24px/30px var(--font-flourish);
-  --type-subtitle-m: normal 500 18px/24px var(--font-flourish);
-  --type-subtitle-s: normal 500 15px/21px var(--font-flourish);
-  --type-body-l: normal 300 20px/30px var(--font-body);
-  --type-body-m: normal 300 16px/22px var(--font-body);
+  --type-subtitle-l: normal 300 24px/30px var(--font-flourish);
+  --type-subtitle-m: normal 300 18px/24px var(--font-flourish);
+  --type-subtitle-s: normal 300 15px/21px var(--font-flourish);
+  --type-body-l: normal 350 19px/27px var(--font-body);
+  --type-body-m: normal 350 16px/22px var(--font-body);
   --type-action: normal 600 16px / normal var(--font-flourish);
   --type-action-s: normal 500 13px / normal var(--font-flourish);
-  --type-caption-m: normal 400 15px/20px var(--font-flourish);
-
-   /* unused tokens */
-  --type-tag-towers: normal 600 24px / normal var(--font-flourish);
-  --type-bullets-towers: normal 400 16px / 18px var(--font-flourish);
+  --type-caption-m: normal 500 15px/20px var(--font-flourish);
 }

@@ -36,7 +36,7 @@
 
 .title {
   margin: 0;
-  font: var(--type-subtitle-m);
+  font: var(--type-H4);
   color: var(--color-text-primary);
 }
 
