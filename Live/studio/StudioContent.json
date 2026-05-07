@@ -59,13 +59,36 @@
           "frames": [
             {
               "figure": { "src": "../../Assets/Studio/Section2/OldProcess.png" },
-              "header": "(Internal) Old Design Options Curation Process",
-              "text": "Traditionally, the merchandising team manually curated design options in PDFs. Now that the Studio app promised digital delivery of these options, the team needed a tool to digitally curate collections of options. I conducted research into the merchandising team's workflows and defined the main MVP requirements:\n\n1. User can create and manage collections of options.\n2. User can upload and manage options, either through UI or CSV/spreadsheet uploads.\n3. System should have duplication guardrails on data entry."
+              "header": "Design Options - PDFs to UI",
+              "text": "Traditionally, homebuyers receive 20+ PDFs of design options. Now, after making confirming their floor plan options, homebuyers take a survey in the Studio App to receive a recommended collection that pre-selects 90% of the features in the Studio App. I designed the post-survey experience where users personalize their recommendation options."
+            },
+            {
+              "figure": { "src": "../../Assets/Studio/Section2/CatalogModules.png" },
+              "header": "Modules for Design Options",
+              "text": "The Studio App uses the set of options curated in the Collection Builder to drive recommendation. Rather than picking individual options, homebuyers take a survey to receive a recommended collection that pre-selects 90% of the features. I designed the post-survey experience where users personalize their options."
             },
             {
               "figure": { "src": "../../Assets/Studio/Section2/NewWireframes.png" },
-              "header": "New Digital Collection Builder - Basic Flow",
+              "header": "Navigation and Flow",
               "text": "Since there was no pre-existing tool, I created wireframes that focus on the editing flow of creating a new collection.\n\n1. **Main** shows all the collections.\n2. **Collection** shows all options in a single collection, separated by rooms (kitchen, primary bath, etc…)\n3. **Selecting** allows users to select options for a single room.\n4. **Uploading** allows users to add new options into the library."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-03",
+      "header": "",
+      "intro": "",
+      "blocks": [
+        {
+          "type": "figRow",
+          "variant": "stacking",
+          "frames": [
+            {
+              "figure": { "src": "../../Assets/Studio/Section2/NewWireframes.png" },
+              "header": "New Digital Collection Builder - Basic Flow",
+              "text": "Traditionally, the merchandising team manually curated design options. Now that the Studio app promised digital delivery of these options, the team needed a tool to digitally curate collections of options. I conducted research into the merchandising team's workflows and defined the main MVP requirements:\n\n1. User can create and manage collections of options.\n2. User can upload and manage options, either through UI or CSV/spreadsheet uploads.\n3. System should have duplication guardrails on data entry.\n\nSince there was no pre-existing tool, I created wireframes that focus on the editing flow of creating a new collection.\n\n1. **Main** shows all the collections.\n2. **Collection** shows all options in a single collection, separated by rooms (kitchen, primary bath, etc…)\n3. **Selecting** allows users to select options for a single room.\n4. **Uploading** allows users to add new options into the library."
             },
             {
               "figure": { "src": "../../Assets/Studio/Section2/MultiWireframes.png" },
