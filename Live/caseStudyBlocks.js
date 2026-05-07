@@ -390,11 +390,8 @@ const createHeroGalleryElement = (hero = {}) => {
   const cloneNext1 = makeFrame(items[1] || items[0], true);
   const allFrames = [clonePrev, ...frames, cloneNext0, cloneNext1];
 
-  const platform = document.createElement("div");
-  platform.className = "cs-hero-gallery-platform";
-
   track.append(...allFrames);
-  wrapper.append(platform, track);
+  wrapper.append(track);
 
   // domIndex 1 = first real frame
   let domIndex = 1;
@@ -449,21 +446,8 @@ const createHeroGalleryElement = (hero = {}) => {
     setTimeout(() => { transitioning = false; }, 500);
   });
 
-  const updatePlatform = () => {
-    const frame = allFrames[domIndex];
-    if (!frame) return;
-    const frameRect = frame.getBoundingClientRect();
-    const wrapperRect = wrapper.getBoundingClientRect();
-    const spacer = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--spacer-300")) || 8;
-    platform.style.left   = `${frameRect.left - wrapperRect.left - spacer}px`;
-    platform.style.top    = `${frameRect.top  - wrapperRect.top  - spacer}px`;
-    platform.style.width  = `${frameRect.width  + spacer * 2}px`;
-    platform.style.height = `${frameRect.height + spacer * 2}px`;
-  };
-
   const ro = new ResizeObserver(() => {
     updateTrack(false);
-    requestAnimationFrame(updatePlatform);
   });
   ro.observe(wrapper);
 

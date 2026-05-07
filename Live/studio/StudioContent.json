@@ -7,10 +7,10 @@
     "title": "Toll Brothers Digital Studio",
     "subtitle": "Showcasing three home customization tools for the Toll Brothers Studio app",
     "gallery": [
-      { "src": "../../Assets/MobilePlaceholder.png", "alt": "" },
-      { "src": "../../Assets/MobilePlaceholder.png", "alt": "" },
-      { "src": "../../Assets/MobilePlaceholder.png", "alt": "" },
-      { "src": "../../Assets/MobilePlaceholder.png", "alt": "" }
+      { "src": "../../Assets/Studio/HeroGallery/G1.png", "alt": "" },
+      { "src": "../../Assets/Studio/HeroGallery/G2.png", "alt": "" },
+      { "src": "../../Assets/Studio/HeroGallery/G3.png", "alt": "" },
+      { "src": "../../Assets/Studio/HeroGallery/G4.png", "alt": "" }
     ]
   },
   "sections": [
@@ -30,14 +30,14 @@
           "variant": "stacking",
           "frames": [
             {
-              "figure": { "src": "../../Assets/Studio/Section1/oldDYOH.png" },
+              "figure": { "src": "../../Assets/Studio/Section1/OldDYOH.png" },
               "header": "Old Floor Plan Options Configurator",
               "text": "The digital Floor Plan Configurator helps homebuyers understand and pre-select architectural customization options. Research reported that homebuyers found the old module difficult to use and needed in-person guidance to understand options.\n\n1. Failed to communicate complex option dependencies.\n2. Relied on trial-and-error with dense tooltips.\n3. Built on desktop-first principles with limited mobile support.\n\nTo understand the full scope of option relationships, I researched 80 floor plans with the most complicated setups."
             },
             {
               "figure": { "src": "../../Assets/Studio/Section1/NewDYOHV.png" },
               "header": "New Floor Plan Option Visualization System",
-              "text": "I designed a modular component system that grouped and visualized dependencies and constraints. Based on the floor plan research, I adapted the design to accomodate for complex edge-cases such as combination and assymetric constraint groups. Stakeholders approved the framework. I then redesigned the module on mobile-first principles."
+              "text": "I designed a modular component system that grouped and visualized dependencies and constraints. Based on the floor plan research, I adapted the design to accommodate complex edge-cases such as combination and asymmetric constraint groups. Stakeholders approved the framework. I then redesigned the module on mobile-first principles."
             }
           ]
         },
@@ -60,17 +60,17 @@
             {
               "figure": { "src": "../../Assets/Studio/Section2/OldProcess.png" },
               "header": "Design Options - PDFs to UI",
-              "text": "Traditionally, homebuyers receive 20+ PDFs of design options. Now, after making confirming their floor plan options, homebuyers take a survey in the Studio App to receive a recommended collection that pre-selects 90% of the features in the Studio App. I designed the post-survey experience where users personalize their recommendation options."
+              "text": "Traditionally, homebuyers receive 20+ PDFs of design options. Now, after confirming their floor plan options, homebuyers take a survey in the Studio App to receive a recommended collection that pre-selects 90% of the options. I designed the post-survey experience where users personalize their recommended options."
             },
             {
               "figure": { "src": "../../Assets/Studio/Section2/CatalogModules.png" },
               "header": "Design Options Modules",
-              "text": "The Studio App uses the set of options curated in the Collection Builder to drive recommendation. Rather than picking individual options, homebuyers take a survey to receive a recommended collection that pre-selects 90% of the features. I designed the post-survey customization experience where users can select new options."
+              "text": "The Studio App uses the set of options curated in the Collection Builder to drive recommendations. Rather than picking individual options, homebuyers take a survey to receive a recommended collection that pre-selects 90% of the options. I designed the post-survey customization experience where users can select new options."
             },
             {
               "figure": { "src": "../../Assets/Studio/Section2/CatalogNav.png" },
               "header": "Navigation, Filters, and Settings",
-              "text": "I designed the main navigation and utility components for the customization pages. These components have to condense fairly complex workflows. I designed Navigation to show continuous progression through all option categories for a room. I designed filters specifically to handle multiple layers of nested filters. To accommodate for users swapping back and forth, I added a dynamic undo button on option switch."
+              "text": "I designed the main navigation and utility components for the customization pages. These components have to condense fairly complex workflows. I designed Navigation to show continuous progression through all option categories for a room. I designed filters specifically to handle multiple layers of nested filters. To accommodate users swapping back and forth, I added a dynamic undo button when switching options."
             }
           ]
         },
@@ -102,12 +102,12 @@
             {
               "figure": { "src": "../../Assets/Studio/Section3/NewWireframes.png" },
               "header": "New Digital Collection Builder - Basic Flow",
-              "text": "Traditionally, the merchandising team manually curated design options. Now that the Studio app promised digital delivery of these options, the team needed a tool to digitally curate collections of options. I conducted research into the merchandising team's workflows and defined the main MVP requirements:\n\n1. User can create and manage collections of options.\n2. User can upload and manage options, either through UI or CSV/spreadsheet uploads.\n3. System should have duplication guardrails on data entry.\n\nSince there was no pre-existing tool, I created wireframes that focus on the editing flow of creating a new collection.\n\n1. **Main** shows all the collections.\n2. **Collection** shows all options in a single collection, separated by rooms (kitchen, primary bath, etc…)\n3. **Selecting** allows users to select options for a single room.\n4. **Uploading** allows users to add new options into the library."
+              "text": "Traditionally, the merchandising team manually curated design options. Now that the Studio app promised digital delivery of these options, the team needed a tool to digitally curate collections of options. I conducted research into the merchandising team's workflows and defined the main MVP requirements:\n\n1. Users can create and manage collections of options.\n2. Users can upload and manage options, either through the UI or CSV/spreadsheet uploads.\n3. The system should have duplication guardrails on data entry.\n\nSince there was no pre-existing tool, I created wireframes that focus on the editing flow of creating a new collection.\n\n1. **Main** shows all the collections.\n2. **Collection** shows all options in a single collection, separated by rooms (kitchen, primary bath, etc…)\n3. **Selecting** allows users to select options for a single room.\n4. **Uploading** allows users to add new options into the library."
             },
             {
               "figure": { "src": "../../Assets/Studio/Section3/MultiWireframes.png" },
-              "header": "Collection Builder - Multi-Upload Flow",
-              "text": "After usability testing initial prototypes, I received feedback on needing more flexibility in option upload. When users are modifying a collection, they notice certain options not existing and have to navigate to the library to upload. I redesigned upload as a core part of the collection editing workflow. \n\n1. Users can now directly upload a new option in the **Select Option** screen, either in the tab or as a prompt in an empty state that pre-fills the form. \n2. **Multi-Upload** allows users to upload a spreadsheet. The system automatically parses existing options, recognize new options, and flag potential duplicates which users can choose how to proceed. \n3. Once the user makes necessary selections, all options are directly added to the checkout flow."
+              "header": "Multi-Upload Flow",
+              "text": "After usability testing initial prototypes, I received feedback on needing more flexibility in option upload. When users are modifying a collection, they notice certain options that don't exist and have to navigate to the library to upload. I redesigned upload as a core part of the collection editing workflow. \n\n1. Users can now directly upload a new option in the **Select Option** screen, either in the tab or as a prompt in an empty state that pre-fills the form. \n2. **Multi-Upload** allows users to upload a spreadsheet. The system automatically parses existing options, recognizes new options, and flags potential duplicates for users to review. \n3. Once the user makes necessary selections, all options are directly added to the checkout flow."
             }
           ]
         },
