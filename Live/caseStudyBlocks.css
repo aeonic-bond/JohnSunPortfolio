@@ -858,6 +858,11 @@
   opacity: 0;
 }
 
+.cs-fig-row-frame.is-covered .cs-fig-row-frame__pills,
+.cs-fig-row-frame.is-deeply-covered .cs-fig-row-frame__pills {
+  display: none;
+}
+
 @media (min-width: 1024px) {
   .cs-fig-row--stacking .cs-fig-row-text,
   .cs-fig-row--stacking .cs-fig-row-media {

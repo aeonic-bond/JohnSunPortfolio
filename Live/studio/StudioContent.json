@@ -63,20 +63,14 @@
               "text": "Traditionally, the merchandising team manually curated design options in PDFs. Now that the Studio app promised digital delivery of these options, the team needed a tool to digitally curate collections of options. I conducted research into the merchandising team's workflows and defined the main MVP requirements:\n\n1. User can create and manage collections of options.\n2. User can upload and manage options, either through UI or CSV/spreadsheet uploads.\n3. System should have duplication guardrails on data entry."
             },
             {
-              "figures": [
-                { "src": "../../Assets/Studio/Section2/NewWireframes.png", "label": "1" },
-                { "src": "../../Assets/Studio/Section2/NewWireframes2.png", "label": "2" }
-              ],
+              "figure": { "src": "../../Assets/Studio/Section2/NewWireframes.png" },
               "header": "New Digital Collection Builder - Basic Flow",
               "text": "Since there was no pre-existing tool, I created wireframes that focus on the editing flow of creating a new collection.\n\n1. **Main** shows all the collections.\n2. **Collection** shows all options in a single collection, separated by rooms (kitchen, primary bath, etc…)\n3. **Selecting** allows users to select options for a single room.\n4. **Uploading** allows users to add new options into the library."
             },
             {
-              "figures": [
-                { "src": "../../Assets/Studio/Section2/NewWireframes.png", "label": "1" },
-                { "src": "../../Assets/Studio/Section2/NewWireframes2.png", "label": "2" }
-              ],
-              "header": "Collection Builder - Batch Flow",
-              "text": "After usability testing initial prototypes, one consistent feedback I created wireframes that focus on the editing flow of creating a new collection.\n\n1. **Main** shows all the collections.\n2. **Collection** shows all options in a single collection, separated by rooms (kitchen, primary bath, etc…)\n3. **Selecting** allows users to select options for a single room.\n4. **Uploading** allows users to add new options into the library."
+              "figure": { "src": "../../Assets/Studio/Section2/MultiWireframes.png" },
+              "header": "Collection Builder - Multi-Upload Flow",
+              "text": "After usability testing initial prototypes, I received feedback on needing more flexibility in option upload. When users are modifying a collection, they notice certain options not existing and have to navigate to the library to upload. I redesigned upload as a core part of the collection editing workflow. \n\n1. Users can now directly upload a new option in the **Select Option** screen, either in the tab or as a prompt in an empty state that pre-fills the form. \n2. **Multi-Upload** allows users to upload a spreadsheet. The system automatically parses existing options, recognize new options, and flag potential duplicates which users can choose how to proceed. \n3. Once the user makes necessary selections, all options are directly added to the checkout flow."
             }
           ]
         },
@@ -88,6 +82,16 @@
             { "src": "../../Assets/Studio/Section2/CB2.png", "label": "Collection" },
             { "src": "../../Assets/Studio/Section2/CB3.png", "label": "Select Options" },
             { "src": "../../Assets/Studio/Section2/CB4.png", "label": "Upload Single Option" }
+          ]
+        },
+        {
+          "type": "protoFlow",
+          "title": "Collection Builder - Multi-Upload Flow",
+          "screens": [
+            { "src": "../../Assets/Studio/Section2/CB5.png", "label": "Select Options with Tabs (Select, Upload)" },
+            { "src": "../../Assets/Studio/Section2/CB6.png", "label": "Upload Single or Multi-Upload" },
+            { "src": "../../Assets/Studio/Section2/CB7.png", "label": "Multi-Upload Options Parsing" },
+            { "src": "../../Assets/Studio/Section2/CB8.png", "label": "Checkout Multi-Upload Options" }
           ]
         }
       ]
