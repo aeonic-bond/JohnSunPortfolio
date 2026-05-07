@@ -64,14 +64,28 @@
             },
             {
               "figure": { "src": "../../Assets/Studio/Section2/CatalogModules.png" },
-              "header": "Modules for Design Options",
-              "text": "The Studio App uses the set of options curated in the Collection Builder to drive recommendation. Rather than picking individual options, homebuyers take a survey to receive a recommended collection that pre-selects 90% of the features. I designed the post-survey experience where users personalize their options."
+              "header": "Design Options Modules",
+              "text": "The Studio App uses the set of options curated in the Collection Builder to drive recommendation. Rather than picking individual options, homebuyers take a survey to receive a recommended collection that pre-selects 90% of the features. I designed the post-survey customization experience where users can select new options."
             },
             {
-              "figure": { "src": "../../Assets/Studio/Section2/NewWireframes.png" },
-              "header": "Navigation and Flow",
-              "text": "Since there was no pre-existing tool, I created wireframes that focus on the editing flow of creating a new collection.\n\n1. **Main** shows all the collections.\n2. **Collection** shows all options in a single collection, separated by rooms (kitchen, primary bath, etc…)\n3. **Selecting** allows users to select options for a single room.\n4. **Uploading** allows users to add new options into the library."
+              "figure": { "src": "../../Assets/Studio/Section2/CatalogNav.png" },
+              "header": "Navigation, Filters, and Settings",
+              "text": "I designed the main navigation and utility components for the customization pages. These components have to condense fairly complex workflows. I designed Navigation to show continuous progression through all option categories for a room. I designed filters specifically to handle multiple layers of nested filters. To accommodate for users swapping back and forth, I added a dynamic undo button on option switch."
             }
+          ]
+        },
+        {
+          "type": "protoFlow",
+          "title": "Design Options Flow",
+          "screens": [
+            { "src": "../../Assets/Studio/Section2/P1.png", "label": "Survey Results" },
+            { "src": "../../Assets/Studio/Section2/P2.png", "label": "Main Design Options Page" },
+            { "src": "../../Assets/Studio/Section2/P3.png", "label": "Kitchen - Cabinets" },
+            { "src": "../../Assets/Studio/Section2/P4.png", "label": "Detail Sheet" },
+            { "src": "../../Assets/Studio/Section2/P5.png", "label": "Appliance Packages" },
+            { "src": "../../Assets/Studio/Section2/P6.png", "label": "Primary Bath" },
+            { "src": "../../Assets/Studio/Section2/P7.png", "label": "Flooring" },
+            { "src": "../../Assets/Studio/Section2/P8.png", "label": "Flooring Detail Sheet" }
           ]
         }
       ]
@@ -86,12 +100,12 @@
           "variant": "stacking",
           "frames": [
             {
-              "figure": { "src": "../../Assets/Studio/Section2/NewWireframes.png" },
+              "figure": { "src": "../../Assets/Studio/Section3/NewWireframes.png" },
               "header": "New Digital Collection Builder - Basic Flow",
               "text": "Traditionally, the merchandising team manually curated design options. Now that the Studio app promised digital delivery of these options, the team needed a tool to digitally curate collections of options. I conducted research into the merchandising team's workflows and defined the main MVP requirements:\n\n1. User can create and manage collections of options.\n2. User can upload and manage options, either through UI or CSV/spreadsheet uploads.\n3. System should have duplication guardrails on data entry.\n\nSince there was no pre-existing tool, I created wireframes that focus on the editing flow of creating a new collection.\n\n1. **Main** shows all the collections.\n2. **Collection** shows all options in a single collection, separated by rooms (kitchen, primary bath, etc…)\n3. **Selecting** allows users to select options for a single room.\n4. **Uploading** allows users to add new options into the library."
             },
             {
-              "figure": { "src": "../../Assets/Studio/Section2/MultiWireframes.png" },
+              "figure": { "src": "../../Assets/Studio/Section3/MultiWireframes.png" },
               "header": "Collection Builder - Multi-Upload Flow",
               "text": "After usability testing initial prototypes, I received feedback on needing more flexibility in option upload. When users are modifying a collection, they notice certain options not existing and have to navigate to the library to upload. I redesigned upload as a core part of the collection editing workflow. \n\n1. Users can now directly upload a new option in the **Select Option** screen, either in the tab or as a prompt in an empty state that pre-fills the form. \n2. **Multi-Upload** allows users to upload a spreadsheet. The system automatically parses existing options, recognize new options, and flag potential duplicates which users can choose how to proceed. \n3. Once the user makes necessary selections, all options are directly added to the checkout flow."
             }
@@ -101,20 +115,20 @@
           "type": "protoFlow",
           "title": "Collection Builder - Basic Flow",
           "screens": [
-            { "src": "../../Assets/Studio/Section2/CB1.png", "label": "Main" },
-            { "src": "../../Assets/Studio/Section2/CB2.png", "label": "Collection" },
-            { "src": "../../Assets/Studio/Section2/CB3.png", "label": "Select Options" },
-            { "src": "../../Assets/Studio/Section2/CB4.png", "label": "Upload Single Option" }
+            { "src": "../../Assets/Studio/Section3/CB1.png", "label": "Main" },
+            { "src": "../../Assets/Studio/Section3/CB2.png", "label": "Collection" },
+            { "src": "../../Assets/Studio/Section3/CB3.png", "label": "Select Options" },
+            { "src": "../../Assets/Studio/Section3/CB4.png", "label": "Upload Single Option" }
           ]
         },
         {
           "type": "protoFlow",
           "title": "Collection Builder - Multi-Upload Flow",
           "screens": [
-            { "src": "../../Assets/Studio/Section2/CB5.png", "label": "Select Options with Tabs (Select, Upload)" },
-            { "src": "../../Assets/Studio/Section2/CB6.png", "label": "Upload Single or Multi-Upload" },
-            { "src": "../../Assets/Studio/Section2/CB7.png", "label": "Multi-Upload Options Parsing" },
-            { "src": "../../Assets/Studio/Section2/CB8.png", "label": "Checkout Multi-Upload Options" }
+            { "src": "../../Assets/Studio/Section3/CB5.png", "label": "Select Options with Tabs (Select, Upload)" },
+            { "src": "../../Assets/Studio/Section3/CB6.png", "label": "Upload Single or Multi-Upload" },
+            { "src": "../../Assets/Studio/Section3/CB7.png", "label": "Multi-Upload Options Parsing" },
+            { "src": "../../Assets/Studio/Section3/CB8.png", "label": "Checkout Multi-Upload Options" }
           ]
         }
       ]

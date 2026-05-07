@@ -1139,6 +1139,7 @@ const createProtoFlowElement = (block = {}) => {
     const track = document.createElement("div");
     track.className = "cs-proto-flow-track";
 
+    let orientationDetected = false;
     for (const screen of screens) {
       const screenEl = document.createElement("div");
       screenEl.className = "cs-proto-flow-screen";
@@ -1152,6 +1153,19 @@ const createProtoFlowElement = (block = {}) => {
         img.src = screen.src;
         img.alt = screen.label || "";
         img.loading = "lazy";
+        if (!orientationDetected) {
+          orientationDetected = true;
+          const checkOrientation = () => {
+            if (img.naturalHeight > img.naturalWidth) {
+              el.classList.add("cs-proto-flow--portrait");
+            }
+          };
+          if (img.complete && img.naturalWidth > 0) {
+            checkOrientation();
+          } else {
+            img.addEventListener("load", checkOrientation, { once: true });
+          }
+        }
         imgWrap.append(img);
       }
 
