@@ -24,7 +24,7 @@
     {
       "id": "section-01",
       "header": "Problem and Research",
-      "intro": "Many commercial chatbots often have underwhelming experiences. To understand good AI experiences, I analyzed several consumer-focused chatbots.",
+      "intro": "Many commercial chatbots deliver underwhelming experiences. To understand good AI experiences, I analyzed several consumer-focused chatbots.",
       "blocks": [
         {
           "type": "bulletRow",
@@ -43,20 +43,20 @@
     {
       "id": "section-02",
       "header": "Requirements",
-      "intro": "Working with the creative director, I adapted the three features and shaped them into two broad requirements for an MVP. Since real estate has predictable concerns, prompts should handle basic questioning. The second requirement was to generate content that could not be easily replicated on the site.",
+      "intro": "Working with the creative director, I distilled insights from the competitive analysis and shaped them into two broad requirements for an MVP. Since homebuyers tend to have predictable concerns, the chatbot's prompts should guide basic questioning around those topics. The second requirement was to generate content that could not be easily replicated on the site.",
       "blocks": []
     },
     {
       "id": "section-03",
       "header": "MVP Design - Context Blocks",
-      "intro": "I first designed the initial flow around suggested prompts and demonstrated how the responses build context. I explained the concept that each suggested prompt adds a block of context that sways the outcome of the chat. I made a key decision to lean away from direct product recommendations and designed the collapsible Category Cards for three reasons:",
+      "intro": "I first designed the initial flow around suggested prompts and demonstrated how the responses build context. I explained the concept that each suggested prompt adds a block of context that shapes the outcome of the chat. I made a key decision to lean away from direct product recommendations and designed the collapsible Category Cards for three reasons:",
       "blocks": [
         {
           "type": "bulletRow",
           "items": [
             "Product recommendations are visually noisy and will greatly extend the chat. Just 2 context blocks are not enough to accurately recommend a luxury home.",
-            "Category recommendations present more specific homebuying parameters like single-family, townhomes, or marketing terms like Active Adult (55+) to further spark further discussions.",
-            "The category cards can recommend either homes or communities, depending on the blocks given (i.e. a timeframe block is more likely to generate a Quick Move-In Home category)."
+            "Category recommendations present more specific homebuying parameters like single-family, townhomes, or marketing terms like Active Adult (55+) to spark further discussion.",
+            "The category cards can recommend either homes or communities, depending on the blocks given (e.g., a timeframe block is more likely to surface a Quick Move-In Home category)."
           ]
         },
         {
@@ -69,11 +69,11 @@
             },
             {
               "src": "../../Assets/Chatbot/Section3/F2.png",
-              "caption": "User chooses the location context and chatbot asks for location refinement, with predictive suggestions based on user behavior on site. I pitched to sticky the last user response up top, allowing the user to remember the input and adjust if necessary."
+              "caption": "User chooses the location context and chatbot asks for location refinement, with predictive suggestions based on user behavior on site. I proposed pinning the last user response to the top, allowing users to recall their input and adjust if necessary."
             },
             {
               "src": "../../Assets/Chatbot/Section3/F3.png",
-              "caption": "If location is the only block, user is shown Category Cards that are showcase product offerings specific to that region. (The faded option up top is for demonstration purposes and will not show up in the actual experience.)"
+              "caption": "If location is the only block, the user is shown Category Cards showcasing product offerings specific to that region. (The faded option up top is for demonstration purposes and will not show up in the actual experience.)"
             },
             {
               "src": "../../Assets/Chatbot/Section3/F4.png",
@@ -86,7 +86,7 @@
     {
       "id": "section-04",
       "header": "Product Flow and Product Comparison Feature",
-      "intro": "Once the user clicks on a recommendation, there are two possible interaction options. The chatbot can generate information within or the user is linked to the specific product page with the chatbot contextually giving prompts. The second option presents a novel experience of supplementing the page with the chatbot. However, this idea was shelved when considering our product pages are not designed with a persistent chatbot in mind, and the benefit is limited on mobile viewports. So, I went with Option 1 and designed a smaller summary of the main product page.\n\nHere, I highlighted the Home Comparison feature. Prompts will easily allow users to directly ask for a home comparison summary. This idea was very well received upon discussion, and will be considered in the future.",
+      "intro": "Once the user clicks on a recommendation, there are two possible interactions. The chatbot can generate information inline, or the user is linked to the specific product page while the chatbot provides contextual prompts. The second option presents a novel experience where the chatbot supplements the product page. However, this idea was shelved given that our product pages are not designed with a persistent chatbot in mind, and the benefit is limited on mobile viewports. So, I went with Option 1 and designed a smaller summary of the main product page.\n\nHere, I highlighted the Home Comparison feature. Users can ask for a home comparison summary through a simple prompt. This idea was well received and has been scoped for a future release.",
       "blocks": [
         {
           "type": "figMatrix",
@@ -94,7 +94,7 @@
           "figures": [
             {
               "src": "../../Assets/Chatbot/Section4/F1.png",
-              "caption": "Instead of linking to the specific product page, users are given a summarized version of the product page that are tailored to context blocks."
+              "caption": "Instead of linking to the specific product page, users are given a summarized version of the product page that is tailored to context blocks."
             },
             {
               "src": "../../Assets/Chatbot/Section4/F2.png",
@@ -102,7 +102,7 @@
             },
             {
               "src": "../../Assets/Chatbot/Section4/F3.png",
-              "caption": "I designed a toggle for the user to select a preference for either natural language summaries vs explicit data points."
+              "caption": "I designed a toggle for the user to choose between natural language summaries and explicit data points."
             },
             {
               "src": "../../Assets/Chatbot/Section4/F4.png",
@@ -115,7 +115,7 @@
     {
       "id": "section-05",
       "header": "Approval and Future Considerations",
-      "intro": "This project had several branching design possibilities, and through a series of collaborative feedback with stakeholders, we arrived at a final thoughtful MVP design for AI homebuying. The prototype was internally tested and approved for production with the main goal of gathering data on user responses. For future considerations, I'd advocate for the home comparison summary feature as well as tools that help describe surrounding areas. I also presented designs for embedded AI features as future possibilities.",
+      "intro": "This project had several branching design possibilities, and through a series of feedback sessions with stakeholders, we arrived at a thoughtful, refined MVP design for an AI-powered homebuying chatbot. The prototype was internally tested and approved for production with the main goal of gathering data on user responses. For future considerations, I advocated for the home comparison summary feature as well as tools that help describe surrounding areas. I also presented designs for embedded AI features as future possibilities.",
       "blocks": []
     }
   ]
