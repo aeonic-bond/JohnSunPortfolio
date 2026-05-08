@@ -54,7 +54,7 @@
   margin: 0;
   width: 100%;
   font: var(--type-H1-intro);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--tracking-display);
   color: var(--color-accent);
   text-box-trim: none;
 }

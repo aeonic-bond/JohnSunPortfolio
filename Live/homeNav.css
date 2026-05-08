@@ -91,6 +91,7 @@
 .cs-header-title {
   margin: 0;
   font: var(--type-H3-nav);
+  letter-spacing: var(--tracking-display);
   line-height: 1;
   color: var(--color-accent);
   text-align: center;

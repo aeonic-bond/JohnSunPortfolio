@@ -114,6 +114,7 @@
 .card-title {
   margin: 0;
   font: var(--type-H2);
+  letter-spacing: var(--tracking-display);
   color: var(--color-accent);
 }
 

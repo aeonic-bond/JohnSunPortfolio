@@ -903,6 +903,7 @@
 
 .cs-fig-row-header {
   font: var(--type-H2);
+  letter-spacing: var(--tracking-display);
   color: var(--color-text-primary);
   overflow-wrap: anywhere;
 }
@@ -974,6 +975,7 @@
 
 .cs-proto-flow-title {
   font: var(--type-H2);
+  letter-spacing: var(--tracking-display);
   color: var(--color-accent);
   text-align: center;
   overflow-wrap: anywhere;
@@ -1029,4 +1031,15 @@
   color: var(--color-text-secondary);
   text-align: center;
   overflow-wrap: anywhere;
+}
+
+/* Block spacing — .cs-main .X is 0-2-0, beats .cs-main * at 0-1-1 */
+.cs-main .cs-bullet-row,
+.cs-main .cs-icon-grid,
+.cs-main .cs-flow-row,
+.cs-main .cs-progress-matrix,
+.cs-main .cs-progress-row,
+.cs-main .cs-fig-matrix,
+.cs-main .cs-fig:not(.cs-fig--hero) {
+  margin-block: var(--spacer-section-500);
 }

@@ -72,7 +72,7 @@
 
 .cs-title {
   font: var(--type-H1);
-  letter-spacing: 0.02em;
+  letter-spacing: var(--tracking-display);
   color: var(--color-accent);
   min-width: 0;
   overflow-wrap: anywhere;
@@ -121,6 +121,7 @@
 
 .cs-section-header {
   font: var(--type-H2);
+  letter-spacing: var(--tracking-display);
   color: var(--color-text-primary);
   min-width: 0;
   overflow-wrap: anywhere;

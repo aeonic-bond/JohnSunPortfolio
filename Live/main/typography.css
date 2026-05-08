@@ -1,16 +1,19 @@
 :root {
-  --font-display: "Roboto", sans-serif;
-  --font-flourish: "Source Sans 3", sans-serif;
-  --font-body: "Source Sans 3", sans-serif;
+  --font-display: "DM Serif Display", serif;
+  --font-flourish: "Switzer", sans-serif;
+  --font-body: "Switzer", sans-serif;
+
+  /* Display tracking */
+  --tracking-display: 0.03em;
 
   /* Typography tokens */
-  --type-H1-intro: normal 900 40px / normal var(--font-display);
+  --type-H1-intro: normal 900 56px / normal var(--font-display);
   --type-subtitle-xl: normal 300 32px/40px var(--font-flourish);
 
   --type-H1: normal 600 45px / normal var(--font-display);
-  --type-H2: normal 600 28px / normal var(--font-display);
-  --type-H3-nav: normal 500 17px / 1.2 var(--font-display);
-  --type-H4: normal 500 15px / 1.2 var(--font-display);
+  --type-H2: normal 600 32px / normal var(--font-display);
+  --type-H3-nav: normal 500 17px / 1.2 var(--font-flourish);
+  --type-H4: normal 500 15px / 1.2 var(--font-flourish);
   --type-subtitle-nav: normal 200 14px/19px var(--font-flourish);
 
   --type-subtitle-l: normal 300 24px/30px var(--font-flourish);

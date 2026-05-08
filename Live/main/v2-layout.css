@@ -7,7 +7,7 @@
 
 /* White surround — visible around the card in its initial state */
 body {
-  background: white;
+  background: var(--color-bg-shine);
 }
 
 /* Smoke: sticky so it behaves like V1's fixed canvas (always
@@ -68,11 +68,11 @@ body.is-expanded .v2-main {
    left/right override width: 100% on the fixed element. */
 .cs-header-bar,
 .cs-header-bar.is-at-top {
-  background: white;
+  background: var(--color-bg-shine);
   left: var(--margin-header-mobile);
   right: var(--margin-header-mobile);
   width: auto;
-  color: var(--color-text-inverse);
+  color: var(--color-bg-raise);
   transition: left 0.5s ease, right 0.5s ease, color 0.5s ease, background 0.5s ease;
 }
 
@@ -88,7 +88,7 @@ body.is-expanded .v2-main {
 
 /* Home nav logo uses mask approach — background-color controls the color */
 .cs-header-back-icon {
-  background-color: var(--color-text-inverse);
+  background-color: var(--color-bg-raise);
   transition: background-color 0.5s ease;
 }
 
@@ -98,7 +98,7 @@ body.is-expanded .cs-header-back-icon {
 
 /* Case study nav sign icon (inline SVG) */
 .cs-header-sign-icon rect {
-  stroke: var(--color-text-inverse);
+  stroke: var(--color-bg-raise);
   transition: stroke 0.5s ease;
 }
 
