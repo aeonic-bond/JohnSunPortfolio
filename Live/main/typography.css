@@ -8,7 +8,7 @@
 
   /* Typography tokens */
   --type-H1-intro: normal 900 56px / normal var(--font-display);
-  --type-subtitle-xl: normal 300 32px/40px var(--font-flourish);
+  --type-subtitle-xl: normal 300 28px/38px var(--font-flourish);
 
   --type-H1: normal 600 45px / normal var(--font-display);
   --type-H2: normal 600 32px / normal var(--font-display);
@@ -16,7 +16,7 @@
   --type-H4: normal 500 15px / 1.2 var(--font-flourish);
   --type-subtitle-nav: normal 200 14px/19px var(--font-flourish);
 
-  --type-subtitle-l: normal 300 24px/30px var(--font-flourish);
+  --type-subtitle-l: normal 300 24px/28px var(--font-flourish);
   --type-subtitle-m: normal 300 18px/24px var(--font-flourish);
   --type-subtitle-s: normal 300 15px/21px var(--font-flourish);
   --type-body-l: normal 350 19px/27px var(--font-body);
