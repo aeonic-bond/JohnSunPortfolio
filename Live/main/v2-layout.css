@@ -73,7 +73,7 @@ body.is-expanded .v2-main {
   right: var(--margin-header-mobile);
   width: auto;
   color: var(--color-text-inverse);
-  transition: left 0.5s ease, right 0.5s ease, color 0.2s ease, background 0.5s ease;
+  transition: left 0.5s ease, right 0.5s ease, color 0.5s ease, background 0.5s ease;
 }
 
 .cs-header-bar .cs-header-home-nav-link,
@@ -89,7 +89,7 @@ body.is-expanded .v2-main {
 /* Home nav logo uses mask approach — background-color controls the color */
 .cs-header-back-icon {
   background-color: var(--color-text-inverse);
-  transition: background-color 0.2s ease;
+  transition: background-color 0.5s ease;
 }
 
 body.is-expanded .cs-header-back-icon {
@@ -99,7 +99,7 @@ body.is-expanded .cs-header-back-icon {
 /* Case study nav sign icon (inline SVG) */
 .cs-header-sign-icon rect {
   stroke: var(--color-text-inverse);
-  transition: stroke 0.2s ease;
+  transition: stroke 0.5s ease;
 }
 
 body.is-expanded .cs-header-sign-icon rect {
@@ -112,7 +112,7 @@ body.is-expanded .cs-header-bar {
   right: 0;
   background: var(--color-bg-main);
   color: var(--color-text-secondary);
-  transition: left 0.5s ease, right 0.5s ease, background 0.5s ease, color 0.2s ease;
+  transition: left 0.5s ease, right 0.5s ease, background 0.5s ease, color 0.5s ease;
 }
 
 
