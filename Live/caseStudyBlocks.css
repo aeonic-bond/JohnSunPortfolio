@@ -184,10 +184,13 @@
   display: inline-flex;
   width: fit-content;
   padding: var(--spacer-200);
-  margin-bottom: var(--spacer-300);
   border: 1px solid var(--color-bg-shade);
   font: var(--type-caption-m);
   color: var(--color-text-secondary);
+}
+
+.cs-main .cs-item-overline {
+  margin-bottom: var(--spacer-300);
 }
 
 .cs-item-overline + * {

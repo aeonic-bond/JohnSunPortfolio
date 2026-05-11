@@ -18,7 +18,7 @@
     {
       "id": "section-00",
       "header": "Executive Summary",
-      "intro": "I led design on Toll Brothers' first AI chatbot, shaping two features that differentiated it from a traditional site search. The first was a context block system: common homebuying criteria (location, price, beds, etc.) were captured as reusable blocks, letting users build up search context in one tap via suggested replies. The second was a comparison feature that surfaced both qualitative and quantitative differences between home choices side by side. The context block system was approved for implementation by key internal stakeholders; the comparison feature was scoped for a future release.",
+      "intro": "I led design for Toll Brothers' first AI chatbot and shaped three features. The core context system allows the user to build up common context of homebuying criteria (location, price, beds, etc.) with suggested replies. The category cards with nested product recommendations surfaces key marketing terms. The comparison feature leverages AI capbilitiies to summarize qualitative and quantitative differences between home choices. The context system and category cards was approved for implementation by internal stakeholders. The comparison feature was scoped for a future release.",
       "blocks": []
     },
     {
@@ -29,7 +29,7 @@
         {
           "type": "bulletRow",
           "items": [
-            "(Luxury Space) BMW - The flow seems designed for users familiar with specific models and preferences and doesn't offer many suggestions for any broader category search.",
+            "(Luxury Space) BMW - The flow centers on specific models and preferences and doesn't offer suggestions for broader category search.",
             "(Homebuilder) Lennar - The flow carried context decently well but generally lacks visuals and suggested prompts.",
             "(Ecommerce) Sephora and Amazon - Similar experiences with sophisticated continuous suggestions built around SKUs with visuals. The chat also updates on navigation to a product page."
           ]
