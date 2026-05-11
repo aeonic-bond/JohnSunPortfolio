@@ -1,5 +1,7 @@
 const canvas = document.getElementById('smoke');
 const ctx = canvas.getContext('2d');
+const offscreen = document.createElement('canvas');
+const offCtx = offscreen.getContext('2d');
 
 const dpr = window.devicePixelRatio || 1;
 let W = 0, H = 0;
@@ -26,8 +28,12 @@ function resizeCanvas() {
   H = window.innerHeight;
   canvas.width = W * dpr;
   canvas.height = H * dpr;
+  offscreen.width = W * dpr;
+  offscreen.height = H * dpr;
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.scale(dpr, dpr);
+  offCtx.setTransform(1, 0, 0, 1, 0, 0);
+  offCtx.scale(dpr, dpr);
 
   updateScrollAnchors();
   if (typeof smoke !== 'undefined') {
@@ -106,31 +112,32 @@ function render(timestamp) {
   const auroraBase = 0.85 + Math.sin(t * 0.3) * 0.15 + Math.sin(t * 0.17) * 0.1;
   const auroraScrollBoost = 1 - p * 0.5;
 
-  ctx.save();
-  ctx.filter = `blur(${blur}px)`;
+  // Draw smoke layers to offscreen so composite ops work correctly in Safari,
+  // then blit the result to the main canvas with blur applied.
+  offCtx.clearRect(0, 0, W, H);
 
   // LAYER 1: Base dark fill
   if (p < 1) {
-    ctx.save();
-    ctx.globalAlpha = smokeAlpha;
-    smoke.buildPath(ctx, offsetPts);
+    offCtx.save();
+    offCtx.globalAlpha = smokeAlpha;
+    smoke.buildPath(offCtx, offsetPts);
     const rimBrightness = Math.floor(35 * (1 - p));
     const outerBrightness = Math.floor(25 * (1 - p));
-    const radGrad = ctx.createRadialGradient(gcx, gcy, 0, gcx, gcy, gradR);
+    const radGrad = offCtx.createRadialGradient(gcx, gcy, 0, gcx, gcy, gradR);
     radGrad.addColorStop(0, 'rgba(7, 7, 7, 1)');
     radGrad.addColorStop(0.5, 'rgba(10, 10, 10, 1)');
     radGrad.addColorStop(0.78, 'rgba(14, 14, 13, 1)');
     radGrad.addColorStop(0.90, 'rgba(4, 4, 4, 1)');
     radGrad.addColorStop(0.96, `rgba(${rimBrightness}, ${rimBrightness}, ${rimBrightness}, 1)`);
     radGrad.addColorStop(1, `rgba(${outerBrightness}, ${outerBrightness}, ${outerBrightness}, 1)`);
-    ctx.fillStyle = radGrad;
-    ctx.fill();
-    ctx.restore();
+    offCtx.fillStyle = radGrad;
+    offCtx.fill();
+    offCtx.restore();
   }
 
   // LAYER 2: Aurora bands
-  ctx.save();
-  ctx.globalCompositeOperation = 'screen';
+  offCtx.save();
+  offCtx.globalCompositeOperation = 'screen';
   for (let i = 0; i < 5; i++) {
     const bandAngle = t * (0.08 + i * 0.02) + i * (Math.PI * 2 / 5);
     const bandDist = smoke.baseRadius * (0.25 + 0.15 * Math.sin(t * 0.1 + i * 1.5)) * (1 - p * 0.95);
@@ -140,40 +147,44 @@ function render(timestamp) {
     const bandRadius = auroraR * (0.5 + 0.3 * Math.sin(t * 0.13 + i * 2));
     const bandAlpha = (0.22 + 0.08 * Math.sin(t * 0.25 + i * 1.2)) * smokeAlpha;
 
-    smoke.buildPath(ctx, offsetPts);
-    ctx.save();
-    ctx.globalAlpha = bandAlpha;
-    const aGrad = ctx.createRadialGradient(bx, by, 0, bx, by, bandRadius);
+    smoke.buildPath(offCtx, offsetPts);
+    offCtx.save();
+    offCtx.globalAlpha = bandAlpha;
+    const aGrad = offCtx.createRadialGradient(bx, by, 0, bx, by, bandRadius);
     aGrad.addColorStop(0, hsla(col.h, col.s * 1.2, col.l * 1.4, 1));
     aGrad.addColorStop(0.3, hsla(col.h + 10, col.s, col.l * 1.1, 0.7));
     aGrad.addColorStop(0.6, hsla(col.h + 20, col.s * 0.8, col.l * 0.7, 0.3));
     aGrad.addColorStop(1, 'hsla(0, 0%, 0%, 0)');
-    ctx.fillStyle = aGrad;
-    ctx.fill();
-    ctx.restore();
+    offCtx.fillStyle = aGrad;
+    offCtx.fill();
+    offCtx.restore();
   }
-  ctx.restore();
+  offCtx.restore();
 
   // LAYER 3: Rim glow
   if (p < 0.9) {
-    ctx.save();
+    offCtx.save();
     const rimAlpha = (0.3 + 0.15 * Math.sin(t * 0.4)) * (1 - p * 0.8) * smokeAlpha;
     const rimHue = (t * 18 + scrollProgress * 120) % 360;
-    ctx.globalCompositeOperation = 'screen';
-    ctx.globalAlpha = rimAlpha;
-    smoke.buildPath(ctx, offsetPts);
-    ctx.strokeStyle = hsla(rimHue, 55, 35, 1);
-    ctx.lineWidth = 3 + Math.sin(t * 0.6) * 1.5;
-    ctx.stroke();
-    ctx.globalAlpha = rimAlpha * 0.5;
-    smoke.buildPath(ctx, offsetPts);
-    ctx.strokeStyle = hsla(rimHue + 60, 65, 45, 1);
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-    ctx.restore();
+    offCtx.globalCompositeOperation = 'screen';
+    offCtx.globalAlpha = rimAlpha;
+    smoke.buildPath(offCtx, offsetPts);
+    offCtx.strokeStyle = hsla(rimHue, 55, 35, 1);
+    offCtx.lineWidth = 3 + Math.sin(t * 0.6) * 1.5;
+    offCtx.stroke();
+    offCtx.globalAlpha = rimAlpha * 0.5;
+    smoke.buildPath(offCtx, offsetPts);
+    offCtx.strokeStyle = hsla(rimHue + 60, 65, 45, 1);
+    offCtx.lineWidth = 1.5;
+    offCtx.stroke();
+    offCtx.restore();
   }
 
-  ctx.restore(); // end blur filter
+  // Blit offscreen to main canvas with blur
+  ctx.save();
+  ctx.filter = `blur(${blur}px)`;
+  ctx.drawImage(offscreen, 0, 0, W, H);
+  ctx.restore();
 
   requestAnimationFrame(render);
 }
