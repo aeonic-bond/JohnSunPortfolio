@@ -180,11 +180,9 @@ function render(timestamp) {
     offCtx.restore();
   }
 
-  // Blit offscreen to main canvas with blur
-  ctx.save();
-  ctx.filter = `blur(${blur}px)`;
+  // Blit offscreen to main canvas, apply blur via CSS (ctx.filter is unreliable in Safari)
   ctx.drawImage(offscreen, 0, 0, W, H);
-  ctx.restore();
+  canvas.style.filter = blur > 0.5 ? `blur(${blur}px)` : '';
 
   requestAnimationFrame(render);
 }
