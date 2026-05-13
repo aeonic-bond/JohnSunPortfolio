@@ -7,10 +7,10 @@
     "title": "Toll Brothers Homebuying AI Chatbot",
     "subtitle": "Designing context-awareness, category recommendations, and home comparison",
     "gallery": [
-      { "src": "../../Assets/Chatbot/heroGallery/G1.png", "alt": "" },
-      { "src": "../../Assets/Chatbot/heroGallery/G2.png", "alt": "" },
-      { "src": "../../Assets/Chatbot/heroGallery/G3.png", "alt": "" },
-      { "src": "../../Assets/Chatbot/heroGallery/G4.png", "alt": "" }
+      { "src": "../../Assets/Chatbot/HeroGallery/G1.png", "alt": "" },
+      { "src": "../../Assets/Chatbot/HeroGallery/G2.png", "alt": "" },
+      { "src": "../../Assets/Chatbot/HeroGallery/G3.png", "alt": "" },
+      { "src": "../../Assets/Chatbot/HeroGallery/G4.png", "alt": "" }
     ]
   },
   "sections": [
