@@ -985,6 +985,9 @@ const createFigRowElement = (block = {}) => {
 
   const rowEl = document.createElement("div");
   rowEl.className = isStacking ? "cs-fig-row cs-fig-row--stacking" : "cs-fig-row";
+  if (isStacking) {
+    rowEl.style.setProperty("grid-template-rows", `repeat(${block.frames.length}, auto)`);
+  }
 
   const mediaEl = document.createElement("div");
   mediaEl.className = "cs-fig-row-media";
@@ -1176,14 +1179,11 @@ const createProtoFlowElement = (block = {}) => {
 
       const observer = new IntersectionObserver((entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting && !triggered && !cooldownId && track.scrollLeft === 0) {
+          if (entry.isIntersecting && !triggered && !cooldownId && track.scrollLeft === 0 && window.matchMedia("(min-width: 1024px)").matches) {
             triggered  = true;
             cooldownId = setTimeout(() => { cooldownId = null; }, COOLDOWN_MS);
-            const firstItem = track.firstElementChild;
-            if (firstItem) {
-              const gap = parseFloat(getComputedStyle(track).columnGap) || 12;
-              track.scrollBy({ left: firstItem.offsetWidth + gap, behavior: "smooth" });
-            }
+            const startPadding = parseFloat(getComputedStyle(track).paddingInlineStart) || 0;
+            track.scrollBy({ left: startPadding - 24, behavior: "smooth" });
           } else if (!entry.isIntersecting) {
             triggered = false;
           }

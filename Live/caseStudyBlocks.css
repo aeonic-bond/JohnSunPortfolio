@@ -867,9 +867,12 @@
 }
 
 @media (min-width: 1024px) {
-  .cs-fig-row--stacking .cs-fig-row-text,
-  .cs-fig-row--stacking .cs-fig-row-media {
-    row-gap: var(--spacer-section-500);
+  .cs-fig-row--stacking .cs-fig-row-media,
+  .cs-fig-row--stacking .cs-fig-row-text {
+    grid-row: 1 / -1;
+    align-self: stretch;
+    display: grid;
+    grid-template-rows: subgrid;
     padding-block: 0;
   }
 
@@ -990,12 +993,17 @@
   gap: var(--spacer-400);
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-snap-type: x proximity;
   padding-inline: max(0px, calc((100% - 560px) / 2));
-  scroll-padding-inline: max(0px, calc((100% - 560px) / 2));
   scrollbar-width: none;
   touch-action: pan-x;
   overscroll-behavior-x: contain;
+}
+
+@media (min-width: 1024px) {
+  .cs-proto-flow-track {
+    padding-inline-start: 375px;
+    padding-inline-end: 0;
+  }
 }
 
 .cs-proto-flow-track::-webkit-scrollbar {
@@ -1007,7 +1015,6 @@
   width: min(560px, calc(100% - var(--spacer-section-600)));
   display: grid;
   gap: var(--spacer-400);
-  scroll-snap-align: start;
 }
 
 .cs-proto-flow--portrait .cs-proto-flow-screen {
