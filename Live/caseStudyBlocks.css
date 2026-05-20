@@ -993,6 +993,7 @@
   gap: var(--spacer-400);
   overflow-x: auto;
   overflow-y: hidden;
+  scroll-snap-type: x mandatory;
   padding-inline: max(0px, calc((100% - 560px) / 2));
   scrollbar-width: none;
   touch-action: pan-x;
@@ -1015,6 +1016,8 @@
   width: min(560px, calc(100% - var(--spacer-section-600)));
   display: grid;
   gap: var(--spacer-400);
+  scroll-snap-align: start;
+  touch-action: pan-x;
 }
 
 .cs-proto-flow--portrait .cs-proto-flow-screen {
