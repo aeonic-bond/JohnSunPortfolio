@@ -3,7 +3,8 @@ const ctx = canvas.getContext('2d');
 const offscreen = document.createElement('canvas');
 const offCtx = offscreen.getContext('2d');
 
-const dpr = window.devicePixelRatio || 1;
+const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth < 768;
+const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 2 : 3);
 let W = 0, H = 0;
 
 const introSection = document.querySelector('.intro-section');
@@ -61,8 +62,15 @@ window.addEventListener('mousemove', (e) => {
 
 let smoke;
 let startTime = null;
+let rafId = null;
+let lastBlur = -1;
 
 function render(timestamp) {
+  if (document.hidden || scrollProgress >= 1) {
+    rafId = null;
+    return;
+  }
+
   if (!startTime) startTime = timestamp;
   const t = (timestamp - startTime) / 1000;
 
@@ -86,7 +94,7 @@ function render(timestamp) {
   const scaleY = scale * irregY;
 
   const blurP = Math.max(0, (p - 0.6) / 0.4);
-  const blur = 40 * (1 - blurP);
+  const blur = isMobile ? 0 : 40 * (1 - blurP);
 
   const blobStartY = window.innerHeight * 0.55;
   const targetY = window.innerHeight * 0.75;
@@ -180,19 +188,35 @@ function render(timestamp) {
     offCtx.restore();
   }
 
-  // Blit offscreen to main canvas, apply blur via CSS (ctx.filter is unreliable in Safari)
+  // Blit offscreen to main canvas; only update CSS blur when value meaningfully changes
   ctx.drawImage(offscreen, 0, 0, W, H);
-  canvas.style.filter = blur > 0.5 ? `blur(${blur}px)` : '';
+  const roundedBlur = Math.round(blur);
+  if (roundedBlur !== lastBlur) {
+    canvas.style.filter = roundedBlur > 0 ? `blur(${roundedBlur}px)` : '';
+    lastBlur = roundedBlur;
+  }
 
-  requestAnimationFrame(render);
+  rafId = requestAnimationFrame(render);
 }
+
+function startRender() {
+  if (!rafId) rafId = requestAnimationFrame(render);
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) startRender();
+});
+
+window.addEventListener('scroll', () => {
+  if (scrollProgress < 1) startRender();
+}, { passive: true });
 
 // ── Init after first paint to ensure layout is complete ──
 requestAnimationFrame(() => {
   resizeCanvas();
   updateScrollAnchors();
   smoke = new SmokeBlade(W / 2, window.innerHeight * 0.55, 250, 8);
-  requestAnimationFrame(render);
+  rafId = requestAnimationFrame(render);
 });
 
 // Re-measure after custom elements have rendered
