@@ -11,11 +11,11 @@ function easeInCubic(t) {
 // ── Aurora color helpers ──
 
 const auroraColors = [
-  { h: 220, s: 70, l: 30 },
-  { h: 270, s: 60, l: 25 },
-  { h: 175, s: 65, l: 28 },
-  { h: 310, s: 55, l: 22 },
-  { h: 145, s: 50, l: 24 },
+  { h: 220, s: 70, l: 48 },
+  { h: 270, s: 60, l: 42 },
+  { h: 175, s: 65, l: 45 },
+  { h: 310, s: 55, l: 38 },
+  { h: 145, s: 50, l: 40 },
 ];
 
 function getAuroraColor(index, t, intensity) {
