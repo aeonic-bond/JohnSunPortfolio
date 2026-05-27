@@ -177,23 +177,21 @@ function render(timestamp) {
     offCtx.globalCompositeOperation = 'screen';
 
     if (isMobile) {
-      const softLayers = [
-        { width: 36, alpha: 0.03 },
-        { width: 28, alpha: 0.05 },
-        { width: 22, alpha: 0.08 },
-        { width: 16, alpha: 0.11 },
-        { width: 11, alpha: 0.15 },
-        { width: 7,  alpha: 0.20 },
-        { width: 4,  alpha: 0.28 },
-        { width: 2,  alpha: 0.38 },
-      ];
-      for (const layer of softLayers) {
-        smoke.buildPath(offCtx, offsetPts);
-        offCtx.globalAlpha = rimAlpha * layer.alpha;
-        offCtx.strokeStyle = hsla(rimHue, 60, 55, 1);
-        offCtx.lineWidth = layer.width;
-        offCtx.stroke();
-      }
+      offCtx.shadowBlur = 22;
+      offCtx.shadowColor = hsla(rimHue, 70, 60, 1);
+      offCtx.globalAlpha = rimAlpha * 0.2;
+      smoke.buildPath(offCtx, offsetPts);
+      offCtx.strokeStyle = hsla(rimHue, 65, 55, 0.2);
+      offCtx.lineWidth = 3;
+      offCtx.stroke();
+      offCtx.shadowBlur = 12;
+      offCtx.shadowColor = hsla(rimHue + 60, 65, 65, 1);
+      offCtx.globalAlpha = rimAlpha * 0.2;
+      smoke.buildPath(offCtx, offsetPts);
+      offCtx.strokeStyle = hsla(rimHue + 60, 65, 55, 0.2);
+      offCtx.lineWidth = 1.5;
+      offCtx.stroke();
+      offCtx.shadowBlur = 0;
     } else {
       offCtx.globalAlpha = rimAlpha;
       smoke.buildPath(offCtx, offsetPts);
@@ -237,7 +235,7 @@ window.addEventListener('scroll', () => {
 requestAnimationFrame(() => {
   resizeCanvas();
   updateScrollAnchors();
-  smoke = new SmokeBlade(W / 2, window.innerHeight * 0.55, 250, 8);
+  smoke = new SmokeBlade(W / 2, window.innerHeight * 0.55, 250, 12);
   rafId = requestAnimationFrame(render);
 });
 
