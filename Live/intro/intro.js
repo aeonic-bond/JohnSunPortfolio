@@ -175,16 +175,38 @@ function render(timestamp) {
     const rimAlpha = (0.3 + 0.15 * Math.sin(t * 0.4)) * (1 - p * 0.8) * smokeAlpha;
     const rimHue = (t * 18 + scrollProgress * 120) % 360;
     offCtx.globalCompositeOperation = 'screen';
-    offCtx.globalAlpha = rimAlpha;
-    smoke.buildPath(offCtx, offsetPts);
-    offCtx.strokeStyle = hsla(rimHue, 55, 35, 1);
-    offCtx.lineWidth = 3 + Math.sin(t * 0.6) * 1.5;
-    offCtx.stroke();
-    offCtx.globalAlpha = rimAlpha * 0.5;
-    smoke.buildPath(offCtx, offsetPts);
-    offCtx.strokeStyle = hsla(rimHue + 60, 65, 45, 1);
-    offCtx.lineWidth = 1.5;
-    offCtx.stroke();
+
+    if (isMobile) {
+      const softLayers = [
+        { width: 36, alpha: 0.03 },
+        { width: 28, alpha: 0.05 },
+        { width: 22, alpha: 0.08 },
+        { width: 16, alpha: 0.11 },
+        { width: 11, alpha: 0.15 },
+        { width: 7,  alpha: 0.20 },
+        { width: 4,  alpha: 0.28 },
+        { width: 2,  alpha: 0.38 },
+      ];
+      for (const layer of softLayers) {
+        smoke.buildPath(offCtx, offsetPts);
+        offCtx.globalAlpha = rimAlpha * layer.alpha;
+        offCtx.strokeStyle = hsla(rimHue, 60, 55, 1);
+        offCtx.lineWidth = layer.width;
+        offCtx.stroke();
+      }
+    } else {
+      offCtx.globalAlpha = rimAlpha;
+      smoke.buildPath(offCtx, offsetPts);
+      offCtx.strokeStyle = hsla(rimHue, 55, 35, 1);
+      offCtx.lineWidth = 3 + Math.sin(t * 0.6) * 1.5;
+      offCtx.stroke();
+      offCtx.globalAlpha = rimAlpha * 0.5;
+      smoke.buildPath(offCtx, offsetPts);
+      offCtx.strokeStyle = hsla(rimHue + 60, 65, 45, 1);
+      offCtx.lineWidth = 1.5;
+      offCtx.stroke();
+    }
+
     offCtx.restore();
   }
 
