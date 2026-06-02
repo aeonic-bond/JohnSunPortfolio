@@ -54,6 +54,8 @@ const createCaseStudyCard = ({
   const descriptionEl = document.createElement("p");
   descriptionEl.className = "card-text";
   descriptionEl.textContent = description;
+  const descriptionId = kind ? `card-desc-${String(kind).trim().toLowerCase()}` : "";
+  if (descriptionId) descriptionEl.id = descriptionId;
 
   const tagsWrap = document.createElement("div");
   tagsWrap.className = "card-tags-group";
@@ -75,27 +77,16 @@ const createCaseStudyCard = ({
   card.append(mediaEl, content);
 
   if (isNavigable) {
-    const navigate = () => {
-      window.location.href = href;
-    };
+    const coverLink = document.createElement("a");
+    coverLink.className = "card-cover-link";
+    coverLink.href = href;
+    if (titleId) coverLink.setAttribute("aria-labelledby", titleId);
+    if (descriptionId) coverLink.setAttribute("aria-describedby", descriptionId);
+    card.append(coverLink);
 
-    card.setAttribute("role", "link");
-    card.tabIndex = 0;
-    card.addEventListener("click", navigate);
-    card.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        navigate();
-      }
-    });
-    // Card is the interactive link; hide the CTA button from screen readers to avoid
-    // a duplicate nested interactive element.
+    // CTA button is a visual affordance only; the cover link is the real interactive element.
     ctaButton.setAttribute("aria-hidden", "true");
     ctaButton.tabIndex = -1;
-    ctaButton.addEventListener("click", (event) => {
-      event.stopPropagation();
-      navigate();
-    });
   }
 
   cardWrap.append(card);
