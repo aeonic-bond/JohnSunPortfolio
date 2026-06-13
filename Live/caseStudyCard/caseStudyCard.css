@@ -186,6 +186,10 @@
   outline-offset: 3px;
 }
 
+.case-study-card[data-card-kind="studio"] .card-media-div {
+  z-index: 4;
+}
+
 .case-study-card.is-draft {
   cursor: default;
 }
